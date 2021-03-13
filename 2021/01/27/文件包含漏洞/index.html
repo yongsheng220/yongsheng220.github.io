@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="什么是文件包含 简单一句话，为了更好地使用代码的重用性，引入了文件包含函数，可以通过文件包含函数将文件包含进来，直接使用包含文件的代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件包含漏洞及php伪协议命令执行">
+<meta property="og:url" content="http://example.com/2021/01/27/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="程勇胜的博客">
+<meta property="og:description" content="什么是文件包含 简单一句话，为了更好地使用代码的重用性，引入了文件包含函数，可以通过文件包含函数将文件包含进来，直接使用包含文件的代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127135908416.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127140119945.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021012714092498.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127140958202.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127141028168.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021012714124674.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021012714141895.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127142544885.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021012714271668.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127142834220.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127143008637.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127143234514.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210127143444372.png#pic_center">
+<meta property="article:published_time" content="2021-01-27T06:38:14.301Z">
+<meta property="article:modified_time" content="2021-01-29T12:01:36.712Z">
+<meta property="article:author" content="程勇胜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210127135908416.png#pic_center">
+
+<link rel="canonical" href="http://example.com/2021/01/27/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>文件包含漏洞及php伪协议命令执行 | 程勇胜的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程勇胜的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/27/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="程勇胜">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程勇胜的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文件包含漏洞及php伪协议命令执行
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-27 14:38:14" itemprop="dateCreated datePublished" datetime="2021-01-27T14:38:14+08:00">2021-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-29 20:01:36" itemprop="dateModified" datetime="2021-01-29T20:01:36+08:00">2021-01-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" itemprop="url" rel="index"><span itemprop="name">文件包含</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="什么是文件包含"><a href="#什么是文件包含" class="headerlink" title="什么是文件包含"></a>什么是文件包含</h2><blockquote>
+<p>简单一句话，为了更好地使用代码的重用性，引入了文件包含函数，可以通过文件包含函数将文件包含进来，直接使用包含文件的代码。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="文件包含漏洞成因"><a href="#文件包含漏洞成因" class="headerlink" title="文件包含漏洞成因"></a>文件包含漏洞成因</h2><blockquote>
+<p>在包含文件时候，为了灵活包含文件，将被包含文件设置为变量，通过动态变量来引入需要包含的文件时，用户可以对变量的值可控而服务器端未对变量值进行合理地校验或者校验被绕过，这样就导致了文件包含漏洞。通常文件包含漏洞出现在PHP语言中。</p>
+</blockquote>
+<h2 id="PHP文件包含的函数"><a href="#PHP文件包含的函数" class="headerlink" title="PHP文件包含的函数"></a>PHP文件包含的函数</h2><ul>
+<li>include( )<br>当使用该函数包含文件时，只有代码执行到 include()函数时才将文件包含<br>进来，发生错误时之给出一个警告，继续向下执行。</li>
+<li>include_once( )<br>功能与 Include()相同，区别在于当重复调用同一文件时，程序只调用一次</li>
+<li>require( )<br>require()与 include()的区别在于 require()执行如果发生错误，函数会输出<br>错误信息，并终止脚本的运行。</li>
+<li>require_once( )<br>功能与 require()相同，区别在于当重复调用同一文件时，程序只调用一次。</li>
+</ul>
+<h2 id="文件包含漏洞分类"><a href="#文件包含漏洞分类" class="headerlink" title="文件包含漏洞分类"></a>文件包含漏洞分类</h2><ul>
+<li>本地文件包含</li>
+<li>远程文件包含</li>
+</ul>
+<p>本地文件包含漏洞</p>
+<blockquote>
+<p>当包含的文件在服务器本地时，就形成了本地文件包含。</p>
+</blockquote>
+<p>比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    include(<span class="variable">$file</span>);</span><br><span class="line">    .....</span><br></pre></td></tr></table></figure>
+<p>get一个参数<code>file</code>，来控制包含的$file的值<br>假如有一个file.txt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210127135908416.png#pic_center"><br>如果限制包含文件的后缀：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>] . <span class="string">&#x27;.php&#x27;</span>;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$file</span>;</span><br><span class="line">    include(<span class="variable">$file</span>);</span><br></pre></td></tr></table></figure>
+<p>就无法找到要包含的文件<br><img src="https://img-blog.csdnimg.cn/20210127140119945.png#pic_center"><br>此时，可以使用<code>%00</code>截断，不过需要有前提条件：<br>1). PHP版本 &lt; 5.3 (不包括5.3) ;<br>2). PHPmagic_quotes_gpc = <code>off</code>;<br>3).PHP对所接收的参数，如以上代码的<code>$_GET[&#39;file&#39;]</code>未使用<code>addslashes</code>函数</p>
+<p>远程文件包含漏洞</p>
+<blockquote>
+<p>当包含的文件在远程服务器上时，就形成了远程文件包含。</p>
+</blockquote>
+<p>远程文件包含的注意点：</p>
+<blockquote>
+<p>1.需要php.ini中<code>allow_url_include = on</code>以及<code>allow_url_fopen=on</code></p>
+</blockquote>
+<blockquote>
+<p>2.所包含远程服务器的文件后缀不能与目标服务器语言相同。(比如目标服务器是php脚本语言解析的，那么包含的远程服务器文件后缀不能是<code>php</code>)</p>
+</blockquote>
+<p>主要解释下第2点:<br>比如远程服务器文件<code>yuancheng.php</code>，内容为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/2021012714092498.png#pic_center" alt="远程服务器"><br>再来看下目标服务器的信息<br><img src="https://img-blog.csdnimg.cn/20210127140958202.png#pic_center" alt="目标服务器"><br>执行远程包含：<br><img src="https://img-blog.csdnimg.cn/20210127141028168.png#pic_center" alt="执行，显示为远程服务器结果"><br>原因：因为目标服务器包含的代码并不是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+<p>而是远程服务器执行完这段代码的源代码<br><img src="https://img-blog.csdnimg.cn/2021012714124674.png#pic_center" alt="远程服务器"><br>因此，正确远程包含文件漏洞利用如下：<br>首先确保配置文件<code>allow_url_fopen = On</code>以及<code>allow_url_include = On</code></p>
+<p>其次，修改文件后缀，只要不是php就行，比如后缀为.txt，然后再来包含。</p>
+<p><img src="https://img-blog.csdnimg.cn/2021012714141895.png#pic_center" alt="成功"></p>
+<hr>
+<h2 id="文件包含漏洞之伪协议"><a href="#文件包含漏洞之伪协议" class="headerlink" title="文件包含漏洞之伪协议"></a>文件包含漏洞之伪协议</h2><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/column/148886.html">php伪协议实行命令执行</a></p>
+<p>伪协议在文件包含的利用，本文演示以下伪协议：</p>
+<blockquote>
+<p>1.data:text/plain 或 data:text/plain;base64<br>2.php://input<br>3.php://filter<br>4.file://<br>5.zip://</p>
+</blockquote>
+<ul>
+<li>data:text/plain<br>直接在对应URL参数内输出：<code>data:text/plain,</code>需要执行的php代码</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210127142544885.png#pic_center"><br><code>data:text/plain;base64,</code><br><img src="https://img-blog.csdnimg.cn/2021012714271668.png#pic_center"></p>
+<hr>
+<ul>
+<li>php://input</li>
+</ul>
+<p><code>php://input</code> 可以访问请求的原始数据的只读流, 将post请求中的数据作为PHP代码执行<br><img src="https://img-blog.csdnimg.cn/20210127142834220.png#pic_center"></p>
+<hr>
+<ul>
+<li>php://filter<br><code>php://filter</code> 该伪协议可以读取php文件代码以base64编码输出，比如说我们想读取一个php文件但是不想让它正常php执行代码后的结果，我们想要这个php文件的代码的时候就可以使用这个伪协议。<blockquote>
+<p>使用方法：php://filter/read=convert.base64-encode/resource=需要读取源码的文件名</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210127143008637.png#pic_center"><br>再base64解码就行</p>
+<hr>
+<ul>
+<li>file://<br><code>file://</code> 用于访问本地文件系统，且不受allow_url_fopen与allow_url_include的影响。<blockquote>
+<p>使用方法：file://文件绝对路径  file://C:/Windows/system.ini</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210127143234514.png#pic_center"></p>
+<hr>
+<ul>
+<li>zip://<br><code>zip://</code>可以访问压缩文件中的文件。但是需要绝对路径。<blockquote>
+<p>使用方法： zip://[压缩包绝对路径]%23(#和url规则冲突，所以用%23代替)[压缩文件内的文件名]</p>
+</blockquote>
+</li>
+</ul>
+<p>在本地创建一个文件2.php，并且压缩成2.zip压缩包，然后包含压缩包里面的文件：<br><img src="https://img-blog.csdnimg.cn/20210127143444372.png#pic_center"></p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/column/148886.html">php伪协议实现命令执行</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3514f0fd79f7">文件包含学习总结</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/27/%E9%9A%8F%E6%89%8B/" rel="prev" title="随手">
+      <i class="fa fa-chevron-left"></i> 随手
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/28/LFI%20%E7%BB%95%E8%BF%87%20Session%20%E5%8C%85%E5%90%AB%E9%99%90%E5%88%B6%20Getshell/" rel="next" title="LFI绕过Session包含限制">
+      LFI绕过Session包含限制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="nav-number">1.</span> <span class="nav-text">什么是文件包含</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E6%88%90%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text">文件包含漏洞成因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">PHP文件包含的函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%88%86%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">文件包含漏洞分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E4%B9%8B%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="nav-number">5.</span> <span class="nav-text">文件包含漏洞之伪协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程勇胜"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">程勇胜</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程勇胜</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
