@@ -38,8 +38,10 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210415233341569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2021041523344524.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210415233502335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210418120104402.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210418122538752.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2021-04-15T15:38:43.836Z">
-<meta property="article:modified_time" content="2021-04-15T15:38:40.576Z">
+<meta property="article:modified_time" content="2021-04-18T07:10:04.916Z">
 <meta property="article:author" content="程勇胜">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210415231333637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
@@ -232,10 +234,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-15 23:38:43 / 修改时间：23:38:40" itemprop="dateCreated datePublished" datetime="2021-04-15T23:38:43+08:00">2021-04-15</time>
+              <time title="创建时间：2021-04-15 23:38:43" itemprop="dateCreated datePublished" datetime="2021-04-15T23:38:43+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-18 15:10:04" itemprop="dateModified" datetime="2021-04-18T15:10:04+08:00">2021-04-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -337,6 +345,24 @@
 
 <hr>
 <h1 id="315"><a href="#315" class="headerlink" title="315"></a>315</h1><p>需要服务器，回头写</p>
+<p><a target="_blank" rel="noopener" href="https://blog.spoock.com/2017/09/19/xdebug-attack-surface/">XDebug的攻击面</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/php/xdebug-rce">github地址</a></p>
+<p><img src="https://img-blog.csdnimg.cn/20210418120104402.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>在DBGp中存在一些可以危险的命令，如果开启了回连，就有可能导致这些命令能够被执行。这些危险的命令包括：</p>
+<ul>
+<li><p>Core Commands &gt; source<br>source可以读取文件，使用方式是source -i transaction_id -f fileURI。transaction_id 貌似没有那么硬性的要求，每次都为 1 即可，fileURI 是要读取的文件的路径。需要注意的是，Xdebug也受限于 open_basedir</p>
+</li>
+<li><p>Extended Commands &gt; eval<br>eval的用法与php中的eval用法相同，使用方式是eval -i transaction_id – {DATA},其中{DATA} 为 base64 过的 PHP 代码</p>
+</li>
+<li><p>Extended Commands &gt; interact - Interactive Shell<br>Xdebug并没有实现</p>
+</li>
+<li><p>Core Commands &gt; property_set</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210418122538752.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<blockquote>
+<p>python3 exp.py -t url/index.php -c ‘shell_exec(‘id’);’</p>
+</blockquote>
 
     </div>
 
