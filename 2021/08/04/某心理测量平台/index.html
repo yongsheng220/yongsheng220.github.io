@@ -20,22 +20,29 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="命令执行绕过小技巧管道符windows 下   |    直接执行后面的语句   ||  如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句   &amp;  前面和后面命令都要执行，无论前面真假   &amp;&amp;   如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令">
+  <meta name="description" content="前言随手">
 <meta property="og:type" content="article">
-<meta property="og:title" content="命令执行绕过小技巧">
-<meta property="og:url" content="http://example.com/2021/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%95%E8%BF%87/index.html">
+<meta property="og:title" content="某心理测量平台">
+<meta property="og:url" content="http://example.com/2021/08/04/%E6%9F%90%E5%BF%83%E7%90%86%E6%B5%8B%E9%87%8F%E5%B9%B3%E5%8F%B0/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="命令执行绕过小技巧管道符windows 下   |    直接执行后面的语句   ||  如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句   &amp;  前面和后面命令都要执行，无论前面真假   &amp;&amp;   如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令">
+<meta property="og:description" content="前言随手">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210117202310335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210117202321964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2021-01-17T15:47:00.337Z">
-<meta property="article:modified_time" content="2021-01-26T19:02:19.123Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8c9ecbae058343a5bac6e32d05843dd3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4994020839884aaca8d0621268586791.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/63c696d07d5a449e82d2a1f0d6d721c0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ec8adbb9380f4c63b374566aaacd05da.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/88996735634a4b7f892b03520fe46bb4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/df3db40302a142c0b63cbd36cee3c556.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b978b966b6e34cb79cf5e0b0d59a0a15.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/46388d06bcf24ea9bae21c43e6d3d68a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ee3102d1e9b743608fdd063644814ff3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2021-08-04T06:51:20.966Z">
+<meta property="article:modified_time" content="2021-08-04T06:50:57.898Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210117202310335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/8c9ecbae058343a5bac6e32d05843dd3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
 
-<link rel="canonical" href="http://example.com/2021/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%95%E8%BF%87/">
+<link rel="canonical" href="http://example.com/2021/08/04/%E6%9F%90%E5%BF%83%E7%90%86%E6%B5%8B%E9%87%8F%E5%B9%B3%E5%8F%B0/">
 
 
 <script id="page-configurations">
@@ -48,7 +55,7 @@
   };
 </script>
 
-  <title>命令执行绕过小技巧 | Y0ng的博客</title>
+  <title>某心理测量平台 | Y0ng的博客</title>
   
 
 
@@ -201,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%95%E8%BF%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/04/%E6%9F%90%E5%BF%83%E7%90%86%E6%B5%8B%E9%87%8F%E5%B9%B3%E5%8F%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -214,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          命令执行绕过小技巧
+          某心理测量平台
         </h1>
 
         <div class="post-meta">
@@ -223,16 +230,19 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-01-17 23:47:00" itemprop="dateCreated datePublished" datetime="2021-01-17T23:47:00+08:00">2021-01-17</time>
+              <time title="创建时间：2021-08-04 14:51:20 / 修改时间：14:50:57" itemprop="dateCreated datePublished" datetime="2021-08-04T14:51:20+08:00">2021-08-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-27 03:02:19" itemprop="dateModified" datetime="2021-01-27T03:02:19+08:00">2021-01-27</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">渗透</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -252,80 +262,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="命令执行绕过小技巧"><a href="#命令执行绕过小技巧" class="headerlink" title="命令执行绕过小技巧"></a>命令执行绕过小技巧</h2><h1 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h1><p>windows 下</p>
-<blockquote>
-<p> |    直接执行后面的语句</p>
-</blockquote>
-<blockquote>
-<p>||  如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</p>
-</blockquote>
-<blockquote>
-<p>&amp;  前面和后面命令都要执行，无论前面真假</p>
-</blockquote>
-<blockquote>
-<p>&amp;&amp;   如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</p>
-</blockquote>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>随手</p>
 <a id="more"></a>
-<p>linux下</p>
-<blockquote>
-<p>; 前面和后面命令都要执行，无论前面真假</p>
-</blockquote>
-<blockquote>
-<p>| 直接执行后面的语句</p>
-</blockquote>
-<blockquote>
-<p>|| 如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</p>
-</blockquote>
-<blockquote>
-<p>&amp; 前面和后面命令都要执行，无论前面真假</p>
-</blockquote>
-<blockquote>
-<p>&amp;&amp; 如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</p>
-</blockquote>
-<h1 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h1><blockquote>
-<p>   &lt;  &gt;   &lt;&gt; 重定向符<br>%09(需要php环境)<br>${IFS}<br>$IFS$9<br>{cat,flag.php} //用逗号实现了空格功能<br>%20<br>%09</p>
-</blockquote>
-<h1 id="命令执行函数"><a href="#命令执行函数" class="headerlink" title="命令执行函数"></a>命令执行函数</h1><blockquote>
-<p>system()<br>passthru()<br>exec()<br>shell_exec()<br>popen()<br>proc_open()<br>pcntl_exec()<br>反引号 同shell_exec() </p>
-</blockquote>
-<h1 id="黑名单绕过"><a href="#黑名单绕过" class="headerlink" title="黑名单绕过"></a>黑名单绕过</h1><p>拼接</p>
-<blockquote>
-<p>a=c;b=at;c=fl;d=ag;$a$b $c$d</p>
-</blockquote>
-<p>base64编码</p>
-<blockquote>
-<p>echo “Y2F0IGZsYWc=” | base64 -d<br>echo “Y2F0IGZsYWc=” | base64 -d | bash (在bash被过滤的情况下可尝试sh)</p>
-</blockquote>
-<p>单引号，双引号</p>
-<blockquote>
-<p>c””at  fl’’ag</p>
-</blockquote>
-<p>反斜线</p>
-<blockquote>
-<p>c\at fl\ag</p>
-</blockquote>
-<p>正则 (假设/bin/cat: test: 是一个目录)</p>
-<blockquote>
-<p>/???/?[a][t] ?’’?’’?’’?’’<br>/???/?at ????<br>/???/?[a]’’[t] ?’’?’’?’’?’’</p>
-</blockquote>
-<p>$1 $2等和 $@</p>
-<blockquote>
-<p>$# 是传给脚本的参数个数<br>$0 是脚本本身的名字<br>$1 是传递给该shell脚本的第一个参数<br>$2 是传递给该shell脚本的第二个参数<br>$@ 是传给脚本的所有参数的列表<br>$* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个<br>$$ 是脚本运行的当前进程ID号<br>$? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误</p>
-</blockquote>
-<h1 id="cat被过滤"><a href="#cat被过滤" class="headerlink" title="cat被过滤"></a>cat被过滤</h1><blockquote>
-<p>more:一页一页的显示档案内容<br>less:与 more 类似<br>head:查看头几行<br>tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示<br>tail:查看尾几行<br>nl：显示的时候，顺便输出行号<br>od:以二进制的方式读取档案内容<br>vi:一种编辑器，这个也可以查看<br>vim:一种编辑器，这个也可以查看<br>sort:可以查看<br>uniq:可以查看<br>file -f:报错出具体内容<br>grep<br>1、在当前目录中，查找后缀有 file 字样的文件中包含 test 字符串的文件，并打印出该字符串的行。此时，可以使用如下命令：<br>grep test *file<br>strings</p>
-</blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20210117202310335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"><br><img src="https://img-blog.csdnimg.cn/20210117202321964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
-<h1 id="内敛执行"><a href="#内敛执行" class="headerlink" title="内敛执行"></a>内敛执行</h1><blockquote>
-<p>cat $ IFS $ 9（反单引号`）ls(反单引号 )<br>cat $ IFS$ 9 $(ls)</p>
-</blockquote>
-<p>(内联，就是将``或$()内命令的输出作为输入执行)</p>
-<h1 id="利用ls-t和-gt-以及换行符绕过长度限制执行命令-文件构造绕过"><a href="#利用ls-t和-gt-以及换行符绕过长度限制执行命令-文件构造绕过" class="headerlink" title="利用ls -t和&gt;以及换行符绕过长度限制执行命令(文件构造绕过)"></a>利用ls -t和&gt;以及换行符绕过长度限制执行命令(文件构造绕过)</h1><blockquote>
-<p>root@kali:<del>/桌面# echo “flag{hahaha}” &gt; flag.txt<br>root@kali:</del>/桌面# touch “ag”<br>root@kali:<del>/桌面# touch “fl\“<br>root@kali:</del>/桌面# touch “t \“<br>root@kali:<del>/桌面# touch “ca\“<br>root@kali:</del>/桌面# ls -t<br>‘ca&#39;  ‘t &#39;  ‘fl&#39;   ag   flag<br>root@kali:<del>/桌面# ls -t &gt;a     #将 ls -t 内容写入到a文件中<br>root@kali:</del>/桌面# sh a<br>a: 1: a: not found<br>flag{hahaha}<br>a: 6: flag.txt: not found</p>
-</blockquote>
-<blockquote>
-<p>\ 是指换行<br>ls  -t 将文件按时间排序输出<br>sh 命令可以从一个文件中读取命令来执行</p>
-</blockquote>
+
+<p>fofa：心理测量平台</p>
+<p><img src="https://img-blog.csdnimg.cn/8c9ecbae058343a5bac6e32d05843dd3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/4994020839884aaca8d0621268586791.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>个别网站拼接 /admin/ 存在 <code>目录遍历</code>，</p>
+<p>后台地址/admin/login.aspx</p>
+<p>忽略验证码次数，一般字典都能冲出来(不是这个密码)</p>
+<p><img src="https://img-blog.csdnimg.cn/63c696d07d5a449e82d2a1f0d6d721c0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传点直接aspx怼上去</p>
+<p><img src="https://img-blog.csdnimg.cn/ec8adbb9380f4c63b374566aaacd05da.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>右键查看图片地址，自动跳转马儿地址</p>
+<p>又发现了另外一个端口8002</p>
+<p>这个样子</p>
+<p><img src="https://img-blog.csdnimg.cn/88996735634a4b7f892b03520fe46bb4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>注册用户，直接上传aspx</p>
+<p><img src="https://img-blog.csdnimg.cn/df3db40302a142c0b63cbd36cee3c556.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>但是没有返回地址</p>
+<p>我就又去这个后台地址</p>
+<p>还是弱密码12121212</p>
+<p><img src="https://img-blog.csdnimg.cn/b978b966b6e34cb79cf5e0b0d59a0a15.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>看到了马儿地址，可以观察一下 <code>2021-0728-10-13-35-六位随机数</code></p>
+<p>时间+随机数，那么就可能存在这样一种可能直接前台上传马儿，然后直接爆破6位随机数，把马儿地址直接爆出来，这样就不需要后台登录</p>
+<p><img src="https://img-blog.csdnimg.cn/46388d06bcf24ea9bae21c43e6d3d68a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/ee3102d1e9b743608fdd063644814ff3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 
     </div>
 
@@ -341,13 +298,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/12/web%E9%AB%98%E6%89%8B/" rel="prev" title="webctf解题">
-      <i class="fa fa-chevron-left"></i> webctf解题
+    <a href="/2021/08/03/BeesCMS%20v4.0/" rel="prev" title="BeesCMS v4.0">
+      <i class="fa fa-chevron-left"></i> BeesCMS v4.0
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/01/24/web%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E6%B8%97%E9%80%8F%E6%96%B9%E6%B3%95/" rel="next" title="web常用基础渗透方法">
-      web常用基础渗透方法 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -406,7 +360,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%95%E8%BF%87%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">1.</span> <span class="nav-text">命令执行绕过小技巧</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-number"></span> <span class="nav-text">管道符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="nav-number"></span> <span class="nav-text">空格绕过</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="nav-number"></span> <span class="nav-text">命令执行函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87"><span class="nav-number"></span> <span class="nav-text">黑名单绕过</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat%E8%A2%AB%E8%BF%87%E6%BB%A4"><span class="nav-number"></span> <span class="nav-text">cat被过滤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%95%9B%E6%89%A7%E8%A1%8C"><span class="nav-number"></span> <span class="nav-text">内敛执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8ls-t%E5%92%8C-gt-%E4%BB%A5%E5%8F%8A%E6%8D%A2%E8%A1%8C%E7%AC%A6%E7%BB%95%E8%BF%87%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-%E6%96%87%E4%BB%B6%E6%9E%84%E9%80%A0%E7%BB%95%E8%BF%87"><span class="nav-number"></span> <span class="nav-text">利用ls -t和&gt;以及换行符绕过长度限制执行命令(文件构造绕过)</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
