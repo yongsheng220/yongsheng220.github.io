@@ -20,33 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言颜色网站，无数据交互，所以无sql注入，js和php配合写的网站，漏洞较多，比较简单，毕竟新人刚开始，加油 XSS前台反射型XSS&#x2F;Static&#x2F;Home&#x2F;VideoJS&#x2F;index.php">
+  <meta name="description" content="前言看到这样一段话 , 不理解，搜了一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="9CCMS 辣椒CMS 代码审计">
-<meta property="og:url" content="http://example.com/2021/07/11/9CCMS%20%E8%BE%A3%E6%A4%92CMS%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html">
+<meta property="og:title" content="关于函数调用 栈在内存中从高地址向低地址生长">
+<meta property="og:url" content="http://example.com/2021/10/09/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E4%BB%8E%E9%AB%98%E5%9C%B0%E5%9D%80%E5%90%91%E4%BD%8E%E5%9C%B0%E5%9D%80%E7%94%9F%E9%95%BF/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="前言颜色网站，无数据交互，所以无sql注入，js和php配合写的网站，漏洞较多，比较简单，毕竟新人刚开始，加油 XSS前台反射型XSS&#x2F;Static&#x2F;Home&#x2F;VideoJS&#x2F;index.php">
+<meta property="og:description" content="前言看到这样一段话 , 不理解，搜了一下">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711202756411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711202912196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203325139.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203346265.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203403759.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203506819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203518306.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021071120361241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203746804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021071120382289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711203958882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711204023647.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210711204037764.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="article:published_time" content="2021-07-11T12:50:02.529Z">
-<meta property="article:modified_time" content="2021-07-11T12:49:59.975Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/91d527fa94ae45558e26b3dc8ffec61c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/08ea00e686bd4a0883e6143e4e902038.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e891624c770247a5bff4ec5dc4ab4f65.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/28f4eed2cc3744a1aeb7324cc4c18505.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2021-10-09T04:23:38.520Z">
+<meta property="article:modified_time" content="2021-10-09T04:23:35.691Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210711202756411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/91d527fa94ae45558e26b3dc8ffec61c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 
-<link rel="canonical" href="http://example.com/2021/07/11/9CCMS%20%E8%BE%A3%E6%A4%92CMS%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+<link rel="canonical" href="http://example.com/2021/10/09/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E4%BB%8E%E9%AB%98%E5%9C%B0%E5%9D%80%E5%90%91%E4%BD%8E%E5%9C%B0%E5%9D%80%E7%94%9F%E9%95%BF/">
 
 
 <script id="page-configurations">
@@ -59,7 +50,7 @@
   };
 </script>
 
-  <title>9CCMS 辣椒CMS 代码审计 | Y0ng的博客</title>
+  <title>关于函数调用 栈在内存中从高地址向低地址生长 | Y0ng的博客</title>
   
 
 
@@ -212,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/11/9CCMS%20%E8%BE%A3%E6%A4%92CMS%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/09/%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E4%BB%8E%E9%AB%98%E5%9C%B0%E5%9D%80%E5%90%91%E4%BD%8E%E5%9C%B0%E5%9D%80%E7%94%9F%E9%95%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -225,7 +216,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          9CCMS 辣椒CMS 代码审计
+          关于函数调用 栈在内存中从高地址向低地址生长
         </h1>
 
         <div class="post-meta">
@@ -236,7 +227,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-11 20:50:02 / 修改时间：20:49:59" itemprop="dateCreated datePublished" datetime="2021-07-11T20:50:02+08:00">2021-07-11</time>
+              <time title="创建时间：2021-10-09 12:23:38 / 修改时间：12:23:35" itemprop="dateCreated datePublished" datetime="2021-10-09T12:23:38+08:00">2021-10-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +235,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">PHP代码审计</span></a>
+                  <a href="/categories/%E9%9A%8F%E6%89%8B/" itemprop="url" rel="index"><span itemprop="name">随手</span></a>
                 </span>
             </span>
 
@@ -266,34 +257,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>颜色网站，无数据交互，所以无sql注入，js和php配合写的网站，漏洞较多，比较简单，毕竟新人刚开始，加油</p>
-<h1 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h1><h2 id="前台反射型XSS"><a href="#前台反射型XSS" class="headerlink" title="前台反射型XSS"></a>前台反射型XSS</h2><p>/Static/Home/VideoJS/index.php</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711202756411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>看到这样一段话 , 不理解，搜了一下</p>
+<p><img src="https://img-blog.csdnimg.cn/91d527fa94ae45558e26b3dc8ffec61c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
 <a id="more"></a>
-<p>跟进函数</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711202912196.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><code>stripslashes  删除反斜线</code></p>
-<p><code>htmlspecialchars  把预定义的字符  &quot;&lt;&quot; （小于）和 &quot;&gt;&quot; （大于）转换为 HTML 实体</code></p>
-<p>而参数 play 本身就在 script 标签中，所以就不需要 &lt; 和 &gt;，只要将前后闭合即可触发XSS</p>
-<p>Payload:  <code>1&#39;;alert(1);&#39; </code></p>
-<p>这里说一下自己的测试来解释payload：</p>
-<p>新建 1.php 这里为 php 文件！</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711203325139.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>运行发现自动添加单引号</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711203346265.png#pic_center"><br>这也就解释为什么payload有单引号了：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711203403759.png#pic_center"></p>
-<hr>
-<h1 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h1><h2 id="后端直接写马"><a href="#后端直接写马" class="headerlink" title="后端直接写马"></a>后端直接写马</h2><p>/Php/Admin/Home/Ad/Adjs.php<br>/Php/Admin/Home/Basic/Statistics.php</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711203506819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210711203518306.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
-<h2 id="修改密码写马"><a href="#修改密码写马" class="headerlink" title="修改密码写马"></a>修改密码写马</h2><p>php/admin/home/security/userpass.php</p>
-<p><img src="https://img-blog.csdnimg.cn/2021071120361241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>这里直接拼接</p>
-<p>Payload: <code>&#39;);eval($_POST[shell]);//</code></p>
-<hr>
-<h1 id="辣椒CMS"><a href="#辣椒CMS" class="headerlink" title="辣椒CMS"></a>辣椒CMS</h1><p>添加广告处有变化</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711203746804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>提交的广告以 <code>lmjs</code> 参数提交，include了<code>class_txttest_js.php</code></p>
-<p>跟踪一下：</p>
-<p><img src="https://img-blog.csdnimg.cn/2021071120382289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>New 触发__construct()，将 <code>$ad_top_json_url</code> 带进 TxtDB 类，跟踪一下 <code>$ad_top_json_url</code> 发现 <code>$ad_top_json_url=JCCMS_ROOT.&quot;ad/ad_js/ad.json&quot;;</code> 再通过<code>alter</code> 方法写入到 json 文件</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711203958882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>这里很多include函数，比如在主界面</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711204023647.png#pic_center"><br>跟踪cllass_ad_js.php</p>
-<p><img src="https://img-blog.csdnimg.cn/20210711204037764.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>发现都是通过include来调用</p>
+<h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><p>首先，我觉得有必要深入理解一下 <code>栈</code> </p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/49861533">一个有关于栈的问题？</a></p>
+<p>初学时，有这种死板的印象 栈就是像盖房子一样，入栈时从底部向上，出栈时就像拆房子从上向下拆</p>
+<p>那么栈的定义是什么?</p>
+<blockquote>
+<p>借用：<br>栈是一种数据结构，有2种操作：加入一个元素，删除最迟加入（且没被删除，还在栈里）的元素。<br>没了，这就是栈的定义</p>
+</blockquote>
+<p>那么上面我说的盖房子就仅仅是对 <code>栈</code> 这种<code>抽象</code>的一种具体实现，无非就是满足了他的功能</p>
+<p>我也可以这样盖房子：从天上开始盖，但是拆房子时<code>必须</code>从下面拆(抽象)</p>
+<p><img src="https://img-blog.csdnimg.cn/08ea00e686bd4a0883e6143e4e902038.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="栈地址从高到低生长，堆从低到高"><a href="#栈地址从高到低生长，堆从低到高" class="headerlink" title="栈地址从高到低生长，堆从低到高"></a>栈地址从高到低生长，堆从低到高</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28483772">计算机中的堆地址从低到高向上增长，但栈地址却从高到低向下增长，为什么这样设计，这样设计有什么好处？</a></p>
+<p>借用两张图</p>
+<p><img src="https://img-blog.csdnimg.cn/e891624c770247a5bff4ec5dc4ab4f65.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br><img src="https://img-blog.csdnimg.cn/28f4eed2cc3744a1aeb7324cc4c18505.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>如果栈向上涨的话，我们就必须得指定栈和堆的一个严格分界线，那么就可能出现栈溢出，导致程序崩溃，并且浪费大量闲置的堆空间，所以呢，最好的办法就是让堆和栈一个向上涨，一个向下涨，<code>这样它们就可以最大程度地共用这块剩余的地址空间，达到利用率的最大化</code></p>
 
     </div>
 
@@ -309,13 +288,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/09/emlog%206.0%20%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="prev" title="emlog 6.0 代码审计">
-      <i class="fa fa-chevron-left"></i> emlog 6.0 代码审计
+    <a href="/2021/10/08/%E9%B9%A4%E5%9F%8E%E6%9D%AF2021/" rel="prev" title="鹤城杯2021">
+      <i class="fa fa-chevron-left"></i> 鹤城杯2021
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/19/ThinkPHP%20v3.2.3%20find%E5%87%BD%E6%95%B0%E5%BC%95%E8%B5%B7%E7%9A%84sql%E6%B3%A8%E5%85%A5/" rel="next" title="ThinkPHP 3.2.3 find/select/delete注入">
-      ThinkPHP 3.2.3 find/select/delete注入 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -374,7 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS"><span class="nav-number">2.</span> <span class="nav-text">XSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%8F%B0%E5%8F%8D%E5%B0%84%E5%9E%8BXSS"><span class="nav-number">2.1.</span> <span class="nav-text">前台反射型XSS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Getshell"><span class="nav-number">3.</span> <span class="nav-text">Getshell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E7%9B%B4%E6%8E%A5%E5%86%99%E9%A9%AC"><span class="nav-number">3.1.</span> <span class="nav-text">后端直接写马</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E5%86%99%E9%A9%AC"><span class="nav-number">3.2.</span> <span class="nav-text">修改密码写马</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%A3%E6%A4%92CMS"><span class="nav-number">4.</span> <span class="nav-text">辣椒CMS</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%88"><span class="nav-number">2.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%88%E5%9C%B0%E5%9D%80%E4%BB%8E%E9%AB%98%E5%88%B0%E4%BD%8E%E7%94%9F%E9%95%BF%EF%BC%8C%E5%A0%86%E4%BB%8E%E4%BD%8E%E5%88%B0%E9%AB%98"><span class="nav-number">3.</span> <span class="nav-text">栈地址从高到低生长，堆从低到高</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
