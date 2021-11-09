@@ -20,33 +20,31 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="wpi-admin1-2-3进入网址：">
+  <meta name="description" content="接着上回没有bypass disable_function 账户交易系统 | Y0ng的博客 (yongsheng.site) 这回发现上回那个站点开启了php-fpm，然后bypass">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WPICTF2021">
-<meta property="og:url" content="http://example.com/2021/04/27/WPICTF/index.html">
+<meta property="og:title" content="蚁剑 PHP-FPM bypass disable_function">
+<meta property="og:url" content="http://example.com/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="wpi-admin1-2-3进入网址：">
+<meta property="og:description" content="接着上回没有bypass disable_function 账户交易系统 | Y0ng的博客 (yongsheng.site) 这回发现上回那个站点开启了php-fpm，然后bypass">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193414394.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193426290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193441784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2021042719352965.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193541972.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193555840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193643472.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193714612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193723440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193734680.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193803683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193812892.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210427193915622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="article:published_time" content="2021-04-27T11:39:58.802Z">
-<meta property="article:modified_time" content="2021-04-27T15:41:00.056Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f0c992f3f9bb49f2a57763917dccfbdc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9c5e1c7adbbc4a19b2b841edf7adc8a9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1ab02175d5894b088652384b451399d6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/08b30ba3a7f44d269fd22ca9f18d3133.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a9bb600df599475b9e87173e933523e5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4212b725f4784b77adbb866b5cebbcc0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/42ebb4a7c1b7433d8e9901dc5aecd1b4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b1be2ba14c4b4ae3a55a8b0c0ffd52df.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c01fae061d114576afa28bebd6c31d4f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/cf96f903480647e0b06554079b3b24d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7588686fdd2e4e4ca0ab4b1c6b3fdf9d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2021-11-09T15:10:26.779Z">
+<meta property="article:modified_time" content="2021-11-09T15:10:20.276Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210427193414394.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/f0c992f3f9bb49f2a57763917dccfbdc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 
-<link rel="canonical" href="http://example.com/2021/04/27/WPICTF/">
+<link rel="canonical" href="http://example.com/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/">
 
 
 <script id="page-configurations">
@@ -59,7 +57,7 @@
   };
 </script>
 
-  <title>WPICTF2021 | Y0ng的博客</title>
+  <title>蚁剑 PHP-FPM bypass disable_function | Y0ng的博客</title>
   
 
 
@@ -212,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/27/WPICTF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -225,7 +223,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          WPICTF2021
+          蚁剑 PHP-FPM bypass disable_function
         </h1>
 
         <div class="post-meta">
@@ -236,7 +234,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-27 19:39:58 / 修改时间：23:41:00" itemprop="dateCreated datePublished" datetime="2021-04-27T19:39:58+08:00">2021-04-27</time>
+              <time title="创建时间：2021-11-09 23:10:26 / 修改时间：23:10:20" itemprop="dateCreated datePublished" datetime="2021-11-09T23:10:26+08:00">2021-11-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,36 +264,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="wpi-admin1-2-3"><a href="#wpi-admin1-2-3" class="headerlink" title="wpi-admin1-2-3"></a>wpi-admin1-2-3</h1><p>进入网址：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193414394.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+        <p>接着上回没有bypass disable_function</p>
+<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2021/08/23/%E8%B4%A6%E6%88%B7%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F/">账户交易系统 | Y0ng的博客 (yongsheng.site)</a></p>
+<p>这回发现上回那个站点开启了php-fpm，然后bypass</p>
+<p><img src="https://img-blog.csdnimg.cn/f0c992f3f9bb49f2a57763917dccfbdc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
 <a id="more"></a>
-<p>弱密码爆破：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193426290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>登录dennisb账号：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193441784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>找到登录窗口连接：</p>
-<p><img src="https://img-blog.csdnimg.cn/2021042719352965.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210427193541972.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>一看session，jwt伪造session</p>
-<p>Flaskunsign：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193555840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
-<p>想着暴力破解找到密钥，半个小时没结果果断放弃</p>
-<p>又一次被cookie坑了</p>
-<p>尝试一波SQL注入就进去了，用户名处有格式检测，在密码处万能密码直接进</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193643472.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dennisb@uupeye.edu</span><br><span class="line">admin&#39;or 1&#x3D;1--+</span><br></pre></td></tr></table></figure>
-<p>紧接着是一个JSON文件上传</p>
-<p>让上传一个配置</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193714612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>查看网页源码：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193723440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>其他开发人员注意：下面是一个帮助开发的JSON配置示例。<br>一旦开发了后端，不要忘记删除它。</p>
-<p>访问后可以看到一些数据：</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193734680.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>猜测是让我们按照这个模板，将名字成绩等替换，再上传</p>
-<p>下载后将成绩改为A</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193803683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210427193812892.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
-<p>还是不行，放弃，找到wp再来</p>
-<h1 id="Glute"><a href="#Glute" class="headerlink" title="Glute"></a>Glute</h1><p>Foremost 分离</p>
-<h1 id="suspicious-traffic"><a href="#suspicious-traffic" class="headerlink" title="suspicious-traffic"></a>suspicious-traffic</h1><p>流量分析</p>
-<blockquote>
-<p>我在可疑客户端和服务器之间获取了数据包捕获。看起来真奇怪，你能看看吗？‎</p>
-</blockquote>
-<p>直接追踪tcp流，看到 w，查找下一个流，右下角那里一直点就行了</p>
-<p><img src="https://img-blog.csdnimg.cn/20210427193915622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>先写shell</p>
+<p>验证：</p>
+<p><img src="https://img-blog.csdnimg.cn/9c5e1c7adbbc4a19b2b841edf7adc8a9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>蚁剑创建编码器：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;*</span><br><span class="line">* @param  &#123;String&#125; pwd   连接密码</span><br><span class="line">* @param  &#123;Array&#125;  data  编码器处理前的 payload 数组</span><br><span class="line">* @return &#123;Array&#125;  data  编码器处理后的 payload 数组</span><br><span class="line">*&#x2F;</span><br><span class="line">module.exports &#x3D; (pwd, data, ext&#x3D;&#123;&#125;) &#x3D;&gt; &#123;</span><br><span class="line"></span><br><span class="line">  data[pwd] &#x3D; Buffer.from(data[&#39;_&#39;]).toString(&#39;base64&#39;);</span><br><span class="line"></span><br><span class="line">  delete data[&#39;_&#39;];</span><br><span class="line"></span><br><span class="line">  return data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>连接：</p>
+<p><img src="https://img-blog.csdnimg.cn/1ab02175d5894b088652384b451399d6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>无法执行系统命令<br>利用蚁剑的插件</p>
+<p><img src="https://img-blog.csdnimg.cn/08b30ba3a7f44d269fd22ca9f18d3133.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>这里fgi的地址需要找到</p>
+<p>发现在/tmp目录下</p>
+<p><img src="https://img-blog.csdnimg.cn/a9bb600df599475b9e87173e933523e5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>直接利用，利用成功后会在shell目录下生成一个<code>.antproxy.php</code></p>
+<p><img src="https://img-blog.csdnimg.cn/4212b725f4784b77adbb866b5cebbcc0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>具体的原理：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.xlab.app/p/a63cefbc/?highlight=%E8%9A%81%E5%89%91">蚁剑 disable_functions 研究 | 明天的乌云 </a></p>
+<p>蚁剑是有一个php-fpm绕过disable的插件</p>
+<p>蚁剑的bypass插件他这里的话是通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;bin&#x2F;sh -c php -n -S 127.0.0.1:60049 -t &#x2F;var&#x2F;www&#x2F;html</span><br></pre></td></tr></table></figure>
+<p>起了一个 <code>新的PHP Server</code>，-n就是不使用php.ini，从而实现了bypass disable_functions，然后在插件的源码可以看到，从133行起的exploit()函数里面，有一个生成扩展，上传扩展，然后最主要的部分是从197行开始构造请求包攻击使用php-fpm加载扩展，关键代码如下。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">197 var payload &#x3D; &#96;$&#123;FastCgiClient()&#125;;</span><br><span class="line">198     $content&#x3D;&quot;&quot;;</span><br><span class="line">199     $client &#x3D; new Client(&#39;$&#123;fpm_host&#125;&#39;,$&#123;fpm_port&#125;);</span><br><span class="line">        ...</span><br><span class="line">211     &#39;PHP_VALUE&#39; &#x3D;&gt; &#39;extension&#x3D;$&#123;p&#125;&#39;,</span><br><span class="line">212     &#39;PHP_ADMIN_VALUE&#39; &#x3D;&gt; &#39;extension&#x3D;$&#123;p&#125;&#39;,</span><br></pre></td></tr></table></figure>
+
+<p>那么总结下来的整个攻击流程就是：<code>首先生成扩展，攻击php-fpm执行扩展，然后就会在目标机器本地开启一个新的web服务器，通过antproxy.php转发到无disable的php server上，此时就成功达成了bypass disable_function</code></p>
+<p>Shell创建副本，然后将新的shell名字改为<code>.antproxy.php</code></p>
+<p><img src="https://img-blog.csdnimg.cn/42ebb4a7c1b7433d8e9901dc5aecd1b4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>进入终端 , 准备上线提权</p>
+<p><img src="https://img-blog.csdnimg.cn/b1be2ba14c4b4ae3a55a8b0c0ffd52df.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>发现disable没有mail函数等，尝试利用上传.so镜像进行bypass<br>上传两大件</p>
+<p><img src="https://img-blog.csdnimg.cn/c01fae061d114576afa28bebd6c31d4f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>访问：</p>
+<p><img src="https://img-blog.csdnimg.cn/cf96f903480647e0b06554079b3b24d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>好吧，没看到putenv也被ban了 无法利用</p>
+<p><img src="https://img-blog.csdnimg.cn/7588686fdd2e4e4ca0ab4b1c6b3fdf9d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
 
     </div>
 
@@ -311,13 +316,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/04/26/BUUCTF(%E4%BA%8C)/" rel="prev" title="BUUCTF(二)">
-      <i class="fa fa-chevron-left"></i> BUUCTF(二)
+    <a href="/2021/11/08/%E9%99%87%E5%8E%9F%E6%88%98%E7%96%AB2021%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/" rel="prev" title="陇原战疫2021网络安全大赛">
+      <i class="fa fa-chevron-left"></i> 陇原战疫2021网络安全大赛
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/04/27/HeroCTF(web)/" rel="next" title="HeroCTF(web)">
-      HeroCTF(web) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -376,7 +378,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wpi-admin1-2-3"><span class="nav-number">1.</span> <span class="nav-text">wpi-admin1-2-3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Glute"><span class="nav-number">2.</span> <span class="nav-text">Glute</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suspicious-traffic"><span class="nav-number">3.</span> <span class="nav-text">suspicious-traffic</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
