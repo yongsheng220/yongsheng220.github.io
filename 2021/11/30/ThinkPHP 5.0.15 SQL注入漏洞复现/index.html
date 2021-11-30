@@ -20,22 +20,35 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="概述因此，在在权限管理中应该遵守： 1.使用最小权限原则对用户进行赋权;  2.使用合理（严格）的权限校验规则;  3.使用后台登录态作为条件进行权限判断,别动不动就瞎用前端传进来的条件;   越权漏洞属于逻辑漏洞，是由于权限校验的逻辑不够严谨导致的   每个应用系统其用户对应的权限是根据其业务功能划分的">
+  <meta name="description" content="# 前言在 parseData() 这个方法中出现对dec、inc 两种情况的考虑不周从而拼接导致的SQL注入（Insert方法注入）漏洞利用版本： 5.0.13&lt;&#x3D;ThinkPHP&lt;&#x3D;5.0.15 、 5.1.0&lt;&#x3D;ThinkPHP&lt;&#x3D;5.1.5 我这垃圾文笔！这个师傅写的不错 ThinkPHP5.0.15代码审计【SQL注入】 复现写入控制器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pikachu 越权-目录遍历-信息泄露">
-<meta property="og:url" content="http://example.com/2021/05/19/pikachu%20%E8%B6%8A%E6%9D%83-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/index.html">
+<meta property="og:title" content="ThinkPHP 5.0.15 SQL注入漏洞 分析">
+<meta property="og:url" content="http://example.com/2021/11/30/ThinkPHP%205.0.15%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="概述因此，在在权限管理中应该遵守： 1.使用最小权限原则对用户进行赋权;  2.使用合理（严格）的权限校验规则;  3.使用后台登录态作为条件进行权限判断,别动不动就瞎用前端传进来的条件;   越权漏洞属于逻辑漏洞，是由于权限校验的逻辑不够严谨导致的   每个应用系统其用户对应的权限是根据其业务功能划分的">
+<meta property="og:description" content="# 前言在 parseData() 这个方法中出现对dec、inc 两种情况的考虑不周从而拼接导致的SQL注入（Insert方法注入）漏洞利用版本： 5.0.13&lt;&#x3D;ThinkPHP&lt;&#x3D;5.0.15 、 5.1.0&lt;&#x3D;ThinkPHP&lt;&#x3D;5.1.5 我这垃圾文笔！这个师傅写的不错 ThinkPHP5.0.15代码审计【SQL注入】 复现写入控制器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210519200653760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20210519200936184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2021-05-19T12:43:49.171Z">
-<meta property="article:modified_time" content="2021-05-24T14:32:13.693Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5ef4889543a54cbb8645f7b03adacbd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4d77770ed75a44e6a08453cc9936d061.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a1ea3e2511ba4a93a80263019bb3ce13.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3f9e654e2a004311bb63d09bd452f5c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e9699224f1964f5cb61b127ca889bd7c.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9eaff951b6ef4ddf8557160934034d27.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f73327dbdb574fd9afc986cd4f394516.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f649f13596344e2b9be68b6445b0cba3.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/50c016a8171d4b0582f02fa77e6dad45.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/189ca8c7163249499ee92a91fd2abdee.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b5370814af5849b391c574aec21773c9.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/469c1f9068fb40f59c3424d5a48f2bd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a7f97ffb85fb4725807287e63528b1b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/88d1072530664f77bacf762692be5ece.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2021-11-30T11:54:27.434Z">
+<meta property="article:modified_time" content="2021-11-30T11:54:22.694Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210519200653760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 
-<link rel="canonical" href="http://example.com/2021/05/19/pikachu%20%E8%B6%8A%E6%9D%83-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">
+<link rel="canonical" href="http://example.com/2021/11/30/ThinkPHP%205.0.15%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
 
 
 <script id="page-configurations">
@@ -48,7 +61,7 @@
   };
 </script>
 
-  <title>pikachu 越权-目录遍历-信息泄露 | Y0ng的博客</title>
+  <title>ThinkPHP 5.0.15 SQL注入漏洞 分析 | Y0ng的博客</title>
   
 
 
@@ -201,7 +214,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/19/pikachu%20%E8%B6%8A%E6%9D%83-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86-%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/30/ThinkPHP%205.0.15%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -214,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          pikachu 越权-目录遍历-信息泄露
+          ThinkPHP 5.0.15 SQL注入漏洞 分析
         </h1>
 
         <div class="post-meta">
@@ -223,23 +236,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-05-19 20:43:49" itemprop="dateCreated datePublished" datetime="2021-05-19T20:43:49+08:00">2021-05-19</time>
+              <time title="创建时间：2021-11-30 19:54:27 / 修改时间：19:54:22" itemprop="dateCreated datePublished" datetime="2021-11-30T19:54:27+08:00">2021-11-30</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-24 22:32:13" itemprop="dateModified" datetime="2021-05-24T22:32:13+08:00">2021-05-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pikachu/" itemprop="url" rel="index"><span itemprop="name">pikachu</span></a>
+                  <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
                 </span>
             </span>
 
@@ -261,32 +268,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>因此，在在权限管理中应该遵守：</p>
-<pre><code>1.使用最小权限原则对用户进行赋权;
-
-2.使用合理（严格）的权限校验规则;
-
-3.使用后台登录态作为条件进行权限判断,别动不动就瞎用前端传进来的条件;</code></pre>
-<p>  越权漏洞属于逻辑漏洞，是由于权限校验的逻辑不够严谨导致的</p>
-<p>  每个应用系统其用户对应的权限是根据其业务功能划分的</p>
+        <p>﻿# 前言<br>在 <code>parseData()</code> 这个方法中出现对<code>dec</code>、<code>inc</code> 两种情况的考虑不周从而拼接导致的SQL注入（Insert方法注入）<br>漏洞利用版本： <strong>5.0.13&lt;=ThinkPHP&lt;=5.0.15 、 5.1.0&lt;=ThinkPHP&lt;=5.1.5</strong></p>
+<p>我这垃圾文笔！这个师傅写的不错</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45669205/article/details/116401771">ThinkPHP5.0.15代码审计【SQL注入】</a></p>
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>写入控制器</p>
+<p><img src="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
 <a id="more"></a>
-<h1 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h1><p>A用户和B用户属于同一级别用户，但各自不能操作对方个人信息。A用户如果越权操作B用户个人信息的情况称为水行越权操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username&#x3D;lucy&amp;submit&#x3D;...</span><br></pre></td></tr></table></figure>
 
-<p>将username修改可以看到其他用户信息</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$link</span>=connect();</span><br><span class="line"><span class="comment">// 判断是否登录，没有登录不能访问</span></span><br><span class="line"><span class="keyword">if</span>(!check_op_login(<span class="variable">$link</span>))&#123;</span><br><span class="line">    header(<span class="string">&quot;location:op1_login.php&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$html</span>=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;submit&#x27;</span>]) &amp;&amp; <span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]!=<span class="literal">null</span>)&#123;</span><br><span class="line">    <span class="comment">//没有使用session来校验,而是使用的传进来的值，权限校验出现问题,这里应该跟登录态关系进行绑定</span></span><br><span class="line">    <span class="variable">$username</span>=escape(<span class="variable">$link</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>]);</span><br><span class="line">    <span class="variable">$query</span>=<span class="string">&quot;select * from member where username=&#x27;<span class="subst">$username</span>&#x27;&quot;</span>;</span><br><span class="line">    <span class="variable">$result</span>=execute(<span class="variable">$link</span>, <span class="variable">$query</span>);</span><br><span class="line">    <span class="keyword">if</span>(mysqli_num_rows(<span class="variable">$result</span>)==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="variable">$data</span>=mysqli_fetch_assoc(<span class="variable">$result</span>);</span><br><span class="line">        <span class="variable">$uname</span>=<span class="variable">$data</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">        <span class="variable">$sex</span>=<span class="variable">$data</span>[<span class="string">&#x27;sex&#x27;</span>];</span><br><span class="line">        <span class="variable">$phonenum</span>=<span class="variable">$data</span>[<span class="string">&#x27;phonenum&#x27;</span>];</span><br><span class="line">        <span class="variable">$add</span>=<span class="variable">$data</span>[<span class="string">&#x27;address&#x27;</span>];</span><br><span class="line">        <span class="variable">$email</span>=<span class="variable">$data</span>[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line"></span><br><span class="line">        <span class="variable">$html</span>.=&lt;&lt;&lt;A</span><br><span class="line">&lt;div id=<span class="string">&quot;per_info&quot;</span>&gt;</span><br><span class="line">   &lt;h1 class=&quot;per_title&quot;&gt;hello,&#123;$uname&#125;,你的具体信息如下：&lt;/h1&gt;</span><br><span class="line">   &lt;p class=&quot;per_name&quot;&gt;姓名:&#123;$uname&#125;&lt;/p&gt;</span><br><span class="line">   &lt;p class=&quot;per_sex&quot;&gt;性别:&#123;$sex&#125;&lt;/p&gt;</span><br><span class="line">   &lt;p class=&quot;per_phone&quot;&gt;手机:&#123;$phonenum&#125;&lt;/p&gt;    </span><br><span class="line">   &lt;p class=&quot;per_add&quot;&gt;住址:&#123;$add&#125;&lt;/p&gt; </span><br><span class="line">   &lt;p class=&quot;per_email&quot;&gt;邮箱:&#123;$email&#125;&lt;/p&gt; </span><br><span class="line">&lt;/div&gt;</span><br><span class="line">A;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/5ef4889543a54cbb8645f7b03adacbd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?a[0]&#x3D;dec&amp;a[1]&#x3D;updatexml(1,concat(0x7,user(),0x7e),1)&amp;a[2]&#x3D;1</span><br><span class="line">?a[0]&#x3D;inc&amp;a[1]&#x3D;updatexml(1,concat(0x7,user(),0x7e),1)&amp;a[2]&#x3D;1</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h1 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h1><p>A用户权限高于B用户，B用户越权操作A用户的权限的情况称为垂直越权</p>
-<p>pikachu用户只有查看权限</p>
-<p><img src="https://img-blog.csdnimg.cn/20210519200653760.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
-<p>登录admin看到有一个添加用户功能<br><img src="https://img-blog.csdnimg.cn/20210519200936184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70"></p>
-<p>登录普通用户，直接访问添加用户的url,即可添加用户</p>
-<hr>
-<h1 id="目录遍历"><a href="#目录遍历" class="headerlink" title="目录遍历"></a>目录遍历</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.189.130&#x2F;pikachu&#x2F;vul&#x2F;dir&#x2F;dir_list.php?title&#x3D;..&#x2F;dir.php</span><br></pre></td></tr></table></figure>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>a这个参数要接收数组形式！所以我们写成了<code>get(&#39;a/a&#39;)</code>，注意后面的 <code>/a</code> 就是要求 <code>传入数组形式</code>。数组形式是后面利用的<code>前提</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/4d77770ed75a44e6a08453cc9936d061.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>跟进insert函数 第一个参数要求数组形式</p>
+<p><img src="https://img-blog.csdnimg.cn/a1ea3e2511ba4a93a80263019bb3ce13.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>跟进 <code>parseExpress()</code> 函数发现 就是获取一下数据库中的表等其他操作</p>
+<p><img src="https://img-blog.csdnimg.cn/3f9e654e2a004311bb63d09bd452f5c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>然后 <code>$data=array_merge($options[&#39;data&#39;], $data);</code> 将我们传入的数组与 <code>$options中的data(空数组)</code> 进行合并，放入到$data</p>
+<p><img src="https://img-blog.csdnimg.cn/e9699224f1964f5cb61b127ca889bd7c.png#pic_center"></p>
+<p>接下来生成sql语句 : <code>$sql = $this-&gt;builder-&gt;insert($data, $options, $replace);</code></p>
+<p>跟进 <code>insert()</code> 函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">abstract class Builder</span><br><span class="line">thinkphp&#x2F;library&#x2F;think&#x2F;db&#x2F;Builder.php</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h1 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h1><p>网页源码</p>
+<p><img src="https://img-blog.csdnimg.cn/9eaff951b6ef4ddf8557160934034d27.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>跟进 <code>parseData()</code></p>
+<p><img src="https://img-blog.csdnimg.cn/f73327dbdb574fd9afc986cd4f394516.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>getFieldsBind()就是获取一下字段名然后返回parseData()</p>
+<p><img src="https://img-blog.csdnimg.cn/f649f13596344e2b9be68b6445b0cba3.png#pic_center"></p>
+<p>问题出现在这里</p>
+<p><img src="https://img-blog.csdnimg.cn/50c016a8171d4b0582f02fa77e6dad45.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>因为$val是个数组所以进入这一分支</p>
+<p>不管是<code>dec</code>还是<code>inc</code> 都将 <code>$val[1]拼接成语句然后存到$result[$item]</code></p>
+<p><img src="https://img-blog.csdnimg.cn/189ca8c7163249499ee92a91fd2abdee.png#pic_center"></p>
+<p>将$result返回到insert()</p>
+<p><img src="https://img-blog.csdnimg.cn/b5370814af5849b391c574aec21773c9.png#pic_center"></p>
+<p>将<code>键等于 $fields</code> 将<code>值等于 $values</code></p>
+<p>接着进行替换</p>
+<p><img src="https://img-blog.csdnimg.cn/469c1f9068fb40f59c3424d5a48f2bd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>返回 <code>$sql=INSERT INTO </code>users<code> (</code>username<code>) VALUES (updatexml(1,concat(0x7,user(),0x7e),1)-1)</code></p>
+<p>执行sql语句</p>
+<p><img src="https://img-blog.csdnimg.cn/a7f97ffb85fb4725807287e63528b1b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h1><p><img src="https://img-blog.csdnimg.cn/88d1072530664f77bacf762692be5ece.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
 
     </div>
 
@@ -302,13 +325,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/05/19/pikachu%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-xxe-url%E9%87%8D%E5%AE%9A%E5%90%91-ssrf-/" rel="prev" title="pikachu 反序列化-xxe-url重定向-ssrf">
-      <i class="fa fa-chevron-left"></i> pikachu 反序列化-xxe-url重定向-ssrf
+    <a href="/2021/11/29/%E5%AE%89%E6%B4%B5%E6%9D%AF/" rel="prev" title="安洵杯">
+      <i class="fa fa-chevron-left"></i> 安洵杯
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/19/pikachu%20%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB-%E4%B8%8A%E4%BC%A0-%E4%B8%8B%E8%BD%BD/" rel="next" title="pikachu 文件包含-上传-下载">
-      pikachu 文件包含-上传-下载 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -367,7 +387,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B0%B4%E5%B9%B3%E8%B6%8A%E6%9D%83"><span class="nav-number">2.</span> <span class="nav-text">水平越权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E8%B6%8A%E6%9D%83"><span class="nav-number">3.</span> <span class="nav-text">垂直越权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86"><span class="nav-number">4.</span> <span class="nav-text">目录遍历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="nav-number">5.</span> <span class="nav-text">信息泄露</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">流程图</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
