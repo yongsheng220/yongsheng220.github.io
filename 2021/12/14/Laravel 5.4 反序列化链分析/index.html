@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="# 环境准备  源码下载，版本 5.4.36 composer create-project --prefer-dist laravel&#x2F;laravel laravel5.4 &quot;5.4.*&quot; 在 app&#x2F;Http&#x2F;Controllers 添加控制器">
+  <meta name="description" content="环境准备 源码下载，版本 5.4.36 composer create-project --prefer-dist laravel&#x2F;laravel laravel5.4 &quot;5.4.*&quot; 在 app&#x2F;Http&#x2F;Controllers 添加控制器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Y0ng的博客">
+<meta property="og:title" content="Laravel v5.4 反序列化链">
 <meta property="og:url" content="http://example.com/2021/12/14/Laravel%205.4%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="# 环境准备  源码下载，版本 5.4.36 composer create-project --prefer-dist laravel&#x2F;laravel laravel5.4 &quot;5.4.*&quot; 在 app&#x2F;Http&#x2F;Controllers 添加控制器">
+<meta property="og:description" content="环境准备 源码下载，版本 5.4.36 composer create-project --prefer-dist laravel&#x2F;laravel laravel5.4 &quot;5.4.*&quot; 在 app&#x2F;Http&#x2F;Controllers 添加控制器">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/e0a65cb26c6d4e21b2e1d864a8cd5e61.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/d61d675aad0d4331876e227bc6ae9978.png#pic_center">
@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/11d7f167274047a2a84e9557bab5aeb2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/7886d40696c04a7bafd8ecab316a33b1.png#pic_center">
 <meta property="article:published_time" content="2021-12-14T09:04:09.350Z">
-<meta property="article:modified_time" content="2021-12-14T09:03:15.983Z">
+<meta property="article:modified_time" content="2021-12-14T09:11:13.801Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/e0a65cb26c6d4e21b2e1d864a8cd5e61.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
@@ -70,7 +70,7 @@
   };
 </script>
 
-  <title> | Y0ng的博客</title>
+  <title>Laravel v5.4 反序列化链 | Y0ng的博客</title>
   
 
 
@@ -155,7 +155,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -236,7 +236,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          Laravel v5.4 反序列化链
         </h1>
 
         <div class="post-meta">
@@ -247,7 +247,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-12-14 17:04:09 / 修改时间：17:03:15" itemprop="dateCreated datePublished" datetime="2021-12-14T17:04:09+08:00">2021-12-14</time>
+              <time title="创建时间：2021-12-14 17:04:09 / 修改时间：17:11:13" itemprop="dateCreated datePublished" datetime="2021-12-14T17:04:09+08:00">2021-12-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel%E6%BC%8F%E6%B4%9E%E5%90%88%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">Laravel漏洞合集</span></a>
+                </span>
             </span>
 
           
@@ -268,8 +277,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>﻿ # 环境准备</p>
-<p> 源码下载，版本 5.4.36</p>
+        <h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p> 源码下载，版本 5.4.36</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">composer create-project --prefer-dist laravel&#x2F;laravel laravel5.4 &quot;5.4.*&quot;</span><br></pre></td></tr></table></figure>
 <p>在 <strong>app/Http/Controllers</strong> 添加控制器</p>
 <p><img src="https://img-blog.csdnimg.cn/e0a65cb26c6d4e21b2e1d864a8cd5e61.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
@@ -443,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dispatch%E6%83%85%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">Dispatch情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80"><span class="nav-number">2.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C"><span class="nav-number">3.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#call%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-number">4.</span> <span class="nav-text">__call情况下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80-1"><span class="nav-number">5.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C-1"><span class="nav-number">6.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%89-%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">链子三(不可用)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dispatch%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">Dispatch情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80"><span class="nav-number">3.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C"><span class="nav-number">4.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#call%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-number">5.</span> <span class="nav-text">__call情况下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80-1"><span class="nav-number">6.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C-1"><span class="nav-number">7.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%89-%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">链子三(不可用)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -466,7 +474,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
