@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/11d7f167274047a2a84e9557bab5aeb2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/7886d40696c04a7bafd8ecab316a33b1.png#pic_center">
 <meta property="article:published_time" content="2021-12-14T09:04:09.350Z">
-<meta property="article:modified_time" content="2021-12-14T09:11:13.801Z">
+<meta property="article:modified_time" content="2021-12-16T06:34:09.817Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/e0a65cb26c6d4e21b2e1d864a8cd5e61.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
@@ -245,10 +245,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-14 17:04:09 / 修改时间：17:11:13" itemprop="dateCreated datePublished" datetime="2021-12-14T17:04:09+08:00">2021-12-14</time>
+              <time title="创建时间：2021-12-14 17:04:09" itemprop="dateCreated datePublished" datetime="2021-12-14T17:04:09+08:00">2021-12-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-16 14:34:09" itemprop="dateModified" datetime="2021-12-16T14:34:09+08:00">2021-12-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -374,6 +380,8 @@
 <p>但是这里少了个重要的点</p>
 <p><img src="https://img-blog.csdnimg.cn/7886d40696c04a7bafd8ecab316a33b1.png#pic_center"></p>
 <p>重置为空，导致这条链子不能利用</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9206">laravel-5.4-序列化导致rce</a></p>
+<p>[Laravel反序列化漏洞学习及再挖掘](<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/258264">Laravel反序列化漏洞学习及再挖掘 - 安全客，安全资讯平台 (anquanke.com)</a>)</p>
 
     </div>
 
@@ -451,7 +459,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dispatch%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">Dispatch情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80"><span class="nav-number">3.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C"><span class="nav-number">4.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#call%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-number">5.</span> <span class="nav-text">__call情况下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80-1"><span class="nav-number">6.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C-1"><span class="nav-number">7.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%89-%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">链子三(不可用)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dispatch%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">Dispatch情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80"><span class="nav-number">3.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C"><span class="nav-number">4.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#call%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-number">5.</span> <span class="nav-text">__call情况下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%80-1"><span class="nav-number">6.</span> <span class="nav-text">链子一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%BA%8C-1"><span class="nav-number">7.</span> <span class="nav-text">链子二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E5%AD%90%E4%B8%89-%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">链子三(不可用)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
