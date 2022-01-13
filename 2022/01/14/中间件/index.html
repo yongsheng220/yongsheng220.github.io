@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="IISIIS 6.0 后缀解析 &#x2F;xx.asp;.jpg  服务器默认不解析 ; 号及其后面的内容，相当于截断 目录解析 &#x2F;xx.asp&#x2F;xx.jpg (xx.asp目录下任意解析) 默认解析 xx.asa xx.cer xx.cdx PROPFIND 栈溢出漏洞 RCE CVE-2017-7269  IIS 7.0-7.5 &#x2F; Nginx &lt;&#x3D; 0.8.37在Fast-CGI开启状态下">
+  <meta name="description" content="IISIIS 6.0 后缀解析 &#x2F;xx.asp;.jpg  服务器默认不解析 ; 号及其后面的内容，相当于截断 目录解析 &#x2F;xx.asp&#x2F;xx.jpg (xx.asp目录下任意解析) 默认解析 xx.asa xx.cer xx.cdx PROPFIND 栈溢出漏洞 RCE CVE-2017-7269">
 <meta property="og:type" content="article">
 <meta property="og:title" content="中间件文件解析漏洞">
 <meta property="og:url" content="http://example.com/2022/01/14/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="IISIIS 6.0 后缀解析 &#x2F;xx.asp;.jpg  服务器默认不解析 ; 号及其后面的内容，相当于截断 目录解析 &#x2F;xx.asp&#x2F;xx.jpg (xx.asp目录下任意解析) 默认解析 xx.asa xx.cer xx.cdx PROPFIND 栈溢出漏洞 RCE CVE-2017-7269  IIS 7.0-7.5 &#x2F; Nginx &lt;&#x3D; 0.8.37在Fast-CGI开启状态下">
+<meta property="og:description" content="IISIIS 6.0 后缀解析 &#x2F;xx.asp;.jpg  服务器默认不解析 ; 号及其后面的内容，相当于截断 目录解析 &#x2F;xx.asp&#x2F;xx.jpg (xx.asp目录下任意解析) 默认解析 xx.asa xx.cer xx.cdx PROPFIND 栈溢出漏洞 RCE CVE-2017-7269">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-13T17:25:52.259Z">
-<meta property="article:modified_time" content="2022-01-13T17:25:47.819Z">
+<meta property="article:modified_time" content="2022-01-13T17:39:47.744Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 
@@ -222,7 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-01-14 01:25:52 / 修改时间：01:25:47" itemprop="dateCreated datePublished" datetime="2022-01-14T01:25:52+08:00">2022-01-14</time>
+              <time title="创建时间：2022-01-14 01:25:52 / 修改时间：01:39:47" itemprop="dateCreated datePublished" datetime="2022-01-14T01:25:52+08:00">2022-01-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,15 +252,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
-
-<h1 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a>IIS</h1><h2 id="IIS-6-0"><a href="#IIS-6-0" class="headerlink" title="IIS 6.0"></a>IIS 6.0</h2><ul>
+        <h1 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a>IIS</h1><h2 id="IIS-6-0"><a href="#IIS-6-0" class="headerlink" title="IIS 6.0"></a>IIS 6.0</h2><ul>
 <li>后缀解析 <code>/xx.asp;.jpg</code>  服务器默认不解析 <code>;</code> 号及其后面的内容，相当于截断</li>
 <li>目录解析 <code>/xx.asp/xx.jpg</code> (xx.asp目录下任意解析)</li>
 <li>默认解析 <code>xx.asa</code> <code>xx.cer</code> <code>xx.cdx</code></li>
 <li>PROPFIND 栈溢出漏洞</li>
 <li>RCE CVE-2017-7269</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="IIS-7-0-7-5-Nginx-lt-0-8-37"><a href="#IIS-7-0-7-5-Nginx-lt-0-8-37" class="headerlink" title="IIS 7.0-7.5 / Nginx &lt;= 0.8.37"></a>IIS 7.0-7.5 / Nginx &lt;= 0.8.37</h2><p>在Fast-CGI开启状态下，在文件路径后加上 <code>/xx.php</code> ，即 <code>xx.jpg/xx.php</code> 会被解析为php文件。</p>
 <h2 id="PUT漏洞"><a href="#PUT漏洞" class="headerlink" title="PUT漏洞"></a>PUT漏洞</h2><ul>
 <li>开启WebDAV</li>
