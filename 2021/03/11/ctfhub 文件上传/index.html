@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2021031123034882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210311230513940.png#pic_center">
 <meta property="article:published_time" content="2021-03-11T15:10:18.518Z">
-<meta property="article:modified_time" content="2021-03-11T15:10:15.273Z">
+<meta property="article:modified_time" content="2022-01-13T17:22:03.445Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210311225714341.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -227,17 +227,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-03-11 23:10:18 / 修改时间：23:10:15" itemprop="dateCreated datePublished" datetime="2021-03-11T23:10:18+08:00">2021-03-11</time>
+              <time title="创建时间：2021-03-11 23:10:18" itemprop="dateCreated datePublished" datetime="2021-03-11T23:10:18+08:00">2021-03-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-14 01:22:03" itemprop="dateModified" datetime="2022-01-14T01:22:03+08:00">2022-01-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTFHub/" itemprop="url" rel="index"><span itemprop="name">CTFHub</span></a>
+                  <a href="/categories/ctf%E9%A2%98%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">ctf题目</span></a>
                 </span>
             </span>
 
@@ -270,10 +276,10 @@
 <hr>
 <h2 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h2><p>有两个版本</p>
 <p>一、</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application&#x2F;x-httpd-php .jpg  此题失败</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AddType application&#x2F;x-httpd-php .jpg  此题失败</span><br></pre></td></tr></table></figure>
 
 <p>二、</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;(任意后缀)&quot;&gt;</span><br><span class="line">setHandler application&#x2F;x-httpd-php</span><br><span class="line">&lt;&#x2F;FilesMatch&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;FilesMatch &quot;(任意后缀)&quot;&gt;</span><br><span class="line">setHandler application&#x2F;x-httpd-php</span><br><span class="line">&lt;&#x2F;FilesMatch&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>再上传一句话文件</p>
 <p>蚁剑即可</p>
 <hr>
@@ -287,7 +293,7 @@
 <h2 id="00截断"><a href="#00截断" class="headerlink" title="00截断"></a>00截断</h2><p>%00截断上传漏洞 php 版本&lt;5.3.4  文件上传绕过之00截断：</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44840696/article/details/90581104">详细原理及其运用</a></p>
 <p>打开得到：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!empty(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$name</span> = basename(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">    <span class="variable">$info</span> = pathinfo(<span class="variable">$name</span>);</span><br><span class="line">    <span class="variable">$ext</span> = <span class="variable">$info</span>[<span class="string">&#x27;extension&#x27;</span>];</span><br><span class="line">    <span class="variable">$whitelist</span> = array(<span class="string">&quot;jpg&quot;</span>, <span class="string">&quot;png&quot;</span>, <span class="string">&quot;gif&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (in_array(<span class="variable">$ext</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">        <span class="variable">$des</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;road&#x27;</span>] . <span class="string">&quot;/&quot;</span> . rand(10, 99) . date(<span class="string">&quot;YmdHis&quot;</span>) . <span class="string">&quot;.&quot;</span> . <span class="variable">$ext</span>;</span><br><span class="line">        <span class="keyword">if</span> (move_uploaded_file(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>], <span class="variable">$des</span>)) &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;&lt;script&gt;alert(&#x27;上传成功&#x27;)&lt;/script&gt;&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;&lt;script&gt;alert(&#x27;上传失败&#x27;)&lt;/script&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;文件类型不匹配&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!empty(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$name</span> = basename(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">    <span class="variable">$info</span> = pathinfo(<span class="variable">$name</span>);</span><br><span class="line">    <span class="variable">$ext</span> = <span class="variable">$info</span>[<span class="string">&#x27;extension&#x27;</span>];</span><br><span class="line">    <span class="variable">$whitelist</span> = array(<span class="string">&quot;jpg&quot;</span>, <span class="string">&quot;png&quot;</span>, <span class="string">&quot;gif&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (in_array(<span class="variable">$ext</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">        <span class="variable">$des</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;road&#x27;</span>] . <span class="string">&quot;/&quot;</span> . rand(10, 99) . date(<span class="string">&quot;YmdHis&quot;</span>) . <span class="string">&quot;.&quot;</span> . <span class="variable">$ext</span>;</span><br><span class="line">        <span class="keyword">if</span> (move_uploaded_file(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>], <span class="variable">$des</span>)) &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;&lt;script&gt;alert(&#x27;上传成功&#x27;)&lt;/script&gt;&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;&lt;script&gt;alert(&#x27;上传失败&#x27;)&lt;/script&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;文件类型不匹配&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/2021031123030371.png#pic_center"></p>
 <p>我们上传的文件经过 <code>des</code> 的变化 被储存 且更改文件名</p>
@@ -297,7 +303,7 @@
 <p><img src="https://img-blog.csdnimg.cn/2021031123034882.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h2 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h2><p>得到：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line"><span class="variable">$name</span> = basename(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line"><span class="variable">$blacklist</span> = array(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;php5&quot;</span>, <span class="string">&quot;php4&quot;</span>, <span class="string">&quot;php3&quot;</span>, <span class="string">&quot;phtml&quot;</span>, <span class="string">&quot;pht&quot;</span>, <span class="string">&quot;jsp&quot;</span>, <span class="string">&quot;jspa&quot;</span>, <span class="string">&quot;jspx&quot;</span>, <span class="string">&quot;jsw&quot;</span>, <span class="string">&quot;jsv&quot;</span>, <span class="string">&quot;jspf&quot;</span>, <span class="string">&quot;jtml&quot;</span>, <span class="string">&quot;asp&quot;</span>, <span class="string">&quot;aspx&quot;</span>, <span class="string">&quot;asa&quot;</span>, <span class="string">&quot;asax&quot;</span>, <span class="string">&quot;ascx&quot;</span>, <span class="string">&quot;ashx&quot;</span>, <span class="string">&quot;asmx&quot;</span>, <span class="string">&quot;cer&quot;</span>, <span class="string">&quot;swf&quot;</span>, <span class="string">&quot;htaccess&quot;</span>, <span class="string">&quot;ini&quot;</span>);</span><br><span class="line"><span class="variable">$name</span> = str_ireplace(<span class="variable">$blacklist</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$name</span>);</span><br><span class="line">--&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line"><span class="variable">$name</span> = basename(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line"><span class="variable">$blacklist</span> = array(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;php5&quot;</span>, <span class="string">&quot;php4&quot;</span>, <span class="string">&quot;php3&quot;</span>, <span class="string">&quot;phtml&quot;</span>, <span class="string">&quot;pht&quot;</span>, <span class="string">&quot;jsp&quot;</span>, <span class="string">&quot;jspa&quot;</span>, <span class="string">&quot;jspx&quot;</span>, <span class="string">&quot;jsw&quot;</span>, <span class="string">&quot;jsv&quot;</span>, <span class="string">&quot;jspf&quot;</span>, <span class="string">&quot;jtml&quot;</span>, <span class="string">&quot;asp&quot;</span>, <span class="string">&quot;aspx&quot;</span>, <span class="string">&quot;asa&quot;</span>, <span class="string">&quot;asax&quot;</span>, <span class="string">&quot;ascx&quot;</span>, <span class="string">&quot;ashx&quot;</span>, <span class="string">&quot;asmx&quot;</span>, <span class="string">&quot;cer&quot;</span>, <span class="string">&quot;swf&quot;</span>, <span class="string">&quot;htaccess&quot;</span>, <span class="string">&quot;ini&quot;</span>);</span><br><span class="line"><span class="variable">$name</span> = str_ireplace(<span class="variable">$blacklist</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$name</span>);</span><br><span class="line">--&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>会将黑名单替换为空</p>
 <p><img src="https://img-blog.csdnimg.cn/20210311230513940.png#pic_center"></p>
 <p>双写后缀  <code>22.pphphp</code>  蚁剑</p>
@@ -404,7 +410,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

