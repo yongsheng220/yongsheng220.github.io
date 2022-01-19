@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="简介如果用servlet来向用户展示html页面，那么要用多个out.println打印html语句,非常不便，而且写个后端程序还得考虑html的打印，所以要将前后端分离，最后让后台产生的数据直接镶嵌到html多方便，这就是jsp的作用，但是说到底jsp还是一个servlet，比如创建一个index.jsp写入代码后，还是转为index_jsp.java 还是一个servlet，只不过自动添加了o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSP">
+<meta property="og:url" content="http://example.com/2022/01/20/JSP(%E4%B8%80)/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="简介如果用servlet来向用户展示html页面，那么要用多个out.println打印html语句,非常不便，而且写个后端程序还得考虑html的打印，所以要将前后端分离，最后让后台产生的数据直接镶嵌到html多方便，这就是jsp的作用，但是说到底jsp还是一个servlet，比如创建一个index.jsp写入代码后，还是转为index_jsp.java 还是一个servlet，只不过自动添加了o">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-19T16:37:27.892Z">
+<meta property="article:modified_time" content="2022-01-19T16:38:57.463Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/01/20/JSP(%E4%B8%80)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JSP | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">132</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/JSP(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JSP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-20 00:37:27 / 修改时间：00:38:57" itemprop="dateCreated datePublished" datetime="2022-01-20T00:37:27+08:00">2022-01-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java-web/" itemprop="url" rel="index"><span itemprop="name">java web</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>如果用servlet来向用户展示html页面，那么要用多个out.println打印html语句,非常不便，而且写个后端程序还得考虑html的打印，所以要将前后端分离，最后让后台产生的数据直接镶嵌到html多方便，这就是jsp的作用，但是说到底jsp还是一个servlet，比如创建一个index.jsp写入代码后，还是转为index_jsp.java 还是一个servlet，只不过自动添加了out.println(html)语句,然后调用servlet引擎，执行servlet类，产生html格式输出传递给容器，容器再传给客户端</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42343690">浅谈JSP - 知乎 (zhihu.com)</a></p>
+<a id="more"></a>
+
+<h1 id="JSP基础语法"><a href="#JSP基础语法" class="headerlink" title="JSP基础语法"></a>JSP基础语法</h1><p>语法格式</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;% 代码片段 %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;jsp:scriptlet&gt;</span><br><span class="line">   代码片段</span><br><span class="line">&lt;/jsp:scriptlet&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSP声明"><a href="#JSP声明" class="headerlink" title="JSP声明"></a>JSP声明</h2><p>一个声明语句可以声明 <strong>多个</strong> <strong>变量</strong> <strong>方法</strong> 以下声明格式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;%! declaration; [ declaration; ]+ ... %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;jsp:declaration&gt;</span><br><span class="line">   代码片段</span><br><span class="line">&lt;/jsp:declaration&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%!</span><br><span class="line">    int a&#x3D;2;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    out.println(&quot;a &#x3D; &quot;+ a);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JSP表达式"><a href="#JSP表达式" class="headerlink" title="JSP表达式"></a>JSP表达式</h2><p>一个JSP表达式中包含的脚本语言表达式，先被转化成String，然后插入到表达式出现的地方</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;%= 表达式 %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;jsp:expression&gt;</span><br><span class="line">   表达式</span><br><span class="line">&lt;&#x2F;jsp:expression&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%&#x3D;</span><br><span class="line">    (new java.util.Date()).toString()</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%-- 该部分注释在网页中不会被显示--%&gt; </span><br></pre></td></tr></table></figure>
+
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>JSP指令用来设置与整个JSP页面相关的属性。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ directive attribute&#x3D;&quot;value&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left"><strong>指令</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&lt;%@ page … %&gt;</td>
+<td align="left">定义页面的依赖属性，比如脚本语言、error页面、缓存需求等等</td>
+</tr>
+<tr>
+<td align="left">&lt;%@ include … %&gt;</td>
+<td align="left">包含其他文件</td>
+</tr>
+<tr>
+<td align="left">&lt;%@ taglib … %&gt;</td>
+<td align="left">引入标签库的定义，可以是自定义标签</td>
+</tr>
+</tbody></table>
+<h2 id="隐含对象"><a href="#隐含对象" class="headerlink" title="隐含对象"></a>隐含对象</h2><p>在jsp页面中默认对象</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>对象</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">request</td>
+<td align="left"><strong>HttpServletRequest</strong>类的实例</td>
+</tr>
+<tr>
+<td align="left">response</td>
+<td align="left"><strong>HttpServletResponse</strong>类的实例</td>
+</tr>
+<tr>
+<td align="left">out</td>
+<td align="left"><strong>PrintWriter</strong>类的实例，用于把结果输出至网页上</td>
+</tr>
+<tr>
+<td align="left">session</td>
+<td align="left"><strong>HttpSession</strong>类的实例</td>
+</tr>
+<tr>
+<td align="left">application</td>
+<td align="left"><strong>ServletContext</strong>类的实例，与应用上下文有关</td>
+</tr>
+<tr>
+<td align="left">config</td>
+<td align="left"><strong>ServletConfig</strong>类的实例</td>
+</tr>
+<tr>
+<td align="left">pageContext</td>
+<td align="left"><strong>PageContext</strong>类的实例，提供对JSP页面所有对象以及命名空间的访问</td>
+</tr>
+<tr>
+<td align="left">page</td>
+<td align="left">类似于Java类中的this关键字</td>
+</tr>
+<tr>
+<td align="left">exception</td>
+<td align="left"><strong>exception</strong> 类的对象，代表发生错误的 JSP 页面中对应的异常对象</td>
+</tr>
+</tbody></table>
+<h1 id="表单处理"><a href="#表单处理" class="headerlink" title="表单处理"></a>表单处理</h1><ul>
+<li><strong>getParameter():</strong> 使用 request.getParameter() 方法来获取表单参数的值。</li>
+<li><strong>getParameterValues():</strong> 获得如checkbox类（名字相同，但值有多个）的数据。 接收数组变量 ，如checkbox类型</li>
+<li>**getParameterNames():**该方法可以取得所有变量的名称，该方法返回一个 Enumeration。</li>
+<li>**getInputStream():**调用此方法来读取来自客户端的二进制数据流。</li>
+</ul>
+<p>处理接受表单中文乱码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">&#x2F;&#x2F; 解决中文乱码的问题</span><br><span class="line">String name &#x3D; new String((request.getParameter(&quot;name&quot;)).getBytes(&quot;ISO-8859-1&quot;),&quot;UTF-8&quot;);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="读取所有表单参数"><a href="#读取所有表单参数" class="headerlink" title="读取所有表单参数"></a>读取所有表单参数</h2><p> <strong>getParameterNames()</strong> 返回一个枚举(Enumeration) 用 hasMoreElements() 方法来确定是否还有元素，以及使用nextElement()方法来获得每个参数的名称</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">   Enumeration paramNames &#x3D; request.getParameterNames();</span><br><span class="line"></span><br><span class="line">   while(paramNames.hasMoreElements()) &#123;</span><br><span class="line">      String paramName &#x3D; (String)paramNames.nextElement();</span><br><span class="line">      out.print(&quot;&lt;tr&gt;&lt;td&gt;&quot; + paramName + &quot;&lt;&#x2F;td&gt;\n&quot;);</span><br><span class="line">      String paramValue &#x3D; request.getParameter(paramName);</span><br><span class="line">      out.println(&quot;&lt;td&gt; &quot; + paramValue + &quot;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;\n&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><p>直接编servlet的filter，web.xml拦截jsp文件就行了</p>
+<h1 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h1><p>设置cookie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">Cookie name &#x3D; new Cookie(&quot;name&quot;,str);</span><br><span class="line">name.setMaxAge(60*60*24);</span><br><span class="line">response.addCookie(name);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>读取cookie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;% </span><br><span class="line">   Cookie[] cookies &#x3D; request.getCookies();</span><br><span class="line">   if( cookies !&#x3D; null )&#123;</span><br><span class="line">      out.println(&quot;&lt;h2&gt; 查找 Cookie 名与值&lt;&#x2F;h2&gt;&quot;);</span><br><span class="line">      for (int i &#x3D; 0; i &lt; cookies.length; i++)&#123;</span><br><span class="line">         cookie &#x3D; cookies[i];</span><br><span class="line">         out.print(&quot;参数名 : &quot; + cookie.getName());</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="session"><a href="#session" class="headerlink" title="session"></a>session</h1><p>相关方法</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/jsp/jsp-session.html">JSP Session | 菜鸟教程 (runoob.com)</a></p>
+<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><p>upload.jsp</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span></span><br><span class="line">    <span class="string">&quot;http://www.w3.org/TR/html4/loose.dtd&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;文件上传实例 - 菜鸟教程&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;文件上传实例 - 菜鸟教程&lt;/h1&gt;</span><br><span class="line">&lt;form method=<span class="string">&quot;post&quot;</span> action=<span class="string">&quot;/TomcatTest/UploadServlet&quot;</span> enctype=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span><br><span class="line">    选择一个文件:</span><br><span class="line">    &lt;input type=<span class="string">&quot;file&quot;</span> name=<span class="string">&quot;uploadFile&quot;</span> /&gt;</span><br><span class="line">    &lt;br/&gt;&lt;br/&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;上传&quot;</span> /&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>uploadservlet</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import java.io.File;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; @WebServlet(&quot;&#x2F;UploadServlet&quot;)</span><br><span class="line">public class UploadServlet extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID &#x3D; 1L;</span><br><span class="line">     </span><br><span class="line">    &#x2F;&#x2F; 上传文件存储目录</span><br><span class="line">    private static final String UPLOAD_DIRECTORY &#x3D; &quot;upload&quot;;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; 上传配置</span><br><span class="line">    private static final int MEMORY_THRESHOLD   &#x3D; 1024 * 1024 * 3;  &#x2F;&#x2F; 3MB</span><br><span class="line">    private static final int MAX_FILE_SIZE      &#x3D; 1024 * 1024 * 40; &#x2F;&#x2F; 40MB</span><br><span class="line">    private static final int MAX_REQUEST_SIZE   &#x3D; 1024 * 1024 * 50; &#x2F;&#x2F; 50MB</span><br><span class="line"> </span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 上传数据及保存文件</span><br><span class="line">     *&#x2F;</span><br><span class="line">    protected void doPost(HttpServletRequest request,</span><br><span class="line">        HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line">        &#x2F;&#x2F; 检测是否为多媒体上传</span><br><span class="line">        if (!ServletFileUpload.isMultipartContent(request)) &#123;</span><br><span class="line">            &#x2F;&#x2F; 如果不是则停止</span><br><span class="line">            PrintWriter writer &#x3D; response.getWriter();</span><br><span class="line">            writer.println(&quot;Error: 表单必须包含 enctype&#x3D;multipart&#x2F;form-data&quot;);</span><br><span class="line">            writer.flush();</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F; 配置上传参数</span><br><span class="line">        DiskFileItemFactory factory &#x3D; new DiskFileItemFactory();</span><br><span class="line">        &#x2F;&#x2F; 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中</span><br><span class="line">        factory.setSizeThreshold(MEMORY_THRESHOLD);</span><br><span class="line">        &#x2F;&#x2F; 设置临时存储目录</span><br><span class="line">        factory.setRepository(new File(System.getProperty(&quot;java.io.tmpdir&quot;)));</span><br><span class="line"> </span><br><span class="line">        ServletFileUpload upload &#x3D; new ServletFileUpload(factory);</span><br><span class="line">         </span><br><span class="line">        &#x2F;&#x2F; 设置最大文件上传值</span><br><span class="line">        upload.setFileSizeMax(MAX_FILE_SIZE);</span><br><span class="line">         </span><br><span class="line">        &#x2F;&#x2F; 设置最大请求值 (包含文件和表单数据)</span><br><span class="line">        upload.setSizeMax(MAX_REQUEST_SIZE);</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F; 中文处理</span><br><span class="line">        upload.setHeaderEncoding(&quot;UTF-8&quot;); </span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 构造临时路径来存储上传的文件</span><br><span class="line">        &#x2F;&#x2F; 这个路径相对当前应用的目录</span><br><span class="line">        String uploadPath &#x3D; getServletContext().getRealPath(&quot;&#x2F;&quot;) + File.separator + UPLOAD_DIRECTORY;</span><br><span class="line">       </span><br><span class="line">        &#x2F;&#x2F; 如果目录不存在则创建</span><br><span class="line">        File uploadDir &#x3D; new File(uploadPath);</span><br><span class="line">        if (!uploadDir.exists()) &#123;</span><br><span class="line">            uploadDir.mkdir();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        try &#123;</span><br><span class="line">            &#x2F;&#x2F; 解析请求的内容提取文件数据</span><br><span class="line">            @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">            List&lt;FileItem&gt; formItems &#x3D; upload.parseRequest(request);</span><br><span class="line"> </span><br><span class="line">            if (formItems !&#x3D; null &amp;&amp; formItems.size() &gt; 0) &#123;</span><br><span class="line">                &#x2F;&#x2F; 迭代表单数据</span><br><span class="line">                for (FileItem item : formItems) &#123;</span><br><span class="line">                    &#x2F;&#x2F; 处理不在表单中的字段</span><br><span class="line">                    if (!item.isFormField()) &#123;</span><br><span class="line">                        String fileName &#x3D; new File(item.getName()).getName();</span><br><span class="line">                        String filePath &#x3D; uploadPath + File.separator + fileName;</span><br><span class="line">                        File storeFile &#x3D; new File(filePath);</span><br><span class="line">                        &#x2F;&#x2F; 在控制台输出文件的上传路径</span><br><span class="line">                        System.out.println(filePath);</span><br><span class="line">                        &#x2F;&#x2F; 保存文件到硬盘</span><br><span class="line">                        item.write(storeFile);</span><br><span class="line">                        request.setAttribute(&quot;message&quot;,</span><br><span class="line">                            &quot;文件上传成功!&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception ex) &#123;</span><br><span class="line">            request.setAttribute(&quot;message&quot;,</span><br><span class="line">                    &quot;错误信息: &quot; + ex.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 跳转到 message.jsp</span><br><span class="line">        getServletContext().getRequestDispatcher(&quot;&#x2F;message.jsp&quot;).forward(</span><br><span class="line">                request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="页面重定向"><a href="#页面重定向" class="headerlink" title="页面重定向"></a>页面重定向</h1><p>使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public void response.sendRedirect(String location) throws IOException </span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">String site &#x3D; &quot;http:&#x2F;&#x2F;www.runoob.com&quot; ;</span><br><span class="line">response.setStatus(response.SC_MOVED_TEMPORARILY);</span><br><span class="line">response.setHeader(&quot;Location&quot;, site); </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    response.sendRedirect(&quot;ip.jsp&quot;);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="网页自动刷新"><a href="#网页自动刷新" class="headerlink" title="网页自动刷新"></a>网页自动刷新</h1><p>设置 <code>返回包Refresh头部信息</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    response.setIntHeader(&quot;Refresh&quot;, 5);</span><br><span class="line">    Date date &#x3D; new Date();</span><br><span class="line">    out.print(date);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="JSTL"><a href="#JSTL" class="headerlink" title="JSTL"></a>JSTL</h1><p>JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。</p>
+<p>JSTL支持通用的、结构化的任务，比如迭代，条件判断，XML文档操作，国际化标签，SQL标签。 除了这些，它还提供了一个框架来使用集成JSTL的自定义标签。</p>
+<p>根据JSTL标签所提供的功能，可以将其分为5个类别。</p>
+<ul>
+<li><strong>核心标签</strong></li>
+<li><strong>格式化标签</strong></li>
+<li><strong>SQL 标签</strong></li>
+<li><strong>XML 标签</strong></li>
+<li><strong>JSTL 函数</strong></li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>Apache Tomcat安装JSTL 库步骤如下：</p>
+<p>从Apache的标准标签库中下载的二进包(jakarta-taglibs-standard-current.zip)。</p>
+<ul>
+<li>官方下载地址：<a target="_blank" rel="noopener" href="http://archive.apache.org/dist/jakarta/taglibs/standard/binaries/">http://archive.apache.org/dist/jakarta/taglibs/standard/binaries/</a></li>
+<li>本站下载地址：<a target="_blank" rel="noopener" href="http://static.runoob.com/download/jakarta-taglibs-standard-1.1.2.tar.gz">jakarta-taglibs-standard-1.1.2.zip</a></li>
+</ul>
+<p>下载 <strong>jakarta-taglibs-standard-1.1.2.zip</strong> 包并解压，将 <strong>jakarta-taglibs-standard-1.1.2/lib/</strong> 下的两个 jar 文件：<strong>standard.jar</strong> 和 <strong>jstl.jar</strong> 文件拷贝到 <strong>/WEB-INF/lib/</strong> 下。</p>
+<p>将 tld 下的需要引入的 tld 文件复制到 WEB-INF 目录下。</p>
+<p>接下来我们在 web.xml 文件中添加以下配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app version&#x3D;&quot;2.4&quot; </span><br><span class="line">    xmlns&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&quot; </span><br><span class="line">    xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;</span><br><span class="line">    xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee </span><br><span class="line">        http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&#x2F;web-app_2_4.xsd&quot;&gt;</span><br><span class="line">    &lt;jsp-config&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;fmt&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;fmt.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;fmt-rt&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;fmt-rt.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;core&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;c.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;core-rt&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;c-rt.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;sql&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;sql.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;sql-rt&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;sql-rt.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;x&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;x.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;taglib&gt;</span><br><span class="line">    &lt;taglib-uri&gt;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;x-rt&lt;&#x2F;taglib-uri&gt;</span><br><span class="line">    &lt;taglib-location&gt;&#x2F;WEB-INF&#x2F;x-rt.tld&lt;&#x2F;taglib-location&gt;</span><br><span class="line">    &lt;&#x2F;taglib&gt;</span><br><span class="line">    &lt;&#x2F;jsp-config&gt;</span><br><span class="line">&lt;&#x2F;web-app&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="核心标签"><a href="#核心标签" class="headerlink" title="核心标签"></a>核心标签</h1><p>先引用方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ taglib prefix&#x3D;&quot;c&quot; uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;core&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&lt;c:out&gt;</td>
+<td align="left">用于在JSP中显示数据，就像&lt;%= … &gt;</td>
+</tr>
+<tr>
+<td align="left">&lt;c:set&gt;</td>
+<td align="left">用于保存数据</td>
+</tr>
+<tr>
+<td align="left">&lt;c:remove&gt;</td>
+<td align="left">用于删除数据</td>
+</tr>
+<tr>
+<td align="left">&lt;c:catch&gt;</td>
+<td align="left">用来处理产生错误的异常状况，并且将错误信息储存起来</td>
+</tr>
+<tr>
+<td align="left">&lt;c:if&gt;</td>
+<td align="left">与我们在一般程序中用的if一样</td>
+</tr>
+<tr>
+<td align="left">&lt;c:choose&gt;</td>
+<td align="left">本身只当做&lt;c:when&gt;和&lt;c:otherwise&gt;的父标签</td>
+</tr>
+<tr>
+<td align="left">&lt;c:when&gt;</td>
+<td align="left">&lt;c:choose&gt;的子标签，用来判断条件是否成立</td>
+</tr>
+<tr>
+<td align="left">&lt;c:otherwise&gt;</td>
+<td align="left">&lt;c:choose&gt;的子标签，接在&lt;c:when&gt;标签后，当&lt;c:when&gt;标签判断为false时被执行</td>
+</tr>
+<tr>
+<td align="left">&lt;c:import&gt;</td>
+<td align="left">检索一个绝对或相对 URL，然后将其内容暴露给页面</td>
+</tr>
+<tr>
+<td align="left">&lt;c:forEach&gt;</td>
+<td align="left">基础迭代标签，接受多种集合类型</td>
+</tr>
+<tr>
+<td align="left">&lt;c:forTokens&gt;</td>
+<td align="left">根据指定的分隔符来分隔内容并迭代输出</td>
+</tr>
+<tr>
+<td align="left">&lt;c:param&gt;</td>
+<td align="left">用来给包含或重定向的页面传递参数</td>
+</tr>
+<tr>
+<td align="left">&lt;c:redirect&gt;</td>
+<td align="left">重定向至一个新的URL.</td>
+</tr>
+<tr>
+<td align="left">&lt;c:url&gt;</td>
+<td align="left">使用可选的查询参数来创造一个URL</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;c:set var&#x3D;&quot;salary&quot; scope&#x3D;&quot;session&quot; value&#x3D;&quot;$&#123;2000*2&#125;&quot;&#x2F;&gt;</span><br><span class="line">&lt;p&gt;salary 变量值: &lt;c:out value&#x3D;&quot;$&#123;salary&#125;&quot;&#x2F;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;c:remove var&#x3D;&quot;salary&quot;&#x2F;&gt;</span><br><span class="line">&lt;p&gt;删除 salary 变量后的值: &lt;c:out value&#x3D;&quot;$&#123;salary&#125;&quot;&#x2F;&gt;&lt;&#x2F;p&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="格式化标签"><a href="#格式化标签" class="headerlink" title="格式化标签"></a>格式化标签</h1><p>引入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ taglib prefix&#x3D;&quot;fmt&quot; </span><br><span class="line">           uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;fmt&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>样式: <strong>&lt;fmt:formatNumber&gt;</strong></p>
+<h1 id="SQL标签"><a href="#SQL标签" class="headerlink" title="SQL标签"></a>SQL标签</h1><p>引入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ taglib prefix&#x3D;&quot;sql&quot; uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;sql&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&lt;sql:setDataSource&gt;</td>
+<td align="left">指定数据源</td>
+</tr>
+<tr>
+<td align="left">&lt;sql:query&gt;</td>
+<td align="left">运行SQL查询语句</td>
+</tr>
+<tr>
+<td align="left">&lt;sql:update&gt;</td>
+<td align="left">运行SQL更新语句</td>
+</tr>
+<tr>
+<td align="left">&lt;sql:param&gt;</td>
+<td align="left">将SQL语句中的参数设为指定值</td>
+</tr>
+<tr>
+<td align="left">&lt;sql:dateParam&gt;</td>
+<td align="left">将SQL语句中的日期参数设为指定的java.util.Date 对象值</td>
+</tr>
+<tr>
+<td align="left">&lt;sql:transaction&gt;</td>
+<td align="left">在共享数据库连接中提供嵌套的数据库行为元素，将所有语句以一个事务的形式来运行</td>
+</tr>
+</tbody></table>
+<h2 id="连接数据库与查询"><a href="#连接数据库与查询" class="headerlink" title="连接数据库与查询"></a>连接数据库与查询</h2><p>加载驱动，连接jdbc url 设置用户密码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language&#x3D;&quot;java&quot; contentType&#x3D;&quot;text&#x2F;html; charset&#x3D;UTF-8&quot;</span><br><span class="line">    pageEncoding&#x3D;&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ page import&#x3D;&quot;java.io.*,java.util.*,java.sql.*&quot;%&gt;</span><br><span class="line">&lt;%@ page import&#x3D;&quot;javax.servlet.http.*,javax.servlet.*&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;core&quot; prefix&#x3D;&quot;c&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;sql&quot; prefix&#x3D;&quot;sql&quot;%&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;JSTL sql:query Tag&lt;&#x2F;title&gt;  &#x2F;&#x2F;页面标题</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--</span><br><span class="line">JDBC 驱动名及数据库 URL </span><br><span class="line">数据库的用户名与密码，需要根据自己的设置</span><br><span class="line">useUnicode&#x3D;true&amp;characterEncoding&#x3D;utf-8 防止中文乱码</span><br><span class="line"> --&gt;</span><br><span class="line">&lt;sql:setDataSource var&#x3D;&quot;snapshot&quot; driver&#x3D;&quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">     url&#x3D;&quot;jdbc:mysql:&#x2F;&#x2F;localhost&#x2F;TEST&quot;</span><br><span class="line">     user&#x3D;&quot;root&quot;  password&#x3D;&quot;pass123&quot;&#x2F;&gt;     &#x2F;&#x2F;设置连接</span><br><span class="line"></span><br><span class="line">&lt;sql:query dataSource&#x3D;&quot;$&#123;snapshot&#125;&quot; var&#x3D;&quot;result&quot;&gt;   &#x2F;&#x2F;语句查询 存放到result</span><br><span class="line">SELECT * from Employees;</span><br><span class="line">&lt;&#x2F;sql:query&gt;</span><br><span class="line"> </span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="XML标签"><a href="#XML标签" class="headerlink" title="XML标签"></a>XML标签</h1><p>在使用xml标签前，你必须将XML 和 XPath 的相关包拷贝至你的&lt;Tomcat 安装目录&gt;\lib下:</p>
+<ul>
+<li><p>XercesImpl.jar</p>
+<p>下载地址： <a target="_blank" rel="noopener" href="http://www.apache.org/dist/xerces/j/">http://www.apache.org/dist/xerces/j/</a></p>
+</li>
+<li><p>xalan.jar</p>
+<p>下载地址： <a target="_blank" rel="noopener" href="http://xml.apache.org/xalan-j/index.html">http://xml.apache.org/xalan-j/index.html</a></p>
+</li>
+</ul>
+<p>引入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ taglib prefix&#x3D;&quot;x&quot; uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;xml&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">标签</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&lt;x:out&gt;</td>
+<td align="left">与&lt;%= … &gt;,类似，不过只用于XPath表达式</td>
+</tr>
+<tr>
+<td align="left">&lt;x:parse&gt;</td>
+<td align="left">解析 XML 数据</td>
+</tr>
+<tr>
+<td align="left">&lt;x:set&gt;</td>
+<td align="left">设置XPath表达式</td>
+</tr>
+<tr>
+<td align="left">&lt;x:if&gt;</td>
+<td align="left">判断XPath表达式，若为真，则执行本体中的内容，否则跳过本体</td>
+</tr>
+<tr>
+<td align="left">&lt;x:forEach&gt;</td>
+<td align="left">迭代XML文档中的节点</td>
+</tr>
+<tr>
+<td align="left">&lt;x:choose&gt;</td>
+<td align="left">&lt;x:when&gt;和&lt;x:otherwise&gt;的父标签</td>
+</tr>
+<tr>
+<td align="left">&lt;x:when&gt;</td>
+<td align="left">&lt;x:choose&gt;的子标签，用来进行条件判断</td>
+</tr>
+<tr>
+<td align="left">&lt;x:otherwise&gt;</td>
+<td align="left">&lt;x:choose&gt;的子标签，当&lt;x:when&gt;判断为false时被执行</td>
+</tr>
+<tr>
+<td align="left">&lt;x:transform&gt;</td>
+<td align="left">将XSL转换应用在XML文档中</td>
+</tr>
+<tr>
+<td align="left">&lt;x:param&gt;</td>
+<td align="left">与&lt;x:transform&gt;共同使用，用于设置XSL样式表</td>
+</tr>
+</tbody></table>
+<h1 id="JSTL函数"><a href="#JSTL函数" class="headerlink" title="JSTL函数"></a>JSTL函数</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ taglib prefix&#x3D;&quot;fn&quot; uri&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;jsp&#x2F;jstl&#x2F;functions&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">fn:contains()</td>
+<td align="left">测试输入的字符串是否包含指定的子串</td>
+</tr>
+<tr>
+<td align="left">fn:length()</td>
+<td align="left">返回字符串长度</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;c:set var&#x3D;&quot;theString&quot; value&#x3D;&quot;I am from runoob&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:if test&#x3D;&quot;$&#123;fn:contains(theString, &#39;runoob&#39;)&#125;&quot;&gt;</span><br><span class="line">   &lt;p&gt;找到 runoob&lt;p&gt;</span><br><span class="line">&lt;&#x2F;c:if&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="EL表达式"><a href="#EL表达式" class="headerlink" title="EL表达式"></a>EL表达式</h1><p>为了简化 JSP 页面，JSP 2.0 新增了 EL（Expression Language）表达式语言。EL 提供了更为简洁、方便的形式来访问变量和参数，不仅可以简化 JSP 页面代码，还会使开发者的逻辑变得更加清晰 。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123;EL表达式&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>${param.name}</strong> 表示获取参数 name 的值，它等同于 <code>&lt;%=request.getParameter(&#39;name&#39;) %&gt;</code>。从形式和语法上可以看出，EL 表达式简化了 JSP 原有的表达式。在实际开发中，EL 表达式也是经常使用的方式。</p>
+<p>EL 表达式定义了许多运算符，如算术运算符、比较运算符、逻辑运算符等，使用这些运算符，可以使 JSP 页面更加简洁</p>
+<p>算术:加减乘除 比较：==、 !=、&lt;、&gt;等</p>
+<h2 id="其他运算符"><a href="#其他运算符" class="headerlink" title="其他运算符"></a>其他运算符</h2><p>一、. 和 []</p>
+<p><code>.</code> 和 <code>[ ]</code>是 EL 中最常用的运算符，用来访问 JavaBean 中的属性和隐式对象的数据。一般情况下，<code>.</code>用来访问 JavaBean 属性或 Map 类型的值，<code>[ ]</code>用来访问数组或者列表的元素。</p>
+<p>二、empty</p>
+<p>empty 用来判断 EL 表达式中的对象或者变量是否为空。若为空或者 null，返回 true，否则返回 false。</p>
+<p>三、条件运算符</p>
+<p>EL 表达式中，条件运算符的语法和 Java 的完全一致，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123;条件表达式?表达式1:表达式2&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h4&gt;.运算符&lt;/h4&gt;</span><br><span class="line">    &lt;%</span><br><span class="line">        Site site = <span class="keyword">new</span> Site();</span><br><span class="line">        site.setName(<span class="string">&quot;编程帮&quot;</span>);</span><br><span class="line">        site.setUrl(<span class="string">&quot;www.biancheng.net&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;site&quot;</span>, site);</span><br><span class="line">    %&gt;</span><br><span class="line">    欢迎来到$&#123;site.name&#125;，我们的网址是：$&#123;site.url&#125;</span><br><span class="line">    &lt;h4&gt;[]运算符&lt;/h4&gt;</span><br><span class="line">    &lt;%</span><br><span class="line">        List tutorials = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        tutorials.add(<span class="string">&quot;Java&quot;</span>);</span><br><span class="line">        tutorials.add(<span class="string">&quot;Python&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;tutorials&quot;</span>, tutorials);</span><br><span class="line">        HashMap siteMap = <span class="keyword">new</span> HashMap();</span><br><span class="line">        siteMap.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;编程帮&quot;</span>);</span><br><span class="line">        siteMap.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;C语言中文网&quot;</span>);</span><br><span class="line">        session.setAttribute(<span class="string">&quot;site&quot;</span>, siteMap);</span><br><span class="line">    %&gt;</span><br><span class="line">    tutorials 中的内容：$&#123;tutorials[<span class="number">0</span>]&#125;，$&#123;tutorials[<span class="number">1</span>]&#125;</span><br><span class="line">    &lt;br&gt; siteMap 中的内容：$&#123;site.one&#125;，$&#123;site.two&#125;</span><br><span class="line">    &lt;h4&gt;empty和条件运算符&lt;/h4&gt;</span><br><span class="line">    &lt;!-- 当 cart 变量为空时，输出购物车为空，否则输出cart --&gt;</span><br><span class="line">    &lt;%</span><br><span class="line">        String cart = <span class="keyword">null</span>;</span><br><span class="line">    %&gt;</span><br><span class="line">    $&#123;empty cart?<span class="string">&quot;购物车为空&quot;</span>:cart&#125;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="禁用表达式"><a href="#禁用表达式" class="headerlink" title="禁用表达式"></a>禁用表达式</h2><p>如果不想使用 EL 表达式，可以禁用 EL 表达式。禁用 EL 表达式有以下 3 种方法：</p>
+<p>一、禁用单个EL表达式</p>
+<p>在 EL 表达式前加 <code>\</code>，例如：<strong>${2+3}</strong></p>
+<p>页面输出：${2+3}</p>
+<p>二、禁用当前页面的EL表达式</p>
+<p>将 page 指令中的 isELIgnored 属性设置为 true，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ page isELIgnored&#x3D;&quot;true&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>三、禁用整个Web应用的EL表达式</p>
+<p>在 web.xml 中配置 <strong>&lt;el-ignored&gt;</strong> 元素，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;jsp-property-group&gt;    </span><br><span class="line">	&lt;url-pattern&gt;*jsp&lt;&#x2F;url-pattern&gt;    </span><br><span class="line">	&lt;el-ignored&gt;false&lt;&#x2F;el-ignored&gt;</span><br><span class="line">&lt;&#x2F;jsp-propery-group&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/jsp/jsp-tutorial.html">JSP 教程 | 菜鸟教程 (runoob.com)</a></p>
+<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/jsp2/">JSP教程 (biancheng.net)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/16/JDBC/" rel="prev" title="JDBC">
+      <i class="fa fa-chevron-left"></i> JDBC
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSP%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">JSP基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSP%E5%A3%B0%E6%98%8E"><span class="nav-number">2.1.</span> <span class="nav-text">JSP声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSP%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">JSP表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-number">2.3.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4"><span class="nav-number">2.4.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E5%90%AB%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.5.</span> <span class="nav-text">隐含对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">表单处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%89%80%E6%9C%89%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">读取所有表单参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">过滤器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">5.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#session"><span class="nav-number">6.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-number">7.</span> <span class="nav-text">文件上传</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">8.</span> <span class="nav-text">页面重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E8%87%AA%E5%8A%A8%E5%88%B7%E6%96%B0"><span class="nav-number">9.</span> <span class="nav-text">网页自动刷新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSTL"><span class="nav-number">10.</span> <span class="nav-text">JSTL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">10.1.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A0%87%E7%AD%BE"><span class="nav-number">11.</span> <span class="nav-text">核心标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%A0%87%E7%AD%BE"><span class="nav-number">12.</span> <span class="nav-text">格式化标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%E6%A0%87%E7%AD%BE"><span class="nav-number">13.</span> <span class="nav-text">SQL标签</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%9F%A5%E8%AF%A2"><span class="nav-number">13.1.</span> <span class="nav-text">连接数据库与查询</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XML%E6%A0%87%E7%AD%BE"><span class="nav-number">14.</span> <span class="nav-text">XML标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSTL%E5%87%BD%E6%95%B0"><span class="nav-number">15.</span> <span class="nav-text">JSTL函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EL%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">16.</span> <span class="nav-text">EL表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">16.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">16.2.</span> <span class="nav-text">其他运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%81%E7%94%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">16.3.</span> <span class="nav-text">禁用表达式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">17.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">132</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
