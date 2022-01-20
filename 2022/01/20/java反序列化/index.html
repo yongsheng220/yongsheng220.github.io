@@ -28,7 +28,7 @@
 <meta property="og:description" content="java反序列化原理同php反序列化大同小异，将对象以一种字符串字节描述 Java中的 ObjectOutputStream 类的 writeObject() 方法可以实现序列化，类 ObjectInputStream 类的 readObject() 方法用于反序列化。如果要实现类的反序列化，则是对其实现 Serializable 接口。 序列化与反序列化协议 XML&amp;SOAPXML 是一">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-20T08:18:25.085Z">
-<meta property="article:modified_time" content="2022-01-20T08:19:52.852Z">
+<meta property="article:modified_time" content="2022-01-20T10:35:55.113Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 
@@ -130,12 +130,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">133</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">135</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -222,7 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-01-20 16:18:25 / 修改时间：16:19:52" itemprop="dateCreated datePublished" datetime="2022-01-20T16:18:25+08:00">2022-01-20</time>
+              <time title="创建时间：2022-01-20 16:18:25 / 修改时间：18:35:55" itemprop="dateCreated datePublished" datetime="2022-01-20T16:18:25+08:00">2022-01-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@
 <h2 id="反序列化实现"><a href="#反序列化实现" class="headerlink" title="反序列化实现"></a>反序列化实现</h2><p>创建一个 <strong>对象输入流</strong> 可以包装其他类型目标输出流，比如 <strong>文件输入流</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ObjectInputStream ois &#x3D; new ObjectInputStream(new FileInputStream(Filname));</span><br></pre></td></tr></table></figure>
 
-<p>接着通过对象输入流的  **readObject(obj); **读出对象</p>
+<p>接着通过对象输入流的**readObject(obj); **读出对象</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Object obj &#x3D; ois.readObject();</span><br><span class="line">return obj;</span><br><span class="line">&#x2F;&#x2F;这里我将序列化反序列化封装为两个方法</span><br><span class="line">Person person &#x3D; (Person)unserialize(&quot;ser.bin&quot;);</span><br></pre></td></tr></table></figure>
 
 
@@ -325,7 +325,10 @@
     <a href="/2022/01/20/JSP(%E4%B8%80)/" rel="prev" title="JSP">
       <i class="fa fa-chevron-left"></i> JSP
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/20/%E5%8F%8D%E5%B0%84/" rel="next" title="反射">
+      反射 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -400,14 +403,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">133</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
