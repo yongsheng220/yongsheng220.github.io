@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/c1bfc6b1cc5747c89c89047422e0d745.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/8ae886fdc50049399d8f3df303646392.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="article:published_time" content="2022-02-15T03:45:36.612Z">
-<meta property="article:modified_time" content="2022-02-15T03:45:30.590Z">
+<meta property="article:modified_time" content="2022-02-15T03:51:04.971Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/98f888122f0c4c998d65bb6b475145e6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
@@ -226,7 +226,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-15 11:45:36 / 修改时间：11:45:30" itemprop="dateCreated datePublished" datetime="2022-02-15T11:45:36+08:00">2022-02-15</time>
+              <time title="创建时间：2022-02-15 11:45:36 / 修改时间：11:51:04" itemprop="dateCreated datePublished" datetime="2022-02-15T11:45:36+08:00">2022-02-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,7 +259,7 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>弄清JNDI RMI LDAP等基础概念以及手动操作实现</p>
 <h1 id="JNDI"><a href="#JNDI" class="headerlink" title="JNDI"></a>JNDI</h1><p>JNDI 全称为 <strong>Java Naming and Directory Interface(Java 命名与目录接口)</strong> 是SUN公司提供的一种标准的 <strong>Java命名系统接口</strong>，JNDI提供统一的客户端API，通过不同的访问提供者接口JNDI服务供应接口(SPI)的实现，由管理者将JNDI API映射为特定的命名服务和目录系统，使得Java应用程序可以和这些命名服务和目录服务之间进行交互。目录服务是命名服务的一种自然扩展。</p>
 <a id="more"></a>
-<p><strong>命名的意思 **就是，在一个目录系统，它实现了</strong>把一个服务名称和对象或命名引用相关联<strong>，在客户端，我们可以调用目录系统服务，并根据服务名称查询到相关联的对象或命名引用，然后返回给客户端。而</strong>目录的意思<strong>就是在命名的基础上，</strong>增加了属性的概念**，我们可以想象一个文件目录中，每个文件和目录都会存在着一些属性，比如创建时间、读写执行权限等等，并且我们可以通过这些相关属性筛选出相应的文件和目录</p>
+<p><strong>命名的意思</strong> 就是，在一个目录系统，它实现了<strong>把一个服务名称和对象或命名引用相关联</strong>，在客户端，我们可以调用目录系统服务，并根据服务名称查询到相关联的对象或命名引用，然后返回给客户端。而 <strong>目录的意思</strong> 就是在命名的基础上，<strong>增加了属性的概念</strong>，我们可以想象一个文件目录中，每个文件和目录都会存在着一些属性，比如创建时间、读写执行权限等等，并且我们可以通过这些相关属性筛选出相应的文件和目录</p>
 <p>也就是说：JNDI是一个接口，在这个接口下会有<strong>多种目录系统服务的实现</strong>，我们能通过名称等去找到相关的对象，并把它下载到客户端中来。</p>
 <p>JNDI可访问的现有的目录及服务主要有：</p>
 <ul>
@@ -273,7 +273,7 @@
 <h1 id="JNDI结构"><a href="#JNDI结构" class="headerlink" title="JNDI结构"></a>JNDI结构</h1><p>在Java JDK里面提供了5个包，提供给JNDI的功能实现，分别是：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">javax.naming：主要用于命名操作，它包含了命名服务的类和接口，该包定义了Context接口和InitialContext类；</span><br><span class="line"></span><br><span class="line">javax.naming.directory：主要用于目录操作，它定义了DirContext接口和InitialDirContext类；</span><br><span class="line"></span><br><span class="line">javax.naming.event：在命名目录服务器中请求事件通知；</span><br><span class="line"></span><br><span class="line">javax.naming.ldap：提供LDAP支持；</span><br><span class="line"></span><br><span class="line">javax.naming.spi：允许动态插入不同实现，为不同命名目录服务供应商的开发人员提供开发和实现的途径，以便应用程序通过JNDI可以访问相关服务。</span><br></pre></td></tr></table></figure>
 
-<p>在 <strong>javax.naming</strong> 中包含了访问目录服务所需的<strong>类和接口</strong>，比如 Context、Bindings、References、lookup 等。 </p>
+<p>在 <strong>javax.naming</strong> 中包含了访问目录服务所需的 <strong>类和接口</strong>，比如 Context、Bindings、References、lookup 等。 </p>
 <p>这里解释一下</p>
 <h2 id="InitialContext类"><a href="#InitialContext类" class="headerlink" title="InitialContext类"></a>InitialContext类</h2><h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">InitialContext() </span><br><span class="line">构建一个初始上下文。  </span><br><span class="line">InitialContext(<span class="keyword">boolean</span> lazy) </span><br><span class="line">构造一个初始上下文，并选择不初始化它。  </span><br><span class="line">InitialContext(Hashtable&lt;?,?&gt; environment) </span><br><span class="line">使用提供的环境构建初始上下文。 </span><br><span class="line"></span><br><span class="line"><span class="comment">//java</span></span><br><span class="line">InitialContext initialContext = <span class="keyword">new</span> InitialContext();</span><br></pre></td></tr></table></figure>
 
@@ -299,7 +299,7 @@
 <h1 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h1><p>RMI，即 <strong>Remote Method Invocation</strong>，Java 的远程方法调用。RMI 为应用提供了远程调用的接口，可以理解为 Java 自带的 RPC 框架</p>
 <p>一个简单的 RMI <code>hello world</code> 主要由三部分组成，分别是接口、服务端和客户端</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wxisme/p/5296441.html">远程方法调用（RMI）原理与示例 - Pickle - 博客园 (cnblogs.com)</a></p>
-<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当客户端调用远程对象方法时, <strong>存根 **负责把要调用的远程对象方法的方法名及其参数编组打包,并将该包向下经远程引用层、传输层 **转发给远程对象所在的服务器</strong>。通过 RMI 系统的 <strong>RMI 注册表 **实现的简单服务器名字服务, 可定位远程对象所在的服务器。该包到达服务器后, 向上经远程引用层, 被远程对象的 Skeleton 接收, 此 Skeleton 解析客户包中的方法名及编组的参数后, **在服务器端执行客户要调用的远程对象方法</strong>, 然后将<strong>该方法的返回值</strong>( 或产生的异常) 打包后通过相反路线返回给客户端, 客户端的 Stub 将返回结果解析后传递给客户程序。</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>当客户端调用远程对象方法时, <strong>存根</strong> 负责把要调用的远程对象方法的方法名及其参数编组打包,并将该包向下经远程引用层、传输层 <strong>转发给远程对象所在的服务器</strong>。通过 RMI 系统的 <strong>RMI 注册表</strong>实现的简单服务器名字服务, 可定位远程对象所在的服务器。该包到达服务器后, 向上经远程引用层, 被远程对象的 Skeleton 接收, 此 Skeleton 解析客户包中的方法名及编组的参数后, <strong>在服务器端执行客户要调用的远程对象方法</strong>, 然后将 <strong>该方法的返回值</strong>( 或产生的异常) 打包后通过相反路线返回给客户端, 客户端的 Stub 将返回结果解析后传递给客户程序。</p>
 <p>RMI远方法程调用步骤：</p>
 <ul>
 <li>1、客户调用客户端辅助对象stub上的方法</li>
@@ -315,13 +315,13 @@
 <h2 id="Stub获取方式"><a href="#Stub获取方式" class="headerlink" title="Stub获取方式"></a>Stub获取方式</h2><p>Stub的获取方式有很多，常见的方法是调用某个远程服务上的方法，向远程服务获取存根。但是调用远程方法又必须先有远程对象的Stub，所以这里有个死循环问题。JDK提供了一个<strong>RMI注册表</strong>（RMIRegistry）来解决这个问题。RMIRegistry也是一个远程对象，默认监听在1099端口上，可以使用代码启动RMIRegistry，也可以使用rmiregistry命令。要注册远程对象，需要RMI URL和一个远程对象的引用。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">IHello rhello = <span class="keyword">new</span> HelloImpl();</span><br><span class="line">LocateRegistry.createRegistry(<span class="number">1099</span>);<span class="comment">//人工创建RMI注册服务</span></span><br><span class="line">Naming.bind(<span class="string">&quot;rmi://0.0.0.0:1099/hello&quot;</span>, rhello);</span><br></pre></td></tr></table></figure>
 
-<p><strong>LocateRegistry.getRegistry()</strong> 会使用给定的主机和端口等信息<strong>本地创建一个Stub对象</strong>作为Registry远程对象的代理，从而启动整个远程调用逻辑。<strong>服务端应用程序可以向RMI注册表中注册远程对象</strong>，然后客户端向RMI注册表查询某个远程对象名称，来获取该远程对象的Stub。</p>
+<p><strong>LocateRegistry.getRegistry()</strong> 会使用给定的主机和端口等信息 <strong>本地创建一个Stub对象</strong>作为Registry远程对象的代理，从而启动整个远程调用逻辑。<strong>服务端应用程序可以向RMI注册表中注册远程对象</strong>，然后客户端向RMI注册表查询某个远程对象名称，来获取该远程对象的Stub。</p>
 <h2 id="动态加载类"><a href="#动态加载类" class="headerlink" title="动态加载类"></a>动态加载类</h2><p>RMI核心特点之一就是动态加载类，如果当前JVM中没有某个类的定义，它可以从远程URL去下载这个类的class，java.rmi.server.codebase属性值表示一个或多个URL位置，可以从中下载本地找不到的类，相当于一个代码库。动态加载的对象class文件可以使用Web服务的方式（如http://、ftp://、file://）进行托管。客户端使用了与RMI注册表相同的机制。RMI服务端将URL传递给客户端，客户端通过HTTP请求下载这些类。</p>
 <p>无论是客户端还是服务端要远程加载类，都需要满足以下条件：</p>
 <ul>
-<li><p>一、由于Java SecurityManager的限制，默认是不允许远程加载的，如果需要进行远程加载类，需要安装RMISecurityManager并且配置java.security.policy，这在后面的利用中可以看到。</p>
+<li><p>由于Java SecurityManager的限制，默认是不允许远程加载的，如果需要进行远程加载类，需要安装RMISecurityManager并且配置java.security.policy，这在后面的利用中可以看到。</p>
 </li>
-<li><p>二、属性 java.rmi.server.useCodebaseOnly 的值必需为false。但是从JDK 6u45、7u21开始，java.rmi.server.useCodebaseOnly 的默认值就是true。当该值为true时，将禁用自动加载远程类文件，仅从CLASSPATH和当前虚拟机的java.rmi.server.codebase 指定路径加载类文件。使用这个属性来防止虚拟机从其他Codebase地址上动态加载类，增加了RMI ClassLoader的安全性。</p>
+<li><p>属性 java.rmi.server.useCodebaseOnly 的值必需为false。但是从 <strong>JDK 6u45、7u21</strong> 开始，java.rmi.server.useCodebaseOnly 的默认值就是true。当该值为true时，将禁用自动加载远程类文件，仅从CLASSPATH和当前虚拟机的java.rmi.server.codebase 指定路径加载类文件。使用这个属性来防止虚拟机从其他Codebase地址上动态加载类，增加了RMI ClassLoader的安全性。</p>
 </li>
 </ul>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>在Server与Client中都需要定义相同接口，继承Remote</p>
@@ -340,7 +340,7 @@
 <ol>
 <li>基于TCP/IP协议</li>
 <li>同样也是分成服务端/客户端；同样也是服务端存储数据，客户端与服务端连接进行操作</li>
-<li>相对于mysql的表型存储；不同的是LDAP使用<strong>树型存储</strong></li>
+<li>相对于mysql的表型存储；不同的是LDAP使用 <strong>树型存储</strong></li>
 </ol>
 <p>树层次分为以下几层：</p>
 <ul>
@@ -349,7 +349,9 @@
 <li>ou：一条记录所处的分叉（哪一个分支，支持多个ou，代表分支后的分支）</li>
 <li>cn/uid：一条记录的名字/ID（树的叶节点的编号，想到与MYSQL的表主键？）</li>
 </ul>
-<p>举个例子一条记录就是<br>dn=”uid=songtao.xu,ou=oa,dc=example,dc=com”</p>
+<p>举个例子一条记录就是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dn&#x3D;&quot;uid&#x3D;songtao.xu,ou&#x3D;oa,dc&#x3D;example,dc&#x3D;com&quot;</span><br></pre></td></tr></table></figure>
+
 <p>详细介绍：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/147768058">LDAP 协议入门（轻量目录访问协议） - 知乎 (zhihu.com)</a></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wxisme/p/5296441.html">远程方法调用（RMI）原理与示例 - Pickle - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/317622.html">十一、RMI、JNDI、LDAP介绍+log4j漏洞分析 - FreeBuf网络安全行业门户</a></p>
