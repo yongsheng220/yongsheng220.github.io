@@ -128,12 +128,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">152</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">153</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -191,6 +191,84 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/05/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%88%9D%E6%8E%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/05/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%88%9D%E6%8E%A2/" class="post-title-link" itemprop="url">内网渗透初探</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-05 00:25:17 / 修改时间：15:23:54" itemprop="dateCreated datePublished" datetime="2021-11-05T00:25:17+08:00">2021-11-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">渗透</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>转载于 - 先知社区 <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10439">内网渗透初探 - 先知社区 </a></p>
+<h1 id="0x01-基础知识"><a href="#0x01-基础知识" class="headerlink" title="0x01 基础知识"></a>0x01 基础知识</h1><p>内网渗透，从字面上理解便是对目标服务器所在内网进行渗透并最终获取域控权限的一种渗透。内网渗透的前提需要获取一个Webshell，可以是低权限的Webshell，因为可以通过提权获取高权限。</p>
+<p>在进行内网渗透之前需要了解一个概念，域环境。在内网中，往往可能存在几百上千台机器，例如需要对机器进行升级、打补丁、设置权限等，管理员不可能一台一台地更新修改。因此便衍生出了域环境。管理员以一台主机作为域控制器新建一个域，将所有其他主机加入域中，以域控来操作其他主机。因为域控的高权限，导致了域控所在的主机的管理员账号密码，可以登录任意一台主机，所以内网渗透的最终目标，往往便是拿下域控的权限。</p>
+<p>首先通过提权获取一个具有管理员权限的账号密码hacker/1234,abcd。具体提权过程就不细说了。下面将利用获取的这个具有管理员权限的账号密码正式开始内网渗透实践。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/05/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%88%9D%E6%8E%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -889,93 +967,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/22/ctfshow%20%E7%AC%AC%E4%BA%8C%E5%B1%8A%E6%9C%88%E9%A5%BC%E6%9D%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/22/ctfshow%20%E7%AC%AC%E4%BA%8C%E5%B1%8A%E6%9C%88%E9%A5%BC%E6%9D%AF/" class="post-title-link" itemprop="url">ctfshow 第二届月饼杯</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-22 23:59:25" itemprop="dateCreated datePublished" datetime="2021-09-22T23:59:25+08:00">2021-09-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-23 00:10:09" itemprop="dateModified" datetime="2021-09-23T00:10:09+08:00">2021-09-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h1><ul>
-<li>MD5绕过<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F;Author:H3h3QAQ</span><br><span class="line">include &quot;flag.php&quot;;</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">error_reporting(0);</span><br><span class="line">if (isset($_GET[&quot;YBB&quot;])) &#123;</span><br><span class="line">    if (hash(&quot;md5&quot;, $_GET[&quot;YBB&quot;]) &#x3D;&#x3D; $_GET[&quot;YBB&quot;]) &#123;</span><br><span class="line">        echo &quot;小伙子不错嘛！！flag给你了：&quot; . $flag;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo &quot;偶吼，带黑阔被窝抓到了！！！！&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><code>0e215962017</code> 的 MD5 值也是由 0e 开头，在 PHP 弱类型比较中相等</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/CSDNiamcoming/article/details/108837347">总结ctf中 MD5 绕过的一些思路</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/22/ctfshow%20%E7%AC%AC%E4%BA%8C%E5%B1%8A%E6%9C%88%E9%A5%BC%E6%9D%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1047,14 +1038,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">152</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

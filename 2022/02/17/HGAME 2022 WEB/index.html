@@ -63,7 +63,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/d5813c0c6b5c498c83a59bbd487c628e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/88f1846c011f4986afec3e87954e2559.png#pic_center">
 <meta property="article:published_time" content="2022-02-17T14:47:55.053Z">
-<meta property="article:modified_time" content="2022-02-17T14:47:47.547Z">
+<meta property="article:modified_time" content="2022-02-17T14:51:27.001Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/2332d271e43d4cb196db39ac537489d1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
@@ -166,12 +166,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">152</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">153</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -258,7 +258,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-17 22:47:55 / 修改时间：22:47:47" itemprop="dateCreated datePublished" datetime="2022-02-17T22:47:55+08:00">2022-02-17</time>
+              <time title="创建时间：2022-02-17 22:47:55 / 修改时间：22:51:27" itemprop="dateCreated datePublished" datetime="2022-02-17T22:47:55+08:00">2022-02-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -444,9 +444,9 @@
 <figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fileHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	http.FileServer(http.Dir(<span class="string">&quot;./&quot;</span>)).ServeHTTP(w, r)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/&quot;</span>, fileHandler)</span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/there_may_be_a_flag&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		w.Write([]<span class="keyword">byte</span>(<span class="string">`No! You can&#x27;t see the flag!`</span>))</span><br><span class="line">	&#125;)</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">&quot;:8889&quot;</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>there_may_be_a_flag</strong> 就是flag的地方，加上了web服务的flag路由,从而使得我们没法通过直接访问/flag来获取文件。而是得到/flag路由的回显。也就是 No! You can’t see the flag!</p>
-<p>审计完再结合题目觉得应该是 **http.FileServer(http.Dir(“./“)).ServeHTTP(w, r)**，出了问题，应该是存在漏洞导致可以跨目录读取到flag，搜索了一下，找到了go的一些安全问题</p>
+<p>审计完再结合题目觉得应该是 **http.FileServer(http.Dir(&quot;./&quot;)).ServeHTTP(w, r)**，出了问题，应该是存在漏洞导致可以跨目录读取到flag，搜索了一下，找到了go的一些安全问题</p>
 <p><a target="_blank" rel="noopener" href="https://bycsec.top/2021/02/07/golang%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98/">golang的一些安全问题</a></p>
-<p>随后发现了漏洞的出处 *<em>justCTF [</em>] 2020：Go-fs**，出题人在github提交了issue，<a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/40940">https://github.com/golang/go/issues/40940</a></p>
+<p>随后发现了漏洞的出处 <strong>justCTF [*] 2020：Go-fs</strong>，出题人在github提交了issue，<a target="_blank" rel="noopener" href="https://github.com/golang/go/issues/40940">https://github.com/golang/go/issues/40940</a></p>
 <p>在ctf中还出现了非预期解法，利用一下非预期来解一下题目</p>
 <p>payload</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -X CONNECT --path-as-is http:&#x2F;&#x2F;3445d0f8a3.filesystem.hgame.homeboyc.cn&#x2F;123&#x2F;..&#x2F;there_may_be_a_flag</span><br></pre></td></tr></table></figure>
@@ -469,7 +469,10 @@
     <a href="/2022/02/16/vnctf-2022/" rel="prev" title="VNCTF 2022 web">
       <i class="fa fa-chevron-left"></i> VNCTF 2022 web
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/21/HarmonyOS%202.0%E9%B8%BF%E8%92%99%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91(%E4%B8%80)/" rel="next" title="HarmonyOS 2.0鸿蒙应用开发(一)">
+      HarmonyOS 2.0鸿蒙应用开发(一) <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -544,14 +547,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">152</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
