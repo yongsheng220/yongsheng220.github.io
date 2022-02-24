@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="前言以前也一直没管cs的特征，结果…学习一下基本的隐藏方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cobalt-strike 特征隐藏">
+<meta property="og:url" content="http://example.com/2022/02/24/c2%E6%94%B9%E9%80%A0/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="前言以前也一直没管cs的特征，结果…学习一下基本的隐藏方式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224231630991.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224220410191.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224225951563.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224230035686.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224230135556.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224230931365.png">
+<meta property="article:published_time" content="2022-02-24T15:19:17.949Z">
+<meta property="article:modified_time" content="2022-02-24T15:19:07.975Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224231630991.png">
+
+<link rel="canonical" href="http://example.com/2022/02/24/c2%E6%94%B9%E9%80%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>cobalt-strike 特征隐藏 | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">156</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/24/c2%E6%94%B9%E9%80%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          cobalt-strike 特征隐藏
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-24 23:19:17 / 修改时间：23:19:07" itemprop="dateCreated datePublished" datetime="2022-02-24T23:19:17+08:00">2022-02-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">渗透</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以前也一直没管cs的特征，结果…学习一下基本的隐藏方式</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224231630991.png" alt="image-20220224231630991"></p>
+<a id="more"></a>
+
+<h1 id="修改端口"><a href="#修改端口" class="headerlink" title="修改端口"></a>修改端口</h1><p><strong>vim teamserver</strong></p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224220410191.png" alt="image-20220224220410191"></p>
+<h1 id="去除证书特征"><a href="#去除证书特征" class="headerlink" title="去除证书特征"></a>去除证书特征</h1><p>cobalt strike 默认的证书存在cobalt strike 的指纹信息。需要keytool (Java数据证书的管理工具) 修改证书信息，删除原来的cobaltstrike.store，接下来创建新的cobaltstrike.store：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keytool -keystore 生成的store名 -storepass 密码 -keypass 密码 -genkey -keyalg RSA -alias 自定义别名 -dname &quot;CN&#x3D;Microsoft Windows, OU&#x3D;MOPR, O&#x3D;Microsoft Corporation, L&#x3D;Redmond, ST&#x3D;Washington, C&#x3D;US&quot;</span><br><span class="line"></span><br><span class="line">keytool -keystore cobaltstrike.store -storepass bypass -keypass bypass -genkey -keyalg RSA -alias apex.tk -dname &quot;CN&#x3D;Microsoft Windows, OU&#x3D;MOPR, O&#x3D;Microsoft Corporation, L&#x3D;Redmond, ST&#x3D;Washington, C&#x3D;US&quot;</span><br></pre></td></tr></table></figure>
+
+<p>修改之前默认的store信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore cobaltstrike.store -destkeystore cobaltstrike.store -deststoretype pkcs12</span><br></pre></td></tr></table></figure>
+
+<p>更改teamserver中的密码等信息</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224225951563.png" alt="image-20220224225951563"></p>
+<p>可以查看信息：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">keytool -<span class="built_in">list</span> -v -keystore cobaltstrike.store </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224230035686.png" alt="image-20220224230035686"></p>
+<p>启动：sha256相同</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224230135556.png" alt="image-20220224230135556"></p>
+<h1 id="流量混淆"><a href="#流量混淆" class="headerlink" title="流量混淆"></a>流量混淆</h1><p>修改Beacon与cobalt strike通信时候的流量特征，创建一个 <strong>.profile文件</strong>(名字任意)</p>
+<p>img.profile</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set sample_name &quot;imgtest&quot;; </span><br><span class="line">set sleeptime &quot;5000&quot;; # 心跳包时间</span><br><span class="line">set jitter    &quot;0&quot;;   # 默认的抖动因子（0-99%）</span><br><span class="line">set maxdns    &quot;255&quot;; # 通过DNS上传数据时的主机名最大长度（0-255）</span><br><span class="line">set useragent &quot;Mozilla&#x2F;5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident&#x2F;5.0)&quot;; </span><br><span class="line"></span><br><span class="line">http-get &#123;</span><br><span class="line">    set uri &quot;&#x2F;image&#x2F;&quot;;</span><br><span class="line">    client &#123;</span><br><span class="line">        header &quot;Accept&quot; &quot;text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*l;q&#x3D;0.8&quot;;</span><br><span class="line">        header &quot;Referer&quot; &quot;http:&#x2F;&#x2F;www.google.com&quot;;  </span><br><span class="line">        header &quot;Pragma&quot; &quot;no-cache&quot;;</span><br><span class="line">        header &quot;Cache-Control&quot; &quot;no-cache&quot;;</span><br><span class="line">        metadata &#123;</span><br><span class="line">            netbios;</span><br><span class="line">            append &quot;.jpg&quot;;  # 传输内容自动追加的后缀</span><br><span class="line">            uri-append;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        header &quot;Content-Type&quot; &quot;img&#x2F;jpg&quot;;</span><br><span class="line">        header &quot;Server&quot; &quot;Microsoft-IIS&#x2F;6.0&quot;;</span><br><span class="line">        header &quot;X-Powered-By&quot; &quot;ASP.NET&quot;;</span><br><span class="line">        output &#123;</span><br><span class="line">            base64;  # 加密方式（base64、base64url、netbios、netbiosu）</span><br><span class="line">            print;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http-post &#123;</span><br><span class="line">    set uri &quot;&#x2F;email&#x2F;&quot;;</span><br><span class="line">    client &#123;</span><br><span class="line">        header &quot;Content-Type&quot; &quot;application&#x2F;octet-stream&quot;;</span><br><span class="line">        header &quot;Referer&quot; &quot;http:&#x2F;&#x2F;www.google.com&quot;; </span><br><span class="line">        header &quot;Pragma&quot; &quot;no-cache&quot;;</span><br><span class="line">        header &quot;Cache-Control&quot; &quot;no-cache&quot;;</span><br><span class="line">        id &#123;</span><br><span class="line">            netbiosu;</span><br><span class="line">            append &quot;.png&quot;;</span><br><span class="line">            uri-append;</span><br><span class="line">        &#125;</span><br><span class="line">        output &#123;</span><br><span class="line">            base64;</span><br><span class="line">            print;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        header &quot;Content-Type&quot; &quot;img&#x2F;jpg&quot;;</span><br><span class="line">        header &quot;Server&quot; &quot;Microsoft-IIS&#x2F;6.0&quot;;</span><br><span class="line">        header &quot;X-Powered-By&quot; &quot;ASP.NET&quot;;</span><br><span class="line">        output &#123;</span><br><span class="line">            base64;</span><br><span class="line">            print;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>chmod 777 c2lint</strong></p>
+<p>检查一下</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%B8%BF%E8%92%99/image-20220224230931365.png" alt="image-20220224230931365"></p>
+<p>使用的话就是：./teamserver 服务器ip cs密码 混淆配置文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;teamserver ip pass img.profile</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e7701efef047">Cobalt Strike 的特征与隐藏 - 简书 (jianshu.com)</a></p>
+<p>[Cobalt Strike隐藏特征与混淆流量 | 那夜我推开了窗 招来了风和奇迹. (kam1.cc)](<a target="_blank" rel="noopener" href="https://kam1.cc/2021/08/09/Cobalt">https://kam1.cc/2021/08/09/Cobalt</a> Strike隐藏特征与混淆流量/)</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Xy--1/p/14396744.html">Cobalt Strike特征隐藏 - Lushun - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ddosi.org/cobalt-strike-bypass/#4%E9%83%A8%E7%BD%B2Nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">cobalt strike特征隐藏|修改默认端口|去除证书特征|混淆配置 - 🔰雨苁ℒ🔰 (ddosi.org)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/24/php/" rel="prev" title="php免杀马尝试">
+      <i class="fa fa-chevron-left"></i> php免杀马尝试
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">修改端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E8%AF%81%E4%B9%A6%E7%89%B9%E5%BE%81"><span class="nav-number">3.</span> <span class="nav-text">去除证书特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%B7%B7%E6%B7%86"><span class="nav-number">4.</span> <span class="nav-text">流量混淆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">156</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
