@@ -22,7 +22,7 @@
 
   <meta name="description" content="前言这篇将介绍一下  CommonsBeanutils 链，以及没有 commons-collections 的Shiro反序列化利用 Apache Commons BeanutilsApache Commons Beanutils  提供了对Java普通类对象（也成为 JavaBean） 的一些操作方法。 至于JavaBean  有一个public的无参数构造函数。 属性可以透过get、set、">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CommonsBeanutils及 shiro中利用">
+<meta property="og:title" content="CommonsBeanutils及shiro中利用">
 <meta property="og:url" content="http://example.com/2022/03/09/CB%E9%93%BE/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言这篇将介绍一下  CommonsBeanutils 链，以及没有 commons-collections 的Shiro反序列化利用 Apache Commons BeanutilsApache Commons Beanutils  提供了对Java普通类对象（也成为 JavaBean） 的一些操作方法。 至于JavaBean  有一个public的无参数构造函数。 属性可以透过get、set、">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309164809686.png">
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309170133185.png">
 <meta property="article:published_time" content="2022-03-09T09:06:58.935Z">
-<meta property="article:modified_time" content="2022-03-09T09:06:39.677Z">
+<meta property="article:modified_time" content="2022-03-09T12:33:22.234Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155025401.png">
@@ -54,7 +54,7 @@
   };
 </script>
 
-  <title>CommonsBeanutils及 shiro中利用 | Y0ng的博客</title>
+  <title>CommonsBeanutils及shiro中利用 | Y0ng的博客</title>
   
 
 
@@ -144,7 +144,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">160</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">161</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -220,7 +220,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CommonsBeanutils及 shiro中利用
+          CommonsBeanutils及shiro中利用
         </h1>
 
         <div class="post-meta">
@@ -231,7 +231,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-03-09 17:06:58 / 修改时间：17:06:39" itemprop="dateCreated datePublished" datetime="2022-03-09T17:06:58+08:00">2022-03-09</time>
+              <time title="创建时间：2022-03-09 17:06:58 / 修改时间：20:33:22" itemprop="dateCreated datePublished" datetime="2022-03-09T17:06:58+08:00">2022-03-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,13 +271,13 @@
 </ul>
 <a id="more"></a>
 
-<p>也就是说属性都可通过 <strong>访问器(读)</strong> 和 **更改器(写)**来进行操作，也就是 getter 和 setter</p>
+<p>也就是说属性都可通过 <strong>访问器(读)</strong> 和 <strong>更改器(写)</strong> 来进行操作，也就是 getter 和 setter</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Person &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line">    public String getName() &#123; return this.name; &#125;</span><br><span class="line">    public void setName(String name) &#123; this.name &#x3D; name; &#125;</span><br><span class="line">    public int getAge() &#123; return this.age; &#125;  &#x2F;&#x2F;读</span><br><span class="line">    public void setAge(int age) &#123; this.age &#x3D; age; &#125;  &#x2F;&#x2F;更改</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>commons-beanutils 提供了一个静态方法，<strong>PropertyUtils.getProperty</strong> ，可以调用任意 JavaBean 的getter方法。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PropertyUtils.getProperty(new Person(),&quot;name&quot;);</span><br></pre></td></tr></table></figure>
 
-<p>就可以调用 Person 对象的 name属性的 getter方法。他还支持递归，获取属性，比如 <strong>PropertyUtils.getProperty(obj,”b.a”)</strong></p>
+<p>就可以调用 Person 对象的 name属性的 getter方法。他还支持递归，获取属性，比如 <code>PropertyUtils.getProperty(obj,&quot;b.a&quot;)</code></p>
 <p>就可以获取 b属性（对象）下的a属性。不是真正调用具体的getter方法，可以说是一种抽象的方法，比如</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PropertyUtils.getProperty(new Person(),&quot;abc&quot;)</span><br></pre></td></tr></table></figure>
 
@@ -313,6 +313,12 @@
 
 
 <p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309170133185.png" alt="image-20220309170133185"></p>
+<h1 id="shiro-权限绕过"><a href="#shiro-权限绕过" class="headerlink" title="shiro 权限绕过"></a>shiro 权限绕过</h1><h2 id="CVE-2020-1957"><a href="#CVE-2020-1957" class="headerlink" title="CVE-2020-1957"></a>CVE-2020-1957</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;xxx&#x2F;..;&#x2F;admin</span><br></pre></td></tr></table></figure>
+
+<h2 id="CVE-2020-11989"><a href="#CVE-2020-11989" class="headerlink" title="CVE-2020-11989"></a>CVE-2020-11989</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;;&#x2F;admin</span><br><span class="line">&#x2F;admin&#x2F;a%25%32%66a</span><br></pre></td></tr></table></figure>
+
+<h2 id="CVE-2020-13933"><a href="#CVE-2020-13933" class="headerlink" title="CVE-2020-13933"></a>CVE-2020-13933</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;admin&#x2F;%3baaa</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -331,7 +337,10 @@
     <a href="/2022/03/04/RMI%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="prev" title="RMI反序列化初探">
       <i class="fa fa-chevron-left"></i> RMI反序列化初探
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/10/ROME/" rel="next" title="ROME反序列化">
+      ROME反序列化 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -390,7 +399,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apache-Commons-Beanutils"><span class="nav-number">2.</span> <span class="nav-text">Apache Commons Beanutils</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">流程分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E9%80%A0poc"><span class="nav-number">4.</span> <span class="nav-text">构造poc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88poc"><span class="nav-number">5.</span> <span class="nav-text">最终poc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro%E4%B8%AD%E7%9A%84%E5%88%A9%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">shiro中的利用</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apache-Commons-Beanutils"><span class="nav-number">2.</span> <span class="nav-text">Apache Commons Beanutils</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">流程分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E9%80%A0poc"><span class="nav-number">4.</span> <span class="nav-text">构造poc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%BB%88poc"><span class="nav-number">5.</span> <span class="nav-text">最终poc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro%E4%B8%AD%E7%9A%84%E5%88%A9%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">shiro中的利用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro-%E6%9D%83%E9%99%90%E7%BB%95%E8%BF%87"><span class="nav-number">7.</span> <span class="nav-text">shiro 权限绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2020-1957"><span class="nav-number">7.1.</span> <span class="nav-text">CVE-2020-1957</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2020-11989"><span class="nav-number">7.2.</span> <span class="nav-text">CVE-2020-11989</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2020-13933"><span class="nav-number">7.3.</span> <span class="nav-text">CVE-2020-13933</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -406,7 +415,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">160</span>
+          <span class="site-state-item-count">161</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
