@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -191,6 +191,90 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/20/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">java反序列化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-20 16:18:25 / 修改时间：18:35:55" itemprop="dateCreated datePublished" datetime="2022-01-20T16:18:25+08:00">2022-01-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java-web/" itemprop="url" rel="index"><span itemprop="name">java web</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="java反序列化"><a href="#java反序列化" class="headerlink" title="java反序列化"></a>java反序列化</h1><p>原理同php反序列化大同小异，将对象以一种字符串字节描述</p>
+<p>Java中的 <code>ObjectOutputStream</code> 类的 <code>writeObject()</code> 方法可以实现序列化，类 <code>ObjectInputStream</code> 类的 <code>readObject()</code> 方法用于反序列化。如果要实现类的反序列化，则是对其实现 <code>Serializable</code> 接口。</p>
+<h1 id="序列化与反序列化协议"><a href="#序列化与反序列化协议" class="headerlink" title="序列化与反序列化协议"></a>序列化与反序列化协议</h1><ul>
+<li><p>XML&amp;SOAP<br>XML 是一种常用的序列化和反序列化协议，具有跨机器，跨语言等优点，SOAP（Simple Object Access protocol） 是一种被广泛应用的，基于 XML 为序列化和反序列化协议的结构化消息传递协议</p>
+</li>
+<li><p>JSON（Javascript Object Notation）</p>
+</li>
+<li><p>Protobuf</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/20/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -949,87 +1033,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/07/%E6%97%A0%E9%9C%80%E5%8F%AF%E6%8E%A7%E6%96%87%E4%BB%B6%E7%9A%84LFI-RCE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/07/%E6%97%A0%E9%9C%80%E5%8F%AF%E6%8E%A7%E6%96%87%E4%BB%B6%E7%9A%84LFI-RCE/" class="post-title-link" itemprop="url">无需可控文件的LFI-RCE</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-07 21:21:41" itemprop="dateCreated datePublished" datetime="2022-01-07T21:21:41+08:00">2022-01-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-31 17:02:29" itemprop="dateModified" datetime="2022-03-31T17:02:29+08:00">2022-03-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">web漏洞</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在 PHP 中，我们可以利用 PHP Base64 Filter 宽松的解析，通过 iconv filter 等编码组合构造出特定的 PHP 代码进而完成无需临时文件的 RCE 。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/07/%E6%97%A0%E9%9C%80%E5%8F%AF%E6%8E%A7%E6%96%87%E4%BB%B6%E7%9A%84LFI-RCE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1101,7 +1104,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-count">166</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
