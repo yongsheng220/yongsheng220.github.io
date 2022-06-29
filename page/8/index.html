@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">176</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">177</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -181,6 +181,91 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/30/ThinkPHP%205.0.15%20insert%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/30/ThinkPHP%205.0.15%20insert%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">ThinkPHP 5.0.15 Insert注入 分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-30 19:54:27" itemprop="dateCreated datePublished" datetime="2021-11-30T19:54:27+08:00">2021-11-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-05 23:32:20" itemprop="dateModified" datetime="2021-12-05T23:32:20+08:00">2021-12-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在 <code>parseData()</code> 这个方法中出现对<code>dec</code>、<code>inc</code> 两种情况的考虑不周从而拼接导致的SQL注入（Insert方法注入）<br>漏洞利用版本： <strong>5.0.13&lt;=ThinkPHP&lt;=5.0.15 、 5.1.0&lt;=ThinkPHP&lt;=5.1.5</strong></p>
+<p>我这垃圾文笔！这个师傅写的不错</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45669205/article/details/116401771">ThinkPHP5.0.15代码审计【SQL注入】</a></p>
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>写入控制器</p>
+<p><img src="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/30/ThinkPHP%205.0.15%20insert%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -920,96 +1005,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/05/%E7%AE%80%E5%8D%95%E6%A0%88%E6%BA%A2%E5%87%BA%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/05/%E7%AE%80%E5%8D%95%E6%A0%88%E6%BA%A2%E5%87%BA%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">简单栈溢出理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-05 18:22:54" itemprop="dateCreated datePublished" datetime="2021-11-05T18:22:54+08:00">2021-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-12 17:51:12" itemprop="dateModified" datetime="2021-11-12T17:51:12+08:00">2021-11-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/" itemprop="url" rel="index"><span itemprop="name">二进制</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>再次理解函数调用，简单栈溢出</p>
-<p>参考:<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-259272.htm">从0开始CTF-PWN（二）从PWN的HelloWorld-栈溢出开始</a></p>
-<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><ul>
-<li>函数状态主要涉及三个寄存器－－esp，ebp，eip。</li>
-</ul>
-<ol>
-<li>esp 用来存储函数调用栈的栈顶地址，在压栈和退栈时发生变化。</li>
-<li>ebp 用来存储当前函数状态的基地址，在函数运行时不变，可以用来索引确定函数参数或局部变量的位置。</li>
-<li>eip 用来存储即将执行的程序指令的地址，cpu 依照 eip 的存储内容读取指令并执行，eip 随之指向相邻的下一条指令，如此反复，程序就得以连续执行指令。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/05/%E7%AE%80%E5%8D%95%E6%A0%88%E6%BA%A2%E5%87%BA%E7%90%86%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1081,7 +1076,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">177</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
