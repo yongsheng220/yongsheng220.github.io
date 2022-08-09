@@ -238,7 +238,7 @@
 <li>读取数据库文件load_file()</li>
 </ul>
 <p>给了查询语句：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM users WHERE id = &#x27;<span class="subst">$query</span>&#x27; OR username = \\&quot;</span><span class="variable">$query</span>\\<span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM users WHERE id = &#x27;<span class="subst">$query</span>&#x27; OR username = \\&quot;</span><span class="variable">$query</span>\\<span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
 
 <p>使query=2有回显，但是对于单引号进行了过滤，但是它给了username，通过username发现<code>双引号</code>是没有被过滤的，接着测试发现还过滤空格</p>
 <p><img src="https://img-blog.csdnimg.cn/20210329184831376.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
