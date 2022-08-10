@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">93</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">92</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -181,89 +181,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/07/%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9BDASCTF%E4%B8%89%E6%9C%88%E5%A8%B1%E4%B9%90%E8%B5%9B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/07/%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9BDASCTF%E4%B8%89%E6%9C%88%E5%A8%B1%E4%B9%90%E8%B5%9B/" class="post-title-link" itemprop="url">DASCTF安恒三月赛</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-07 21:35:14 / 修改时间：21:35:04" itemprop="dateCreated datePublished" datetime="2021-04-07T21:35:14+08:00">2021-04-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="BestDB"><a href="#BestDB" class="headerlink" title="BestDB"></a>BestDB</h1><ul>
-<li>SQL注入</li>
-<li>读取数据库文件load_file()</li>
-</ul>
-<p>给了查询语句：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM users WHERE id = &#x27;<span class="subst">$query</span>&#x27; OR username = \\&quot;</span><span class="variable">$query</span>\\<span class="string">&quot;&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>使query=2有回显，但是对于单引号进行了过滤，但是它给了username，通过username发现<code>双引号</code>是没有被过滤的，接着测试发现还过滤空格</p>
-<p><img src="https://img-blog.csdnimg.cn/20210329184831376.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/07/%E5%AE%89%E6%81%92%E6%9C%88%E8%B5%9BDASCTF%E4%B8%89%E6%9C%88%E5%A8%B1%E4%B9%90%E8%B5%9B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
       
   
   
@@ -489,7 +406,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
