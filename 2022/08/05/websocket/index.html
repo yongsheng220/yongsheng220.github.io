@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220721232910575.png">
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220722015033708.png">
 <meta property="article:published_time" content="2022-08-05T00:16:29.688Z">
-<meta property="article:modified_time" content="2022-08-05T15:39:36.382Z">
+<meta property="article:modified_time" content="2022-08-09T18:43:46.835Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC%2F6193d09c503d8e057afa1636_Java%20code%20review%20checklist-min-p-1600.jpeg">
@@ -221,10 +221,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-08-05 08:16:29 / 修改时间：23:39:36" itemprop="dateCreated datePublished" datetime="2022-08-05T08:16:29+08:00">2022-08-05</time>
+              <time title="创建时间：2022-08-05 08:16:29" itemprop="dateCreated datePublished" datetime="2022-08-05T08:16:29+08:00">2022-08-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-10 02:43:46" itemprop="dateModified" datetime="2022-08-10T02:43:46+08:00">2022-08-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -256,7 +262,7 @@
         <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC%2F6193d09c503d8e057afa1636_Java%20code%20review%20checklist-min-p-1600.jpeg" alt="6193d09c503d8e057afa1636_Java code review checklist-min-p-1600"></p>
 <a id="more"></a>
 
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>tnnd，文章写的太垃圾，投稿不收 :(，看到新型内存马项目，学习一下，项目地址：<a target="_blank" rel="noopener" href="https://github.com/veo/wsMemShell">https://github.com/veo/wsMemShell</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>看到新型内存马项目，学习一下，项目地址：<a target="_blank" rel="noopener" href="https://github.com/veo/wsMemShell">https://github.com/veo/wsMemShell</a></p>
 <p>websocket类型内存马的学习，环境：Tomcat 8.5 + JDK1.8</p>
 <h1 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h1><p>先读这一篇前置知识文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36586120/article/details/120025498">WebSocket通信原理和在Tomcat中实现源码详解</a></p>
 <p>Tomcat7早期版本7.0.47之前还没有出 JSR356标准时，自己实现了一套接口，支持websocket。后来Tomcat7.0.47版本废弃自定义的API，实现了JSR356标准。</p>
@@ -266,9 +272,10 @@
 
 <p>关于继承抽象类Endpoint的方式，需要自己实现 <strong>MessageHandler</strong> 和 <strong>ServerApplicationConfig</strong></p>
 <p>MessageHandler 用于处理消息，ServerApplicationConfig用于处理URI映射。</p>
-<h1 id="websocket加载"><a href="#websocket加载" class="headerlink" title="websocket加载"></a>websocket加载</h1><p>Tomcat通过 <strong>org.apache.tomcat.websocket.server.WsSci</strong> 专门对 websocket 进行初始化以及加载，该类实现了接口</p>
-<p><strong>javax.servlet.ServletContainerInitializer</strong> ，该接口是Servlet 3.0规范中定义的用来接收Web应用启动事件的接口，简称为SCI加载机制。该机制在Tomcat部署装载Web项目 <strong>org.apache.catalina.core.StandardContext#startInternal</strong> 时主动触发 <strong>ServletContainerInitializer#onStartup</strong>，做一些扩展的初始化操作。</p>
-<h2 id="WsSci-onStartup"><a href="#WsSci-onStartup" class="headerlink" title="WsSci#onStartup"></a>WsSci#onStartup</h2><p>WsSci会将 <strong>HandlesTypes注解 **指定的类扫描出来，并 **创建WebSocketContainer容器</strong>，将扫描的类添加到容器中。扫描的类如下</p>
+<h1 id="websocket加载"><a href="#websocket加载" class="headerlink" title="websocket加载"></a>websocket加载</h1><p>Tomcat通过 <strong>org.apache.tomcat.websocket.server.WsSci</strong> 专门对 websocket 进行初始化以及加载，该类实现了接口 <strong>javax.servlet.ServletContainerInitializer</strong> </p>
+<p>该接口是Servlet 3.0规范中定义的用来接收Web应用启动事件的接口，简称为SCI加载机制。</p>
+<p>该机制在Tomcat部署装载Web项目 <strong>org.apache.catalina.core.StandardContext#startInternal</strong> 时主动触发 <strong>ServletContainerInitializer#onStartup</strong>，做一些扩展的初始化操作。</p>
+<h2 id="WsSci-onStartup"><a href="#WsSci-onStartup" class="headerlink" title="WsSci#onStartup"></a>WsSci#onStartup</h2><p>WsSci会将 <strong>HandlesTypes注解</strong>指定的类扫描出来，并 <strong>创建WebSocketContainer容器</strong>，将扫描的类添加到容器中。扫描的类如下</p>
 <ul>
 <li>注解类ServerEndpoint即 @ServerEndpoint</li>
 <li>ServerApplicationConfig实现类</li>
@@ -276,7 +283,7 @@
 </ul>
 <p>调试一下，扫描到刚才自定义的 ServerEndpoint，创建WebSocketContainer容器，这里用的是 <strong>WsServerContainer</strong> 类</p>
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220720232039952.png" alt="image-20220720232039952"></p>
-<p>在 WsServerContainer 的构造函数中为ServletContext添加了一个 <strong>org.apache.tomcat.websocket.server.WsFilter</strong> 类型的Filter用来<strong>处理websocket的请求</strong></p>
+<p>在 WsServerContainer 的构造函数中为ServletContext添加了一个 <strong>org.apache.tomcat.websocket.server.WsFilter</strong> 类型的Filter用来 <strong>处理websocket的请求</strong></p>
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220720234850629.png" alt="image-20220720234850629"></p>
 <p>回到SCI中，定义三个set集合针对扫描到的三种不同类</p>
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220720232801875.png" alt="image-20220720232801875"></p>
@@ -287,7 +294,7 @@
 <li>当前类为ServerEndpoint 添加到 <strong>scannedPojoEndpoints</strong> 集合中</li>
 </ul>
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220720235931159.png" alt="image-20220720235931159"></p>
-<p>又重新定义了 两个集合 <strong>filteredEndpointConfigs</strong> 和 <strong>filteredPojoEndpoints</strong>，如果 <strong>serverApplicationConfigs</strong> 为空即不存在以继承抽象类Endpoint的方式编写的类，将注释方式的类添加 <strong>filteredPojoEndpoints</strong> 中，else中不在赘述。</p>
+<p>又重新定义了 两个集合<strong>filteredEndpointConfigs</strong> 和<strong>filteredPojoEndpoints</strong>，如果 <strong>serverApplicationConfigs</strong> 为空即不存在以继承抽象类Endpoint的方式编写的类，将注释方式的类添加 <strong>filteredPojoEndpoints</strong> 中，else中不在赘述。</p>
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC/image-20220721001100660.png" alt="image-20220721001100660"></p>
 <p>通过 <strong>addEndpoint</strong> 添加到WebSocketContainer容器中，两种websocket实现方式调用的addEndpoint也不相同</p>
 <ul>
