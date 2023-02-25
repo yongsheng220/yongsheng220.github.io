@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="长城杯预赛-b4bycoffee 二次反序列化  再贴一个其他的解法：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;u7RuSmBHy76R7_PqL8WJww 反序列化  看一下 AntObjectInputStream，很明显，ban了ROME常见的几种触发方式，唯独缺少了 EqualsBean，然后又ban了 TemplatesImpl，可以利用 二次反序列化 绕过  那么整个流">
+  <meta name="description" content="java-chall">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java题目">
 <meta property="og:url" content="http://example.com/2023/02/02/java-chall/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="长城杯预赛-b4bycoffee 二次反序列化  再贴一个其他的解法：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;u7RuSmBHy76R7_PqL8WJww 反序列化  看一下 AntObjectInputStream，很明显，ban了ROME常见的几种触发方式，唯独缺少了 EqualsBean，然后又ban了 TemplatesImpl，可以利用 二次反序列化 绕过  那么整个流">
+<meta property="og:description" content="java-chall">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-chall/image-20220901164958434.png">
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-chall/image-20220901165039922.png">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-chall/image-20221029144633774.png">
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-chall/image-20221029145012594.png">
 <meta property="article:published_time" content="2023-02-02T11:34:49.995Z">
-<meta property="article:modified_time" content="2023-02-02T11:34:45.902Z">
+<meta property="article:modified_time" content="2023-02-25T03:11:05.186Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-chall/image-20220901164958434.png">
@@ -219,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-02-02 19:34:49 / 修改时间：19:34:45" itemprop="dateCreated datePublished" datetime="2023-02-02T19:34:49+08:00">2023-02-02</time>
+              <time title="创建时间：2023-02-02 19:34:49" itemprop="dateCreated datePublished" datetime="2023-02-02T19:34:49+08:00">2023-02-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-25 11:11:05" itemprop="dateModified" datetime="2023-02-25T11:11:05+08:00">2023-02-25</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -251,7 +257,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
+        <p>java-chall</p>
+<a id="more"></a>
 
 <h1 id="长城杯预赛-b4bycoffee"><a href="#长城杯预赛-b4bycoffee" class="headerlink" title="长城杯预赛-b4bycoffee"></a>长城杯预赛-b4bycoffee</h1><ul>
 <li>二次反序列化</li>
