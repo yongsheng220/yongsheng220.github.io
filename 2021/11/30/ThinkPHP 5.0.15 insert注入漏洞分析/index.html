@@ -27,26 +27,26 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言在 parseData() 这个方法中出现对dec、inc 两种情况的考虑不周从而拼接导致的SQL注入（Insert方法注入）漏洞利用版本： 5.0.13&lt;&#x3D;ThinkPHP&lt;&#x3D;5.0.15 、 5.1.0&lt;&#x3D;ThinkPHP&lt;&#x3D;5.1.5 我这垃圾文笔！这个师傅写的不错 ThinkPHP5.0.15代码审计【SQL注入】 复现写入控制器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/5ef4889543a54cbb8645f7b03adacbd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4d77770ed75a44e6a08453cc9936d061.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a1ea3e2511ba4a93a80263019bb3ce13.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/3f9e654e2a004311bb63d09bd452f5c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e9699224f1964f5cb61b127ca889bd7c.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9eaff951b6ef4ddf8557160934034d27.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f73327dbdb574fd9afc986cd4f394516.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f649f13596344e2b9be68b6445b0cba3.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/50c016a8171d4b0582f02fa77e6dad45.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/189ca8c7163249499ee92a91fd2abdee.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b5370814af5849b391c574aec21773c9.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/469c1f9068fb40f59c3424d5a48f2bd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a7f97ffb85fb4725807287e63528b1b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/88d1072530664f77bacf762692be5ece.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1faf0b53b60546dfb66a31ab6b72da80.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5ef4889543a54cbb8645f7b03adacbd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/4d77770ed75a44e6a08453cc9936d061.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a1ea3e2511ba4a93a80263019bb3ce13.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/3f9e654e2a004311bb63d09bd452f5c8.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e9699224f1964f5cb61b127ca889bd7c.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/9eaff951b6ef4ddf8557160934034d27.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f73327dbdb574fd9afc986cd4f394516.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f649f13596344e2b9be68b6445b0cba3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/50c016a8171d4b0582f02fa77e6dad45.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/189ca8c7163249499ee92a91fd2abdee.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b5370814af5849b391c574aec21773c9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/469c1f9068fb40f59c3424d5a48f2bd0.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7f97ffb85fb4725807287e63528b1b0.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/88d1072530664f77bacf762692be5ece.png">
 <meta property="article:published_time" content="2021-11-30T11:54:27.434Z">
-<meta property="article:modified_time" content="2021-12-05T15:32:20.482Z">
+<meta property="article:modified_time" content="2023-03-16T13:41:35.513Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1faf0b53b60546dfb66a31ab6b72da80.png">
 
 <link rel="canonical" href="http://example.com/2021/11/30/ThinkPHP%205.0.15%20insert%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
 
@@ -146,7 +146,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-05 23:32:20" itemprop="dateModified" datetime="2021-12-05T23:32:20+08:00">2021-12-05</time>
+                <time title="修改时间：2023-03-16 21:41:35" itemprop="dateModified" datetime="2023-03-16T21:41:35+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,45 +268,45 @@
 <p>我这垃圾文笔！这个师傅写的不错</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45669205/article/details/116401771">ThinkPHP5.0.15代码审计【SQL注入】</a></p>
 <h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>写入控制器</p>
-<p><img src="https://img-blog.csdnimg.cn/1faf0b53b60546dfb66a31ab6b72da80.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1faf0b53b60546dfb66a31ab6b72da80.png"></p>
 <a id="more"></a>
 
-<p><img src="https://img-blog.csdnimg.cn/5ef4889543a54cbb8645f7b03adacbd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5ef4889543a54cbb8645f7b03adacbd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
 <p>payload</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?a[0]&#x3D;dec&amp;a[1]&#x3D;updatexml(1,concat(0x7,user(),0x7e),1)&amp;a[2]&#x3D;1</span><br><span class="line">?a[0]&#x3D;inc&amp;a[1]&#x3D;updatexml(1,concat(0x7,user(),0x7e),1)&amp;a[2]&#x3D;1</span><br></pre></td></tr></table></figure>
 
 <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>a这个参数要接收数组形式！所以我们写成了<code>get(&#39;a/a&#39;)</code>，注意后面的 <code>/a</code> 就是要求 <code>传入数组形式</code>。数组形式是后面利用的<code>前提</code>。</p>
-<p><img src="https://img-blog.csdnimg.cn/4d77770ed75a44e6a08453cc9936d061.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/4d77770ed75a44e6a08453cc9936d061.png"></p>
 <p>跟进insert函数 第一个参数要求数组形式</p>
-<p><img src="https://img-blog.csdnimg.cn/a1ea3e2511ba4a93a80263019bb3ce13.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a1ea3e2511ba4a93a80263019bb3ce13.png"></p>
 <p>跟进 <code>parseExpress()</code> 函数发现 就是获取一下数据库中的表等其他操作</p>
-<p><img src="https://img-blog.csdnimg.cn/3f9e654e2a004311bb63d09bd452f5c8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_14,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/3f9e654e2a004311bb63d09bd452f5c8.png"></p>
 <p>然后 <code>$data=array_merge($options[&#39;data&#39;], $data);</code> 将我们传入的数组与 <code>$options中的data(空数组)</code> 进行合并，放入到$data</p>
-<p><img src="https://img-blog.csdnimg.cn/e9699224f1964f5cb61b127ca889bd7c.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e9699224f1964f5cb61b127ca889bd7c.png"></p>
 <p>接下来生成sql语句 : <code>$sql = $this-&gt;builder-&gt;insert($data, $options, $replace);</code></p>
 <p>跟进 <code>insert()</code> 函数</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">abstract class Builder</span><br><span class="line">thinkphp&#x2F;library&#x2F;think&#x2F;db&#x2F;Builder.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/9eaff951b6ef4ddf8557160934034d27.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/9eaff951b6ef4ddf8557160934034d27.png"></p>
 <p>跟进 <code>parseData()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/f73327dbdb574fd9afc986cd4f394516.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f73327dbdb574fd9afc986cd4f394516.png"></p>
 <p>getFieldsBind()就是获取一下字段名然后返回parseData()</p>
-<p><img src="https://img-blog.csdnimg.cn/f649f13596344e2b9be68b6445b0cba3.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f649f13596344e2b9be68b6445b0cba3.png"></p>
 <p>问题出现在这里</p>
-<p><img src="https://img-blog.csdnimg.cn/50c016a8171d4b0582f02fa77e6dad45.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/50c016a8171d4b0582f02fa77e6dad45.png"></p>
 <p>因为$val是个数组所以进入这一分支</p>
 <p>不管是<code>dec</code>还是<code>inc</code> 都将 <code>$val[1]拼接成语句然后存到$result[$item]</code></p>
-<p><img src="https://img-blog.csdnimg.cn/189ca8c7163249499ee92a91fd2abdee.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/189ca8c7163249499ee92a91fd2abdee.png"></p>
 <p>将$result返回到insert()</p>
-<p><img src="https://img-blog.csdnimg.cn/b5370814af5849b391c574aec21773c9.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b5370814af5849b391c574aec21773c9.png"></p>
 <p>将<code>键等于 $fields</code> 将<code>值等于 $values</code></p>
 <p>接着进行替换</p>
-<p><img src="https://img-blog.csdnimg.cn/469c1f9068fb40f59c3424d5a48f2bd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/469c1f9068fb40f59c3424d5a48f2bd0.png"></p>
 <p>返回</p>
 <p> <code>$sql=INSERT INTO </code>users<code> (</code>username<code>) VALUES (updatexml(1,concat(0x7,user(),0x7e),1)-1)</code></p>
 <p>执行sql语句</p>
-<p><img src="https://img-blog.csdnimg.cn/a7f97ffb85fb4725807287e63528b1b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<h1 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h1><p><img src="https://img-blog.csdnimg.cn/88d1072530664f77bacf762692be5ece.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7f97ffb85fb4725807287e63528b1b0.png"></p>
+<h1 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h1><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/88d1072530664f77bacf762692be5ece.png"></p>
 
     </div>
 
@@ -403,7 +403,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

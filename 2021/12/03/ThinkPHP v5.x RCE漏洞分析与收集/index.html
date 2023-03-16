@@ -27,26 +27,26 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言具体分析 ThinkPHPv5 RCE改造 | Y0ng的博客 (yongsheng.site) Thinkphp5 rce分两个大版本     ThinkPHP 5.0-5.0.24    ThinkPHP 5.1.0-5.1.30  方法主要分为两种 1.Request中的filter变量覆盖导致RCE 分开启debug和不开启debug 两种情况 2.路由控制不严谨导致的RCE 先分析第">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b1e2b08dc3d44dcfaab4d1d9108142dd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a3875bfeb8f24e128b74dc6c8b1ef990.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_17,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/09256c2ce9694cb28331ec0802a692d6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a7593d0362494070b5c032ae33e7b48c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f0ace01c7f9b4174ad8909d6a3589d49.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/ab29f838e3ac4f25bb2d851bc78c8a6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c82b887a0f054af5a8f171db4731be99.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f35dee589d5647d4ac790630adb52749.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/eb2af877ab0549c7a50f8d0993c0826f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/504a986fa93f42a7b7265d5a6c45428e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/09124093039d48149f7427898e9a51f5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/3c66457317324bfaa6ba438a0242d4a7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1826311d22704305b57caf6ff1a697eb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/39523143e3614b18a43a708a9e0c4577.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7df49593ac2640bdbf20d3914ef98103.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b1e2b08dc3d44dcfaab4d1d9108142dd.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a3875bfeb8f24e128b74dc6c8b1ef990.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09256c2ce9694cb28331ec0802a692d6.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7593d0362494070b5c032ae33e7b48c.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f0ace01c7f9b4174ad8909d6a3589d49.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ab29f838e3ac4f25bb2d851bc78c8a6a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c82b887a0f054af5a8f171db4731be99.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f35dee589d5647d4ac790630adb52749.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/eb2af877ab0549c7a50f8d0993c0826f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/504a986fa93f42a7b7265d5a6c45428e.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09124093039d48149f7427898e9a51f5.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/3c66457317324bfaa6ba438a0242d4a7.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1826311d22704305b57caf6ff1a697eb.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/39523143e3614b18a43a708a9e0c4577.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/7df49593ac2640bdbf20d3914ef98103.png">
 <meta property="article:published_time" content="2021-12-03T10:28:33.482Z">
-<meta property="article:modified_time" content="2022-04-25T11:47:43.418Z">
+<meta property="article:modified_time" content="2023-03-16T13:37:57.452Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/b1e2b08dc3d44dcfaab4d1d9108142dd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b1e2b08dc3d44dcfaab4d1d9108142dd.png">
 
 <link rel="canonical" href="http://example.com/2021/12/03/ThinkPHP%20v5.x%20RCE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E6%94%B6%E9%9B%86/">
 
@@ -146,7 +146,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-25 19:47:43" itemprop="dateModified" datetime="2022-04-25T19:47:43+08:00">2022-04-25</time>
+                <time title="修改时间：2023-03-16 21:37:57" itemprop="dateModified" datetime="2023-03-16T21:37:57+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,40 +282,41 @@
 
 <h2 id="开启debug"><a href="#开启debug" class="headerlink" title="开启debug"></a>开启debug</h2><p>当 <code>application\config.php    中的app_debug = true</code></p>
 <p>单入口文件</p>
-<p><img src="https://img-blog.csdnimg.cn/b1e2b08dc3d44dcfaab4d1d9108142dd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br><img src="https://img-blog.csdnimg.cn/a3875bfeb8f24e128b74dc6c8b1ef990.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_17,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b1e2b08dc3d44dcfaab4d1d9108142dd.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a3875bfeb8f24e128b74dc6c8b1ef990.png"></p>
 <p>进入<code>run()</code> 方法</p>
-<p><img src="https://img-blog.csdnimg.cn/09256c2ce9694cb28331ec0802a692d6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09256c2ce9694cb28331ec0802a692d6.png"></p>
 <p>首先初始化<code>$request</code> 这个数组，<code>self::initCommon()</code>;初始化公共配置。未设置调度信息则进行 URL 路由检测 <code>self::routeCheck($request, $config)</code> 默认进入。</p>
 <p>跟进 routeCheck()</p>
-<p><img src="https://img-blog.csdnimg.cn/a7593d0362494070b5c032ae33e7b48c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7593d0362494070b5c032ae33e7b48c.png"></p>
 <p>默认<code>self::$routeCheck</code> <code>self::$routemust</code> 为空，整体流程看图</p>
 <p>跟进 <code>Route::check</code></p>
-<p><img src="https://img-blog.csdnimg.cn/f0ace01c7f9b4174ad8909d6a3589d49.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f0ace01c7f9b4174ad8909d6a3589d49.png"></p>
 <p>进入到Request.php中的method()方法中</p>
-<p><img src="https://img-blog.csdnimg.cn/ab29f838e3ac4f25bb2d851bc78c8a6a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ab29f838e3ac4f25bb2d851bc78c8a6a.png"></p>
 <p>首先进入<code>elseif分支</code>，接着 <code>isset($_POST[Config::get(&#39;var_method&#39;)])</code> ， <code>var_method 默认为 _method</code></p>
 <p>并执行 <code>$this-&gt;&#123;$this-&gt;method&#125;($_POST)</code> 语句。因此通过<code>指定_method</code>即可完成 <code>对该类的任意方法的调用</code>，其传入对应的参数即对应的$_POST数组。</p>
 <p>这里利用的地方是 <code>__construct()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/c82b887a0f054af5a8f171db4731be99.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c82b887a0f054af5a8f171db4731be99.png"></p>
 <p>所以当我们post传入<br><code>s=whoami&amp;_method=__construct&amp;method=POST&amp;filter[]=system</code> 时</p>
 <p><code>_method触发__construct</code> ，<code>filter覆盖参数为system</code> ，<code>method覆盖为POST</code></p>
-<p><img src="https://img-blog.csdnimg.cn/f35dee589d5647d4ac790630adb52749.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f35dee589d5647d4ac790630adb52749.png"></p>
 <p>然后一路返回到run()</p>
-<p><img src="https://img-blog.csdnimg.cn/eb2af877ab0549c7a50f8d0993c0826f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/eb2af877ab0549c7a50f8d0993c0826f.png"></p>
 <p>因为此时开启debug，进入if 进入<code>$request-&gt;param()</code></p>
 <p>param()</p>
-<p><img src="https://img-blog.csdnimg.cn/504a986fa93f42a7b7265d5a6c45428e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/504a986fa93f42a7b7265d5a6c45428e.png"></p>
 <p>进入<code>input()</code> 函数</p>
-<p><img src="https://img-blog.csdnimg.cn/09124093039d48149f7427898e9a51f5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<p><img src="https://img-blog.csdnimg.cn/3c66457317324bfaa6ba438a0242d4a7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09124093039d48149f7427898e9a51f5.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/3c66457317324bfaa6ba438a0242d4a7.png"></p>
 <p><code>array_walk_recursive() </code><br>对数组中的每个元素应用用户自定义函数，也就是说 <code>调用filterValue()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/1826311d22704305b57caf6ff1a697eb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1826311d22704305b57caf6ff1a697eb.png"></p>
 <h2 id="未开启debug"><a href="#未开启debug" class="headerlink" title="未开启debug"></a>未开启debug</h2><p>5.0.x 跟 5.1.x 代码差异较大</p>
 <p>所以payload 也不尽相同</p>
 <p>以 <a target="_blank" rel="noopener" href="https://www.easy233.top/2020/12/11/thinkphp5-rce-zong-jie/#toc-heading-5">参考</a> 为例子</p>
-<p><img src="https://img-blog.csdnimg.cn/39523143e3614b18a43a708a9e0c4577.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/39523143e3614b18a43a708a9e0c4577.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
 <h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p><code>$this-&gt;method</code> 可控导致可以调用<code>__contruct()覆盖Request类的filter字段</code>，然后<code>App::run()</code> 执行判断debug来决定是否执行 <code>$request-&gt;param()</code>，并且还有<code>$dispatch[&#39;type&#39;]</code> 等于<code>controller</code>或者 <code>method</code> 时会执行 <code>$request-&gt;param()</code>，而<code>$request-&gt;param()</code>会进入到 <code>input()</code> 方法，在这个方法中将被覆盖的filter回调call_user_func()，造成rce</p>
-<p><img src="https://img-blog.csdnimg.cn/7df49593ac2640bdbf20d3914ef98103.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/7df49593ac2640bdbf20d3914ef98103.png"></p>
 <h1 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h1><p>基于__construct的payload大部分出现在 <code>5.0.x</code> 及低版本的 <code>5.1.x</code> 中。</p>
 <h2 id="5-0-amp-5-0-1-5-0-7"><a href="#5-0-amp-5-0-1-5-0-7" class="headerlink" title="5.0&amp;5.0.1-5.0.7"></a>5.0&amp;5.0.1-5.0.7</h2><p>与debug无关</p>
 <p>命令执行rce</p>
@@ -456,7 +457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -27,24 +27,24 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言可能下的环境有问题，不多说了 参考： ThinkPHP 6 反序列化漏洞 ThinkPHP V6.0.x 反序列化漏洞 前面的方法跟6.0.9那里一样 不管是通过updateData()还是通过insertData() 最后都是走到 $this-&gt;db() 来触发__toString 分析这里直接省略前面 跟进updateData() 所以多出的条件是 $this-&gt;exists">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/bf0f101393d8419688291eba0f1852f9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/040d482e1f0b459ca3032f52ef4ad9a1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7e08422a5de54a0097322802f333f448.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f257197d3009454392bae6f22f52df72.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/990c1d1e57ef4d53bd160f33665f1a36.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/40d7c6e763c04760b6ad716ba688c0aa.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d85224c5ae8748a4a80e784f6f2aa9c3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/bdaab3c60002494489276a832e585127.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/10b6084728cb41e9b4bfdd21b3064b9a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/ec4f12bb2a634dcaa0db81576d41ba25.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e8c5c8cede1843328cc63c848e5f4e4f.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c73bfe21dc8b4204aa15124720ef5c63.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2db60aa8b776458f92f7a60c3e911db4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/bf0f101393d8419688291eba0f1852f9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/040d482e1f0b459ca3032f52ef4ad9a1.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/7e08422a5de54a0097322802f333f448.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f257197d3009454392bae6f22f52df72.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/990c1d1e57ef4d53bd160f33665f1a36.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/40d7c6e763c04760b6ad716ba688c0aa.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/d85224c5ae8748a4a80e784f6f2aa9c3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/bdaab3c60002494489276a832e585127.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/10b6084728cb41e9b4bfdd21b3064b9a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ec4f12bb2a634dcaa0db81576d41ba25.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e8c5c8cede1843328cc63c848e5f4e4f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c73bfe21dc8b4204aa15124720ef5c63.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/2db60aa8b776458f92f7a60c3e911db4.png">
 <meta property="article:published_time" content="2021-11-25T14:18:11.561Z">
-<meta property="article:modified_time" content="2022-05-31T15:56:38.570Z">
+<meta property="article:modified_time" content="2023-03-16T13:37:28.176Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/bf0f101393d8419688291eba0f1852f9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/bf0f101393d8419688291eba0f1852f9.png">
 
 <link rel="canonical" href="http://example.com/2021/11/25/ThinkPHP%206.0.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">
 
@@ -144,7 +144,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-31 23:56:38" itemprop="dateModified" datetime="2022-05-31T23:56:38+08:00">2022-05-31</time>
+                <time title="修改时间：2023-03-16 21:37:28" itemprop="dateModified" datetime="2023-03-16T21:37:28+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -269,13 +269,13 @@
 <p>前面的方法跟6.0.9那里一样 不管是通过updateData()还是通过insertData() 最后都是走到 <code>$this-&gt;db() 来触发__toString</code></p>
 <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>这里直接省略前面 跟进<code>updateData()</code></p>
 <p>所以多出的条件是 <code>$this-&gt;exists = true</code></p>
-<p><img src="https://img-blog.csdnimg.cn/bf0f101393d8419688291eba0f1852f9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/bf0f101393d8419688291eba0f1852f9.png"></p>
 <a id="more"></a>
 
 <p>这里的 <code>__toString</code> 是在 <code>Conversion</code> 进行触发的</p>
-<p><img src="https://img-blog.csdnimg.cn/040d482e1f0b459ca3032f52ef4ad9a1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/040d482e1f0b459ca3032f52ef4ad9a1.png"></p>
 <p>跟进 <code>toArray()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/7e08422a5de54a0097322802f333f448.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/7e08422a5de54a0097322802f333f448.png"></p>
 <p>这里</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="variable">$data</span> = array_merge(<span class="keyword">$this</span>-&gt;data, <span class="keyword">$this</span>-&gt;relation);</span><br></pre></td></tr></table></figure>
 
@@ -283,23 +283,23 @@
 <p>然后进行<br><code>foreach ($data as $key =&gt; $val)</code></p>
 <p>那么这里的 <code>$key</code> 包含了 <code>$this-&gt;data, $this-&gt;relation</code> 的key  我称它为<code>大key</code>吧</p>
 <p>跟进 <code>getAttr()</code> 这里传入的参数<code>$name是大key</code></p>
-<p><img src="https://img-blog.csdnimg.cn/f257197d3009454392bae6f22f52df72.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f257197d3009454392bae6f22f52df72.png"></p>
 <p>跟进 <code>getData()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/990c1d1e57ef4d53bd160f33665f1a36.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/990c1d1e57ef4d53bd160f33665f1a36.png"></p>
 <p>再跟进 <code>getRealFieldName()</code> 传入的参数依然是 <code>大key</code></p>
-<p><img src="https://img-blog.csdnimg.cn/40d7c6e763c04760b6ad716ba688c0aa.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/40d7c6e763c04760b6ad716ba688c0aa.png"></p>
 <p>还是返回 <code>$name</code> 这里返回到 <code>getData()</code>中</p>
-<p><img src="https://img-blog.csdnimg.cn/d85224c5ae8748a4a80e784f6f2aa9c3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/d85224c5ae8748a4a80e784f6f2aa9c3.png"></p>
 <p>接着进入 <code>if</code> 就是看这个<code>大key不论是$this-&gt;data, $this-&gt;relation 中的哪一个</code> ，然后返回到 <code>getAttr()</code> 作为变量 <code>$value</code></p>
-<p><img src="https://img-blog.csdnimg.cn/bdaab3c60002494489276a832e585127.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/bdaab3c60002494489276a832e585127.png"></p>
 <p>跟进 <code>getValue()</code></p>
-<p><img src="https://img-blog.csdnimg.cn/10b6084728cb41e9b4bfdd21b3064b9a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/10b6084728cb41e9b4bfdd21b3064b9a.png"></p>
 <p>最后实例化抽象类Model还是用 <code>Pivot类</code></p>
 <p>但是可能我tp版本太高了存在这一句</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable">$closure</span> <span class="keyword">instanceof</span> \<span class="built_in">Closure</span>)</span><br></pre></td></tr></table></figure>
 <p>可以看一下不一样的地方</p>
-<p><img src="https://img-blog.csdnimg.cn/ec4f12bb2a634dcaa0db81576d41ba25.png#pic_center"></p>
-<p><img src="https://img-blog.csdnimg.cn/e8c5c8cede1843328cc63c848e5f4e4f.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ec4f12bb2a634dcaa0db81576d41ba25.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e8c5c8cede1843328cc63c848e5f4e4f.png"></p>
 <p>导致exp无法利用</p>
 <p>具体解释：</p>
 <blockquote>
@@ -310,9 +310,9 @@
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">model</span>\<span class="title">concern</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">trait</span> Attribute&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$data</span>=[<span class="string">&#x27;jiang&#x27;</span>=&gt;<span class="string">&#x27;whoami&#x27;</span>];</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$withAttr</span>=[<span class="string">&#x27;jiang&#x27;</span>=&gt;<span class="string">&#x27;system&#x27;</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">trait</span> ModelEvent&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$withEvent</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Model</span></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">model</span>\<span class="title">concern</span>\<span class="title">Attribute</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">model</span>\<span class="title">concern</span>\<span class="title">ModelEvent</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$exists</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$force</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$lazySave</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$suffix</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$a</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;exists = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;force = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;lazySave = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;withEvent = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;suffix = <span class="variable">$a</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">think</span>\<span class="title">model</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pivot</span> <span class="keyword">extends</span> <span class="title">Model</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize(<span class="keyword">new</span> Pivot(<span class="keyword">new</span> Pivot())));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="v6-0-0-v6-0-12"><a href="#v6-0-0-v6-0-12" class="headerlink" title="v6.0.0-v6.0.12"></a>v6.0.0-v6.0.12</h1><p>不过在利用点上面的if语句里有 <code>getJsonValue</code> 方法</p>
-<p><img src="https://img-blog.csdnimg.cn/c73bfe21dc8b4204aa15124720ef5c63.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c73bfe21dc8b4204aa15124720ef5c63.png"></p>
 <p>跟进，利用没有限制</p>
-<p><img src="https://img-blog.csdnimg.cn/2db60aa8b776458f92f7a60c3e911db4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/2db60aa8b776458f92f7a60c3e911db4.png"></p>
 <p>还是可以利用</p>
 <p>不过在进入<code>getJsonValue</code>之前的那个if 得通过修改<code>$this-&gt;json</code>来进入if</p>
 <p>还有让<code>$this-&gt;jsonAssoc = true</code> 而且必须是<code>数组套数组</code>的形式</p>
@@ -429,7 +429,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -27,33 +27,33 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="漏洞概述该漏洞是在受影响的版本中，业务代码中如果 模板赋值方法assign的第一个参数可控，则可导致模板文件路径变量被覆盖为携带攻击代码的文件路径，造成任意文件包含，执行任意代码。 环境搭建 \Application\Home\Controller\IndexController.class.php  写入demo代码 &lt;?phpnamespace Home\Controller;use T">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/007cc087595d4d138605361b81023e7a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2d206d364a1c42bca28d35fddfe5ceaa.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/13c638770e9a4836a02b2234430ad929.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/6bc534cf440b424f84cd463769a953da.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9cd341c47fce42a09abde6f374435be3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/635027d41fdd4e98b96cd76ca03a6bf3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b38b3635d0fb4388a6f0b21697a882d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c3feaa44354b43339d6923adbabdee49.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/096b8dca50b8460aa56a6a93f983eccd.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/edaf40928b3d498a93f09544a711fc17.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/09244c4475f741188e6ad1468cc795d9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a7579343a44e4cf7bff0499975a940bb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4709eebdc41b4cc5afa19c072925fd1f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/73324f3d4b5a492dadb16f3278137d65.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/5ebc9a7903c14d47bbc861487bb26f34.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2acce5e0677d46978e64dfe686b3aa96.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/8590777bd1c44742a6cde0e8b6169df3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/625b741cc3f8487b8ab5ec841af387f3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/6c744fee31ce4b399d9053fbdacf2c52.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4289cc72f74142d491ea517ead3c8a37.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e71e14d705bf404a9fb93d16d49e2f80.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/eec5d7074c4648109f3e7a007d369004.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/007cc087595d4d138605361b81023e7a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/2d206d364a1c42bca28d35fddfe5ceaa.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/13c638770e9a4836a02b2234430ad929.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6bc534cf440b424f84cd463769a953da.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/9cd341c47fce42a09abde6f374435be3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/635027d41fdd4e98b96cd76ca03a6bf3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b38b3635d0fb4388a6f0b21697a882d3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c3feaa44354b43339d6923adbabdee49.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/096b8dca50b8460aa56a6a93f983eccd.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/edaf40928b3d498a93f09544a711fc17.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09244c4475f741188e6ad1468cc795d9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7579343a44e4cf7bff0499975a940bb.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/4709eebdc41b4cc5afa19c072925fd1f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/73324f3d4b5a492dadb16f3278137d65.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5ebc9a7903c14d47bbc861487bb26f34.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/2acce5e0677d46978e64dfe686b3aa96.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/8590777bd1c44742a6cde0e8b6169df3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/625b741cc3f8487b8ab5ec841af387f3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6c744fee31ce4b399d9053fbdacf2c52.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/4289cc72f74142d491ea517ead3c8a37.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e71e14d705bf404a9fb93d16d49e2f80.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/eec5d7074c4648109f3e7a007d369004.png">
 <meta property="article:published_time" content="2021-08-29T08:53:12.916Z">
-<meta property="article:modified_time" content="2021-12-23T09:58:36.299Z">
+<meta property="article:modified_time" content="2023-03-16T13:41:12.681Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/007cc087595d4d138605361b81023e7a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/007cc087595d4d138605361b81023e7a.png">
 
 <link rel="canonical" href="http://example.com/2021/08/29/ThinkPHP%203.2.x%20RCE/">
 
@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -241,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-23 17:58:36" itemprop="dateModified" datetime="2021-12-23T17:58:36+08:00">2021-12-23</time>
+                <time title="修改时间：2023-03-16 21:41:12" itemprop="dateModified" datetime="2023-03-16T21:41:12+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,54 +297,54 @@
 <blockquote>
 <p>/index.php?m=–&gt;<?=phpinfo();?></p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/007cc087595d4d138605361b81023e7a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>会将错误记录到日志中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/007cc087595d4d138605361b81023e7a.png"><br>会将错误记录到日志中</p>
 <blockquote>
 <p>\Application\Runtime\Logs\Common\21_08_29.log</p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/2d206d364a1c42bca28d35fddfe5ceaa.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>构造攻击请求：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/2d206d364a1c42bca28d35fddfe5ceaa.png"><br>构造攻击请求：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;index.php?m&#x3D;Home&amp;c&#x3D;Index&amp;a&#x3D;index&amp;value[_filename]&#x3D;.&#x2F;Application&#x2F;Runtime&#x2F;Logs&#x2F;Common&#x2F;21_08_29.log</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/13c638770e9a4836a02b2234430ad929.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
-<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p><img src="https://img-blog.csdnimg.cn/6bc534cf440b424f84cd463769a953da.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/13c638770e9a4836a02b2234430ad929.png"></p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6bc534cf440b424f84cd463769a953da.png"></p>
 <p>当构造包含请求，跟进</p>
-<p><img src="https://img-blog.csdnimg.cn/9cd341c47fce42a09abde6f374435be3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/9cd341c47fce42a09abde6f374435be3.png"></p>
 <p>ThinkPHP/Library/Think/Controller.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/635027d41fdd4e98b96cd76ca03a6bf3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/635027d41fdd4e98b96cd76ca03a6bf3.png"></p>
 <p>ThinkPHP/Library/Think/View.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/b38b3635d0fb4388a6f0b21697a882d3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b38b3635d0fb4388a6f0b21697a882d3.png"></p>
 <p>进入assign方法，由于传入的$name是数组，所以进入if，赋值给数组tVar</p>
 <p>然后进入display方法开始解析并获取模板文件内容</p>
-<p><img src="https://img-blog.csdnimg.cn/c3feaa44354b43339d6923adbabdee49.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c3feaa44354b43339d6923adbabdee49.png"></p>
 <p>ThinkPHP/Library/Think/Controller.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/096b8dca50b8460aa56a6a93f983eccd.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/096b8dca50b8460aa56a6a93f983eccd.png"></p>
 <p>ThinkPHP/Library/Think/View.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/edaf40928b3d498a93f09544a711fc17.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/edaf40928b3d498a93f09544a711fc17.png"></p>
 <p>这时传入的参数全是空</p>
 <p>接着进入fetch方法</p>
-<p><img src="https://img-blog.csdnimg.cn/09244c4475f741188e6ad1468cc795d9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09244c4475f741188e6ad1468cc795d9.png"></p>
 <p>ThinkPHP/Library/Think/View.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/a7579343a44e4cf7bff0499975a940bb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7579343a44e4cf7bff0499975a940bb.png"></p>
 <p>如果内容为空，程序会去根据配置获取默认的模板文件位置(./Application/Home/View/Index/index.html)，所以我们这里要去新建这个目录和文件</p>
 <p>接着进行判断模板引擎是什么</p>
-<p><img src="https://img-blog.csdnimg.cn/4709eebdc41b4cc5afa19c072925fd1f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/4709eebdc41b4cc5afa19c072925fd1f.png"></p>
 <p>因为默认配置是think，所以进入else分支，将tVar赋给了<code>$params[&#39;var&#39;]</code></p>
-<p><img src="https://img-blog.csdnimg.cn/73324f3d4b5a492dadb16f3278137d65.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br><img src="https://img-blog.csdnimg.cn/5ebc9a7903c14d47bbc861487bb26f34.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/73324f3d4b5a492dadb16f3278137d65.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5ebc9a7903c14d47bbc861487bb26f34.png"></p>
 <p>进入Hook::listen</p>
-<p><img src="https://img-blog.csdnimg.cn/2acce5e0677d46978e64dfe686b3aa96.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/2acce5e0677d46978e64dfe686b3aa96.png"></p>
 <p>ThinkPHP/Library/Think/Hook.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/8590777bd1c44742a6cde0e8b6169df3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/8590777bd1c44742a6cde0e8b6169df3.png"></p>
 <p>进入exec方法中，处理后调用Behavior\ParseTemplateBehavior类中的<code>run方法</code>处理$params这个带有日志文件路径的值。</p>
-<p><img src="https://img-blog.csdnimg.cn/625b741cc3f8487b8ab5ec841af387f3.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/625b741cc3f8487b8ab5ec841af387f3.png" alt="在这里插入图片描述"></p>
 <p>随后进入run方法</p>
-<p><img src="https://img-blog.csdnimg.cn/6c744fee31ce4b399d9053fbdacf2c52.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6c744fee31ce4b399d9053fbdacf2c52.png"></p>
 <p>前面进行判断，重点看这个fetch方法，因为我们的payload在<code>[&#39;var&#39;]</code>下，所以看这里</p>
 <p>调用ThinkPHP/Library/Think/Template.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/4289cc72f74142d491ea517ead3c8a37.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/4289cc72f74142d491ea517ead3c8a37.png"></p>
 <p>将payload赋给tVar,进入到Storage::load</p>
 <p>ThinkPHP/Library/Think/Storage/Driver/File.class.php</p>
-<p><img src="https://img-blog.csdnimg.cn/e71e14d705bf404a9fb93d16d49e2f80.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e71e14d705bf404a9fb93d16d49e2f80.png"></p>
 <p>extract, EXTR_OVERWRITE - 默认。如果有冲突，覆盖已有的变量，然后进行include</p>
-<p><img src="https://img-blog.csdnimg.cn/eec5d7074c4648109f3e7a007d369004.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/eec5d7074c4648109f3e7a007d369004.png"></p>
 
     </div>
 
@@ -441,7 +441,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

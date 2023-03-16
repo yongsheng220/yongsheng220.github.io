@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言再次理解函数调用，简单栈溢出 参考:从0开始CTF-PWN（二）从PWN的HelloWorld-栈溢出开始 寄存器 函数状态主要涉及三个寄存器－－esp，ebp，eip。   esp 用来存储函数调用栈的栈顶地址，在压栈和退栈时发生变化。 ebp 用来存储当前函数状态的基地址，在函数运行时不变，可以用来索引确定函数参数或局部变量的位置。 eip 用来存储即将执行的程序指令的地址，cpu 依照">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/34f548fc8f7048ca8b19ffd460a23e80.jpg#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4379440febb2406a99f1686130b7f4bc.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/147103fcefc54ce3ab44a9aca955c831.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/40f47a5c857b4835bee4c4b08510a49b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d888061e493c48d699a0c1311594f8f7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/8b9a44eaa1e44257940cc15005daf759.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/8077b02187d644fa9a7baa22fa6234cc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/3143e59fe2414c6c83f5ceb28fca2fab.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/34f548fc8f7048ca8b19ffd460a23e80.jpg">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/4379440febb2406a99f1686130b7f4bc.jpg">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/147103fcefc54ce3ab44a9aca955c831.jpg">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/40f47a5c857b4835bee4c4b08510a49b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/d888061e493c48d699a0c1311594f8f7.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/8b9a44eaa1e44257940cc15005daf759.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/8077b02187d644fa9a7baa22fa6234cc.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/3143e59fe2414c6c83f5ceb28fca2fab.png">
 <meta property="article:published_time" content="2021-11-05T10:22:54.969Z">
-<meta property="article:modified_time" content="2021-11-12T09:51:12.914Z">
+<meta property="article:modified_time" content="2023-03-16T14:12:28.121Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/34f548fc8f7048ca8b19ffd460a23e80.jpg#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/34f548fc8f7048ca8b19ffd460a23e80.jpg">
 
 <link rel="canonical" href="http://example.com/2021/11/05/%E7%AE%80%E5%8D%95%E6%A0%88%E6%BA%A2%E5%87%BA%E7%90%86%E8%A7%A3/">
 
@@ -139,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-12 17:51:12" itemprop="dateModified" datetime="2021-11-12T17:51:12+08:00">2021-11-12</time>
+                <time title="修改时间：2023-03-16 22:12:28" itemprop="dateModified" datetime="2023-03-16T22:12:28+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,7 +270,7 @@
 <a id="more"></a>
 
 <h1 id="函数调用栈"><a href="#函数调用栈" class="headerlink" title="函数调用栈"></a>函数调用栈</h1><p>函数调用栈是指程序运行时内存一段连续的区域，用来保存函数运行时的状态信息，包括函数参数与局部变量等。称之为“栈”是因为发生函数调用时，调用函数（caller）的状态被保存在栈内，被调用函数（callee）的状态被压入调用栈的栈顶；在函数调用结束时，栈顶的函数（callee）状态被弹出，栈顶恢复到调用函数（caller）的状态。函数调用栈在内存中从高地址向低地址生长，所以栈顶对应的内存地址在压栈时变小，退栈时变大。<br>典型的函数调用栈结构如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/34f548fc8f7048ca8b19ffd460a23e80.jpg#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/34f548fc8f7048ca8b19ffd460a23e80.jpg"></p>
 <h1 id="函数调用过程"><a href="#函数调用过程" class="headerlink" title="函数调用过程"></a>函数调用过程</h1><ul>
 <li><p>发生函数调用时，会先将被调用函数（callee）的参数按逆序压入栈内，这些参数会保存在调用函数（caller）的函数状态内。</p>
 </li>
@@ -284,14 +284,14 @@
 <blockquote>
 <p>入栈时： 被调函数参数 –&gt; 被调函数返回地址 –&gt; 调用者基址 –&gt; 被调者局部变量 </p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/4379440febb2406a99f1686130b7f4bc.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/4379440febb2406a99f1686130b7f4bc.jpg"></p>
 <ul>
 <li><p>在压栈过程中，esp寄存器的值会逐渐减小（栈从内存高地址向地址值“生长”）。发生调用时，程序还会将被调用函数（callee）的指令地址存到eip寄存器内，这样程序就可以依序执行被调用函数的指令了。</p>
 </li>
 <li><p>调用结束时，栈变化的核心任务是弹出被调用函数（callee）的状态，并将整个栈恢复到调用函数（caller）的状态。首先弹出被调用函数（callee）的局部变量，然后将栈上存储的调用函数（caller）的基地址从栈内弹出，并重新保存到ebp寄存器中，这样调用函数的基地址信息得以恢复，此时栈顶会指向返回地址。最后将返回地址从栈顶弹出，并保存到eip寄存器内，这样调用函数的eip指令信息得以恢复，指向了调用函数后的下一条语句。</p>
 </li>
 </ul>
-<p><img src="https://img-blog.csdnimg.cn/147103fcefc54ce3ab44a9aca955c831.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/147103fcefc54ce3ab44a9aca955c831.jpg"></p>
 <blockquote>
 <p>出栈时：被调者局部变量  –&gt; 调用者基址 –&gt; 被调函数返回地址 –&gt;被调函数参数</p>
 </blockquote>
@@ -300,14 +300,14 @@
 <p>编译</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc -g -m32 -O0 -fno-stack-protector -z execstack -o test test.c</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/40f47a5c857b4835bee4c4b08510a49b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>在 call func 处下断点 <code>b *56556254</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/40f47a5c857b4835bee4c4b08510a49b.png"><br>在 call func 处下断点 <code>b *56556254</code></p>
 <p>查看栈情况</p>
-<p><img src="https://img-blog.csdnimg.cn/d888061e493c48d699a0c1311594f8f7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>看到压入的是<code>被调函数参数</code> 地址为 <code>0xffffd130</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/d888061e493c48d699a0c1311594f8f7.png"><br>看到压入的是<code>被调函数参数</code> 地址为 <code>0xffffd130</code></p>
 <p>stepi 进一步进行</p>
-<p><img src="https://img-blog.csdnimg.cn/8b9a44eaa1e44257940cc15005daf759.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>看到栈内情况 压入了 <code>callee返回地址</code> </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/8b9a44eaa1e44257940cc15005daf759.png"><br>看到栈内情况 压入了 <code>callee返回地址</code> </p>
 <p>如果想利用栈溢出来覆盖参数，那么肯定要知道 <code>gets 开始存入的地址</code></p>
-<p>在gets下一步下断点<br><img src="https://img-blog.csdnimg.cn/8077b02187d644fa9a7baa22fa6234cc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="在这里插入图片描述"><br><code>c</code> 继续运行</p>
-<p><img src="https://img-blog.csdnimg.cn/3143e59fe2414c6c83f5ceb28fca2fab.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"><br>看到从 <code>0xffffd0f0</code> 开始存入输入的字符</p>
+<p>在gets下一步下断点<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/8077b02187d644fa9a7baa22fa6234cc.png" alt="在这里插入图片描述"><br><code>c</code> 继续运行</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/pwn/3143e59fe2414c6c83f5ceb28fca2fab.png"><br>看到从 <code>0xffffd0f0</code> 开始存入输入的字符</p>
 <p><code>p/d 0xffffd130 - 0xffffd0f0</code> 得到输入处地址与函数参数地址之间的距离，然后构造<code>垃圾数据+paylaod</code> 达到控制函数参数的目的</p>
 <p>嗯，目前了解就是这些了</p>
 
@@ -406,7 +406,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

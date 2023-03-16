@@ -23,42 +23,42 @@
   <meta name="description" content="前言学习shiro反序列化 是什么Apache Shiro是一种功能强大且易于使用的Java安全框架，它执行身份验证、授权、加密和会话管理，可用于保护任何应用程序的安全。 Shiro提供了应用程序安全性API来执行以下方面：  身份验证：证明用户身份，通常称为用户登录  授权：访问控制  密码术：保护或隐藏数据以防窥视；  会话管理：每个用户的时间敏感状态。   Shiro还支持一些辅助功能，例如">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shiro-550 反序列化">
-<meta property="og:url" content="http://example.com/2022/02/28/shrio%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
+<meta property="og:url" content="http://example.com/2022/02/28/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言学习shiro反序列化 是什么Apache Shiro是一种功能强大且易于使用的Java安全框架，它执行身份验证、授权、加密和会话管理，可用于保护任何应用程序的安全。 Shiro提供了应用程序安全性API来执行以下方面：  身份验证：证明用户身份，通常称为用户登录  授权：访问控制  密码术：保护或隐藏数据以防窥视；  会话管理：每个用户的时间敏感状态。   Shiro还支持一些辅助功能，例如">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/48402bba71731b7a55a0c9bb2dd26168.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ec0211df706ace32bc4ee145c0d3a242.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/35b2b65f586d4a843569e1258f5e1b64.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/294ee01c8c3bd6a9c6b100d564ede342.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7b47279fbf85cc5a5a7eb8faf3cf33b1.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1e1e2c9e08afc94621f695c57980b368.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/60ffa04b9f2d2b957bc8f7c6e21d9c73.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/8b50a41c3e1de8085aabeb72c26212c6.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b2912ce7de7ff68544d0de03d4750c71.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/a6ccf19c0353db0026d4d4a43cb5a91f.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d16239754af20536a418a54d9ac9d737.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9689f4ed2bbbb5b072ee4facbd2f5672.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/28bb17f0ca5be8907fa5d9ad636a3e50.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/31cb422a7d10184504006c407080a638.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6a65f3f4f5036d1957b9eb3013b229ec.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/355b4a7243d844a2ddbaa811b77b1111.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/eceead19cc9bedc366664a80fdcbc3a9.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7f48163000c280ab1a5a77a8458a6940.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3614f0d0c40f3a26e38050a3d56c3298.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9035c6c8c55ea8ad4b3895a04e4f9dd9.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1104e03ff0796cfce5080c9c51b7d1fd.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5b33127bfd9cd24486b42080cfbab076.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/20f2721824ba1798fb2727f7d1ef7e2f.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/2a7236894bc5b1a5940475cd455cc086.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e1883f1a48ccb600dd647fa9a365c0b9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/48402bba71731b7a55a0c9bb2dd26168.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/ec0211df706ace32bc4ee145c0d3a242.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/35b2b65f586d4a843569e1258f5e1b64.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/294ee01c8c3bd6a9c6b100d564ede342.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/7b47279fbf85cc5a5a7eb8faf3cf33b1.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/1e1e2c9e08afc94621f695c57980b368.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/60ffa04b9f2d2b957bc8f7c6e21d9c73.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/8b50a41c3e1de8085aabeb72c26212c6.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/b2912ce7de7ff68544d0de03d4750c71.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/a6ccf19c0353db0026d4d4a43cb5a91f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/d16239754af20536a418a54d9ac9d737.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/9689f4ed2bbbb5b072ee4facbd2f5672.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/28bb17f0ca5be8907fa5d9ad636a3e50.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/31cb422a7d10184504006c407080a638.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/6a65f3f4f5036d1957b9eb3013b229ec.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/355b4a7243d844a2ddbaa811b77b1111.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/eceead19cc9bedc366664a80fdcbc3a9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/7f48163000c280ab1a5a77a8458a6940.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/3614f0d0c40f3a26e38050a3d56c3298.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/9035c6c8c55ea8ad4b3895a04e4f9dd9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/1104e03ff0796cfce5080c9c51b7d1fd.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/5b33127bfd9cd24486b42080cfbab076.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/20f2721824ba1798fb2727f7d1ef7e2f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/2a7236894bc5b1a5940475cd455cc086.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/e1883f1a48ccb600dd647fa9a365c0b9.png">
 <meta property="article:published_time" content="2022-02-28T13:46:12.348Z">
-<meta property="article:modified_time" content="2022-03-29T15:25:58.258Z">
+<meta property="article:modified_time" content="2023-03-16T14:05:49.066Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/48402bba71731b7a55a0c9bb2dd26168.png">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/48402bba71731b7a55a0c9bb2dd26168.png">
 
-<link rel="canonical" href="http://example.com/2022/02/28/shrio%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+<link rel="canonical" href="http://example.com/2022/02/28/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 
 
 <script id="page-configurations">
@@ -156,7 +156,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -214,7 +214,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/28/shrio%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/28/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/cys.jpg">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-29 23:25:58" itemprop="dateModified" datetime="2022-03-29T23:25:58+08:00">2022-03-29</time>
+                <time title="修改时间：2023-03-16 22:05:49" itemprop="dateModified" datetime="2023-03-16T22:05:49+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -294,59 +294,59 @@
 <p>在我们勾选rememberme登陆后，刷新，抓包，将其 <strong>JSESSIONID 删除</strong>，使 shiro 验证cookie中rememberme的值是否正确（如果不删除JSESSIONID，shiro则直接以JSESSIONID为登陆凭证了，就不会验证rememberme中的值了）</p>
 <h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p><a target="_blank" rel="noopener" href="https://github.com/phith0n/JavaThings/tree/master/shirodemo">JavaThings/shirodemo at master · phith0n/JavaThings (github.com)</a>，p神的shiro的demo 然后导入idea</p>
 <p>添加tomcat</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/48402bba71731b7a55a0c9bb2dd26168.png" alt="image-20220225153128673"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/48402bba71731b7a55a0c9bb2dd26168.png" alt="image-20220225153128673"></p>
 <p>部署war包</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/ec0211df706ace32bc4ee145c0d3a242.png" alt="image-20220225153150758"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/ec0211df706ace32bc4ee145c0d3a242.png" alt="image-20220225153150758"></p>
 <p>这样就行了</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/35b2b65f586d4a843569e1258f5e1b64.png" alt="image-20220225153302200"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/35b2b65f586d4a843569e1258f5e1b64.png" alt="image-20220225153302200"></p>
 <h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><p>admin ：secret 选择remember me登录，当访问其他资源时cookie中会携带rememberme，shiro会进行反序列化导致漏洞发生</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/294ee01c8c3bd6a9c6b100d564ede342.png" alt="image-20220225154200301"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/294ee01c8c3bd6a9c6b100d564ede342.png" alt="image-20220225154200301"></p>
 <p>利用工具，爆破内置密钥</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/7b47279fbf85cc5a5a7eb8faf3cf33b1.png" alt="image-20220225153415417"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/7b47279fbf85cc5a5a7eb8faf3cf33b1.png" alt="image-20220225153415417"></p>
 <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h2><p>账号密码登录，选择 remerberMe，入口是在 AbstractRememberMeManager.java 中的 onSuccessfulLogin 方法中，判断token是否为true，然后调用 <strong>rememberIdentity</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/1e1e2c9e08afc94621f695c57980b368.png" alt="image-20220228192058505"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/1e1e2c9e08afc94621f695c57980b368.png" alt="image-20220228192058505"></p>
 <p><strong>getIdentityToRemember</strong> 作用是获取 用户名 赋值给 principals，然后再次调用<strong>重构的 rememberIdentity</strong> 方法</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/60ffa04b9f2d2b957bc8f7c6e21d9c73.png" alt="image-20220228192813101"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/60ffa04b9f2d2b957bc8f7c6e21d9c73.png" alt="image-20220228192813101"></p>
 <p>发现调用了 <strong>convertPrincipalsToBytes</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/8b50a41c3e1de8085aabeb72c26212c6.png" alt="image-20220228193027909"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/8b50a41c3e1de8085aabeb72c26212c6.png" alt="image-20220228193027909"></p>
 <p>先是将用户名序列化处理 然后如果存在 <strong>getCipherService</strong> 看名字应该是获取某种加密方式 ，就进行加密操作 encrypt</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/b2912ce7de7ff68544d0de03d4750c71.png" alt="image-20220228193222032"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/b2912ce7de7ff68544d0de03d4750c71.png" alt="image-20220228193222032"></p>
 <p>看一下 getCipherService 确实是返回了一种aes的加密方式</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/a6ccf19c0353db0026d4d4a43cb5a91f.png" alt="image-20220228193509942"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/a6ccf19c0353db0026d4d4a43cb5a91f.png" alt="image-20220228193509942"></p>
 <p>看一下 encrypt ，看注释就知道，通过用设置好的加密方式，对传进来的已经序列化过的byte数组进行加密，然后返回加密的value</p>
 <p>这里这个地方 <strong>getEncryptionCipherKey()</strong> </p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/d16239754af20536a418a54d9ac9d737.png" alt="image-20220228193736549"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/d16239754af20536a418a54d9ac9d737.png" alt="image-20220228193736549"></p>
 <p>看到getEncryptionCipherKey() 直接返回一个常量，向上看看 encryptionCipherKey产生的过程</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/9689f4ed2bbbb5b072ee4facbd2f5672.png" alt="image-20220228203944931"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/9689f4ed2bbbb5b072ee4facbd2f5672.png" alt="image-20220228203944931"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AbstractRememberMeManager()</span><br><span class="line">setCipherKey()</span><br><span class="line">setEncryptionCipherKey()</span><br><span class="line">encryptionCipherKey</span><br></pre></td></tr></table></figure>
 
 <p>看到最后 用到了 <strong>DEFAULT_CIPHER_KEY_BYTES</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/28bb17f0ca5be8907fa5d9ad636a3e50.png" alt="image-20220228204320106"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/28bb17f0ca5be8907fa5d9ad636a3e50.png" alt="image-20220228204320106"></p>
 <p>而 <strong>DEFAULT_CIPHER_KEY_BYTES</strong> 是一个特定的值</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/31cb422a7d10184504006c407080a638.png" alt="image-20220228204400367"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/31cb422a7d10184504006c407080a638.png" alt="image-20220228204400367"></p>
 <p>接下来就进入到了 cipherService.encrypt()，最后的encrypt就是具体的加密过程</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/6a65f3f4f5036d1957b9eb3013b229ec.png" alt="image-20220228204618717"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/6a65f3f4f5036d1957b9eb3013b229ec.png" alt="image-20220228204618717"></p>
 <p>一路向上返回到重构的 rememberIdentity 方法，然后进入到 <strong>rememberSerializedIdentity</strong> 方法</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/355b4a7243d844a2ddbaa811b77b1111.png" alt="image-20220228204826221"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/355b4a7243d844a2ddbaa811b77b1111.png" alt="image-20220228204826221"></p>
 <p>在 CookieRememberMeManager.java 中 有一个 CookieRememberMeManager 类，看一下里面的方法，把刚才加密的byte进行base64加密，然后放到cookie中</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/eceead19cc9bedc366664a80fdcbc3a9.png" alt="image-20220225162643258"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/eceead19cc9bedc366664a80fdcbc3a9.png" alt="image-20220225162643258"></p>
 <p>此时，经过server返回登录响应，就可以看到rememberMe的值了</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/7f48163000c280ab1a5a77a8458a6940.png" alt="image-20220228205603747"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/7f48163000c280ab1a5a77a8458a6940.png" alt="image-20220228205603747"></p>
 <h2 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h2><p>了解了加密过程，如果使用了特定的key进行加密，如果在解密过程中有危险的点，就可以伪造cookie进行触发危险方法</p>
 <p>getRememberedPrincipals 下断点</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/3614f0d0c40f3a26e38050a3d56c3298.png" alt="image-20220228210252805"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/3614f0d0c40f3a26e38050a3d56c3298.png" alt="image-20220228210252805"></p>
 <p><strong>getRememberedSerializedIdentity</strong> 方法从名称来看是获取remember中的序列化的值，往下看看还有什么其他的操作</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/9035c6c8c55ea8ad4b3895a04e4f9dd9.png" alt="image-20220225162737876"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/9035c6c8c55ea8ad4b3895a04e4f9dd9.png" alt="image-20220225162737876"></p>
 <p>通过getCookie读取cookie的值，判断符不符合base64格式，最后解码后返回</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/1104e03ff0796cfce5080c9c51b7d1fd.png" alt="image-20220225163217983"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/1104e03ff0796cfce5080c9c51b7d1fd.png" alt="image-20220225163217983"></p>
 <p>返回到 getRememberedPrincipals 中 调用 convertBytesToPrincipals</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/5b33127bfd9cd24486b42080cfbab076.png" alt="image-20220228210659776"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/5b33127bfd9cd24486b42080cfbab076.png" alt="image-20220228210659776"></p>
 <p>可以看到就进行了两个操作 <strong>decrypt</strong> 和 <strong>deserialize</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/20f2721824ba1798fb2727f7d1ef7e2f.png" alt="image-20220228210805161"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/20f2721824ba1798fb2727f7d1ef7e2f.png" alt="image-20220228210805161"></p>
 <p>decrypt 就不跟进了，就是获取key解密，重点看一下反序列化的操作</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/2a7236894bc5b1a5940475cd455cc086.png" alt="image-20220228211002005"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/2a7236894bc5b1a5940475cd455cc086.png" alt="image-20220228211002005"></p>
 <p>最后走到 DefaultSerializer.java 中的 <strong>deserialize</strong> 最后 <strong>readObject()</strong> 这里打CC依赖</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/e1883f1a48ccb600dd647fa9a365c0b9.png" alt="image-20220228211217692"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/e1883f1a48ccb600dd647fa9a365c0b9.png" alt="image-20220228211217692"></p>
 <h1 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onSuccessfulLogin -&gt; rememberMeSuccessfulLogin -&gt; onSuccessfulLogin -&gt; </span><br></pre></td></tr></table></figure>
 
 <p>当存在JSESSIONID时，会忽略rememberMe，所以在攻击时需要将JSESSIONID删掉</p>
@@ -384,8 +384,8 @@
       <i class="fa fa-chevron-left"></i> cobalt-strike 特征隐藏
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/02/28/clash%20for%20windows%20rce/" rel="next" title="Clash RCE">
-      Clash RCE <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/09/CB%E9%93%BE/" rel="next" title="CommonsBeanutils及shiro中利用">
+      CommonsBeanutils及shiro中利用 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -461,7 +461,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

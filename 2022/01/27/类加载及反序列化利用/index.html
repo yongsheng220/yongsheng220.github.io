@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言在java反序列化时由于readObject会自动执行代码，在java类加载的时候也会执行代码，从这里可以扩宽攻击的知识面 Javac原理： javac是用于将源码文件.java编译成对应的字节码文件.class 类加载 先在方法区找class信息，有的话直接调用，没有的话则使用类加载器加载到方法区（静态成员放在静态区，非静态成功放在非静态区），静态代码块在类加载时自动执行代码，非静态的不执行">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://image-static.segmentfault.com/200/346/2003461697-5f506a4699821_fix732">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/42373ddfe6213c44cc4b5876fe85ec8d.webp?x-oss-process=image/format,png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/879aa79917ff4a4d91e41772a8e374f3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/3bdb86c8c2e14dd5a697245b0970a741.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2b9ffa4061ff4d9e98d2b33454262d3b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/02c7b09721104589b5d8f0f6cdaede28.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/2003461697-5f506a4699821_fix732">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/42373ddfe6213c44cc4b5876fe85ec8d.webp">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/879aa79917ff4a4d91e41772a8e374f3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/3bdb86c8c2e14dd5a697245b0970a741.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/2b9ffa4061ff4d9e98d2b33454262d3b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/02c7b09721104589b5d8f0f6cdaede28.png">
 <meta property="article:published_time" content="2022-01-26T21:47:25.200Z">
-<meta property="article:modified_time" content="2022-07-19T12:19:00.440Z">
+<meta property="article:modified_time" content="2023-03-16T13:45:40.055Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://image-static.segmentfault.com/200/346/2003461697-5f506a4699821_fix732">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/2003461697-5f506a4699821_fix732">
 
 <link rel="canonical" href="http://example.com/2022/01/27/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8/">
 
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-19 20:19:00" itemprop="dateModified" datetime="2022-07-19T20:19:00+08:00">2022-07-19</time>
+                <time title="修改时间：2023-03-16 21:45:40" itemprop="dateModified" datetime="2023-03-16T21:45:40+08:00">2023-03-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +258,7 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在java反序列化时由于readObject会自动执行代码，在java类加载的时候也会执行代码，从这里可以扩宽攻击的知识面</p>
 <p>Javac原理： javac是用于将源码文件.java编译成对应的字节码文件.class</p>
 <h1 id="类加载"><a href="#类加载" class="headerlink" title="类加载"></a>类加载</h1><p> 先在方法区找class信息，有的话直接调用，没有的话则使用类加载器加载到方法区（静态成员放在静态区，非静态成功放在非静态区），<strong>静态代码块在类加载时自动执行代码</strong>，<strong>非静态的不执行</strong>；先父类后子类，先静态后非静态；<strong>静态方法和非静态方法都是被动调用</strong>,即<strong>不调用就不执行</strong></p>
-<p><img src="https://image-static.segmentfault.com/200/346/2003461697-5f506a4699821_fix732" alt="image">)</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/2003461697-5f506a4699821_fix732" alt="image">)</p>
 <a id="more"></a>
 
 <p>给出示例代码</p>
@@ -290,7 +290,7 @@
 <li><p>避免类的重复加载。一个类只会被加载一次。</p>
 </li>
 </ul>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/42373ddfe6213c44cc4b5876fe85ec8d.webp?x-oss-process=image/format,png" alt="图来自百度"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/42373ddfe6213c44cc4b5876fe85ec8d.webp"></p>
 <ul>
 <li>引导类加载器（bootstrap class loader）：它用来加载 Java 的核心库，是用原生代码来实现的，并不继承自 <code>java.lang.ClassLoader</code>。</li>
 <li>扩展类加载器（extensions class loader）：它用来加载 Java 的扩展库。Java 虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载 Java 类。</li>
@@ -302,11 +302,11 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class.forName(<span class="string">&quot;Person&quot;</span>);</span><br><span class="line">输出:</span><br><span class="line">静态代码块</span><br></pre></td></tr></table></figure>
 
 <p>跟进forName，</p>
-<p><img src="https://img-blog.csdnimg.cn/879aa79917ff4a4d91e41772a8e374f3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/879aa79917ff4a4d91e41772a8e374f3.png"></p>
 <p>跟进forName0，四个参数，(类名,是否初始化,类加载器,不重要)</p>
-<p><img src="https://img-blog.csdnimg.cn/3bdb86c8c2e14dd5a697245b0970a741.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/3bdb86c8c2e14dd5a697245b0970a741.png"></p>
 <p>其实forName有两个最后都是调用forName0，这个就是自己可控是否初始化</p>
-<p><img src="https://img-blog.csdnimg.cn/2b9ffa4061ff4d9e98d2b33454262d3b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/2b9ffa4061ff4d9e98d2b33454262d3b.png"></p>
 <p>判断一下，静态代码块是不是在初始化时调用</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ClassLoader cl = ClassLoader.getSystemClassLoader();</span><br><span class="line">Class.forName(<span class="string">&quot;Person&quot;</span>,<span class="keyword">false</span>,cl);</span><br><span class="line">输出:(空)</span><br></pre></td></tr></table></figure>
 
@@ -343,7 +343,7 @@
 
 
 
-<p><img src="https://img-blog.csdnimg.cn/02c7b09721104589b5d8f0f6cdaede28.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java/02c7b09721104589b5d8f0f6cdaede28.png"></p>
 <h1 id="方式二-ClassLoader-defineClass字节码加载任意类"><a href="#方式二-ClassLoader-defineClass字节码加载任意类" class="headerlink" title="方式二:ClassLoader.defineClass字节码加载任意类"></a>方式二:ClassLoader.defineClass字节码加载任意类</h1><ul>
 <li>利用defineClass</li>
 <li>私有-&gt;反射</li>
@@ -457,7 +457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

