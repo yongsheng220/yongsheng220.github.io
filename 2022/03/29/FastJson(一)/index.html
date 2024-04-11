@@ -2,9 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -12,90 +12,23 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
-  </script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-  <meta name="description" content="前言初探FastJson，version &#x3D; 1.2.24 FastJsonFastjson是Alibaba开发的Java语言编写的高性能 JSON 库，用于将数据在 JSON 和 Java Object 之间互相转换，提供两个主要接口 JSON.toJSONString 和 JSON.parseObject&#x2F;JSON.parse 来分别实现序列化和反序列化操作。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Fastjson1.22-1.24反序列化之TemplateImpl">
-<meta property="og:url" content="http://example.com/2022/03/29/FastJson(%E4%B8%80)/index.html">
-<meta property="og:site_name" content="Y0ng的博客">
-<meta property="og:description" content="前言初探FastJson，version &#x3D; 1.2.24 FastJsonFastjson是Alibaba开发的Java语言编写的高性能 JSON 库，用于将数据在 JSON 和 Java Object 之间互相转换，提供两个主要接口 JSON.toJSONString 和 JSON.parseObject&#x2F;JSON.parse 来分别实现序列化和反序列化操作。">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/47cc5cf56eaef4d5c9b8ab3388e2e44a.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/b5c40ff0a06a5433cc827c1ef50863bf.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/0145e46c1f7c526813654e24ccd185f1.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/e67e2da0714a35478bf2fdc8ac7fedb8.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/1dec53bb9ad6d181de2c5494b40a4ee2.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/2eff941da40e3e5a19f166a674c6e5d9.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/5b3336fd5022a66879980480a08529a5.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/18fea6c9c770e01018f8cac30be9b620.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/2f2472d77bb601a3d5e11777f13e6775.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/7833d1ec42fbd90fd57ab7de43b3939a.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/bd2249eeaff70221edc903659fae2459.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/7cda09c98d47c3940c2ef772a9065c28.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/8aadd8ecdea45b43d0d336f9c8897243.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/a43526b5528f7d0fe5ab502426a04df8.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/cd4989966b8597b5db062c06c914f651.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/c7edf06d82a0a3ee26e54aebb802d913.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/81e2f5a68faf775c43be7484748439f8.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/1b11a5f3f12087894694c39cd0e811d9.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/30eab56f7c2b7bdaabd0c882faafefc0.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/1de7759c2a3054715c5dd807136955ee.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/08094fd576e29123354b520939a213eb.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/0f283c0e5934e060c1838df63dd28331.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/265c7213f19190272c47177f74a02a36.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/15d2903d010c32df257892578f7fddda.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/9985c0fcf5c2ba1b38b077aa5c98a9c1.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/100219b824ba22fac838ad6cb5427a5c.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/a0607512af4fdd12b38fd536c10c2d06.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/4d827e04eed580e9204588ff4b94a4ad.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/8104f4d03207305d940a1bf0b85e973c.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/5af109b691a220e51a02cd6270d7b528.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/b6a6fc0491ef59c8d6e031ca992c73ea.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/eb6e2929992d4404d90b55d9f14e0e55.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/82ad201b26b59263b933b93eafac51d2.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/f68177edc0a4a52dc9a74edc1da5020e.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/0c1093851819bd049e42a4c18602ec2d.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/4aedc004a4d4fa88cc149462ca543ac0.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/a8f89e404a598a1aec9578c4a6895d0b.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/c27dfeced2e8c3ce8e56618d548d6f5a.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/6f0a7e607929cf1eb421aec3002a5dbe.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/3b02d1c2c461c85622f802bac980c9b8.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/64e57b0e86444f718a3e159c6669fc81.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/251a4ba9c08b4c7d8d5ccb12fa42915f.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/36e29f0519bd4b43599fa284b5364bdc.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/7f1f9d6908a0f7bcf5e4ac3e39062b31.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/60d81ce98771b07c32e43326ebfb5e32.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/3f60e115380218d32cfdde0b7db9a012.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/35b0cdcc1786592b8bdec3df8ef74781.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/8add6f841fa0a690e704abe9b1adf8eb.png">
-<meta property="og:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/0ddc045f478f5240a722c2a245895618.png">
-<meta property="article:published_time" content="2022-03-29T15:29:24.431Z">
-<meta property="article:modified_time" content="2023-03-16T13:16:36.069Z">
-<meta property="article:author" content="Y0ng">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/fastjson/47cc5cf56eaef4d5c9b8ab3388e2e44a.png">
+
 
 <link rel="canonical" href="http://example.com/2022/03/29/FastJson(%E4%B8%80)/">
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>Fastjson1.22-1.24反序列化之TemplateImpl | Y0ng的博客</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/29/FastJson(%E4%B8%80)/","path":"2022/03/29/FastJson(一)/","title":"Fastjson1.22-1.24反序列化之TemplateImpl"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Fastjson1.22-1.24反序列化之TemplateImpl | Y0ng's Blog</title>
   
 
 
@@ -103,56 +36,38 @@
 
 
 
+
+
   <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Y0ng的博客</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
     </a>
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -160,29 +75,8 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">108</span></a>
-
-  </li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,101 +87,120 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
 
     </div>
   </div>
 
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastJson"><span class="nav-text">FastJson</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E8%B7%9F%E8%BF%9B"><span class="nav-text">流程跟进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#outputProperties"><span class="nav-text">_outputProperties</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
 </div>
-    </header>
+
+        </div>
+      </div>
+    </div>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
+    </div>
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/FastJson(%E4%B8%80)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/cys.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Y0ng">
-      <meta itemprop="description" content="花有重开日，人无再少年">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Y0ng的博客">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="花有重开日，人无再少年">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Fastjson1.22-1.24反序列化之TemplateImpl | Y0ng's Blog">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           Fastjson1.22-1.24反序列化之TemplateImpl
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-03-29 23:29:24" itemprop="dateCreated datePublished" datetime="2022-03-29T23:29:24+08:00">2022-03-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-16 21:16:36" itemprop="dateModified" datetime="2023-03-16T21:16:36+08:00">2023-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Fastjson/" itemprop="url" rel="index"><span itemprop="name">Fastjson</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2022-03-29 23:29:24" itemprop="dateCreated datePublished" datetime="2022-03-29T23:29:24+08:00">2022-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Fastjson/" itemprop="url" rel="index"><span itemprop="name">Fastjson</span></a>
+        </span>
+    </span>
 
-          
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
+  
+</div>
 
         </div>
       </header>
@@ -295,10 +208,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初探FastJson，version = 1.2.24</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>初探FastJson，version = 1.2.24</p>
 <h1 id="FastJson"><a href="#FastJson" class="headerlink" title="FastJson"></a>FastJson</h1><p>Fastjson是Alibaba开发的Java语言编写的高性能 JSON 库，用于将数据在 <strong>JSON 和 Java Object</strong> 之间互相转换，提供两个主要接口 <strong>JSON.toJSONString</strong> 和 <strong>JSON.parseObject/JSON.parse</strong> 来分别实现序列化和反序列化操作。</p>
 <a id="more"></a>
 
@@ -461,205 +371,72 @@
     
     
 
-      <footer class="post-footer">
+    <footer class="post-footer">
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2022/03/29/d3ctf/" rel="prev" title="D3 CTF">
-      <i class="fa fa-chevron-left"></i> D3 CTF
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/03/30/DASctf%E4%B8%89%E6%9C%88/" rel="next" title="2022DASCTFXSU三月">
-      2022DASCTFXSU三月 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/29/d3ctf/" rel="prev" title="D3 CTF">
+                  <i class="fa fa-angle-left"></i> D3 CTF
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/30/DASctf%E4%B8%89%E6%9C%88/" rel="next" title="2022DASCTFXSU三月">
+                  2022DASCTFXSU三月 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
           </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FastJson"><span class="nav-number">2.</span> <span class="nav-text">FastJson</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-number">3.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E8%B7%9F%E8%BF%9B"><span class="nav-number">5.</span> <span class="nav-text">流程跟进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#outputProperties"><span class="nav-number">6.</span> <span class="nav-text">_outputProperties</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Y0ng"
-      src="/images/cys.jpg">
-  <p class="site-author-name" itemprop="name">Y0ng</p>
-  <div class="site-description" itemprop="description">花有重开日，人无再少年</div>
+    </footer>
+  </article>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">108</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">14</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-  </nav>
+
+
+
+
+
+
 </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="mailto:1216043519@qq.com" title="E-Mail → mailto:1216043519@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
   </div>
-
-
-
-      </div>
 
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+  </footer>
 
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Y0ng</span>
-</div>
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
   </div>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
 
   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 
@@ -669,7 +446,9 @@
 
   
 
-  
+
+
+
 
 </body>
 </html>
