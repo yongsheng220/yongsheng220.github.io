@@ -21,14 +21,14 @@
 
 
 
-<link rel="canonical" href="http://example.com/2025/01/07/kerberos%E5%8F%8A%E5%A7%94%E6%B4%BE/">
+<link rel="canonical" href="http://example.com/2025/05/20/Kerberos%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/01/07/kerberos%E5%8F%8A%E5%A7%94%E6%B4%BE/","path":"2025/01/07/kerberos及委派/","title":"kerberos流程及委派"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/05/20/Kerberos%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/","path":"2025/05/20/Kerberos协议简析/","title":"Kerberos Attacks - Kerberos协议简析"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>kerberos流程及委派 | Y0ng's Blog</title>
+<title>Kerberos Attacks - Kerberos协议简析 | Y0ng's Blog</title>
   
 
 
@@ -127,7 +127,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kerberos"><span class="nav-text">Kerberos</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%BB%84%E6%88%90"><span class="nav-text">相关组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-text">认证流程图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E8%AE%A4%E8%AF%81"><span class="nav-text">预认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E6%9D%83%E5%B1%9E%E6%80%A7%E8%AF%81%E4%B9%A6-PAC"><span class="nav-text">特权属性证书-PAC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E7%B2%97%E8%8A%82"><span class="nav-text">协议粗节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AS-REQ"><span class="nav-text">AS_REQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AS-REP"><span class="nav-text">AS_REP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TGS-REQ"><span class="nav-text">TGS_REQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TGS-REP"><span class="nav-text">TGS_REP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AP-REQ"><span class="nav-text">AP_REQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AP-REP-%E5%8F%AF%E9%80%89"><span class="nav-text">AP_REP(可选)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allow-Service-Access"><span class="nav-text">Allow Service Access</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE"><span class="nav-text">委派</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">委派的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">非约束委派</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">约束委派</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">基于资源的约束委派</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE-1"><span class="nav-text">非约束委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE-1"><span class="nav-text">约束委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE-1"><span class="nav-text">基于资源的约束委派</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kerberos"><span class="nav-text">Kerberos</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%BB%84%E6%88%90"><span class="nav-text">相关组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-text">认证流程图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E8%AE%A4%E8%AF%81"><span class="nav-text">预认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E6%9D%83%E5%B1%9E%E6%80%A7%E8%AF%81%E4%B9%A6-PAC"><span class="nav-text">特权属性证书-PAC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E7%B2%97%E8%8A%82"><span class="nav-text">协议粗节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AS-REQ"><span class="nav-text">AS_REQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AS-REP"><span class="nav-text">AS_REP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TGS-REQ"><span class="nav-text">TGS_REQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TGS-REP"><span class="nav-text">TGS_REP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AP-REQ"><span class="nav-text">AP_REQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AP-REP-%E5%8F%AF%E9%80%89"><span class="nav-text">AP_REP(可选)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Allow-Service-Access"><span class="nav-text">Allow Service Access</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -158,7 +158,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/01/07/kerberos%E5%8F%8A%E5%A7%94%E6%B4%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/20/Kerberos%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -171,12 +171,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="kerberos流程及委派 | Y0ng's Blog">
+      <meta itemprop="name" content="Kerberos Attacks - Kerberos协议简析 | Y0ng's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          kerberos流程及委派
+          Kerberos Attacks - Kerberos协议简析
         </h1>
 
         <div class="post-meta-container">
@@ -187,7 +187,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-01-07 22:33:54" itemprop="dateCreated datePublished" datetime="2025-01-07T22:33:54+08:00">2025-01-07</time>
+      <time title="创建时间：2025-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2025-05-20T00:00:00+08:00">2025-05-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -208,7 +208,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>kerberos协议简析</p>
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/logo.png"></p>
 <a id="more"></a>
 
 <h1 id="Kerberos"><a href="#Kerberos" class="headerlink" title="Kerberos"></a>Kerberos</h1><p>Kerberos 协议的开发始于麻省理工学院 (MIT) 的 雅典娜项目。该项目于 1983 年启动，旨在为学生和研究人员提供尖端计算资源，包括联网工作站、高速网络和协作软件工具。Kerberos v5于 1993 年发布，并于 2005 年更新以解决以前版本的问题。此版本添加了其他加密类型、跨领域身份验证和通用安全服务应用程序接口，从 Windows Server 2000 开始， Kerberos 取代了 Windows  NTLM 成为默认的身份验证协议；不过，Microsoft 仍然支持 NTLM 以实现向后兼容。</p>
@@ -392,133 +392,14 @@
 <h2 id="AP-REP-可选"><a href="#AP-REP-可选" class="headerlink" title="AP_REP(可选)"></a>AP_REP(可选)</h2><p>KRB_verify_PAC_REQ：应用程序尝试使用 服务账户HASH来解密消息，并验证来自 KDC 的 PAC来识别用户权限</p>
 <p>PAC_Verified_REP：KDC验证PAC</p>
 <h2 id="Allow-Service-Access"><a href="#Allow-Service-Access" class="headerlink" title="Allow Service Access"></a>Allow Service Access</h2><p>允许用户在特定的时间内访问该服务</p>
-<h1 id="委派"><a href="#委派" class="headerlink" title="委派"></a>委派</h1><p><strong>什么是委派：</strong></p>
-<p>Kerberos 委派是 Kerberos 身份验证协议中的一项功能，允许服务代表用户行事。例如，Web 服务器可以使用 Kerberos 委派来验证用户身份，然后使用该用户身份验证票证代表该用户身份访问后端数据库。</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119223054197.png" alt="image-20250119223054197"></p>
-<p><strong>委派分为：</strong></p>
-<ul>
-<li>非约束委派（Unconstrained Delegation）：允许被委派的服务账户以委派用户的身份访问任何服务，存在较大的安全风险</li>
-<li>约束委派（Constrained Delegation）：限制了委派的范围，服务账户只能访问特定的服务，减少了安全风险</li>
-<li>基于资源的约束委派（Resource Based Constrained Delegation 也称 <strong>RBCD</strong>）：进一步限制了委派权限，将委派的控制权交给拥有被访问资源的管理员，提高了安全性</li>
-</ul>
-<p><strong>域中能够委派的账号类型：</strong></p>
-<ul>
-<li>主机账号（机器账户）：活动目录中的Computers组内的计算机</li>
-<li>服务账户：域内用户的一种类型，是服务器运行服务时所用的账号，将服务运行起来加入域内，比如：SQLServer、MYSQL等；域用户通过注册SPN也能成为服务账号。</li>
-</ul>
-<h2 id="委派的配置"><a href="#委派的配置" class="headerlink" title="委派的配置"></a>委派的配置</h2><h3 id="非约束委派"><a href="#非约束委派" class="headerlink" title="非约束委派"></a>非约束委派</h3><p>选择：<code>信任此计算机来委派任何服务 (仅 Kerberos)(T)</code></p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119234030581.png" alt="image-20250119234030581"></p>
-<p>配置了非约束性委派属性的计算机用户的 <strong>userAccountControl</strong> 属性为：<strong>WORKSTATION_TRUST_ACCOUNT | TRUSTED_FOR_DELEGATION</strong>，其对应的数是 0x81000=528384</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119234246535.png" alt="image-20250119234246535"></p>
-<p><strong>msDS- AllowedToDelegateTo</strong> 属性为空</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119234637164.png" alt="image-20250119234637164"></p>
-<h3 id="约束委派"><a href="#约束委派" class="headerlink" title="约束委派"></a>约束委派</h3><p>约束性委派有两种：</p>
-<ul>
-<li>仅使用 Kerberos(K)</li>
-<li>使用任何身份验证协议 (N)</li>
-</ul>
-<p>一、仅用 Kerberos 协议进行身份验证，不支持协议转换。配置了仅使用 Kerberos(K) 约束性委派的 <strong>机器账号 和 服务账号</strong> 的 <strong>userAccountControl</strong> 属性与正常账号一样，其 <strong>msDS- AllowedToDelegateTo</strong> 属性会有允许被委派的服务的 SPN。</p>
-<p>点击添加来添加服务，通过spn查找来查看当前域内的服务，这里就添加一个HOST/Win7.test.com作为实例</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119235138953.png" alt="image-20250119235138953"></p>
-<p>随便添加一个服务</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119235449695.png" alt="image-20250119235449695"></p>
-<p><strong>msDS- AllowedToDelegateTo</strong> 属性：</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119235543550.png" alt="image-20250119235543550"></p>
-<p>二、使用任何身份验证协议 (N)，支持协议的转换。其 <strong>msDS-AllowedToDelegateTo</strong> 属性会有允许被委派的服务的 SPN。</p>
-<p>配置了使用任何身份验证协议 (N) 约束性委派的 <strong>机器账号</strong> 的 <strong>userAccountControl</strong> 属性为： <code>WORKSTATION_TRUST_ACCOUNT | TRUETED_TO_AUTHENTICATE_FOR_DELEGATION</code>，其对应的数是0x1001000=16781312</p>
-<p>配置了使用任何身份验证协议 (N) 约束性委派的 <strong>服务账号</strong> 的 <strong>userAccountControl</strong> 属性为：<code>NORMAL_ACCOUNT | TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION</code>，其对应的数是0x1000200=16777728</p>
-<h3 id="基于资源的约束委派"><a href="#基于资源的约束委派" class="headerlink" title="基于资源的约束委派"></a>基于资源的约束委派</h3><p>通过 <strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong> 属性进行配置，只能在命令行进行配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#To set attribute:</span><br><span class="line">#设置属性</span><br><span class="line">Set-ADComputer -Identity MSSQL01$ -PrincipalsAllowedToDelegateToAccount WEB$ -Verbose</span><br><span class="line"></span><br><span class="line">#To get</span><br><span class="line">#查询属性</span><br><span class="line">$comp &#x3D; Get-ADComputer -Identity MSSQL01$ -Properties msDS-AllowedToActOnBehalfOfOtherIdentity</span><br><span class="line">$comp.&#39;msDS-AllowedToActOnBehalfOfOtherIdentity&#39;.Access</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="非约束委派-1"><a href="#非约束委派-1" class="headerlink" title="非约束委派"></a>非约束委派</h2><p> Windows Server 2000 首次发布Active Directory时引入，客户端会将其 TGT 的副本委派给某个服务，因此该服务可以使用该 TGT 在网络中代表客户端行事。</p>
-<p>以web服务器（HTTP）+文件服务器（FS）作为该实验场景，基本流程：</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250126222546137.png" alt="image-20250126222546137"></p>
-<p>通信流量为：</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250126222706358.png" alt="image-20250126222706358"></p>
-<ol>
-<li>客户端请求TGT（AS-REQ）</li>
-<li>KDC返回TGT（AS-REP）</li>
-<li>客户端请求HTTP服务器的ST（TGS-REQ）</li>
-<li>KDC返回ST，但是 <strong>ok-as-delegate 标志设置为 TRUE，通知客户端所请求的服务已获得授权委托</strong></li>
-<li>客户端再次发起新的TGS-REQ请求，用于请求获取 <strong>额外的用户TGT</strong>，且要求该TGT开启 <strong>forwardable 和 forwarded</strong>，即 <code>可转发TGT</code></li>
-<li>KDC返回 <code>可转发TGT</code></li>
-<li>客户端向HTTP服务器发起AP-REQ请求，该请求包含ST 和 <code>可转发TGT</code> 票证</li>
-<li>HTTP服务器将 <code>可转发TGT</code> <strong>缓存在内存中</strong>，并使用该TGT向KDC请求FS的ST</li>
-<li>KDC返回FS的ST</li>
-<li>HTTP收到FS的ST后，调用FS服务</li>
-<li>FS将结果返回给HTTP</li>
-<li>HTTP再将结果返回给客户端</li>
-</ol>
-<h2 id="约束委派-1"><a href="#约束委派-1" class="headerlink" title="约束委派"></a>约束委派</h2><p>由于非约束委派可以伪造访问任何服务的不安全性，微软在 windows server2003 中引入了约束委派，旨在提供一种可供服务使用的更安全的委派形式，<strong>将委派范围限制为仅明确允许的服务</strong>，在约束委派中，TGS 请求中不需要包含用户的 TGT。<strong>服务本身可以代表用户请求其他服务的服务票证，只要有证据表明它已收到用户的请求即可</strong></p>
-<p>对 Kerberos 协议进行了拓展，引入了 S4U。其中 S4U 支持两个子协议：</p>
-<ul>
-<li>Service for User to Proxy (S4U2proxy) ：允许服务账户以用户的身份请求其他服务的服务票据，并将其传递给目标服务，因此具有更广泛的委派权限。</li>
-<li>Service for User to Self (S4U2self) ：允许服务代表用户获取自身的服务票证，但无法代表用户请求其他服务</li>
-</ul>
-<p><strong>仅使用 Kerberos</strong></p>
-<p>当客户端使用 Kerberos 进行身份验证时，服务可以委托（使用 S4U2Proxy 扩展）</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127003103141.png" alt="image-20250127003103141"></p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127005111249.png" alt="image-20250127005111249"></p>
-<ol start="4">
-<li><p>Kerberos 认证</p>
-</li>
-<li><p>客户端向 Web 服务器发送 HTTP AP-REQ 消息，请求包括服务票证ST</p>
-</li>
-<li><p>HTTP服务可以使用 S4U2Proxy 请求额外的服务票证。将用户ST票证附加到TGS-REQ结构的 <strong>附加票证 字段中</strong>。</p>
-</li>
-<li><p>KDC 将检查附加票证，验证其是否可转发，并通过检查 <strong>msDS-AllowedToDelegateTo</strong> 属性进一步验证 HTTP服务 是否可以委托给 FS服务。通过TGS-REP将FS的ST返给HTTP服务</p>
-</li>
-<li><p>HTTP收到FS的ST后，调用FS服务</p>
-</li>
-<li><p>FS将结果返回给HTTP</p>
-</li>
-<li><p>HTTP再将结果返回给客户端</p>
-</li>
-</ol>
-<p><strong>使用任何身份验证协议</strong></p>
-<p>无论客户端如何进行身份验证，服务都可以委托（使用 S4U2Self 和 S4U2Proxy 扩展）</p>
-<p>例如通过 NTLM 身份验证，服务就没有附加票证，此时需要另一种方式来获取客户端代表其委派的票证，服务可以调用 S4U2Self 来要求身份验证服务为其自身生成任意用户的 TGS，随后再调用 S4U2Proxy。</p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127003134415.png" alt="image-20250127003134415"></p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127005949624.png" alt="image-20250127005949624"></p>
-<ol>
-<li>客户端向 Web 服务器发送 HTTP 请求。由于应用程序不接受 Kerberos，因此将使用 NTLM 执行身份验证</li>
-<li>由于目前没有客户的TGS，无法去获取FS的TGS，所以先使用S4U2Self来请求客户的TGS，存在特定于 S4U2Self 扩展的结构 <strong>pA-FOR-X509-USER</strong>和 <strong>pA-FOR-USER</strong>，其名称为要模拟的客户端</li>
-<li>KDC 将验证 DEV 是否配置了启用约束委派，返回代表自身的 <code>可转发TGS</code></li>
-<li>发起S4U2Proxy 请求FS服务的ST</li>
-<li>返回FS服务的ST</li>
-<li>调用FS服务</li>
-<li>FS将结果返回给HTTP</li>
-<li>HTTP再将结果返回给客户端</li>
-</ol>
-<h2 id="基于资源的约束委派-1"><a href="#基于资源的约束委派-1" class="headerlink" title="基于资源的约束委派"></a>基于资源的约束委派</h2><p>为了配置受约束的委派，必须拥有SeEnableDelegation特权，该特权很敏感，通常仅授予域管理员。为了使用户/资源更加独立，Windows Server 2012中引入了基于资源的约束委派（RBCD）。</p>
-<p>RBCD允许资源配置受信任的帐户委派给他们：仅允许ServiceA能委派访问我的服务</p>
-<p>RBCD将委派的控制权交给拥有被访问资源的管理员：ServiceB的管理员可以配置RBCD，不需要域管了</p>
-<p>RBCD是通过 <strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong> 属性类进行配置</p>
-<p>见下图对比，约束委派是 <strong>出去能访问到谁</strong>，RBCD是 <strong>谁能够访问到我</strong></p>
-<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127012741931.png" alt="image-20250127012741931"></p>
-<p>其通信流程与约束委派相同</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>kerberos：</p>
-<p><a target="_blank" rel="noopener" href="https://labs.lares.com/fear-kerberos-pt1/">https://labs.lares.com/fear-kerberos-pt1/</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.chudamax.com/posts/kerberos-102-overview/">kerberos-102-overview</a></p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/@robert.broeckelmann/kerberos-and-windows-security-kerberos-v5-protocol-b9c804e06479">Kerberos and Windows Security: Kerberos v5 Protocol</a></p>
-<p><a target="_blank" rel="noopener" href="https://medium.com/@robert.broeckelmann/kerberos-wireshark-captures-a-windows-login-example-151fabf3375a">Kerberos Wireshark Captures: A Windows Login Example</a></p>
-<p><a target="_blank" rel="noopener" href="https://daiker.gitbook.io/windows-protocol/kerberos/1">Windows内网协议学习Kerberos篇</a></p>
-<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/14717">Kerberos协议之AS_REQ&amp;AS_REP</a></p>
-<p><a target="_blank" rel="noopener" href="https://loong716.top/posts/Kerberos/">再谈Kerberos</a></p>
-<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/15367">详解Kerberos认证流程及常见攻击方式</a></p>
-<p>委派：</p>
-<p><a target="_blank" rel="noopener" href="https://labs.lares.com/fear-kerberos-pt4/">https://labs.lares.com/fear-kerberos-pt4/</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.chudamax.com/posts/kerberos-102-delegation/">kerberos-102-delegation</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/173477">Kerberos协议探索系列之委派篇</a></p>
-<p><a target="_blank" rel="noopener" href="https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/">kerberos域委派攻击学习</a></p>
-<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/kerberos-unconstrained-delegation/">Kerberos协议之非约束委派</a></p>
-<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/kerberos-constrained-delegation/">Kerberos协议之约束委派</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/370073.html">一篇文章讲清楚什么是委派攻击</a></p>
-<p><a target="_blank" rel="noopener" href="https://ruyueattention.github.io/2022/06/24/%E5%9F%9F%E5%A7%94%E6%B4%BE/">域委派的原理与利用</a></p>
-<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1591">红队域渗透技术：委派攻击汇总（全）</a></p>
-<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11555">域渗透之委派攻击全集</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>⭐ <a target="_blank" rel="noopener" href="https://labs.lares.com/fear-kerberos-pt1/">Kerberos I - Overview</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://www.chudamax.com/posts/kerberos-102-overview/">kerberos-102-overview</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://medium.com/@robert.broeckelmann/kerberos-and-windows-security-kerberos-v5-protocol-b9c804e06479">Kerberos and Windows Security: Kerberos v5 Protocol</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://medium.com/@robert.broeckelmann/kerberos-wireshark-captures-a-windows-login-example-151fabf3375a">Kerberos Wireshark Captures: A Windows Login Example</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://daiker.gitbook.io/windows-protocol/kerberos/1">Windows内网协议学习Kerberos篇</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/14717">Kerberos协议之AS_REQ&amp;AS_REP</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://loong716.top/posts/Kerberos/">再谈Kerberos</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/15367">详解Kerberos认证流程及常见攻击方式</a></p>
 
     </div>
 
@@ -532,13 +413,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/01/05/Time/" rel="prev" title="春秋云境-Time">
-                  <i class="fa fa-angle-left"></i> 春秋云境-Time
+                <a href="/2025/05/19/ThermalPower/" rel="prev" title="春秋云境-ThermalPower">
+                  <i class="fa fa-angle-left"></i> 春秋云境-ThermalPower
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/03/02/kerberos%E6%94%BB%E5%87%BB%E9%9D%A2/" rel="next" title="kerberos协议攻击面">
-                  kerberos协议攻击面 <i class="fa fa-angle-right"></i>
+                <a href="/2025/05/21/Kerberos%E6%94%BB%E5%87%BB%E9%9D%A2/" rel="next" title="Kerberos Attacks - Kerberos攻击面">
+                  Kerberos Attacks - Kerberos攻击面 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
