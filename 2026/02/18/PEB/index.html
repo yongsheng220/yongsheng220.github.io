@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/02/18/PEB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/02/18/PEB/","path":"2026/02/18/PEB/","title":"Windows PEB"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows PEB | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EPROCESS"><span class="nav-text">EPROCESS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PEB"><span class="nav-text">PEB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TEB"><span class="nav-text">TEB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96PEB"><span class="nav-text">获取PEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96"><span class="nav-text">汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Win-API"><span class="nav-text">Win API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A6%E5%99%A8%E5%8C%96"><span class="nav-text">武器化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81API"><span class="nav-text">动态API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%9A%90%E8%97%8F"><span class="nav-text">模块隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E4%BC%AA%E8%A3%85"><span class="nav-text">进程伪装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/18/PEB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows PEB | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows PEB
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2026-02-18T00:00:00+08:00">2026-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!--more-->
+
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>在Windows中关于进程、线程的数据结构有以下</p>
+<ul>
+<li>EPROCESS、KPROCESS、PEB</li>
+<li>ETHREAD、KTHREAD、TEB</li>
+</ul>
+<h2 id="EPROCESS"><a href="#EPROCESS" class="headerlink" title="EPROCESS"></a>EPROCESS</h2><p>在内核中即0环存在EPROCESS结构体，该结构用于存储有关进程的关键信息，例如进程的状态、进程的地址空间、进程的安全上下文以及它正在使用的其他资源。每个进程都有一个EPROCESS结构，windows通过一个链表将所有的EPROCESS串起来进行管理。修改此结构体需要驱动。</p>
+<h2 id="PEB"><a href="#PEB" class="headerlink" title="PEB"></a>PEB</h2><p>在用户模式中存在 进程环境块（Process Environment Block）是一种加载到每个进程中的内存结构，它存储了该进程范围内的全局信息。这些信息对于进程的整个生命周期都至关重要，例如进程加载了哪些动态链接库 (DLL)、完整的命令行参数、启动目录、可执行文件的内存基址、进程堆信息以及一些用于调试和系统兼容性的标志位。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;0x7c8 bytes (sizeof)</span><br><span class="line">struct _PEB</span><br><span class="line">&#123;</span><br><span class="line">    UCHAR InheritedAddressSpace;                                            &#x2F;&#x2F;0x0</span><br><span class="line">    UCHAR ReadImageFileExecOptions;                                         &#x2F;&#x2F;0x1</span><br><span class="line">    UCHAR BeingDebugged;                                                    &#x2F;&#x2F;0x2</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        UCHAR BitField;                                                     &#x2F;&#x2F;0x3</span><br><span class="line">        struct</span><br><span class="line">        &#123;</span><br><span class="line">            UCHAR ImageUsesLargePages:1;                                    &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsProtectedProcess:1;                                     &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsImageDynamicallyRelocated:1;                            &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR SkipPatchingUser32Forwarders:1;                           &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsPackagedProcess:1;                                      &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsAppContainer:1;                                         &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsProtectedProcessLight:1;                                &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsLongPathAwareProcess:1;                                 &#x2F;&#x2F;0x3</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    UCHAR Padding0[4];                                                      &#x2F;&#x2F;0x4</span><br><span class="line">    VOID* Mutant;                                                           &#x2F;&#x2F;0x8</span><br><span class="line">    VOID* ImageBaseAddress;                                                 &#x2F;&#x2F;0x10</span><br><span class="line">    struct _PEB_LDR_DATA* Ldr;                                              &#x2F;&#x2F;0x18</span><br><span class="line">    struct _RTL_USER_PROCESS_PARAMETERS* ProcessParameters;                 &#x2F;&#x2F;0x20</span><br><span class="line">    VOID* SubSystemData;                                                    &#x2F;&#x2F;0x28</span><br><span class="line">    VOID* ProcessHeap;                                                      &#x2F;&#x2F;0x30</span><br><span class="line">    struct _RTL_CRITICAL_SECTION* FastPebLock;                              &#x2F;&#x2F;0x38</span><br><span class="line">    union _SLIST_HEADER* volatile AtlThunkSListPtr;                         &#x2F;&#x2F;0x40</span><br><span class="line">    VOID* IFEOKey;                                                          &#x2F;&#x2F;0x48</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        ULONG CrossProcessFlags;                                            &#x2F;&#x2F;0x50</span><br><span class="line">        struct</span><br><span class="line">        &#123;</span><br><span class="line">            ULONG ProcessInJob:1;                                           &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessInitializing:1;                                    &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessUsingVEH:1;                                        &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessUsingVCH:1;                                        &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessUsingFTH:1;                                        &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessPreviouslyThrottled:1;                             &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessCurrentlyThrottled:1;                              &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ProcessImagesHotPatched:1;                                &#x2F;&#x2F;0x50</span><br><span class="line">            ULONG ReservedBits0:24;                                         &#x2F;&#x2F;0x50</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    UCHAR Padding1[4];                                                      &#x2F;&#x2F;0x54</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        VOID* KernelCallbackTable;                                          &#x2F;&#x2F;0x58</span><br><span class="line">        VOID* UserSharedInfoPtr;                                            &#x2F;&#x2F;0x58</span><br><span class="line">    &#125;;</span><br><span class="line">    ULONG SystemReserved;                                                   &#x2F;&#x2F;0x60</span><br><span class="line">    ULONG AtlThunkSListPtr32;                                               &#x2F;&#x2F;0x64</span><br><span class="line">    VOID* ApiSetMap;                                                        &#x2F;&#x2F;0x68</span><br><span class="line">    ULONG TlsExpansionCounter;                                              &#x2F;&#x2F;0x70</span><br><span class="line">    UCHAR Padding2[4];                                                      &#x2F;&#x2F;0x74</span><br><span class="line">    VOID* TlsBitmap;                                                        &#x2F;&#x2F;0x78</span><br><span class="line">    ULONG TlsBitmapBits[2];                                                 &#x2F;&#x2F;0x80</span><br><span class="line">    VOID* ReadOnlySharedMemoryBase;                                         &#x2F;&#x2F;0x88</span><br><span class="line">    VOID* SharedData;                                                       &#x2F;&#x2F;0x90</span><br><span class="line">    VOID** ReadOnlyStaticServerData;                                        &#x2F;&#x2F;0x98</span><br><span class="line">    VOID* AnsiCodePageData;                                                 &#x2F;&#x2F;0xa0</span><br><span class="line">    VOID* OemCodePageData;                                                  &#x2F;&#x2F;0xa8</span><br><span class="line">    VOID* UnicodeCaseTableData;                                             &#x2F;&#x2F;0xb0</span><br><span class="line">    ULONG NumberOfProcessors;                                               &#x2F;&#x2F;0xb8</span><br><span class="line">    ULONG NtGlobalFlag;                                                     &#x2F;&#x2F;0xbc</span><br><span class="line">    union _LARGE_INTEGER CriticalSectionTimeout;                            &#x2F;&#x2F;0xc0</span><br><span class="line">    ULONGLONG HeapSegmentReserve;                                           &#x2F;&#x2F;0xc8</span><br><span class="line">    ULONGLONG HeapSegmentCommit;                                            &#x2F;&#x2F;0xd0</span><br><span class="line">    ULONGLONG HeapDeCommitTotalFreeThreshold;                               &#x2F;&#x2F;0xd8</span><br><span class="line">    ULONGLONG HeapDeCommitFreeBlockThreshold;                               &#x2F;&#x2F;0xe0</span><br><span class="line">    ULONG NumberOfHeaps;                                                    &#x2F;&#x2F;0xe8</span><br><span class="line">    ULONG MaximumNumberOfHeaps;                                             &#x2F;&#x2F;0xec</span><br><span class="line">    VOID** ProcessHeaps;                                                    &#x2F;&#x2F;0xf0</span><br><span class="line">    VOID* GdiSharedHandleTable;                                             &#x2F;&#x2F;0xf8</span><br><span class="line">    VOID* ProcessStarterHelper;                                             &#x2F;&#x2F;0x100</span><br><span class="line">    ULONG GdiDCAttributeList;                                               &#x2F;&#x2F;0x108</span><br><span class="line">    UCHAR Padding3[4];                                                      &#x2F;&#x2F;0x10c</span><br><span class="line">    struct _RTL_CRITICAL_SECTION* LoaderLock;                               &#x2F;&#x2F;0x110</span><br><span class="line">    ULONG OSMajorVersion;                                                   &#x2F;&#x2F;0x118</span><br><span class="line">    ULONG OSMinorVersion;                                                   &#x2F;&#x2F;0x11c</span><br><span class="line">    USHORT OSBuildNumber;                                                   &#x2F;&#x2F;0x120</span><br><span class="line">    USHORT OSCSDVersion;                                                    &#x2F;&#x2F;0x122</span><br><span class="line">    ULONG OSPlatformId;                                                     &#x2F;&#x2F;0x124</span><br><span class="line">    ULONG ImageSubsystem;                                                   &#x2F;&#x2F;0x128</span><br><span class="line">    ULONG ImageSubsystemMajorVersion;                                       &#x2F;&#x2F;0x12c</span><br><span class="line">    ULONG ImageSubsystemMinorVersion;                                       &#x2F;&#x2F;0x130</span><br><span class="line">    UCHAR Padding4[4];                                                      &#x2F;&#x2F;0x134</span><br><span class="line">    ULONGLONG ActiveProcessAffinityMask;                                    &#x2F;&#x2F;0x138</span><br><span class="line">    ULONG GdiHandleBuffer[60];                                              &#x2F;&#x2F;0x140</span><br><span class="line">    VOID (*PostProcessInitRoutine)();                                       &#x2F;&#x2F;0x230</span><br><span class="line">    VOID* TlsExpansionBitmap;                                               &#x2F;&#x2F;0x238</span><br><span class="line">    ULONG TlsExpansionBitmapBits[32];                                       &#x2F;&#x2F;0x240</span><br><span class="line">    ULONG SessionId;                                                        &#x2F;&#x2F;0x2c0</span><br><span class="line">    UCHAR Padding5[4];                                                      &#x2F;&#x2F;0x2c4</span><br><span class="line">    union _ULARGE_INTEGER AppCompatFlags;                                   &#x2F;&#x2F;0x2c8</span><br><span class="line">    union _ULARGE_INTEGER AppCompatFlagsUser;                               &#x2F;&#x2F;0x2d0</span><br><span class="line">    VOID* pShimData;                                                        &#x2F;&#x2F;0x2d8</span><br><span class="line">    VOID* AppCompatInfo;                                                    &#x2F;&#x2F;0x2e0</span><br><span class="line">    struct _UNICODE_STRING CSDVersion;                                      &#x2F;&#x2F;0x2e8</span><br><span class="line">    struct _ACTIVATION_CONTEXT_DATA* ActivationContextData;                 &#x2F;&#x2F;0x2f8</span><br><span class="line">    struct _ASSEMBLY_STORAGE_MAP* ProcessAssemblyStorageMap;                &#x2F;&#x2F;0x300</span><br><span class="line">    struct _ACTIVATION_CONTEXT_DATA* SystemDefaultActivationContextData;    &#x2F;&#x2F;0x308</span><br><span class="line">    struct _ASSEMBLY_STORAGE_MAP* SystemAssemblyStorageMap;                 &#x2F;&#x2F;0x310</span><br><span class="line">    ULONGLONG MinimumStackCommit;                                           &#x2F;&#x2F;0x318</span><br><span class="line">    VOID* SparePointers[4];                                                 &#x2F;&#x2F;0x320</span><br><span class="line">    ULONG SpareUlongs[5];                                                   &#x2F;&#x2F;0x340</span><br><span class="line">    VOID* WerRegistrationData;                                              &#x2F;&#x2F;0x358</span><br><span class="line">    VOID* WerShipAssertPtr;                                                 &#x2F;&#x2F;0x360</span><br><span class="line">    VOID* pUnused;                                                          &#x2F;&#x2F;0x368</span><br><span class="line">    VOID* pImageHeaderHash;                                                 &#x2F;&#x2F;0x370</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        ULONG TracingFlags;                                                 &#x2F;&#x2F;0x378</span><br><span class="line">        struct</span><br><span class="line">        &#123;</span><br><span class="line">            ULONG HeapTracingEnabled:1;                                     &#x2F;&#x2F;0x378</span><br><span class="line">            ULONG CritSecTracingEnabled:1;                                  &#x2F;&#x2F;0x378</span><br><span class="line">            ULONG LibLoaderTracingEnabled:1;                                &#x2F;&#x2F;0x378</span><br><span class="line">            ULONG SpareTracingBits:29;                                      &#x2F;&#x2F;0x378</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    UCHAR Padding6[4];                                                      &#x2F;&#x2F;0x37c</span><br><span class="line">    ULONGLONG CsrServerReadOnlySharedMemoryBase;                            &#x2F;&#x2F;0x380</span><br><span class="line">    ULONGLONG TppWorkerpListLock;                                           &#x2F;&#x2F;0x388</span><br><span class="line">    struct _LIST_ENTRY TppWorkerpList;                                      &#x2F;&#x2F;0x390</span><br><span class="line">    VOID* WaitOnAddressHashTable[128];                                      &#x2F;&#x2F;0x3a0</span><br><span class="line">    VOID* TelemetryCoverageHeader;                                          &#x2F;&#x2F;0x7a0</span><br><span class="line">    ULONG CloudFileFlags;                                                   &#x2F;&#x2F;0x7a8</span><br><span class="line">    ULONG CloudFileDiagFlags;                                               &#x2F;&#x2F;0x7ac</span><br><span class="line">    CHAR PlaceholderCompatibilityMode;                                      &#x2F;&#x2F;0x7b0</span><br><span class="line">    CHAR PlaceholderCompatibilityModeReserved[7];                           &#x2F;&#x2F;0x7b1</span><br><span class="line">    struct _LEAP_SECOND_DATA* LeapSecondData;                               &#x2F;&#x2F;0x7b8</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        ULONG LeapSecondFlags;                                              &#x2F;&#x2F;0x7c0</span><br><span class="line">        struct</span><br><span class="line">        &#123;</span><br><span class="line">            ULONG SixtySecondEnabled:1;                                     &#x2F;&#x2F;0x7c0</span><br><span class="line">            ULONG Reserved:31;                                              &#x2F;&#x2F;0x7c0</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    ULONG NtGlobalFlag2;                                                    &#x2F;&#x2F;0x7c4</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>AI描述PEB字段含义如下，未必正确</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0x0 - 0x3: 基本状态标志</span><br><span class="line">InheritedAddressSpace (0x0) - 是否继承父进程的地址空间</span><br><span class="line">ReadImageFileExecOptions (0x1) - 是否读取可执行文件的特殊执行选项</span><br><span class="line">BeingDebugged (0x2) - 进程是否正在被调试</span><br><span class="line">BitField &#x2F; 位域 (0x3)</span><br><span class="line">    ImageUsesLargePages - 是否使用大页内存映射</span><br><span class="line">    IsProtectedProcess - 是否受保护进程(如防止注入)</span><br><span class="line">    IsImageDynamicallyRelocated - 可执行映像是否被动态重定位</span><br><span class="line">    SkipPatchingUser32Forwarders - 是否跳过 User32 转发修补</span><br><span class="line">    IsPackagedProcess - 是否为打包应用(UWP&#x2F;Store 应用)</span><br><span class="line">    IsAppContainer - 是否在 AppContainer 沙箱中运行</span><br><span class="line">    IsProtectedProcessLight - 轻量保护进程标志</span><br><span class="line">    IsLongPathAwareProcess - 是否支持长路径文件名</span><br><span class="line"></span><br><span class="line">0x8 - 0x30: 核心指针</span><br><span class="line">Mutant (0x8) - 内核同步对象指针(用于进程互斥)</span><br><span class="line">ImageBaseAddress (0x10) - 可执行映像加载基址</span><br><span class="line">Ldr (0x18) - 指向 _PEB_LDR_DATA,记录加载的模块列表</span><br><span class="line">ProcessParameters (0x20) - 指向 _RTL_USER_PROCESS_PARAMETERS,存储命令行、环境变量等</span><br><span class="line">SubSystemData (0x28) - 子系统数据指针(如 GUI&#x2F;Console 子系统)</span><br><span class="line">ProcessHeap (0x30) - 默认堆指针</span><br><span class="line"></span><br><span class="line">0x38 - 0x58: 同步和 Thunk 指针</span><br><span class="line">FastPebLock (0x38) - PEB 快速锁,用于线程安全访问</span><br><span class="line">AtlThunkSListPtr (0x40) - ATL 弹性链表指针,用于内部 thunk</span><br><span class="line">IFEOKey (0x48) - Image File Execution Options 注册表键指针</span><br><span class="line">CrossProcessFlags (0x50) - 进程状态标志集合(如 ProcessInJob、使用 VEH&#x2F;FTH 等)</span><br><span class="line"></span><br><span class="line">0x58 - 0x98: 内核回调与 API 重映射</span><br><span class="line">KernelCallbackTable &#x2F; UserSharedInfoPtr (0x58) - 内核回调表或用户共享信息</span><br><span class="line">SystemReserved (0x60) - 系统保留</span><br><span class="line">AtlThunkSListPtr32 (0x64) - 32 位 ATL 弹性链表指针</span><br><span class="line">ApiSetMap (0x68) - API 重映射表</span><br><span class="line">TlsExpansionCounter (0x70) - TLS 扩展计数器</span><br><span class="line">TlsBitmap (0x78) &amp; TlsBitmapBits (0x80) - TLS 使用情况位图</span><br><span class="line">ReadOnlySharedMemoryBase (0x88) - 只读共享内存基址</span><br><span class="line">SharedData (0x90) - KUSER_SHARED_DATA 全局共享数据指针</span><br><span class="line">ReadOnlyStaticServerData (0x98) - 静态服务器只读数据</span><br><span class="line"></span><br><span class="line">0xa0 - 0xb8: 字符编码和 CPU 信息</span><br><span class="line">AnsiCodePageData (0xa0) - ANSI 编码页数据表</span><br><span class="line">OemCodePageData (0xa8) - OEM 编码页数据表</span><br><span class="line">UnicodeCaseTableData (0xb0) - Unicode 大小写映射表</span><br><span class="line">NumberOfProcessors (0xb8) - 系统 CPU 核心数量</span><br><span class="line"></span><br><span class="line">0xbc - 0xf0: 堆和同步超时</span><br><span class="line">NtGlobalFlag (0xbc) - 内核调试标志</span><br><span class="line">CriticalSectionTimeout (0xc0) - 临界区超时</span><br><span class="line">HeapSegmentReserve (0xc8)、HeapSegmentCommit (0xd0) - 堆段保留与提交大小</span><br><span class="line">HeapDeCommitTotalFreeThreshold (0xd8)、HeapDeCommitFreeBlockThreshold (0xe0) - 堆释放阈值</span><br><span class="line">NumberOfHeaps (0xe8)、MaximumNumberOfHeaps (0xec) - 堆数量限制</span><br><span class="line">ProcessHeaps (0xf0) - 所有进程堆数组</span><br><span class="line"></span><br><span class="line">0xf8 - 0x110: GDI 和 Loader</span><br><span class="line">GdiSharedHandleTable (0xf8) - GDI 共享句柄表</span><br><span class="line">ProcessStarterHelper (0x100) - 内核启动辅助指针</span><br><span class="line">GdiDCAttributeList (0x108) - GDI 设备上下文属性列表</span><br><span class="line">LoaderLock (0x110) - 模块加载锁</span><br><span class="line"></span><br><span class="line">0x118 - 0x134: OS 版本与子系统</span><br><span class="line">OSMajorVersion&#x2F;OSMinorVersion&#x2F;OSBuildNumber&#x2F;OSCSDVersion - 操作系统版本信息</span><br><span class="line">OSPlatformId - 平台 ID</span><br><span class="line">ImageSubsystem&#x2F;ImageSubsystemMajorVersion&#x2F;ImageSubsystemMinorVersion - 可执行文件子系统类型和版本</span><br><span class="line">ActiveProcessAffinityMask (0x138) - CPU 亲和掩码</span><br><span class="line"></span><br><span class="line">0x140 - 0x2c0: GDI 缓冲、初始化例程、TLS 扩展</span><br><span class="line">GdiHandleBuffer (0x140) - GDI 本地句柄缓存</span><br><span class="line">PostProcessInitRoutine (0x230) - 初始化后回调例程</span><br><span class="line">TlsExpansionBitmap (0x238)、TlsExpansionBitmapBits (0x240) - TLS 扩展位图</span><br><span class="line">SessionId (0x2c0) - Terminal Services &#x2F; Session ID</span><br><span class="line"></span><br><span class="line">0x2c8 - 0x310: 兼容性、激活上下文、程序集</span><br><span class="line">AppCompatFlags&#x2F;AppCompatFlagsUser - 兼容性标志</span><br><span class="line">pShimData&#x2F;AppCompatInfo - 应用兼容性数据指针</span><br><span class="line">CSDVersion - 服务包 Unicode 字符串</span><br><span class="line">ActivationContextData&#x2F;ProcessAssemblyStorageMap&#x2F;</span><br><span class="line">SystemDefaultActivationContextData&#x2F;SystemAssemblyStorageMap - 激活上下文和程序集存储映射</span><br><span class="line"></span><br><span class="line">0x318 - 0x370: 堆栈与调试指针</span><br><span class="line">MinimumStackCommit - 最小栈提交大小</span><br><span class="line">SparePointers &#x2F; SpareUlongs - 保留指针和整数</span><br><span class="line">WerRegistrationData &#x2F; WerShipAssertPtr - Windows 错误报告数据</span><br><span class="line">pUnused &#x2F; pImageHeaderHash - 未使用或镜像哈希指针</span><br><span class="line"></span><br><span class="line">0x378 - 0x3a0: 追踪和任务池</span><br><span class="line">TracingFlags - Heap&#x2F;CritSec&#x2F;Loader 追踪开关</span><br><span class="line">CsrServerReadOnlySharedMemoryBase - CSR 服务器共享内存</span><br><span class="line">TppWorkerpListLock &#x2F; TppWorkerpList - 线程池工作列表锁和列表</span><br><span class="line">WaitOnAddressHashTable - 内核等待地址哈希表</span><br><span class="line"></span><br><span class="line">0x7a0 - 0x7c4: 云文件、占位兼容、闰秒</span><br><span class="line">TelemetryCoverageHeader - 遥测覆盖头</span><br><span class="line">CloudFileFlags &#x2F; CloudFileDiagFlags - 云文件标志</span><br><span class="line">PlaceholderCompatibilityMode - 占位兼容模式</span><br><span class="line">LeapSecondData &#x2F; LeapSecondFlags - 闰秒数据及启用标志</span><br><span class="line">NtGlobalFlag2 - 第二组内核标志(调试、追踪等)</span><br></pre></td></tr></table></figure>
+
+<p>其中重要的是Ldr字段，该字段指向 <strong>PEB_LDR_DATA</strong> 结构</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">struct _PEB_LDR_DATA* Ldr;  &#x2F;&#x2F;0x18</span><br></pre></td></tr></table></figure>
+
+<p><strong>PEB_LDR_DATA</strong> 结构包含三个双向链表</p>
+<ul>
+<li>InLoadOrderModuleList - 加载顺序</li>
+<li>InMemoryOrderModuleList - 内存布局顺序</li>
+<li>InInitializationOrderModuleList - 初始化顺序</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;0x58 bytes (sizeof)</span><br><span class="line">struct _PEB_LDR_DATA</span><br><span class="line">&#123;</span><br><span class="line">    ULONG Length;                                          &#x2F;&#x2F;0x0</span><br><span class="line">    UCHAR Initialized;                                     &#x2F;&#x2F;0x4</span><br><span class="line">    VOID* SsHandle;                                        &#x2F;&#x2F;0x8</span><br><span class="line">    struct _LIST_ENTRY InLoadOrderModuleList;              &#x2F;&#x2F;0x10</span><br><span class="line">    struct _LIST_ENTRY InMemoryOrderModuleList;            &#x2F;&#x2F;0x20</span><br><span class="line">    struct _LIST_ENTRY InInitializationOrderModuleList;    &#x2F;&#x2F;0x30</span><br><span class="line">    VOID* EntryInProgress;                                 &#x2F;&#x2F;0x40</span><br><span class="line">    UCHAR ShutdownInProgress;                              &#x2F;&#x2F;0x48</span><br><span class="line">    VOID* ShutdownThreadId;                                &#x2F;&#x2F;0x50</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>每个双向链表中 <code>_LIST_ENTRY</code> 中的 <code>Flink/Blink</code> 指针，指向了一个 <strong>LDR_DATA_TABLE_ENTRY</strong> 结构体，该结构是描述加载模块的信息，例如DLL基址、DLL名称。每一个加载的模块（.dll）都有一个这样的结构体。该结构体中分别有三个<code>_LIST_ENTRY类型的InLoadOrderLinks、InMemoryOrderLinks、InInitializationOrderLinks </code> 它们又指向了下一个 LDR_DATA_TABLE_ENTRY 结构体</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;0x120 bytes (sizeof)</span><br><span class="line">struct _LDR_DATA_TABLE_ENTRY</span><br><span class="line">&#123;</span><br><span class="line">    struct _LIST_ENTRY InLoadOrderLinks;                                    &#x2F;&#x2F;0x0</span><br><span class="line">    struct _LIST_ENTRY InMemoryOrderLinks;                                  &#x2F;&#x2F;0x10</span><br><span class="line">    struct _LIST_ENTRY InInitializationOrderLinks;                          &#x2F;&#x2F;0x20</span><br><span class="line">    VOID* DllBase;                                                          &#x2F;&#x2F;0x30</span><br><span class="line">    VOID* EntryPoint;                                                       &#x2F;&#x2F;0x38</span><br><span class="line">    ULONG SizeOfImage;                                                      &#x2F;&#x2F;0x40</span><br><span class="line">    struct _UNICODE_STRING FullDllName;                                     &#x2F;&#x2F;0x48</span><br><span class="line">    struct _UNICODE_STRING BaseDllName;                                     &#x2F;&#x2F;0x58</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        UCHAR FlagGroup[4];                                                 &#x2F;&#x2F;0x68</span><br><span class="line">        ULONG Flags;                                                        &#x2F;&#x2F;0x68</span><br><span class="line">        struct</span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    USHORT ObsoleteLoadCount;                                               &#x2F;&#x2F;0x6c</span><br><span class="line">    USHORT TlsIndex;                                                        &#x2F;&#x2F;0x6e</span><br><span class="line">    struct _LIST_ENTRY HashLinks;                                           &#x2F;&#x2F;0x70</span><br><span class="line">    ULONG TimeDateStamp;                                                    &#x2F;&#x2F;0x80</span><br><span class="line">    struct _ACTIVATION_CONTEXT* EntryPointActivationContext;                &#x2F;&#x2F;0x88</span><br><span class="line">    VOID* Lock;                                                             &#x2F;&#x2F;0x90</span><br><span class="line">    struct _LDR_DDAG_NODE* DdagNode;                                        &#x2F;&#x2F;0x98</span><br><span class="line">    struct _LIST_ENTRY NodeModuleLink;                                      &#x2F;&#x2F;0xa0</span><br><span class="line">    struct _LDRP_LOAD_CONTEXT* LoadContext;                                 &#x2F;&#x2F;0xb0</span><br><span class="line">    VOID* ParentDllBase;                                                    &#x2F;&#x2F;0xb8</span><br><span class="line">    VOID* SwitchBackContext;                                                &#x2F;&#x2F;0xc0</span><br><span class="line">    struct _RTL_BALANCED_NODE BaseAddressIndexNode;                         &#x2F;&#x2F;0xc8</span><br><span class="line">    struct _RTL_BALANCED_NODE MappingInfoIndexNode;                         &#x2F;&#x2F;0xe0</span><br><span class="line">    ULONGLONG OriginalBase;                                                 &#x2F;&#x2F;0xf8</span><br><span class="line">    union _LARGE_INTEGER LoadTime;                                          &#x2F;&#x2F;0x100</span><br><span class="line">    ULONG BaseNameHashValue;                                                &#x2F;&#x2F;0x108</span><br><span class="line">    enum _LDR_DLL_LOAD_REASON LoadReason;                                   &#x2F;&#x2F;0x10c</span><br><span class="line">    ULONG ImplicitPathOptions;                                              &#x2F;&#x2F;0x110</span><br><span class="line">    ULONG ReferenceCount;                                                   &#x2F;&#x2F;0x114</span><br><span class="line">    ULONG DependentLoadFlags;                                               &#x2F;&#x2F;0x118</span><br><span class="line">    UCHAR SigningLevel;                                                     &#x2F;&#x2F;0x11c</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>三个链表记录加载模块的顺序如下：</p>
+<p>InLoadOrderModuleList </p>
+<blockquote>
+<p>notepad.exe - ntdll.dll - kernel32.dll - kernelbase.dll</p>
+</blockquote>
+<p>InMemoryOrderModuleList </p>
+<blockquote>
+<p>notepad.exe - ntdll.dll - kernel32.dll - kernelbase.dll</p>
+</blockquote>
+<p>InInitializationOrderModuleList</p>
+<blockquote>
+<p>ntdll.dll - kernelbase.dll - kernel32.dll</p>
+</blockquote>
+<h2 id="TEB"><a href="#TEB" class="headerlink" title="TEB"></a>TEB</h2><p>在用户模式中存在 线程环境块（Thread Environment Block），每个线程都具有一个独立的TEB，它存储了与单个线程相关的特定信息，例如 线程ID (TID)、线程的栈基址和栈顶限制、指向线程局部存储 (Thread Local Storage, TLS) 的指针。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; AI总结TEB结构成员意义，未必正确</span><br><span class="line"></span><br><span class="line">0x0 - 0x38: NT_TIB</span><br><span class="line">NtTib - 包含异常链表、堆栈边界、线程信息块核心指针，用于结构化异常处理和栈管理</span><br><span class="line"></span><br><span class="line">0x38 - 0x60: 环境与线程标识</span><br><span class="line">EnvironmentPointer - 指向环境变量块</span><br><span class="line">ClientId - 线程和进程 ID</span><br><span class="line">ActiveRpcHandle - 活动 RPC 会话句柄</span><br><span class="line">ThreadLocalStoragePointer - TLS 基址</span><br><span class="line">ProcessEnvironmentBlock - 指向所属进程的 PEB</span><br><span class="line"></span><br><span class="line">0x68 - 0x108: 状态与保留字段</span><br><span class="line">LastErrorValue - 上一次调用 SetLastError&#x2F;Win32 API 的错误码</span><br><span class="line">CountOfOwnedCriticalSections - 线程拥有的临界区数量</span><br><span class="line">CsrClientThread - CSR 服务器客户端线程指针</span><br><span class="line">Win32ThreadInfo - Win32 子系统线程信息</span><br><span class="line">User32Reserved &#x2F; UserReserved - User32 和用户保留区</span><br><span class="line">WOW32Reserved - WOW64 子系统保留</span><br><span class="line">CurrentLocale - 当前线程区域设置</span><br><span class="line">FpSoftwareStatusRegister - 浮点状态寄存器模拟标志</span><br><span class="line"></span><br><span class="line">0x110 - 0x290: 调试和占位相关</span><br><span class="line">ReservedForDebuggerInstrumentation - 调试器使用的保留指针数组</span><br><span class="line">SystemReserved1 - 系统保留</span><br><span class="line">PlaceholderCompatibilityMode &#x2F; PlaceholderHydrationAlwaysExplicit &#x2F; PlaceholderReserved - 占位兼容模式和保留</span><br><span class="line">ProxiedProcessId - 被代理的进程 ID</span><br><span class="line">_ActivationStack - 激活上下文栈信息</span><br><span class="line">WorkingOnBehalfTicket - 权限代理票据</span><br><span class="line"></span><br><span class="line">0x2c0 - 0x2e8: 异常与上下文</span><br><span class="line">ExceptionCode - 线程异常代码</span><br><span class="line">ActivationContextStackPointer - 当前激活上下文栈指针</span><br><span class="line">InstrumentationCallbackSp&#x2F;Pc&#x2F;PreviousSp - 仿真&#x2F;回调上下文保存</span><br><span class="line">TxFsContext - 事务性文件系统上下文</span><br><span class="line">InstrumentationCallbackDisabled - 仿真回调是否禁用</span><br><span class="line">UnalignedLoadStoreExceptions - 未对齐访问异常标志</span><br><span class="line"></span><br><span class="line">0x2f0 - 0x7f8: GDI 与客户端信息</span><br><span class="line">GdiTebBatch - 批量 GDI 绘图缓存</span><br><span class="line">RealClientId - 实际线程和进程 ID</span><br><span class="line">GdiCachedProcessHandle &#x2F; GdiClientPID &#x2F; GdiClientTID - GDI 相关缓存</span><br><span class="line">GdiThreadLocalInfo - 线程本地 GDI 信息</span><br><span class="line">Win32ClientInfo - Win32 客户端信息数组</span><br><span class="line"></span><br><span class="line">0x9f0 - 0x1250: OpenGL 和状态</span><br><span class="line">glDispatchTable &#x2F; glReserved1&#x2F;2 - OpenGL 调用表及保留</span><br><span class="line">glSectionInfo, glSection, glTable - OpenGL 线程上下文</span><br><span class="line">glCurrentRC &#x2F; glContext - 当前 OpenGL 渲染上下文</span><br><span class="line">LastStatusValue - 上一次 NT API 状态返回值</span><br><span class="line">StaticUnicodeString &#x2F; StaticUnicodeBuffer - 静态 Unicode 字符串缓存</span><br><span class="line"></span><br><span class="line">0x1478 - 0x1698: 堆栈与 TLS</span><br><span class="line">DeallocationStack - 栈释放指针</span><br><span class="line">TlsSlots - 线程局部存储槽</span><br><span class="line">TlsLinks - TLS 链表，用于线程切换</span><br><span class="line">Vdm - 虚拟 DOS 子系统指针</span><br><span class="line">ReservedForNtRpc - NT RPC 保留</span><br><span class="line">DbgSsReserved - 调试子系统保留</span><br><span class="line">HardErrorMode - 严重错误处理模式</span><br><span class="line">Instrumentation - 调试&#x2F;监控回调保留</span><br><span class="line"></span><br><span class="line">0x1710 - 0x1748: 活动、性能、GDI</span><br><span class="line">ActivityId - 活动 GUID，用于事件追踪</span><br><span class="line">SubProcessTag - 子进程标记</span><br><span class="line">PerflibData &#x2F; EtwTraceData - 性能库和 ETW 事件数据</span><br><span class="line">WinSockData - Winsock 数据</span><br><span class="line">GdiBatchCount - GDI 批量计数</span><br><span class="line">CurrentIdealProcessor &#x2F; IdealProcessorValue - 理想处理器编号</span><br><span class="line">GuaranteedStackBytes - 最小栈保证</span><br><span class="line"></span><br><span class="line">0x1750 - 0x17e8: 线程池、TLS 扩展、语言与模拟</span><br><span class="line">ReservedForPerf &#x2F; ReservedForOle - 性能和 OLE 保留</span><br><span class="line">WaitingOnLoaderLock - 是否在等待 LoaderLock</span><br><span class="line">SavedPriorityState - 保存线程优先级状态</span><br><span class="line">ReservedForCodeCoverage - 代码覆盖工具使用</span><br><span class="line">ThreadPoolData - 线程池信息</span><br><span class="line">TlsExpansionSlots - TLS 扩展槽</span><br><span class="line">DeallocationBStore &#x2F; BStoreLimit - 备用栈存储指针及限制</span><br><span class="line">MuiGeneration - MUI 数据版本</span><br><span class="line">IsImpersonating - 是否模拟用户</span><br><span class="line">NlsCache - 本地化信息缓存</span><br><span class="line">pShimData - 应用兼容性 Shim 数据</span><br><span class="line">HeapData - 堆相关数据</span><br><span class="line">CurrentTransactionHandle &#x2F; ActiveFrame - 事务处理句柄和上下文</span><br><span class="line">FlsData - Fiber 本地存储</span><br><span class="line">PreferredLanguages, UserPrefLanguages, MergedPrefLanguages - 线程语言首选项</span><br><span class="line">MuiImpersonation - MUI 模拟状态</span><br><span class="line">CrossTebFlags &#x2F; SameTebFlags - TEB 标志位，如 SafeThunkCall, InDebugPrint, InitialThread 等</span><br><span class="line">TxnScopeEnterCallback &#x2F; TxnScopeExitCallback &#x2F; TxnScopeContext - 事务回调和上下文</span><br><span class="line"></span><br><span class="line">0x1808 - 0x1828: 资源与容器</span><br><span class="line">LockCount - 线程锁计数</span><br><span class="line">WowTebOffset - WOW64 TEB 偏移</span><br><span class="line">ResourceRetValue - 资源返回值缓存</span><br><span class="line">ReservedForWdf &#x2F; ReservedForCrt - WDF 和 CRT 保留</span><br><span class="line">EffectiveContainerId - 有效容器 GUID(AppContainer 标识)</span><br></pre></td></tr></table></figure>
+
+<p>其中 ProcessEnvironmentBlock 即PEB，相对TEB地址偏移为：</p>
+<ul>
+<li>x86：0x30</li>
+<li>x64：0x60</li>
+</ul>
+<h1 id="获取PEB"><a href="#获取PEB" class="headerlink" title="获取PEB"></a>获取PEB</h1><p>windows设计了段寄存器来指向TEB地址，因此可以直接读取该值获取TEB地址，再通过偏移获取PEB地址</p>
+<ul>
+<li>x86 架构：<strong>FS 段寄存器</strong> 指向当前线程 TEB 的基址<ul>
+<li>FS:[0x18]：TEB 自身地址</li>
+<li>FS:[0x30]： 指向 PEB 的指针</li>
+</ul>
+</li>
+<li>x64 架构： <strong>GS 段寄存器</strong> 指向当前线程 TEB 的基址<ul>
+<li>GS:[0x30]: TEB 自身地址</li>
+<li>GS:[0x60]: 指向 PEB 的指针</li>
+</ul>
+</li>
+</ul>
+<h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><p>x86直接使用汇编</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">__asm &#123;</span><br><span class="line">    mov eax, fs:[0x30]</span><br><span class="line">    mov pPeb, eax</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>x64默认无法使用汇编，需要新建asm文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.CODE</span><br><span class="line">    GetInInitializationOrderModuleList PROC</span><br><span class="line">    mov rax,gs:[60h]</span><br><span class="line">    ret</span><br><span class="line">    GetInInitializationOrderModuleList ENDP</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+
+<h2 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h2><p>在 C 语言中，获取 PEB 的方法会因编译器而异。Visual Studio 在编译 64 位程序时不允许使用内联汇编，但提供了一些替代宏。而 GCC 则要求使用内联汇编</p>
+<ul>
+<li>x86：使用 <code>__readfsdword(offset)</code></li>
+<li>x64：使用 <code>__readgsqword(offset)</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;intrin.h&gt;</span><br><span class="line"></span><br><span class="line">PTEB GetTEB(void) &#123;</span><br><span class="line">#ifdef _M_IX86</span><br><span class="line">    return (PTEB)__readfsdword(0x18);  &#x2F;&#x2F; FS:[0x18] &#x3D; Self</span><br><span class="line">#elif defined(_M_X64)</span><br><span class="line">    return (PTEB)__readgsqword(0x30);  &#x2F;&#x2F; GS:[0x30] &#x3D; Self</span><br><span class="line">#else</span><br><span class="line">    #error &quot;Unsupported architecture&quot;</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PPEB GetPEB(void) &#123;</span><br><span class="line">#ifdef _M_IX86</span><br><span class="line">    return (PPEB)__readfsdword(0x30);  &#x2F;&#x2F; FS:[0x30] &#x3D; PEB指针</span><br><span class="line">#elif defined(_M_X64)</span><br><span class="line">    return (PPEB)__readgsqword(0x60);  &#x2F;&#x2F; GS:[0x60] &#x3D; PEB指针</span><br><span class="line">#else</span><br><span class="line">    #error &quot;Unsupported architecture&quot;</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Win-API"><a href="#Win-API" class="headerlink" title="Win API"></a>Win API</h2><p>NtCurrentTeb、RtlGetCurrentPeb、NtQueryInformationProcess 获取PEB地址</p>
+<h1 id="武器化"><a href="#武器化" class="headerlink" title="武器化"></a>武器化</h1><p>在获取到PEB在内存中的地址后，可以通过修改结构体实现攻防对抗</p>
+<h2 id="动态API"><a href="#动态API" class="headerlink" title="动态API"></a>动态API</h2><p>获取PEB后通过Ldr结构定位加载的模块例如ntdll，解析导出表可以动态使用API函数，实现隐藏程序的IAT表</p>
+<p>peb.h，定义所需要的结构体</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma once</span><br><span class="line"></span><br><span class="line">typedef struct _UNICODE_STRING &#123;</span><br><span class="line">    USHORT Length;</span><br><span class="line">    USHORT MaximumLength;</span><br><span class="line">    PWSTR  Buffer;</span><br><span class="line">&#125; UNICODE_STRING;</span><br><span class="line"></span><br><span class="line">typedef struct _PEB &#123;</span><br><span class="line">    UCHAR InheritedAddressSpace;                                            &#x2F;&#x2F;0x0</span><br><span class="line">    UCHAR ReadImageFileExecOptions;                                         &#x2F;&#x2F;0x1</span><br><span class="line">    UCHAR BeingDebugged;                                                    &#x2F;&#x2F;0x2</span><br><span class="line">    union</span><br><span class="line">    &#123;</span><br><span class="line">        UCHAR BitField;                                                     &#x2F;&#x2F;0x3</span><br><span class="line">        struct</span><br><span class="line">        &#123;</span><br><span class="line">            UCHAR ImageUsesLargePages : 1;                                    &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsProtectedProcess : 1;                                     &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsImageDynamicallyRelocated : 1;                            &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR SkipPatchingUser32Forwarders : 1;                           &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsPackagedProcess : 1;                                      &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsAppContainer : 1;                                         &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsProtectedProcessLight : 1;                                &#x2F;&#x2F;0x3</span><br><span class="line">            UCHAR IsLongPathAwareProcess : 1;                                 &#x2F;&#x2F;0x3</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    UCHAR Padding0[4];                                                      &#x2F;&#x2F;0x4</span><br><span class="line">    VOID* Mutant;                                                           &#x2F;&#x2F;0x8</span><br><span class="line">    VOID* ImageBaseAddress;                                                 &#x2F;&#x2F;0x10</span><br><span class="line">    struct _PEB_LDR_DATA* Ldr;                                              &#x2F;&#x2F;0x18</span><br><span class="line">&#125; PEB, * PPEB;</span><br><span class="line"></span><br><span class="line">typedef struct _PEB_LDR_DATA &#123;</span><br><span class="line">    ULONG Length;                                                           &#x2F;&#x2F;0x0</span><br><span class="line">    UCHAR Initialized;                                                      &#x2F;&#x2F;0x4</span><br><span class="line">    VOID* SsHandle;                                                         &#x2F;&#x2F;0x8</span><br><span class="line">    struct _LIST_ENTRY InLoadOrderModuleList;                               &#x2F;&#x2F;0x10</span><br><span class="line">    struct _LIST_ENTRY InMemoryOrderModuleList;                             &#x2F;&#x2F;0x20</span><br><span class="line">    struct _LIST_ENTRY InInitializationOrderModuleList;                     &#x2F;&#x2F;0x30</span><br><span class="line">    VOID* EntryInProgress;                                                  &#x2F;&#x2F;0x40</span><br><span class="line">    UCHAR ShutdownInProgress;                                               &#x2F;&#x2F;0x48</span><br><span class="line">    VOID* ShutdownThreadId;                                                 &#x2F;&#x2F;0x50</span><br><span class="line">&#125; PEB_LDR_DATA, * PPEB_LDR_DATA;</span><br><span class="line"></span><br><span class="line">typedef struct _LDR_DATA_TABLE_ENTRY &#123;</span><br><span class="line">    struct _LIST_ENTRY InLoadOrderLinks;                                    &#x2F;&#x2F;0x0</span><br><span class="line">    struct _LIST_ENTRY InMemoryOrderLinks;                                  &#x2F;&#x2F;0x10</span><br><span class="line">    struct _LIST_ENTRY InInitializationOrderLinks;                          &#x2F;&#x2F;0x20</span><br><span class="line">    VOID* DllBase;                                                          &#x2F;&#x2F;0x30</span><br><span class="line">    VOID* EntryPoint;                                                       &#x2F;&#x2F;0x38</span><br><span class="line">    ULONG SizeOfImage;                                                      &#x2F;&#x2F;0x40</span><br><span class="line">    struct _UNICODE_STRING FullDllName;                                     &#x2F;&#x2F;0x48</span><br><span class="line">    struct _UNICODE_STRING BaseDllName;                                     &#x2F;&#x2F;0x58</span><br><span class="line">&#125; LDR_DATA_TABLE_ENTRY, * PLDR_DATA_TABLE_ENTRY;</span><br></pre></td></tr></table></figure>
+
+<p>PEB.cpp</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;windows.h&gt;</span><br><span class="line">#include &lt;peb.h&gt;</span><br><span class="line"></span><br><span class="line">PPEB GetPeb() &#123;</span><br><span class="line">#ifdef _WIN64</span><br><span class="line">    return (PPEB)__readgsqword(0x60);</span><br><span class="line">#else</span><br><span class="line">    return (PPEB)__readfsdword(0x30);</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LPVOID EnumModule(const wchar_t* target) &#123;</span><br><span class="line">    LPVOID address &#x3D; nullptr;</span><br><span class="line">    PPEB peb &#x3D; GetPeb();</span><br><span class="line">    PPEB_LDR_DATA Ldr &#x3D; peb-&gt;Ldr;</span><br><span class="line"></span><br><span class="line">    _LIST_ENTRY* head &#x3D; &amp;Ldr-&gt;InLoadOrderModuleList;</span><br><span class="line">    _LIST_ENTRY* current &#x3D; Ldr-&gt;InLoadOrderModuleList.Flink;</span><br><span class="line"></span><br><span class="line">    while (head !&#x3D; current) &#123;</span><br><span class="line">        PLDR_DATA_TABLE_ENTRY ldr_data &#x3D; (PLDR_DATA_TABLE_ENTRY)current;</span><br><span class="line">        printf(&quot;[*] name: %S base_address: %p\n&quot;, ldr_data-&gt;BaseDllName.Buffer, ldr_data-&gt;DllBase);</span><br><span class="line">        if (wcscmp(ldr_data-&gt;BaseDllName.Buffer, target) &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            address &#x3D; ldr_data-&gt;DllBase;</span><br><span class="line">            printf(&quot;[!]Found module\n&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        current &#x3D; current-&gt;Flink;</span><br><span class="line">    &#125;</span><br><span class="line">    return address;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FARPROC GetExportedFunctionAddress(LPVOID pBaseAddr, const char* functionName) &#123;</span><br><span class="line">    PIMAGE_DOS_HEADER dosHeader &#x3D; (PIMAGE_DOS_HEADER)pBaseAddr;</span><br><span class="line">    PIMAGE_NT_HEADERS ntHeaders &#x3D; (PIMAGE_NT_HEADERS)((BYTE*)pBaseAddr + dosHeader-&gt;e_lfanew);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 获取导出表 RVA (Relative Virtual Address)</span><br><span class="line">    PIMAGE_EXPORT_DIRECTORY exportDir &#x3D; (PIMAGE_EXPORT_DIRECTORY)((BYTE*)pBaseAddr + ntHeaders-&gt;OptionalHeader.DataDirectory[0].VirtualAddress);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 获取名称表和地址表</span><br><span class="line">    DWORD* nameRvas &#x3D; (DWORD*)((BYTE*)pBaseAddr + exportDir-&gt;AddressOfNames);</span><br><span class="line">    DWORD* addrRvas &#x3D; (DWORD*)((BYTE*)pBaseAddr + exportDir-&gt;AddressOfFunctions);</span><br><span class="line">    WORD* ordinals &#x3D; (WORD*)((BYTE*)pBaseAddr + exportDir-&gt;AddressOfNameOrdinals);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 遍历名称表，找到函数名</span><br><span class="line">    for (DWORD i &#x3D; 0; i &lt; exportDir-&gt;NumberOfNames; ++i) &#123;</span><br><span class="line">        &#x2F;&#x2F; 获取导出函数名</span><br><span class="line">        char* exportedFuncName &#x3D; (char*)pBaseAddr + nameRvas[i];</span><br><span class="line">        if (strcmp(exportedFuncName, functionName) &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            &#x2F;&#x2F; 找到函数，返回函数地址</span><br><span class="line">            DWORD funcRva &#x3D; addrRvas[ordinals[i]];</span><br><span class="line">            FARPROC funcAddr &#x3D; (FARPROC)((BYTE*)pBaseAddr + funcRva);</span><br><span class="line">            return funcAddr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const wchar_t *target_module &#x3D; L&quot;ntdll.dll&quot;;</span><br><span class="line">    LPVOID module_addr &#x3D; EnumModule(target_module);</span><br><span class="line"></span><br><span class="line">    FARPROC paddr &#x3D; GetExportedFunctionAddress(module_addr, &quot;NtCreateProcess&quot;);</span><br><span class="line">    printf(&quot;[*]Addr from PEB: %p\n&quot;, paddr);</span><br><span class="line">    </span><br><span class="line">    FARPROC ntaddr &#x3D; GetProcAddress(GetModuleHandleA(&quot;ntdll&quot;), &quot;NtCreateProcess&quot;);</span><br><span class="line">    printf(&quot;[*]Addr from API: %p\n&quot;, ntaddr);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模块隐藏"><a href="#模块隐藏" class="headerlink" title="模块隐藏"></a>模块隐藏</h2><p>同样通过Ldr结构修改链表，实现隐藏加载的模块。核心逻辑如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 我后面的下一个要指向我的下一个</span><br><span class="line">ldr-&gt;InLoadOrderModuleList.Blink-&gt;Flink &#x3D; ldr-&gt;InLoadOrderModuleList.Flink;</span><br><span class="line">&#x2F;&#x2F; 我下一个的后面要指向我的后面</span><br><span class="line">ldr-&gt;InLoadOrderModuleList.Flink-&gt;Blink &#x3D; ldr-&gt;InLoadOrderModuleList.Blink;</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程伪装"><a href="#进程伪装" class="headerlink" title="进程伪装"></a>进程伪装</h2><p>修改PEB结构体中ProcessParameters，实现伪装命令行参数、伪装启动路径等信息，结构体如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">struct _RTL_USER_PROCESS_PARAMETERS* ProcessParameters;                 &#x2F;&#x2F;0x20</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;0x440 bytes (sizeof)</span><br><span class="line">struct _RTL_USER_PROCESS_PARAMETERS</span><br><span class="line">&#123;</span><br><span class="line">    ULONG MaximumLength;                                                    &#x2F;&#x2F;0x0</span><br><span class="line">    ULONG Length;                                                           &#x2F;&#x2F;0x4</span><br><span class="line">    ULONG Flags;                                                            &#x2F;&#x2F;0x8</span><br><span class="line">    ULONG DebugFlags;                                                       &#x2F;&#x2F;0xc</span><br><span class="line">    VOID* ConsoleHandle;                                                    &#x2F;&#x2F;0x10</span><br><span class="line">    ULONG ConsoleFlags;                                                     &#x2F;&#x2F;0x18</span><br><span class="line">    VOID* StandardInput;                                                    &#x2F;&#x2F;0x20</span><br><span class="line">    VOID* StandardOutput;                                                   &#x2F;&#x2F;0x28</span><br><span class="line">    VOID* StandardError;                                                    &#x2F;&#x2F;0x30</span><br><span class="line">    struct _CURDIR CurrentDirectory;                                        &#x2F;&#x2F;0x38</span><br><span class="line">    struct _UNICODE_STRING DllPath;                                         &#x2F;&#x2F;0x50</span><br><span class="line">    struct _UNICODE_STRING ImagePathName;                                   &#x2F;&#x2F;0x60</span><br><span class="line">    struct _UNICODE_STRING CommandLine;                                     &#x2F;&#x2F;0x70</span><br><span class="line">    VOID* Environment;                                                      &#x2F;&#x2F;0x80</span><br><span class="line">    ULONG StartingX;                                                        &#x2F;&#x2F;0x88</span><br><span class="line">    ULONG StartingY;                                                        &#x2F;&#x2F;0x8c</span><br><span class="line">    ULONG CountX;                                                           &#x2F;&#x2F;0x90</span><br><span class="line">    ULONG CountY;                                                           &#x2F;&#x2F;0x94</span><br><span class="line">    ULONG CountCharsX;                                                      &#x2F;&#x2F;0x98</span><br><span class="line">    ULONG CountCharsY;                                                      &#x2F;&#x2F;0x9c</span><br><span class="line">    ULONG FillAttribute;                                                    &#x2F;&#x2F;0xa0</span><br><span class="line">    ULONG WindowFlags;                                                      &#x2F;&#x2F;0xa4</span><br><span class="line">    ULONG ShowWindowFlags;                                                  &#x2F;&#x2F;0xa8</span><br><span class="line">    struct _UNICODE_STRING WindowTitle;                                     &#x2F;&#x2F;0xb0</span><br><span class="line">    struct _UNICODE_STRING DesktopInfo;                                     &#x2F;&#x2F;0xc0</span><br><span class="line">    struct _UNICODE_STRING ShellInfo;                                       &#x2F;&#x2F;0xd0</span><br><span class="line">    struct _UNICODE_STRING RuntimeData;                                     &#x2F;&#x2F;0xe0</span><br><span class="line">    struct _RTL_DRIVE_LETTER_CURDIR CurrentDirectores[32];                  &#x2F;&#x2F;0xf0</span><br><span class="line">    ULONGLONG EnvironmentSize;                                              &#x2F;&#x2F;0x3f0</span><br><span class="line">    ULONGLONG EnvironmentVersion;                                           &#x2F;&#x2F;0x3f8</span><br><span class="line">    VOID* PackageDependencyData;                                            &#x2F;&#x2F;0x400</span><br><span class="line">    ULONG ProcessGroupId;                                                   &#x2F;&#x2F;0x408</span><br><span class="line">    ULONG LoaderThreads;                                                    &#x2F;&#x2F;0x40c</span><br><span class="line">    struct _UNICODE_STRING RedirectionDllName;                              &#x2F;&#x2F;0x410</span><br><span class="line">    struct _UNICODE_STRING HeapPartitionName;                               &#x2F;&#x2F;0x420</span><br><span class="line">    ULONGLONG* DefaultThreadpoolCpuSetMasks;                                &#x2F;&#x2F;0x430</span><br><span class="line">    ULONG DefaultThreadpoolCpuSetMaskCount;                                 &#x2F;&#x2F;0x438</span><br><span class="line">    ULONG DefaultThreadpoolThreadMaximum;                                   &#x2F;&#x2F;0x43c</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/">https://www.vergiliusproject.com/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LittleHann/p/3453148.html">《寒江独钓》内核学习笔记（2）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LittleHann/p/3454748.html">《寒江独钓》内核学习笔记（3）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LittleHann/p/3454855.html">《寒江独钓》内核学习笔记（4）</a></p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1526">Peb小结</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/RTyafWl13djCI5ua6LFQ6w">Windows安全攻防-PEB&amp;TEB</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/14/unhookdll/" rel="prev" title="Api Unhook">
+                  <i class="fa fa-angle-left"></i> Api Unhook
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
