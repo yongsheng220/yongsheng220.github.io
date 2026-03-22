@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/03/22/Azure-P1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/03/22/Azure-P1/","path":"2026/03/22/Azure-P1/","title":"Azure Part 1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Azure Part 1 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Azure"><span class="nav-text">Azure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-%E6%9C%8D%E5%8A%A1%E6%A6%82%E8%BF%B0"><span class="nav-text">Azure 服务概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RBAC"><span class="nav-text">RBAC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-RBAC"><span class="nav-text">Azure RBAC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entra-ID-RBAC"><span class="nav-text">Entra ID RBAC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#365-RBAC"><span class="nav-text">365 RBAC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-VS-Entra"><span class="nav-text">Azure VS Entra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entra-VS-365"><span class="nav-text">Entra VS 365</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Microsoft-Entra-ID"><span class="nav-text">Microsoft Entra ID</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Microsoft-Entra"><span class="nav-text">Microsoft Entra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entra-ID"><span class="nav-text">Entra ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AD-vs-Entra-ID"><span class="nav-text">AD vs Entra ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Entra-ID-Role"><span class="nav-text">Entra ID Role</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Application"><span class="nav-text">Application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-text">混合模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95"><span class="nav-text">同步方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F"><span class="nav-text">认证方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92"><span class="nav-text">交互</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Microsoft-365"><span class="nav-text">Microsoft 365</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Microsoft-Graph"><span class="nav-text">Microsoft Graph</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/22/Azure-P1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Azure Part 1 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Azure Part 1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-22 00:00:00" itemprop="dateCreated datePublished" datetime="2026-03-22T00:00:00+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/2-1774176097715-5.png"></p>
+<a id="more"></a>
+
+<h1 id="Azure"><a href="#Azure" class="headerlink" title="Azure"></a>Azure</h1><p>根据维基和微软描述，Azure 是一个云计算平台，提供包括 计算、分析、存储、网络、AI、身份识别与访问管理 等一系列云服务。客户可以从这些服务中进行选择，以在云端开发和扩展新应用程序或运行现有应用程序。Azure 帮助企业轻松灵活地在全球范围内管理和部署应用程序。</p>
+<p>微软云（microsoft-cloud）是所有微软云服务的统称，包括 Azure、Microsoft 365 和 Dynamics 365。Azure 特指微软云计算平台，并且整个微软云都运行在 Azure 上。</p>
+<h2 id="Azure-服务概述"><a href="#Azure-服务概述" class="headerlink" title="Azure 服务概述"></a>Azure 服务概述</h2><p>关于Azure服务常见如下：</p>
+<ul>
+<li>计算服务：虚拟机、云服务、RemoteApp、Service Fabric、容器服务和函数服务</li>
+<li>应用服务：应用服务、API管理服务、服务总线、Mobile Engagement和IoT应用集</li>
+<li>存储服务：关系数据库、DocumentDB、存储体、搜索服务、Redis缓存服务和Cosmos DB</li>
+<li>分析服务：HDInsights、资料流分析、资料工厂、事件汇集器、资料湖和机器学习</li>
+<li>网络服务：虚拟网络、高速路由专线、流量管理员和名称托管服务</li>
+<li>身份识别与访问管理服务：Microsoft Entra ID</li>
+<li>开发人员服务：Application Insights、Azure DevOps、Azure App Center</li>
+<li>管理服务：调度器、自动化、营运洞察、密钥收纳库、安全中心、备份服务和站台撤销服务</li>
+</ul>
+<p>服务总览如图：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260223224159524.png" alt="image-20260223224159524"></p>
+<h1 id="RBAC"><a href="#RBAC" class="headerlink" title="RBAC"></a>RBAC</h1><p><strong>基于角色的访问控制 (RBAC)</strong> 是一种广泛使用的访问控制模型，旨在通过将主体 (Subject) 分配到预定义的角色 (Role) 来管理用户访问权限，每个角色都指定了一组权限 (Permissions)，用于控制主体在资源 (Resources) 中可以执行的操作。该模型提供了一种结构化的访问管理方法，使组织能够实施符合业务目标和安全要求的策略。</p>
+<p>组成部分大概如下：</p>
+<ul>
+<li>主体 (Subject)：用户、实体、标识、应用程序等</li>
+<li>角色 (Role)：一组主体的集合，例如 工程师、销售员、售后员</li>
+<li>权限 (Permissions)：一组权限定义了可以对资源执行的特定操作，例如 读取、删除、添加、开机等</li>
+<li>资源 (Resources)：被操作的对象，例如 容器、计算机、订阅等</li>
+<li>角色分配 (Role Assignment)：将角色与资源关联起来的过程</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260321231421995.png" alt="image-20260321231421995"></p>
+<p>Azure 使用RBAC模型实现对Azure资源进行细粒度访问管理。</p>
+<p>我将微软云中RBAC分为三种：</p>
+<ul>
+<li><p>Azure RBAC：控制 <strong>云资源</strong></p>
+</li>
+<li><p>Microsoft Entra ID RBAC：控制 <strong>身份 &amp; SaaS 服务</strong></p>
+</li>
+<li><p>Microsoft 365下各服务 RBAC：Saas服务各自的RBAC实现</p>
+</li>
+</ul>
+<h2 id="Azure-RBAC"><a href="#Azure-RBAC" class="headerlink" title="Azure RBAC"></a>Azure RBAC</h2><p>Azure RBAC管理谁有权访问 Azure 资源、他们可以对这些资源执行哪些操作以及他们可以访问哪些区域。有以下要素：</p>
+<p><strong>安全主体（security principal）</strong></p>
+<p>用户(user)、组(group)、服务主体(service principal)、托管标识(managed identity)</p>
+<p><strong>角色定义（role definition）</strong></p>
+<p>通常简称为角色，列出了可以执行的操作，例如读取、写入和删除。Azure角色分为内置（Built-in）和 自定义（custom）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260321235544621.png" alt="image-20260321235544621"></p>
+<p><strong>作用范围（scope）</strong></p>
+<p>范围是指访问权限所适用的资源集合，Azure 中可指定四个级别的范围：管理组（management-groups）、订阅（subscription）、资源组（resource-groups）、资源（resource）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260321235759195.png" alt="image-20260321235759195"></p>
+<p><strong>角色分配（Role Assignment）</strong></p>
+<p>可以通过 Azure portal、Azure CLI、Azure PowerShell、Azure SDKs、REST APIs 进行角色分配</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322000049524.png" alt="image-20260322000049524"></p>
+<p>关于Azure RBAC的角色分配还有以下特性</p>
+<ol>
+<li>角色分配对组具有传递性</li>
+</ol>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322000517973.png" alt="image-20260322000517973"></p>
+<ol start="2">
+<li>重叠角色为权限的并集</li>
+</ol>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322000529220.png" alt="image-20260322000529220"></p>
+<p><strong>Built in Role</strong></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles">https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles</a></p>
+<table>
+<thead>
+<tr>
+<th>常见Role</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Contributor</td>
+<td>授予管理所有资源的完全访问权限，但不允许您在 Azure RBAC 中分配角色、在 Azure 蓝图中管理分配或共享图像库</td>
+</tr>
+<tr>
+<td>Owner</td>
+<td>授予管理所有资源的完全权限，包括在 Azure RBAC 中分配角色的能力</td>
+</tr>
+<tr>
+<td>Reservations Administrator</td>
+<td>允许用户读取和管理租户中的所有预订信息</td>
+</tr>
+<tr>
+<td>Role Based Access Control Administrator</td>
+<td>使用 Azure RBAC 分配角色来管理对 Azure 资源的访问。此角色不允许您使用其他方式（例如 Azure Policy）来管理访问</td>
+</tr>
+<tr>
+<td>User Access Administrator</td>
+<td>允许您管理用户对 Azure 资源的访问权限</td>
+</tr>
+<tr>
+<td>Reader</td>
+<td>查看所有资源，但不允许您进行任何更改</td>
+</tr>
+</tbody></table>
+<h2 id="Entra-ID-RBAC"><a href="#Entra-ID-RBAC" class="headerlink" title="Entra ID RBAC"></a>Entra ID RBAC</h2><p>与Azure RBAC类似，但Microsoft Entra ID 中的主体/范围/定义是不同于Azure</p>
+<p><strong>安全主体（security principal）</strong></p>
+<p>用户(user)：用户是指在 Microsoft Entra ID 中拥有用户配置文件的个人</p>
+<p>组(group)：被设可分配角色组的 Microsoft 365 组 或 安全组</p>
+<p>服务主体(service principal)：为应用程序、托管服务、自动化工具访问 Microsoft Entra 资源而创建的身份</p>
+<p><strong>角色定义（role definition）</strong></p>
+<p>角色是一组权限的集合，分为内置（Built-in）和 自定义（custom）</p>
+<p><strong>作用范围（scope）</strong></p>
+<p>Entra 中指定了三种类型的作用范围</p>
+<ul>
+<li>Tenant</li>
+<li>Administrative unit</li>
+<li>Microsoft Entra resource<ul>
+<li>Microsoft Entra groups</li>
+<li>Enterprise applications</li>
+<li>Application registrations</li>
+</ul>
+</li>
+</ul>
+<p><strong>角色分配（Role Assignment）</strong></p>
+<p>可以通过 Microsoft Entra 管理中心、Microsoft Graph PowerShell 、Microsoft Graph API 进行角色分配</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322014844594.png" alt="image-20260322014844594"></p>
+<p><strong>运行流程</strong></p>
+<ol>
+<li>用户/组/服务主体获取 Microsoft Graph endpoint的Token</li>
+<li>用户通过 Microsoft Graph 使用token向 Microsoft Entra ID 发出 API请求</li>
+<li>根据具体情况，Microsoft Entra ID 会执行以下操作之一：<ul>
+<li>根据用户access token中的 wids 声明评估用户的角色成员身份</li>
+<li>检索适用于用户的所有角色分配，无论是直接分配还是通过组成员身份分配，这些角色分配都适用于正在执行操作的资源</li>
+</ul>
+</li>
+<li>Microsoft Entra ID 确定 API 调用中的操作是否包含在用户对此资源拥有的角色中</li>
+<li>如果用户没有在请求的权限范围内执行该操作的角色，则不授予访问权限。否则，授予访问权限</li>
+</ol>
+<p><strong>Built in Role</strong></p>
+<table>
+<thead>
+<tr>
+<th>常见Role</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Global Administrator</td>
+<td>全局管理员，管理所有</td>
+</tr>
+<tr>
+<td>Privileged Role Administrator</td>
+<td>特权角色管理员，分配所有高权限角色</td>
+</tr>
+<tr>
+<td>Global Reader</td>
+<td>几乎读所有信息</td>
+</tr>
+<tr>
+<td>User Administrator</td>
+<td>用户管理员</td>
+</tr>
+<tr>
+<td>Groups Administrator</td>
+<td>组管理员</td>
+</tr>
+<tr>
+<td>Application Administrator</td>
+<td>应用管理员</td>
+</tr>
+<tr>
+<td>Cloud Application Administrator</td>
+<td>云应用管理员</td>
+</tr>
+<tr>
+<td>Exchange Administrator</td>
+<td>Exchange Online 管理员</td>
+</tr>
+<tr>
+<td>SharePoint Administrator</td>
+<td>SharePoint Online 管理员</td>
+</tr>
+<tr>
+<td>Teams Administrator</td>
+<td>Teams 管理员</td>
+</tr>
+</tbody></table>
+<h2 id="365-RBAC"><a href="#365-RBAC" class="headerlink" title="365 RBAC"></a>365 RBAC</h2><p>Microsoft 365 拥有多个基于角色的访问控制系统，即多个服务都有一套自己的RBAC</p>
+<p>Exchange Online：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/exchange/permissions-exo/permissions-exo">https://learn.microsoft.com/en-us/exchange/permissions-exo/permissions-exo</a></p>
+<p>Microsoft Intune：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/role-based-access-control">https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/role-based-access-control</a></p>
+<p>Microsoft Purview：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/purview/purview-permissions">https://learn.microsoft.com/en-us/purview/purview-permissions</a></p>
+<p>这里有常见服务的RBAC Map可以方便的查看Role和权限：<a target="_blank" rel="noopener" href="https://rbacmap.com/">Microsoft 365 Admin Center RBAC</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322024826587.png" alt="image-20260322024826587"></p>
+<h2 id="Azure-VS-Entra"><a href="#Azure-VS-Entra" class="headerlink" title="Azure VS Entra"></a>Azure VS Entra</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>Entra ID RBAC</th>
+<th>Azure RBAC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>描述</td>
+<td>一种身份和访问管理服务，可帮助您访问内部和外部资源</td>
+<td>一个管理用户对 Azure 资源访问权限的授权系统</td>
+</tr>
+<tr>
+<td>重点</td>
+<td>使用 Microsoft Graph API 控制对 Microsoft Entra 资源（例如用户、组和应用程序）的访问</td>
+<td>使用 Azure 资源管理来控制对 Azure 资源（例如虚拟机或存储）的访问</td>
+</tr>
+<tr>
+<td>范围</td>
+<td>租户级别（组织范围）、管理单元、单个对象（例如，特定应用程序）指定</td>
+<td>指定在多个级别（管理组、订阅、资源组、资源）</td>
+</tr>
+<tr>
+<td>角色</td>
+<td>Global Administrator、User Administrator、Billing Administrator</td>
+<td>Owner、Contributor、Reader、User Access Administrator</td>
+</tr>
+<tr>
+<td>角色信息</td>
+<td>通过 Azure 门户、Microsoft Entra 管理中心、Microsoft 365 管理中心、Microsoft Graph 和 Microsoft Graph PowerShell 访问角色信息</td>
+<td>通过 Azure 门户、CLI、PowerShell、资源管理器模板和 REST API 访问角色信息</td>
+</tr>
+</tbody></table>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322030830462.png" alt="image-20260322030830462"></p>
+<p>默认情况下，Azure 角色和 Microsoft Entra 角色不能互相跨越 Azure 和 Microsoft Entra ID，但是 <code>Global Administrator</code> 可以开启 <code>Access management for Azure resources</code> 实现跨越</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/azure-roles-entra-roles.png"></p>
+<h2 id="Entra-VS-365"><a href="#Entra-VS-365" class="headerlink" title="Entra VS 365"></a>Entra VS 365</h2><p>Microsoft 365 中包含许多不同的服务，其中一些服务拥有自己的RBAC如下：</p>
+<ul>
+<li>Microsoft Entra ID</li>
+<li>Microsoft Exchange</li>
+<li>Microsoft Intune</li>
+<li>Microsoft Defender for Cloud Apps</li>
+<li>Microsoft 365 Defender portal</li>
+<li>Compliance portal</li>
+<li>Cost Management + Billing</li>
+</ul>
+<p>一些服务没有自己的RBAC，所以它们使用 Microsoft Entra ID的角色进行管理访问，如下：</p>
+<ul>
+<li>Teams</li>
+<li>SharePoint</li>
+<li>Managed Desktop</li>
+</ul>
+<p>为了方便在 Microsoft Entra 管理中心统一管理 Microsoft 365 中身份，微软添加了一些特定于服务的内置角色，每个角色都授予对 Microsoft 365 服务的管理权限，例如Entra ID中的 <strong>Exchange Administrator</strong>，就是专门用来管理Exchange Online的，同理还有Intune Administrator, Teams Administrator, SharePoint Administrator。</p>
+<p>针对这种情况，Microsoft Entra roles就可以分为三类：</p>
+<ul>
+<li><strong>Microsoft Entra ID-specific roles</strong>：Microsoft Entra ID特有角色</li>
+<li><strong>Service-specific roles in Microsoft Entra ID</strong>：Microsoft Entra ID管理服务的角色</li>
+<li><strong>Cross-service roles in Microsoft Entra ID</strong>：跨服务使用的角色，比如所有 Microsoft 365 服务都支持的两个角色 Global Administrator 和 Global Reader，还有关于跨安全服务的Security Administrator 和 Security Reader</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322032106281.png" alt="image-20260322032106281"></p>
+<h1 id="Microsoft-Entra-ID"><a href="#Microsoft-Entra-ID" class="headerlink" title="Microsoft Entra ID"></a>Microsoft Entra ID</h1><h2 id="Microsoft-Entra"><a href="#Microsoft-Entra" class="headerlink" title="Microsoft Entra"></a>Microsoft Entra</h2><p>Microsoft Entra 是一系列标识和网络访问产品。它允许组织实施零信任安全策略，并创建一个信任结构用于验证标识、验证访问条件、检查权限、加密连接通道以及监视泄露</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260223230717989.png" alt="image-20260223230717989"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322033348804.png" alt="image-20260322033348804"></p>
+<p>Microsoft Entra admin center，是一个基于 Web 的 Microsoft Entra 产品身份门户。它为组织提供统一的管理体验，以便在一个集中位置配置和管理其 Microsoft Entra 解决方案</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322125850029.png" alt="image-20260322125850029"></p>
+<h2 id="Entra-ID"><a href="#Entra-ID" class="headerlink" title="Entra ID"></a>Entra ID</h2><p>Entra ID是 Microsoft Entra 的基础产品。它是一种基于云的身份和访问管理服务，提供必要的身份、身份验证、策略和保护，以保障用户、设备、应用和资源的安全。简单说Entra ID是一个用来进行身份验证的身份管理平台，通过RBAC来控制可访问的资源</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322032454537.png" alt="image-20260322032454537"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322130129122.png" alt="image-20260322130129122"></p>
+<h2 id="AD-vs-Entra-ID"><a href="#AD-vs-Entra-ID" class="headerlink" title="AD vs Entra ID"></a>AD vs Entra ID</h2><p>在2023年Azure AD，更名为 Microsoft Entra ID，以前Azure AD与Windows Server Active Directory会存在一些命名混淆，至少我在初步认识时误以为Azure AD就是云上的域，实则不然。以下是一些对比：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Windows AD（Active Directory）</th>
+<th>Entra ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>部署类型</td>
+<td>本地部署，需要在组织的服务器上安装和维护</td>
+<td>云部署，由 Microsoft 托管和维护</td>
+</tr>
+<tr>
+<td>主要用途</td>
+<td>管理本地 Windows 环境中的用户、计算机和资源，例如文件服务器、打印机和应用程序</td>
+<td>管理云应用程序和资源的访问，例如 Microsoft 365、Azure 服务和 SaaS 应用程序</td>
+</tr>
+<tr>
+<td>身份验证协议</td>
+<td>Kerberos、NTLM</td>
+<td>SAML、WS-Federation、OAuth 2.0、OpenID Connect</td>
+</tr>
+<tr>
+<td>目录结构</td>
+<td>基于树状结构的组织单位 (OU)</td>
+<td>基于扁平结构的组</td>
+</tr>
+<tr>
+<td>组策略</td>
+<td>支持组策略对象 (GPO)，用于集中管理 Windows 设置和配置</td>
+<td>不直接支持组策略，但可以使用 Intune 等工具实现类似功能</td>
+</tr>
+<tr>
+<td>访问控制</td>
+<td>基于访问控制列表 (ACL)</td>
+<td>基于角色的访问控制 (RBAC) 和条件访问策略</td>
+</tr>
+<tr>
+<td>单点登录 (SSO)</td>
+<td>支持本地应用程序的 SSO，但需要额外的配置</td>
+<td>支持云应用程序的 SSO，通常开箱即用</td>
+</tr>
+<tr>
+<td>多重身份验证 (MFA)</td>
+<td>支持 MFA，但需要额外的配置</td>
+<td>支持 MFA，并且易于配置</td>
+</tr>
+<tr>
+<td>自助服务</td>
+<td>支持自助服务密码重置和解锁帐户，但需要额外的配置</td>
+<td>支持自助服务密码重置、解锁帐户和注册设备，通常开箱即用</td>
+</tr>
+<tr>
+<td>许可模式</td>
+<td>通常作为 Windows Server 操作系统的一部分提供，需要购买 Windows Server 许可证</td>
+<td>提供免费版和付费版，付费版P1、P2</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>适用于主要使用本地 Windows 应用程序和资源的组织，或者需要严格控制本地环境的组织</td>
+<td>适用于主要使用云应用程序和资源的组织，或者需要灵活、可扩展的身份和访问管理解决方案的组织</td>
+</tr>
+<tr>
+<td>集成</td>
+<td>可以与 Azure AD 集成，实现混合身份管理</td>
+<td>可以与 Windows AD 集成，实现混合身份管理</td>
+</tr>
+<tr>
+<td>其他功能</td>
+<td>提供其他功能，如 DNS、DHCP 和证书服务</td>
+<td>提供其他功能，如设备管理、应用程序代理、自助服务组管理和动态组</td>
+</tr>
+</tbody></table>
+<h2 id="Entra-ID-Role"><a href="#Entra-ID-Role" class="headerlink" title="Entra ID Role"></a>Entra ID Role</h2><p>在Entra ID RBAC中已初步介绍</p>
+<h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><p>在RBAC节提到了Entra ID的服务主体(Service Principal) 和scope之一的Microsoft Entra resource：</p>
+<ul>
+<li>Microsoft Entra groups</li>
+<li>Enterprise applications</li>
+<li>Application registrations</li>
+</ul>
+<p>还提及到了Entra ID认证的流程，这里简单回顾，安全主体（包括user/group/Service Principal）通过Graph获取Token，携带Token向Entra ID发起对scope的操作请求。</p>
+<p>那么安全主体中的服务主体 (Service Principal) 是什么？以及scope中企业应用 (Enterprise applications)、应用注册 (Application registrations)是什么？以及他们之间是什么关系？</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322151931260.png" alt="image-20260322151931260"></p>
+<p>这篇文章介绍的非常详细：<a target="_blank" rel="noopener" href="https://heusser.pro/p/whats-the-difference-between-an-entra-id-app-registration-and-an-enterprise-app-4yyib4g1sk5a/">Understanding Microsoft Entra ID App Registrations, Enterprise Apps and Service Principals</a></p>
+<p>我总结以下几点</p>
+<p><strong>应用初步认识</strong></p>
+<ul>
+<li><p>企业应用 = 服务主体，每个企业应用都是一个服务主体</p>
+</li>
+<li><p>服务主体始终与应用注册关联</p>
+</li>
+<li><p>应用注册是将一个应用注册到 Entra ID 系统中，创建新的应用注册信息，实际上只是告诉 Entra ID 这个应用模板存在，可以理解为一个声明</p>
+</li>
+<li><p>Entra 应用可以注册并添加到单个租户（您注册该应用的租户）、多租户（任何Entra ID租户）、多租户 + 个人帐户</p>
+</li>
+<li><p>应用注册的 Application(client) ID 在所有 Entra ID 租户中都是唯一的。因此一个应用注册只能存在于一个租户中</p>
+</li>
+<li><p>某些应用程序注册信息你将看不到，因为该程序不是你注册的，例如Graph应用就是微软注册的多租户应用程序</p>
+</li>
+<li><p>当在Azure门户创建应用注册时，会自动创建一个对应的企业应用程序(服务主体)</p>
+</li>
+<li><p>当通过powershell创建应用注册时，不会自动创建一个对应的企业应用程序(服务主体)，只会创建（注册）应用程序本身</p>
+</li>
+<li><p>可以通过服务主体登录 Graph PowerShell</p>
+</li>
+</ul>
+<p><strong>应用的权限</strong></p>
+<p>注册应用程序和企业应用程序中都存在权限，分为两大类</p>
+<ul>
+<li><p>委托权限：以 <strong>用户身份</strong> 操作，委托权限需要已登录用户，请求是以已登录用户的身份发出的，而且用于连接到Graph的应用程序必须配置并同意相应的委托权限</p>
+</li>
+<li><p>应用程序权限：以 <strong>应用自身身份</strong> 操作，无需用户登录即可执行操作，您需要client secret（客户端密钥）或 cert（证书）</p>
+</li>
+<li><p>应用注册中配置的所有权限都将是企业应用需要请求的权限</p>
+</li>
+</ul>
+<h2 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h2><p>如今，企业和公司越来越多地采用本地部署和云应用相结合的方式。用户需要同时访问本地和云端的应用，我称此场景为混合模式，本地环境 + 云环境 同时存在并协同工作</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">混合模式</span><br><span class="line">    ├── 混合身份（Entra + AD）</span><br><span class="line">    ├── 混合邮件</span><br><span class="line">    ├── 混合应用</span><br><span class="line">    └── 混合网络</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322173703642.png" alt="image-20260322173703642"></p>
+<p>跨目录配置是指在两个不同的目录服务系统之间配置身份。跨目录配置最常见的场景是将本地 Active Directory 中的用户配置到 Microsoft Entra ID 中，实现混合身份环境。这里进行简单介绍</p>
+<h3 id="同步方法"><a href="#同步方法" class="headerlink" title="同步方法"></a>同步方法</h3><p>Entra ID提供了三种实现目录间配置的方法：</p>
+<ul>
+<li>Microsoft Entra Connect：AD 到 Entra 的主流同步方案</li>
+<li>Microsoft Entra Cloud Sync：提供了一种轻量级的基于代理的方法，它将取代 Microsoft Entra Connect</li>
+<li>Microsoft Identity Manager (MIM) ：提供高级目录间配置功能</li>
+</ul>
+<h3 id="认证方式"><a href="#认证方式" class="headerlink" title="认证方式"></a>认证方式</h3><p>Microsoft Entra Connect 提供了如下核心功能实现身份认证</p>
+<ul>
+<li><p>密码哈希同步 (Password Hash Synchronization, PHS)：将本地 AD 用户密码的哈希同步到 Microsoft Entra ID</p>
+</li>
+<li><p>传递身份验证 (Pass-through Authentication, PTA)：允许用户在本地和云端使用相同密码，无需额外的联合环境基础设施</p>
+</li>
+<li><p>联合身份验证集成 (Federation integration)：可用于配置使用本地 ADFS 基础架构的混合环境</p>
+</li>
+</ul>
+<h2 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h2><p>MSOnline Powershell：偏向Office 365</p>
+<p>AzureAD Powershell：常规AzureAD模块</p>
+<h1 id="Microsoft-365"><a href="#Microsoft-365" class="headerlink" title="Microsoft 365"></a>Microsoft 365</h1><ul>
+<li>Office 365 和 Microsoft 365 区别</li>
+</ul>
+<p>Office 365 是基于云的商业<strong>一系列应用程序</strong>，包含了Word、Excel、Outlook、PowerPoint、OneDrive、Teams、Exchange Online、SharePoint Online、Entra ID等</p>
+<p>Microsoft 365 是<strong>一项订阅服务</strong>，提供一套 Microsoft 的生产力工具和基于云的服务，包含了 Office 365 加 Windows 10/11 操作系统和企业移动套件等，不同订阅解锁的服务工具各不同</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260225003643846.png" alt="image-20260225003643846"></p>
+<ul>
+<li>Exchange Online</li>
+</ul>
+<p>Microsoft Exchange Online是一个基于云的消息平台，提供电子邮件、日历、联系人和任务管理功能。本地域环境中的Exchange Server是在本地机器搭建的服务，而Online是微软提供的云服务，也称邮箱上云。</p>
+<p>当公司/组织注册了商业版、企业版订阅时，即可使用Exchange Online，也可以购买独立的 Exchange Online 计划。用户可以使用 Outlook、Outlook 网页版或 Outlook 移动应用等应用程序连接到 Exchange Online。</p>
+<p>组织管理员管理Exchange Online时可通过两种方式</p>
+<ol>
+<li> Microsoft 365 管理中心：使用管理员权限登录Microsoft 365 管理中心 <a target="_blank" rel="noopener" href="https://admin.microsoft.com/">https://admin.microsoft.com/</a> ，在导航中选择Exchange</li>
+<li>Exchange 管理中心 (EAC) ：<a target="_blank" rel="noopener" href="https://admin.exchange.microsoft.com/">https://admin.exchange.microsoft.com</a></li>
+</ol>
+<ul>
+<li>Outlook</li>
+</ul>
+<p>Outlook既是客户端应用程序的名称，也是微软基础邮件托管服务的名称。</p>
+<ol>
+<li><p>作为基础邮件托管服务来说，它提供了一个类似Gmail的邮箱服务，可以让用户注册一个@outlook.com的邮箱</p>
+</li>
+<li><p>作为客户端应用程序来说，它有桌面版、web页面、移动端。通过客户端登录，可以连接到Exchange Online、Exchange Server、微软邮箱托管服务，简而言之，Outlook是一个前端入口用来连接邮箱后端服务</p>
+</li>
+</ol>
+<h1 id="Microsoft-Graph"><a href="#Microsoft-Graph" class="headerlink" title="Microsoft Graph"></a>Microsoft Graph</h1><p>是通往 Microsoft 云服务（如 Microsoft Entra 和 Microsoft 365）中的数据和智能的门户，通过Microsoft Graph 公开的 REST API 和客户端库，可以访问众多Microsoft 云服务上的数据。简单来说，就是拿着你的Token通过API去获取、操作服务数据等</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260322181813910.png" alt="image-20260322181813910"></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li>Azure</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-azure">https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-azure</a></p>
+<p><a target="_blank" rel="noopener" href="https://azurecharts.com/overview">https://azurecharts.com/overview</a></p>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Microsoft_Azure">https://zh.wikipedia.org/wiki/Microsoft_Azure</a></p>
+<ul>
+<li><p>RBAC</p>
+<ul>
+<li>Azure RBAC ：<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/role-based-access-control/">https://learn.microsoft.com/en-us/azure/role-based-access-control/</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles">https://learn.microsoft.com/en-us/azure/role-based-access-control/rbac-and-directory-admin-roles</a></li>
+</ul>
+</li>
+<li>Entra RBAC：<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/">https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/</a></li>
+<li><a target="_blank" rel="noopener" href="https://rbacmap.com/">https://rbacmap.com/</a></li>
+</ul>
+</li>
+<li>Exchange RBAC：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/exchange/permissions-exo/permissions-exo">https://learn.microsoft.com/en-us/exchange/permissions-exo/permissions-exo</a></li>
+</ul>
+</li>
+<li><p>Exchange Online</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/exchange/exchange-online">https://learn.microsoft.com/en-us/exchange/exchange-online</a></p>
+<ul>
+<li>Entra</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/entra/">https://learn.microsoft.com/en-us/entra/</a></p>
+<ul>
+<li>Entra ID</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/entra/identity/">https://learn.microsoft.com/en-us/entra/identity/</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/cloudservice/iam/azure_ad_pentest.html">https://wiki.teamssix.com/cloudservice/iam/azure_ad_pentest.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://heusser.pro/p/whats-the-difference-between-an-entra-id-app-registration-and-an-enterprise-app-4yyib4g1sk5a/">https://heusser.pro/p/whats-the-difference-between-an-entra-id-app-registration-and-an-enterprise-app-4yyib4g1sk5a/</a></p>
+<p><a target="_blank" rel="noopener" href="https://whoamianony.top/posts/entra-id-tracing-the-abuse-history-of-connect-sync/">https://whoamianony.top/posts/entra-id-tracing-the-abuse-history-of-connect-sync/</a></p>
+<ul>
+<li>Graph</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/graph/overview">https://learn.microsoft.com/en-us/graph/overview</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/20/PPL/" rel="prev" title="Windows PPL">
+                  <i class="fa fa-angle-left"></i> Windows PPL
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
