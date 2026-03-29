@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/03/28/Azure-P2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/03/28/Azure-P2/","path":"2026/03/28/Azure-P2/","title":"Azure Part 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Azure Part 2 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E8%BD%AF%E9%97%A8%E6%88%B7%E7%BD%91%E7%AB%99"><span class="nav-text">微软门户网站</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85"><span class="nav-text">官方工具安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-PowerShell"><span class="nav-text">Azure PowerShell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graph-PowerShell"><span class="nav-text">Graph PowerShell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-CLI"><span class="nav-text">Azure CLI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%AD%E8%AF%81%E7%99%BB%E5%BD%95"><span class="nav-text">凭证登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-Powershell"><span class="nav-text">Azure Powershell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graph-PowerShell-1"><span class="nav-text">Graph PowerShell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-Cli"><span class="nav-text">Azure Cli</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Portal-%E9%97%A8%E6%88%B7"><span class="nav-text">Portal 门户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REST-API"><span class="nav-text">REST API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Az-Ps"><span class="nav-text">Az Ps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graph-Ps"><span class="nav-text">Graph Ps</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="nav-text">身份验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Token"><span class="nav-text">Token</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E6%B5%81%E7%A8%8B"><span class="nav-text">攻击流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E6%9E%9A%E4%B8%BE"><span class="nav-text">信息收集&#x2F;枚举</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E8%AE%BF%E9%97%AE"><span class="nav-text">初始访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87-%E5%90%8E%E6%B8%97%E9%80%8F"><span class="nav-text">权限提升&#x2F;后渗透</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%AD%E8%AF%81%E8%8E%B7%E5%8F%96-Token%E6%94%BB%E5%87%BB"><span class="nav-text">凭证获取&#x2F;Token攻击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-text">持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="nav-text">横向移动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#O365-%E4%B8%93%E7%94%A8%E6%94%BB%E5%87%BB%E5%B7%A5%E5%85%B7"><span class="nav-text">O365 专用攻击工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%94%BB%E5%87%BB"><span class="nav-text">高级攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Evilginx"><span class="nav-text">Evilginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Golden-SAML"><span class="nav-text">Golden SAML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MFA-%E6%94%BB%E5%87%BB"><span class="nav-text">MFA 攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E5%B7%A5%E5%85%B7%E9%93%BE%E6%80%BB%E7%BB%93"><span class="nav-text">综合工具链总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E7%82%B9%E6%B7%B1%E5%85%A5%E8%BF%99%E5%87%A0%E4%B8%AA%E6%96%B9%E5%90%91"><span class="nav-text">重点深入这几个方向</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/28/Azure-P2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Azure Part 2 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Azure Part 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2026-03-28T00:00:00+08:00">2026-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/2-1774176097715-5.png"></p>
+<a id="more"></a>
+
+<h1 id="微软门户网站"><a href="#微软门户网站" class="headerlink" title="微软门户网站"></a>微软门户网站</h1><p><a target="_blank" rel="noopener" href="https://msportals.io/">https://msportals.io/</a></p>
+<h1 id="官方工具安装"><a href="#官方工具安装" class="headerlink" title="官方工具安装"></a>官方工具安装</h1><h2 id="Azure-PowerShell"><a href="#Azure-PowerShell" class="headerlink" title="Azure PowerShell"></a>Azure PowerShell</h2><p>是用于管理 Azure 资源的官方 Microsoft PowerShell 模块集合的产品名称，可以枚举 Entra ID 和 Azure 资源</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 查看powershell版本</span><br><span class="line">$PSVersionTable.PSVersion</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 安装 PowerShellGet</span><br><span class="line">Install-Module -Name PowerShellGet -Force</span><br><span class="line">[Y] Yes  [N] No  [S] Suspend  [?] Help (default is &quot;Y&quot;): Y</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 放宽PowerShell策略</span><br><span class="line">Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</span><br><span class="line">[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is &quot;N&quot;): A</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 安装 Azure PowerShell 模块</span><br><span class="line">Install-Module -Name Az -Repository PSGallery -Force</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 验证</span><br><span class="line">Get-InstalledModule -Name Az -AllVersions</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 更新 Azure PowerShell</span><br><span class="line">Update-Module -Name Az -Force</span><br></pre></td></tr></table></figure>
+
+<h2 id="Graph-PowerShell"><a href="#Graph-PowerShell" class="headerlink" title="Graph PowerShell"></a>Graph PowerShell</h2><p>Microsoft Graph PowerShell SDK 是 Microsoft Graph API 的 API 封装器，将整个 API 集暴露给 PowerShell 使用，建议用于与 Microsoft Entra ID 进行交互</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 放宽PowerShell策略</span><br><span class="line">Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</span><br><span class="line">[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is &quot;N&quot;): A</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 为当前用户安装</span><br><span class="line">Install-Module Microsoft.Graph -Scope CurrentUser</span><br><span class="line">[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is &quot;N&quot;): A</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 验证</span><br><span class="line">Get-InstalledModule Microsoft.Graph</span><br></pre></td></tr></table></figure>
+
+<hr>
+<blockquote>
+<p>在Windows Powershell 环境下安装了 Microsoft.Graph 2.x 版本后，Az 和 Graph 会出现函数找不到的兼容问题，例如：</p>
+<p>Get-MgGroup : 找不到方法:Void Microsoft.Graph.Authentication.AzureIdentityAccessTokenProvider..ctor</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载powershell 7 可解决</span><br></pre></td></tr></table></figure>
+
+<h2 id="Azure-CLI"><a href="#Azure-CLI" class="headerlink" title="Azure CLI"></a>Azure CLI</h2><p>是一款跨平台命令行工具，用于连接到 Azure 并通过交互式命令或脚本管理 Azure 资源</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 安装</span><br><span class="line">$ProgressPreference &#x3D; &#39;SilentlyContinue&#39;; Invoke-WebRequest -Uri https:&#x2F;&#x2F;aka.ms&#x2F;installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList &#39;&#x2F;I&#39;, &#39;AzureCLI.msi&#39;, &#39;&#x2F;quiet&#39;; Remove-Item .\AzureCLI.msi</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 验证</span><br><span class="line">az --version</span><br></pre></td></tr></table></figure>
+
+<h1 id="凭证登录"><a href="#凭证登录" class="headerlink" title="凭证登录"></a>凭证登录</h1><h2 id="Azure-Powershell"><a href="#Azure-Powershell" class="headerlink" title="Azure Powershell"></a>Azure Powershell</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 弹出来门户登录</span><br><span class="line">Connect-AzAccount</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户账号密码登录</span><br><span class="line">$pass &#x3D; ConvertTo-SecureString &#39;&lt;PASSWORD&gt;&#39; -AsPlainText -Force</span><br><span class="line">$cred &#x3D; New-Object System.Management.Automation.PSCredential(&quot;&lt;UserPrincipalName&gt;&quot;, $pass)</span><br><span class="line">Connect-AzAccount -Credential $cred</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 服务主体密钥登录</span><br><span class="line">$pass &#x3D; ConvertTo-SecureString &#39;&lt;SECRET&gt;&#39; -AsPlainText -Force</span><br><span class="line">$cred &#x3D; New-Object System.Management.Automation.PSCredential(&quot;&lt;CLIENTID&gt;&quot;, $pass)</span><br><span class="line">Connect-AzAccount -ServicePrincipal -Tenant &quot;&lt;TENANTID&gt;&quot; -Credential $cred </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Token登录</span><br><span class="line">Connect-AzAccount -AccessToken &quot;&lt;eyJ0......&gt;&quot; -AccountId &quot;&lt;ANY_NAME&gt;&quot;  </span><br></pre></td></tr></table></figure>
+
+<h2 id="Graph-PowerShell-1"><a href="#Graph-PowerShell-1" class="headerlink" title="Graph PowerShell"></a>Graph PowerShell</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 弹出来门户登录</span><br><span class="line">Connect-MgGraph</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Token登录</span><br><span class="line">$pass &#x3D; ConvertTo-SecureString &quot;&lt;PASSWORD&gt;&quot; -AsPlainText -Force</span><br><span class="line">$cred &#x3D; New-Object System.Management.Automation.PSCredential(&quot;&lt;User&gt;&quot;, $pass)</span><br><span class="line">Connect-AzAccount -Credential $cred</span><br><span class="line">$Token &#x3D; (Get-AzAccessToken -ResourceTypeName MSGraph).Token</span><br><span class="line">Connect-MgGraph -AccessToken $Token</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 添加权限范围</span><br><span class="line">Connect-MgGraph -Scopes &quot;User.Read.All&quot;,&quot;Group.Read.All&quot;,&quot;Directory.Read.All&quot;,&quot;Application.Read.All&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Azure-Cli"><a href="#Azure-Cli" class="headerlink" title="Azure Cli"></a>Azure Cli</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">az login --user &quot;&lt;username&gt;&quot; --password &quot;&lt;password&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Portal-门户"><a href="#Portal-门户" class="headerlink" title="Portal 门户"></a>Portal 门户</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;portal.azure.com&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="REST-API"><a href="#REST-API" class="headerlink" title="REST API"></a>REST API</h2><p>纯拿Token访问API，可以写python脚本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;v1.0&#x2F;users HTTP&#x2F;1.1</span><br><span class="line">Host: graph.microsoft.com</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64)</span><br><span class="line">Authorization: Bearer &lt;Token&gt;</span><br><span class="line">Accept: application&#x2F;json</span><br><span class="line">Connection: close</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><p>这里只偏向记录Entra ID的命令，完整官方档案：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/powershell/azure/?view=azps-15.4.0">https://learn.microsoft.com/en-us/powershell/azure/?view=azps-15.4.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/powershell/microsoftgraph/?view=graph-powershell-1.0">https://learn.microsoft.com/en-us/powershell/microsoftgraph/?view=graph-powershell-1.0</a></li>
+</ul>
+<h2 id="Az-Ps"><a href="#Az-Ps" class="headerlink" title="Az Ps"></a>Az Ps</h2><p>断开连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Disconnect-AzAccount</span><br></pre></td></tr></table></figure>
+
+<p>命令格式，关于Azure AD格式均为 AzAD </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-Command *azad*</span><br></pre></td></tr></table></figure>
+
+<p>获取为当前用户授权的所有租户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-AzTenant</span><br></pre></td></tr></table></figure>
+
+<p>当前身份上下文元数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-AzContext</span><br></pre></td></tr></table></figure>
+
+<p>获取Graph的 Access Token</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(Get-AzAccessToken -AsSecureString -ResourceTypeName MSGraph).Token</span><br></pre></td></tr></table></figure>
+
+<p>列出所有 Azure RBAC 角色分配</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-AzRoleAssignment</span><br></pre></td></tr></table></figure>
+
+<p>获取Entra ID用户信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有用户信息</span><br><span class="line">Get-AzADUser</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数量</span><br><span class="line">(Get-AzADUser -Select &#39;DisplayName&#39;).Count</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取当前登录用户</span><br><span class="line">Get-AzADUser -SignedIn</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-AzADUser -UserPrincipalName test@tenant.onmicrosoft.com</span><br><span class="line">Get-AzADUser | ?&#123;$_.Displayname -match &quot;admin&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 前10个</span><br><span class="line">Get-AzADUser -First 10</span><br></pre></td></tr></table></figure>
+
+<p>获取Group信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有组信息</span><br><span class="line">Get-AzADGroup</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数量</span><br><span class="line">(Get-AzADGroup -Select DisplayName).Count</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-AzADGroup -ObjectId 783a312d-0de2-4490-92e4-539b0e4ee03e</span><br><span class="line">Get-AzADGroup | ?&#123;$_.Displayname -match &quot;admin&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 组成员</span><br><span class="line">Get-AzADGroupMember -GroupObjectId xxx</span><br></pre></td></tr></table></figure>
+
+<p>Application（App Registration，应用注册）信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有app详细信息</span><br><span class="line">Get-AzADApplication</span><br><span class="line">Get-AzADApplication -Select DisplayName,Id,AppId</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数量</span><br><span class="line">(Get-AzADApplication -Select DisplayName).Count</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-AzADApplication -ObjectId a1333e88-1278-41bf-8145-155a069ebed0</span><br><span class="line">Get-AzADApplication | ?&#123;$_.DisplayName -match &quot;app&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 查询所有存在 Client Secret 的app</span><br><span class="line">Get-AzADApplication -Select DisplayName,Id,AppId,PasswordCredentials | Where-Object &#123; $_.PasswordCredentials &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 查询所有存在 Certificate 的app</span><br><span class="line">Get-AzADApplication -Select DisplayName,Id,AppId,KeyCredentials | Where-Object &#123; $_.KeyCredentials &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Application 的凭据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-AzADAppCredential -ObjectId xxx</span><br><span class="line">Get-AzADAppCredential -DisplayName xxx</span><br><span class="line">Get-AzADAppCredential -ApplicationId xxx</span><br></pre></td></tr></table></figure>
+
+<p>ServicePrincipal（Enterprise Application，服务主体）信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有主体</span><br><span class="line">Get-AzADServicePrincipal</span><br><span class="line">Get-AzADServicePrincipal -Select DisplayName,Id,AppId</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 数量</span><br><span class="line">(Get-AzADServicePrincipal -Select DisplayName).Count</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-AzADServicePrincipal -ObjectId a1333e88-1278-41bf-8145-155a069ebed0</span><br><span class="line">Get-AzADServicePrincipal | ?&#123;$_.DisplayName -match &quot;app&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 查询所有存在 Client Secret 的主体</span><br><span class="line">Get-AzADServicePrincipal -Select DisplayName,Id,AppId,PasswordCredentials | Where-Object &#123; $_.PasswordCredentials &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 查询所有存在 Certificate 的主体</span><br><span class="line">Get-AzADServicePrincipal -Select DisplayName,Id,AppId,KeyCredentials | Where-Object &#123; $_.KeyCredentials &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从 ServicePrincipal 获取 appRoleAssignments</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-AzADServicePrincipalAppRoleAssignment</span><br></pre></td></tr></table></figure>
+
+<p>ServicePrincipal的的凭据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-AzADSpCredential -ObjectId xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="Graph-Ps"><a href="#Graph-Ps" class="headerlink" title="Graph Ps"></a>Graph Ps</h2><p>断开连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Disconnect-MgGraph</span><br></pre></td></tr></table></figure>
+
+<p>当前身份上下文</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-MgContext</span><br><span class="line">(Get-MgContext).Scopes</span><br></pre></td></tr></table></figure>
+
+<p>用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有用户</span><br><span class="line">Get-MgUser -All</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-MgUser -UserId test@tenant.onmicrosoft.com</span><br><span class="line">Get-MgUser -All | ?&#123; $_.Displayname -match &quot;admin&quot; &#125;</span><br><span class="line">Get-MgUser -Search &#39;&quot;DisplayName:admin&quot;&#39; -ConsistencyLevel eventual</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户所有属性</span><br><span class="line">Get-MgUser -UserId test@tenant.onmicrosoft.com | fl *</span><br><span class="line">Get-MgUser -UserId test@tenant.onmicrosoft.com | % &#123; $_.PSObject.Properties.Name &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 搜索指定属性的用户</span><br><span class="line">Get-MgUser -All | % &#123; $Properties &#x3D; $_; $Properties.PSObject.Properties.Name | % &#123; if ($Properties.$_ -match &#39;password&#39;) &#123; &quot;$($Properties.UserPrincipalName) - $_ - $($Properties.$_)&quot; &#125; &#125; &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有本地同步用户</span><br><span class="line">Get-MgUser -All | ? &#123; $_.OnPremisesSecurityIdentifier -ne $null &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有Entra Id用户</span><br><span class="line">Get-MgUser -All | ? &#123; $_.OnPremisesSecurityIdentifier -eq $null &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户创建的对象</span><br><span class="line">Get-MgUserCreatedObject -UserId test@tenant.onmicrosoft.com | fl *</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户拥有的对象</span><br><span class="line">Get-MgUserOwnedObject -UserId test@tenant.onmicrosoft.com | fl *</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户所属组和角色</span><br><span class="line">(Get-MgUserMemberOf -UserId test@tenant.onmicrosoft.com).AdditionalProperties</span><br></pre></td></tr></table></figure>
+
+<p>组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有组</span><br><span class="line">Get-MgGroup -All</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 指定组</span><br><span class="line">Get-MgGroup -GroupId xxxx</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 动态组</span><br><span class="line">Get-MgGroup | ? &#123; $_.GroupTypes -eq &#39;DynamicMembership&#39; &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊查找</span><br><span class="line">Get-MgGroup -ConsistencyLevel eventual -Search &#39;&quot;DisplayName:Admin&quot;&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有本地同步组</span><br><span class="line">Get-MgGroup -All | ? &#123; $_.OnPremisesSecurityIdentifier -ne $null &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有Entra Id组</span><br><span class="line">Get-MgGroup -All | ? &#123; $_.OnPremisesSecurityIdentifier -eq $null &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 组成员</span><br><span class="line">Get-MgGroupMember -GroupId xxx</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 组owner</span><br><span class="line">Get-MgGroupOwner</span><br></pre></td></tr></table></figure>
+
+<p>角色</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有可用的角色模板</span><br><span class="line">Get-MgDirectoryRoleTemplate</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 启用角色</span><br><span class="line">Get-MgDirectoryRole</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊查询</span><br><span class="line">Get-MgRoleManagementDirectoryRoleDefinition -Filter &quot;DisplayName eq &#39;AS-ADCRADLC8&#39;&quot; | Format-List</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有被分配了角色的用户</span><br><span class="line">$RoleId &#x3D; (Get-MgDirectoryRole -Filter &quot;DisplayName eq &#39;Global Administrator&#39;&quot;).Id</span><br><span class="line">(Get-MgDirectoryRoleMember -DirectoryRoleId $RoleId).AdditionalProperties</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 角色拥有的权限</span><br><span class="line">(Get-MgRoleManagementDirectoryRoleDefinition -Filter &quot;DisplayName eq &#39;AS-ADCRADLC8&#39;&quot;).RolePermissions.AllowedResourceActions</span><br></pre></td></tr></table></figure>
+
+<p>设备</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 所有已加入和已注册的 Azure 设备</span><br><span class="line">Get-MgDevice –All | fl *</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 活动设备</span><br><span class="line">Get-MgDevice –All | ? &#123; $_.ApproximateLastSignInDateTime -ne $null &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有设备的注册所有者</span><br><span class="line">$Ids &#x3D; (Get-MgDevice –All).Id; foreach($i in $Ids) &#123; (Get-MgDeviceRegisteredOwner -DeviceId $i).AdditionalProperties &#125;</span><br><span class="line">$Ids &#x3D; (Get-MgDevice –All).Id; foreach($i in $Ids) &#123; (Get-MgDeviceRegisteredOwner -DeviceId $i).AdditionalProperties.userPrincipalName &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 所有设备的注册用户</span><br><span class="line">$Ids &#x3D; (Get-MgDevice –All).Id; foreach($i in $Ids) &#123; (Get-MgDeviceRegisteredUser -DeviceId $i).AdditionalProperties &#125;</span><br><span class="line">$Ids &#x3D; (Get-MgDevice –All).Id; foreach($i in $Ids) &#123; (Get-MgDeviceRegisteredUser -DeviceId $i).AdditionalProperties.userPrincipalName &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户拥有的设备</span><br><span class="line">(Get-MgUserOwnedDevice -UserId user@tenant.onmicrosoft.com).AdditionalProperties</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 用户注册设备</span><br><span class="line">(Get-MgUserRegisteredDevice -UserId user@tenant.onmicrosoft.com).AdditionalProperties</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;  Intune 管理的设备</span><br><span class="line">Get-MgDevice -All | ? &#123; $_.IsCompliant -eq &quot;True&quot; &#125; | fl *</span><br></pre></td></tr></table></figure>
+
+<p>Application</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-MgApplication -All</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 指定app</span><br><span class="line">Get-MgApplicationByAppId -AppId f072c4a6-b440-40de-983f-a7f3bd317d8f | fl *</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-MgApplication -All | ? &#123; $_.DisplayName -match &quot;app&quot; &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; app拥有者</span><br><span class="line">(Get-MgApplicationOwner -ApplicationId 35589758-714e-43a9-be9e-94d22fdd34f6).AdditionalProperties.userPrincipalName</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 某个用户被授予了哪些应用权限</span><br><span class="line">Get-MgUserAppRoleAssignment -UserId user@tenant.onmicrosoft.com | fl *</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 某个组被授予了哪些应用权限</span><br><span class="line">Get-MgGroupAppRoleAssignment -GroupId 57ada729-a581-4d6f-9f16-3fe0961ada82 | fl *</span><br></pre></td></tr></table></figure>
+
+<p>ServicePrincipal</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Get-MgServicePrincipal -All</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 指定服务主体</span><br><span class="line">Get-MgServicePrincipal -ServicePrincipalId fd518680-b290-4db2-b92a-5dbd025c6791 | fl *</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 模糊搜索</span><br><span class="line">Get-MgServicePrincipal –All | ? &#123; $_.DisplayName -match &quot;app&quot; &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 服务主体的拥有者</span><br><span class="line">(Get-MgServicePrincipalOwner -ServicePrincipalId fd518680-b290-4db2-b92a-5dbd025c6791).AdditionalProperties.userPrincipalName</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 服务主体拥有的对象</span><br><span class="line">Get-MgServicePrincipalOwnedObject -ServicePrincipalId fd518680-b290-4db2-b92a-5dbd025c6791</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 服务主体创建的对象</span><br><span class="line">Get-MgServicePrincipalCreatedObject -ServicePrincipalId fd518680-b290-4db2-b92a-5dbd025c6791</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 服务主体的组成员身份和角色成员身份</span><br><span class="line">Get-MgServicePrincipalMemberOf -ServicePrincipalId fd518680-b290-4db2-b92a-5dbd025c6791 | fl *</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="身份验证"><a href="#身份验证" class="headerlink" title="身份验证"></a>身份验证</h1><p>Microsoft Identity Platform（微软身份平台）使用两种不同的协议完成两件不同的事</p>
+<ul>
+<li>OpenID Connect（OIDC）：身份验证（Authentication）即 你是谁</li>
+<li>OAuth2：授权（Authorization）即 你能做什么</li>
+</ul>
+<h1 id="Token"><a href="#Token" class="headerlink" title="Token"></a>Token</h1><p>微软通常会同时返回三种token</p>
+<ul>
+<li><strong>ID Token</strong>：客户端从授权服务器接收此令牌，它包含用户的基本信息，用作登录身份</li>
+<li><strong>Access Token</strong>：客户端向资源服务器提供此令牌以访问资源，它只能用于特定的用户、客户端和资源组合，并且在过期前（默认为 1 小时）无法撤销，用作通过API进行资源访问</li>
+<li><strong>Refresh Token</strong>：用于获取新的 Access Token 和 ID Token，非活跃刷新令牌的默认过期时间为 90 天，活跃令牌没有过期时间，可以被撤销</li>
+</ul>
+<h1 id="攻击流程"><a href="#攻击流程" class="headerlink" title="攻击流程"></a>攻击流程</h1><p>按 <strong>Recon → Initial Access → Post-Ex → Persistence → 横向移动 → 特殊攻击（SAML/MFA）</strong> 分层整理</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">External Reconnaissance</span><br><span class="line">Initial Access</span><br><span class="line">Token Acquisition</span><br><span class="line">Internal Enumeration</span><br><span class="line">Privilege Escalation</span><br><span class="line">Lateral Movement</span><br><span class="line">Persistence</span><br><span class="line">Defense Evasion</span><br><span class="line">Data Exfiltration</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">外部侦察</span><br><span class="line">初始访问</span><br><span class="line">令牌获取</span><br><span class="line">内部枚举</span><br><span class="line">权限提升</span><br><span class="line">横向移动</span><br><span class="line">持久化</span><br><span class="line">防御规避</span><br><span class="line">数据泄露</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="信息收集-枚举"><a href="#信息收集-枚举" class="headerlink" title="信息收集/枚举"></a>信息收集/枚举</h1><p>目标：摸清 Entra ID / Azure / O365 结构</p>
+<ul>
+<li>AzureHound：类似 BloodHound，但针对 Azure / Entra ID</li>
+<li>ROADtools（ROADrecon）<ul>
+<li>枚举 Azure AD / Entra ID（非常核心）</li>
+<li>支持 Graph API、token 操作 </li>
+</ul>
+</li>
+<li>Stormspotter<ul>
+<li>可视化 Azure 资源关系（图形化攻击路径）</li>
+</ul>
+</li>
+<li>MicroBurst<ul>
+<li>Azure 资产发现 + 弱配置扫描 </li>
+</ul>
+</li>
+<li>o365recon / o365creeper<ul>
+<li>枚举 O365 用户、邮箱 </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="初始访问"><a href="#初始访问" class="headerlink" title="初始访问"></a>初始访问</h1><p>云红队最常见：<strong>账号攻击</strong></p>
+<p>工具</p>
+<ul>
+<li><strong>MSOLSpray</strong></li>
+<li><strong>o365spray</strong></li>
+<li><strong>TrevorSpray</strong></li>
+<li><strong>CredMaster（配合代理）</strong></li>
+</ul>
+<p>主要攻击：</p>
+<ul>
+<li>Password spraying</li>
+<li>用户名枚举</li>
+<li>MFA 疲劳攻击 </li>
+</ul>
+<hr>
+<h1 id="权限提升-后渗透"><a href="#权限提升-后渗透" class="headerlink" title="权限提升/后渗透"></a>权限提升/后渗透</h1><p>获取 token 后才是真正开始</p>
+<p>工具</p>
+<ul>
+<li>GraphRunner<ul>
+<li>Microsoft Graph API 后渗透框架 </li>
+</ul>
+</li>
+<li>GraphSpy<ul>
+<li>GUI 操作 O365 数据（邮件 / OneDrive / Teams） </li>
+</ul>
+</li>
+<li>APEX<ul>
+<li>Azure 后渗透框架（整合 ROADtools 等）</li>
+</ul>
+</li>
+<li>PowerZure<ul>
+<li>PowerShell Azure 攻击框架 </li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="凭证获取-Token攻击"><a href="#凭证获取-Token攻击" class="headerlink" title="凭证获取/Token攻击"></a>凭证获取/Token攻击</h1><p>Azure 和传统 AD 最大区别：<strong>Token 即权限</strong></p>
+<p>工具</p>
+<ul>
+<li>AADInternals<ul>
+<li>获取 token、dump 信息、滥用 Azure AD </li>
+</ul>
+</li>
+<li>adconnectdump<ul>
+<li>dump Azure AD Connect 凭证 </li>
+</ul>
+</li>
+<li>EntraTokenAid（社区工具）<ul>
+<li>获取 access / refresh token（红队常用）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><p>云环境 persistence 很隐蔽</p>
+<p>技术</p>
+<ul>
+<li><strong>Service Principal backdoor</strong></li>
+<li><strong>恶意 App 注册</strong></li>
+<li><strong>Guest 用户植入</strong></li>
+</ul>
+<p>相关工具：</p>
+<ul>
+<li>ROADtools</li>
+<li>GraphRunner</li>
+<li>AADInternals</li>
+</ul>
+<p>攻击方式示例：</p>
+<ul>
+<li>创建隐藏角色绑定</li>
+<li>添加高权限应用</li>
+<li>修改 API 权限</li>
+</ul>
+<h1 id="横向移动"><a href="#横向移动" class="headerlink" title="横向移动"></a>横向移动</h1><p>在云里 = 权限链移动</p>
+<p>工具</p>
+<ul>
+<li><strong>AzureHound + BloodHound</strong></li>
+<li><strong>Stormspotter</strong></li>
+</ul>
+<p>核心思想：</p>
+<ul>
+<li>找 ‘谁可以控制谁’</li>
+<li>利用 RBAC / App / Role 关系</li>
+</ul>
+<hr>
+<h1 id="O365-专用攻击工具"><a href="#O365-专用攻击工具" class="headerlink" title="O365 专用攻击工具"></a>O365 专用攻击工具</h1><p>偏数据窃取</p>
+<ul>
+<li>MailSniper<ul>
+<li>搜索邮箱敏感信息 </li>
+</ul>
+</li>
+<li>GraphSpy<ul>
+<li>跨 OneDrive / SharePoint / Teams 搜索</li>
+</ul>
+</li>
+<li>github.com/admindroid-community/powershell-scripts</li>
+</ul>
+<hr>
+<h1 id="高级攻击"><a href="#高级攻击" class="headerlink" title="高级攻击"></a>高级攻击</h1><p>这部分是云红队精髓</p>
+<h2 id="Evilginx"><a href="#Evilginx" class="headerlink" title="Evilginx"></a>Evilginx</h2><ul>
+<li>反向代理钓鱼</li>
+<li>窃取 session cookie</li>
+<li>绕过 MFA</li>
+</ul>
+<p>云红队必备</p>
+<h2 id="Golden-SAML"><a href="#Golden-SAML" class="headerlink" title="Golden SAML"></a>Golden SAML</h2><ul>
+<li>伪造 SAML token</li>
+<li>直接登录 O365 / Azure</li>
+</ul>
+<p>类似 Kerberos Golden Ticket（云版） </p>
+<h2 id="MFA-攻击"><a href="#MFA-攻击" class="headerlink" title="MFA 攻击"></a>MFA 攻击</h2><ul>
+<li><strong>MFASweep</strong></li>
+<li>MFA fatigue（骚扰认证）</li>
+</ul>
+<h1 id="综合工具链总结"><a href="#综合工具链总结" class="headerlink" title="综合工具链总结"></a>综合工具链总结</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Recon:</span><br><span class="line">  AzureHound + ROADrecon</span><br><span class="line"></span><br><span class="line">Initial Access:</span><br><span class="line">  o365spray &#x2F; MSOLSpray</span><br><span class="line"></span><br><span class="line">Post-Ex:</span><br><span class="line">  GraphRunner &#x2F; AADInternals</span><br><span class="line"></span><br><span class="line">Persistence:</span><br><span class="line">  App backdoor &#x2F; Service Principal</span><br><span class="line"></span><br><span class="line">Data Access:</span><br><span class="line">  GraphSpy &#x2F; MailSniper</span><br><span class="line"></span><br><span class="line">Advanced:</span><br><span class="line">  Evilginx2 &#x2F; Golden SAML</span><br></pre></td></tr></table></figure>
+
+<h2 id="重点深入这几个方向"><a href="#重点深入这几个方向" class="headerlink" title="重点深入这几个方向"></a>重点深入这几个方向</h2><ol>
+<li><strong>Microsoft Graph API 攻击面</strong></li>
+<li><strong>OAuth / Token 滥用</strong></li>
+<li><strong>App Registration 攻击</strong></li>
+<li><strong>Conditional Access 绕过</strong></li>
+<li><strong>PRT（Primary Refresh Token）攻击</strong></li>
+</ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/powershell/azure/">https://learn.microsoft.com/en-us/powershell/azure/</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/powershell/microsoftgraph/">https://learn.microsoft.com/en-us/powershell/microsoftgraph/</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cli/azure/">https://learn.microsoft.com/en-us/cli/azure/</a></p>
+<p><a target="_blank" rel="noopener" href="https://johnermac.github.io/notes/cartp/cartp1/">https://johnermac.github.io/notes/cartp/cartp1/</a></p>
+<p><a target="_blank" rel="noopener" href="https://johnermac.github.io/notes/cartp/cartp2/">https://johnermac.github.io/notes/cartp/cartp2/</a></p>
+<p><a target="_blank" rel="noopener" href="https://johnermac.github.io/notes/cartp/cartp3/">https://johnermac.github.io/notes/cartp/cartp3/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/22/Azure-P1/" rel="prev" title="Azure Part 1">
+                  <i class="fa fa-angle-left"></i> Azure Part 1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/03/29/Azure-P3/" rel="next" title="Azure Part 3">
+                  Azure Part 3 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
