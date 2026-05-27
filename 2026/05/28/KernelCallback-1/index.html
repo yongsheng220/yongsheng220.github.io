@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/05/28/KernelCallback-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/05/28/KernelCallback-1/","path":"2026/05/28/KernelCallback-1/","title":"Windows Kernel Callback-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows Kernel Callback-1 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#EDR%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">EDR工作原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="nav-text">内核安全机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E7%AD%BE%E5%90%8D%E6%9C%BA%E5%88%B6"><span class="nav-text">驱动签名机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6"><span class="nav-text">内核保护机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%A9%B1%E5%8A%A8"><span class="nav-text">简单驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E9%A9%B1%E5%8A%A8"><span class="nav-text">编写驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="nav-text">双机调试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E9%80%9A%E7%9F%A5%E5%9B%9E%E8%B0%83%E4%BE%8B%E7%A8%8B"><span class="nav-text">内核通知回调例程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%9B%9E%E8%B0%83%E6%95%B0%E7%BB%84"><span class="nav-text">全局回调数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%9B%9E%E8%B0%83%E6%95%B0%E7%BB%84-1"><span class="nav-text">全局回调数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%A0%E5%83%8F%E5%8A%A0%E8%BD%BD"><span class="nav-text">映像加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%9B%9E%E8%B0%83%E6%95%B0%E7%BB%84-2"><span class="nav-text">全局回调数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%A1%A8"><span class="nav-text">注册表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%9B%9E%E8%B0%83%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="nav-text">全局回调双向链表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%9B%9E%E8%B0%83%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8-1"><span class="nav-text">全局回调双向链表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-text">清除回调函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refrence"><span class="nav-text">Refrence</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/05/28/KernelCallback-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows Kernel Callback-1 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows Kernel Callback-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-28 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-28T00:00:00+08:00">2026-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%85%8D%E6%9D%80%E5%AF%B9%E6%8A%97/" itemprop="url" rel="index"><span itemprop="name">免杀对抗</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/bg.jpg" alt="image-20260526234952301"></p>
+<a id="more"></a>
+
+<h1 id="EDR工作原理"><a href="#EDR工作原理" class="headerlink" title="EDR工作原理"></a>EDR工作原理</h1><p>关于EDR的基本构成，我十分推荐该文章：<a target="_blank" rel="noopener" href="https://blog.whiteflag.io/blog/from-windows-drivers-to-a-almost-fully-working-edr/">https://blog.whiteflag.io/blog/from-windows-drivers-to-a-almost-fully-working-edr/</a></p>
+<p>总而言之，一个基础的EDR实现应该要有以下部分：</p>
+<ul>
+<li>静态文件扫描器</li>
+<li>Ring3的API hook</li>
+<li>Ring0的内核回调</li>
+<li>Minifilter文件微过滤器</li>
+<li>WFP网络过滤</li>
+<li>ETW事件</li>
+<li>AMSI反恶意软件接口</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260526234952301.png" alt="image-20260526234952301"></p>
+<p>其中Ring0的内核回调是比较重要的主机信息收集源，可以分为三类：</p>
+<ul>
+<li>内核回调函数</li>
+<li>Minifilter文件微过滤器</li>
+<li>WFP网络过滤</li>
+</ul>
+<p>这篇文章简单记录对于五个内核回调函数的学习。</p>
+<h1 id="内核安全机制"><a href="#内核安全机制" class="headerlink" title="内核安全机制"></a>内核安全机制</h1><h2 id="驱动签名机制"><a href="#驱动签名机制" class="headerlink" title="驱动签名机制"></a>驱动签名机制</h2><p><strong>Driver Signature Enforcement（DSE，驱动程序签名强制执行）</strong> 是 Windows Vista 64 位系统引入的一项核心安全机制，要求所有加载到内核模式的驱动程序必须包含有效的数字签名，否则系统将拒绝加载。其目的是防止恶意软件或未经验证的代码进入高特权级的内核空间，从而提升系统稳定性与安全性。</p>
+<p>从 Windows 10 / Windows Server 2016 开始，微软进一步收紧了这一策略。内核模式驱动程序不再允许使用普通代码签名证书，而必须通过 Windows 硬件开发中心仪表板（现已整合为 硬件开发中心） 进行提交和签名。这一过程要求开发者持有 EV 证书（Extended Validation，扩展验证证书），它是一种经过严格法律和实体身份验证的高级别证书，仅发放给合法的商业实体。</p>
+<h2 id="内核保护机制"><a href="#内核保护机制" class="headerlink" title="内核保护机制"></a>内核保护机制</h2><p><strong>PatchGuard（Kernel Patch Protection，内核补丁保护）</strong>之前文章已经接触过，主要用于保护 Windows 内核的关键数据结构、代码和关键函数表不被未经授权地修改，直接导致了反病毒软件不能劫持 SSDT 或内核中的任何关键结构。主要保护以下几部分：</p>
+<ul>
+<li>系统服务表（SSDT，System Service Descriptor Table）</li>
+<li>中断描述符表（IDT，Interrupt Descriptor Table）</li>
+<li>全局描述符表（GDT，Global Descriptor Table）</li>
+<li>内核代码段（内核映像本身）</li>
+<li>处理器控制寄存器（如 MSR，Model-Specific Registers）</li>
+<li>某些关键驱动和系统 DLL 的结构</li>
+</ul>
+<hr>
+<p><strong>CI（Code Integrity，代码完整性）</strong>是 Windows 内核中用于对驱动程序及关键系统文件实施加载时及运行时完整性校验的核心安全机制。它不负责制定是否强制签名的策略（该策略由 DSE 承担），而是具体执行以下校验操作：计算文件哈希值，验证其是否与内嵌签名或目录文件（.cat）中记录的哈希值一致，以防止文件被篡改；同时校验证书链的有效性及证书是否被吊销。DSE 决定了是否需要签名，而 CI 负责确认签名是否真实、内容是否完整。</p>
+<hr>
+<p>记录一下其他的安全机制</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">代码完整性</span><br><span class="line">  - DSE — 驱动签名强制</span><br><span class="line">  - CI — 内核模块加载时签名&#x2F;哈希校验</span><br><span class="line">  - HVCI — Hypervisor 强制 W^X，内核页不能同时可写可执行</span><br><span class="line">  - Secure Boot — UEFI 阶段 bootloader→winload 签名链校验</span><br><span class="line">反篡改</span><br><span class="line">  - PatchGuard (KPP) — 定时校验 SSDT&#x2F;IDT&#x2F;代码段等关键结构，被改即蓝屏</span><br><span class="line">  - Driver Verifier — 开发期池损坏&#x2F;IRQL&#x2F;死锁实时检测</span><br><span class="line">  - KCFG — 内核控制流保护，间接调用前验目标地址</span><br><span class="line">内存保护</span><br><span class="line">  - KASLR — 内核基址每次启动随机化</span><br><span class="line">  - SMEP — Ring 0 不能执行用户态页面</span><br><span class="line">  - SMAP — Ring 0 不能直接访问用户态内存</span><br><span class="line">  - KDP — 关键内核数据页由 Hypervisor 强制只读</span><br><span class="line">虚拟化安全 (VBS)</span><br><span class="line">  - VBS (VTL 0&#x2F;1) — 双虚拟信任层隔离</span><br><span class="line">  - Credential Guard — VTL1 隔离开 LSASS 密钥</span><br><span class="line">缓解攻击</span><br><span class="line">  - Kernel CET — 硬件影子栈防内核 ROP&#x2F;JOP</span><br><span class="line">  - kCFG - 内核控制流保护</span><br><span class="line">对象保护</span><br><span class="line">  - ObjManager Callbacks — 进程&#x2F;线程句柄权限控制</span><br><span class="line">  - Token Security             │ 限制低权限进程对高权限 token 的操作</span><br><span class="line">  - Trust Label                │ Windows 11 为进程打信任标记，限制跨信任级交互</span><br><span class="line">检测与审计</span><br><span class="line">  - ETW TI — 内核级事件追踪给 EDR 供数据</span><br><span class="line">  - Process&#x2F;Thread&#x2F;Image&#x2F;Registry Callbacks — 回调监控框架</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="简单驱动"><a href="#简单驱动" class="headerlink" title="简单驱动"></a>简单驱动</h1><p>使用一些工具可以直观查看内核相关信息：</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/sysinternals/downloads/debugview">https://learn.microsoft.com/en-us/sysinternals/downloads/debugview</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hfiref0x/WinObjEx64">https://github.com/hfiref0x/WinObjEx64</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AxtMueller/Windows-Kernel-Explorer">https://github.com/AxtMueller/Windows-Kernel-Explorer</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/QAX-Anti-Virus/QDoctor">https://github.com/QAX-Anti-Virus/QDoctor</a></p>
+<p>OpenArk：<a target="_blank" rel="noopener" href="https://mefcl.lanzouu.com/b0j0nxlvi">https://mefcl.lanzouu.com/b0j0nxlvi</a> 密码：2bcr</p>
+<h2 id="编写驱动"><a href="#编写驱动" class="headerlink" title="编写驱动"></a>编写驱动</h2><p>Visual Studio 2022 环境下，下载匹配的 SDK 和 WDK，搜索vs2022驱动开发环境搭建相关文章了解细节。选择 Empty WDM Driver 模板并创建项目</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260516174958399.png" alt="image-20260516174958399"></p>
+<p>hello world驱动，在vs编译时要注意 <strong>KdPrint 仅在 Debug 版本中生效</strong>，在 Release 版本编译时会被直接移除</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;ntddk.h&gt;</span><br><span class="line"></span><br><span class="line">void DriverUnload(_In_ PDRIVER_OBJECT DriverObject)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(DriverObject);</span><br><span class="line">	KdPrint((&quot;unload ok\n&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extern &quot;C&quot;</span><br><span class="line">NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject, _In_ PUNICODE_STRING RegistryPath)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(RegistryPath);</span><br><span class="line"></span><br><span class="line">	KdPrint((&quot;DriverEntry ok\n&quot;));</span><br><span class="line"></span><br><span class="line">	DriverObject-&gt;DriverUnload &#x3D; DriverUnload;</span><br><span class="line"></span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>加载自定义无签名驱动需要开启测试签名模式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#打开测试签名模式，并重启</span><br><span class="line">bcdedit &#x2F;set testsigning on</span><br></pre></td></tr></table></figure>
+
+<p>如果win10测试机开启了安全启动，即使开启了测试签名模式依然会失败，此时需要通过BIOS禁用驱动程序强制签名（DSE）</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260516202018725.png" alt="image-20260516202018725"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260516185649909.png" alt="image-20260516185649909"></p>
+<p>如果自己添加一个数字签名，只开启测试签名模式就可以</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260516202148167.png" alt="image-20260516202148167"></p>
+<p>捕获 KdPrint 输出还需要添加注册表项 DEFAULT 的值为 0000000f</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Debug Print Filter</span><br></pre></td></tr></table></figure>
+
+<p>开启DbgView并设置：</p>
+<ul>
+<li><p>Capture -&gt; Capture Kernel (捕获内核输出)</p>
+</li>
+<li><p>Capture -&gt; Enable Verbose Kernel Output (启用详细内核输出)</p>
+</li>
+</ul>
+<p>加载驱动程序：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#安装驱动</span><br><span class="line">sc create DriverTest type&#x3D; kernel binPath&#x3D; &quot;C:\Users\admin\Desktop\tt\sec\HelloWorldDriver.sys&quot;</span><br><span class="line">#加载驱动</span><br><span class="line">sc start DriverTest</span><br><span class="line">#卸载驱动</span><br><span class="line">sc stop DriverTest</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260516202620943.png" alt="image-20260516202620943"></p>
+<h2 id="双机调试"><a href="#双机调试" class="headerlink" title="双机调试"></a>双机调试</h2><p>内核的调试在被调试机器上，整个系统都会卡住，所以内核的调试需要两台机器，这里使用网络调试</p>
+<p>被调试机器：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bcdedit &#x2F;debug on</span><br><span class="line">bcdedit &#x2F;dbgsettings net hostip:&lt;调试机ip&gt; port:50000 key:1.2.3.4</span><br><span class="line">重启</span><br></pre></td></tr></table></figure>
+
+<p>调试机器：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260517191626594.png" alt="image-20260517191626594"></p>
+<p>顺利连接开始调试</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260517191922588.png" alt="image-20260517191922588"></p>
+<h1 id="内核通知回调例程"><a href="#内核通知回调例程" class="headerlink" title="内核通知回调例程"></a>内核通知回调例程</h1><p>Windows 内核回调机制是内核暴露给驱动程序的通知/拦截框架，核心思想是 <strong>提前在内核中注册一个函数指针，在特定事件发生时内核会调用该函数</strong>。简而言之，利用注册函数API将自定义回调函数注册到内核中，等待事件发生后，从事件发生到函数调用过程可以称为回调。</p>
+<p>回调函数、回调例程函数、回调通知函数、通知回调例程 等都是同一个意思。</p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>用于注册或删除进程通知回调函数的注册函数API有</p>
+<ul>
+<li>PsSetCreateProcessNotifyRoutine</li>
+<li>PsSetCreateProcessNotifyRoutineEx：可以阻止进程创建</li>
+<li>PsSetCreateProcessNotifyRoutineEx2：Windows 10 1607引入，拓展功能</li>
+</ul>
+<p>PsSetCreateProcessNotifyRoutineEx 函数原型，限制最多注册64个回调函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NTSTATUS PsSetCreateProcessNotifyRoutineEx(</span><br><span class="line">  [in] PCREATE_PROCESS_NOTIFY_ROUTINE_EX NotifyRoutine,</span><br><span class="line">  [in] BOOLEAN                           Remove</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Remove：第二个参数表示将例程从 <strong>回调函数列表</strong> 中添加或移除</p>
+</li>
+<li><p>NotifyRoutine：第一个参数为驱动程序实现的回调函数，原型如下</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef</span><br><span class="line">VOID</span><br><span class="line">(*PCREATE_PROCESS_NOTIFY_ROUTINE_EX) (</span><br><span class="line">    _Inout_ PEPROCESS Process,</span><br><span class="line">    _In_ HANDLE ProcessId,</span><br><span class="line">    _Inout_opt_ PPS_CREATE_NOTIFY_INFO CreateInfo</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<p>回调函数中重要的是第三个参数 CreateInfo，PPS_CREATE_NOTIFY_INFO类型的对象 非空时表示进程正在创建，其包含了被创建进程的详细信息，结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _PS_CREATE_NOTIFY_INFO &#123;</span><br><span class="line">  SIZE_T              Size;</span><br><span class="line">  union &#123;</span><br><span class="line">    ULONG Flags;</span><br><span class="line">    struct &#123;</span><br><span class="line">      ULONG FileOpenNameAvailable : 1;</span><br><span class="line">      ULONG IsSubsystemProcess : 1;</span><br><span class="line">      ULONG Reserved : 30;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  HANDLE              ParentProcessId;</span><br><span class="line">  CLIENT_ID           CreatingThreadId;</span><br><span class="line">  struct _FILE_OBJECT *FileObject;</span><br><span class="line">  PCUNICODE_STRING    ImageFileName;</span><br><span class="line">  PCUNICODE_STRING    CommandLine;</span><br><span class="line">  NTSTATUS            CreationStatus;</span><br><span class="line">&#125; PS_CREATE_NOTIFY_INFO, *PPS_CREATE_NOTIFY_INFO;</span><br></pre></td></tr></table></figure>
+
+<p>包含父进程ID、命令行、映像文件名等，可通过设置 <code>CreateInfo-&gt;CreationStatus = STATUS_ACCESS_DENIED</code> 来阻止进程启动。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>给出一个例子，实现禁止进程名为notepad.exe启动。通过用户态的client程序与驱动进行IOCTL通信，控制是否开启拦截进程</p>
+<p>common.h</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#pragma once</span><br><span class="line"></span><br><span class="line">#define DEVICE_NAME      L&quot;\\Device\\ProcessMon&quot;</span><br><span class="line">#define SYMLINK_NAME     L&quot;\\DosDevices\\ProcessMon&quot;</span><br><span class="line">#define DEVICE_USER_NAME L&quot;\\\\.\\ProcessMon&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; IOCTL codes</span><br><span class="line">#define IOCTL_ENABLE_BLOCK   CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800, METHOD_BUFFERED, FILE_ANY_ACCESS)</span><br><span class="line">#define IOCTL_DISABLE_BLOCK  CTL_CODE(FILE_DEVICE_UNKNOWN, 0x801, METHOD_BUFFERED, FILE_ANY_ACCESS)</span><br><span class="line">#define IOCTL_QUERY_STATS    CTL_CODE(FILE_DEVICE_UNKNOWN, 0x802, METHOD_BUFFERED, FILE_ANY_ACCESS)</span><br><span class="line"></span><br><span class="line">typedef struct _PROCESS_MON_STATS &#123;</span><br><span class="line">    volatile LONG TotalCreated;</span><br><span class="line">    volatile LONG TotalBlocked;</span><br><span class="line">    BOOLEAN       BlockEnabled;</span><br><span class="line">    LONG          Padding;</span><br><span class="line">&#125; PROCESS_MON_STATS, * PPROCESS_MON_STATS;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>驱动main.cpp</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;ntddk.h&gt;</span><br><span class="line">#include &quot;common.h&quot;</span><br><span class="line"></span><br><span class="line">static PROCESS_MON_STATS g_Stats &#x3D; &#123; 0, 0, TRUE, 0 &#125;;</span><br><span class="line"></span><br><span class="line">extern &quot;C&quot; NTKERNELAPI UCHAR* PsGetProcessImageFileName(IN PEPROCESS Process);</span><br><span class="line">void OnProcessNotify(_Inout_ PEPROCESS Process, _In_ HANDLE ProcessId, _Inout_opt_ PPS_CREATE_NOTIFY_INFO CreateInfo);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void DriverUnload(_In_ PDRIVER_OBJECT DriverObject)</span><br><span class="line">&#123;</span><br><span class="line">	KdPrint((&quot;[Y0ng] Unloading\n&quot;));</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 注销回调函数</span><br><span class="line">	PsSetCreateProcessNotifyRoutineEx(OnProcessNotify, TRUE);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 删除符号连接</span><br><span class="line">	UNICODE_STRING symlinkName;</span><br><span class="line">	RtlInitUnicodeString(&amp;symlinkName, SYMLINK_NAME);</span><br><span class="line">	IoDeleteSymbolicLink(&amp;symlinkName);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 删除设备对象</span><br><span class="line">	IoDeleteDevice(DriverObject-&gt;DeviceObject);</span><br><span class="line"></span><br><span class="line">	KdPrint((&quot;[Y0ng] Unload Ok\n&quot;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS DispatchCreateClose(_In_ PDEVICE_OBJECT DeviceObject, _In_ PIRP Irp)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(DeviceObject);</span><br><span class="line">	Irp-&gt;IoStatus.Status &#x3D; STATUS_SUCCESS;</span><br><span class="line">	Irp-&gt;IoStatus.Information &#x3D; 0;</span><br><span class="line">	IoCompleteRequest(Irp, 0);</span><br><span class="line">	return STATUS_SUCCESS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NTSTATUS DispatchIoControl(_In_ PDEVICE_OBJECT DeviceObject, _In_ PIRP Irp)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(DeviceObject);</span><br><span class="line"></span><br><span class="line">	PIO_STACK_LOCATION stack &#x3D; IoGetCurrentIrpStackLocation(Irp);</span><br><span class="line">	ULONG              code &#x3D; stack-&gt;Parameters.DeviceIoControl.IoControlCode;</span><br><span class="line">	NTSTATUS           status &#x3D; STATUS_SUCCESS;</span><br><span class="line">	ULONG              infoLen &#x3D; 0;</span><br><span class="line"></span><br><span class="line">	switch (code) &#123;</span><br><span class="line">	case IOCTL_ENABLE_BLOCK:</span><br><span class="line">		KdPrint((&quot;[Y0ng] IOCTL: Enable block\n&quot;));</span><br><span class="line">		g_Stats.BlockEnabled &#x3D; TRUE;</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	case IOCTL_DISABLE_BLOCK:</span><br><span class="line">		KdPrint((&quot;[Y0ng] IOCTL: Disable block\n&quot;));</span><br><span class="line">		g_Stats.BlockEnabled &#x3D; FALSE;</span><br><span class="line">		break;</span><br><span class="line"></span><br><span class="line">	case IOCTL_QUERY_STATS: &#123;</span><br><span class="line">		ULONG outLen &#x3D; stack-&gt;Parameters.DeviceIoControl.OutputBufferLength;</span><br><span class="line">		if (outLen &gt;&#x3D; sizeof(PROCESS_MON_STATS)) &#123;</span><br><span class="line">			RtlCopyMemory(Irp-&gt;AssociatedIrp.SystemBuffer,&amp;g_Stats, sizeof(PROCESS_MON_STATS));</span><br><span class="line">			infoLen &#x3D; sizeof(PROCESS_MON_STATS);</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			status &#x3D; STATUS_BUFFER_TOO_SMALL;</span><br><span class="line">		&#125;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	default:</span><br><span class="line">		status &#x3D; STATUS_INVALID_DEVICE_REQUEST;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Irp-&gt;IoStatus.Status &#x3D; status;</span><br><span class="line">	Irp-&gt;IoStatus.Information &#x3D; infoLen;</span><br><span class="line">	IoCompleteRequest(Irp, IO_NO_INCREMENT);</span><br><span class="line">	return status;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extern &quot;C&quot; NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject, _In_ PUNICODE_STRING RegistryPath)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(RegistryPath);</span><br><span class="line">	KdPrint((&quot;[Y0ng] DriverEntry\n&quot;));</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 全局状态变量</span><br><span class="line">	NTSTATUS status &#x3D; STATUS_SUCCESS;</span><br><span class="line">	bool SetsymLink , SetprocessCallback &#x3D; false;</span><br><span class="line">	PDEVICE_OBJECT DeviceObject &#x3D; nullptr;</span><br><span class="line">	UNICODE_STRING deviceName;</span><br><span class="line">	UNICODE_STRING symlinkName;</span><br><span class="line"></span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; 创建设备对象</span><br><span class="line">		RtlInitUnicodeString(&amp;deviceName, DEVICE_NAME);</span><br><span class="line">		status &#x3D; IoCreateDevice(DriverObject, 0, &amp;deviceName, FILE_DEVICE_UNKNOWN, 0, FALSE, &amp;DeviceObject);</span><br><span class="line">		if (!NT_SUCCESS(status)) &#123;</span><br><span class="line">			KdPrint((&quot;[Y0ng] IoCreateDevice failed: 0x%08X\n&quot;, status));</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; 创建符号链接</span><br><span class="line">		RtlInitUnicodeString(&amp;symlinkName, SYMLINK_NAME);</span><br><span class="line">		status &#x3D; IoCreateSymbolicLink(&amp;symlinkName, &amp;deviceName);</span><br><span class="line">		if (!NT_SUCCESS(status)) &#123;</span><br><span class="line">			KdPrint((&quot;[Y0ng] IoCreateSymbolicLink failed: 0x%08X\n&quot;, status));</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		SetsymLink &#x3D; true;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; 创建进程回调函数</span><br><span class="line">		status &#x3D; PsSetCreateProcessNotifyRoutineEx(OnProcessNotify, FALSE);</span><br><span class="line">		if (!NT_SUCCESS(status)) &#123;</span><br><span class="line">			KdPrint((&quot;[Y0ng] PsSetCreateProcessNotifyRoutineEx failed: 0x%08X\n&quot;, status));</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		SetprocessCallback &#x3D; true;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&#125; while (false);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;全局状态检查</span><br><span class="line">	if (!NT_SUCCESS(status)) &#123;</span><br><span class="line">		if (SetprocessCallback)</span><br><span class="line">			PsSetCreateProcessNotifyRoutineEx(OnProcessNotify, TRUE);</span><br><span class="line">		if (SetsymLink)</span><br><span class="line">			IoDeleteSymbolicLink(&amp;symlinkName);</span><br><span class="line">		if (DeviceObject)</span><br><span class="line">			IoDeleteDevice(DeviceObject);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 设置分发函数</span><br><span class="line">	DriverObject-&gt;DriverUnload &#x3D; DriverUnload;</span><br><span class="line">	DriverObject-&gt;MajorFunction[IRP_MJ_CREATE] &#x3D; DriverObject-&gt;MajorFunction[IRP_MJ_CLOSE] &#x3D; DispatchCreateClose;</span><br><span class="line">	DriverObject-&gt;MajorFunction[IRP_MJ_DEVICE_CONTROL] &#x3D; DispatchIoControl;</span><br><span class="line"></span><br><span class="line">	return status;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 进程回调</span><br><span class="line">VOID OnProcessNotify(_Inout_ PEPROCESS Process, _In_ HANDLE ProcessId, _Inout_opt_ PPS_CREATE_NOTIFY_INFO CreateInfo)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(Process);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; CreateInfo &#x3D;&#x3D; NULL 表示进程退出，忽略</span><br><span class="line">	if (!CreateInfo) return;</span><br><span class="line"></span><br><span class="line">	InterlockedIncrement(&amp;g_Stats.TotalCreated);</span><br><span class="line"></span><br><span class="line">	UCHAR* FileName &#x3D; PsGetProcessImageFileName(Process);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; ---- 打印进程信息 ----</span><br><span class="line">	KdPrint((&quot;[Y0ng] &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;\n&quot;));</span><br><span class="line">	KdPrint((&quot;[Y0ng] Process Created:\n&quot;));</span><br><span class="line">	KdPrint((&quot;[Y0ng]   PID       : %lu\n&quot;, HandleToULong(ProcessId)));</span><br><span class="line">	KdPrint((&quot;[Y0ng]   ParentPID : %lu\n&quot;, HandleToULong(CreateInfo-&gt;ParentProcessId)));</span><br><span class="line">	KdPrint((&quot;[Y0ng]   FileName  : %s\n&quot;, FileName));</span><br><span class="line">	KdPrint((&quot;[Y0ng]   Image     : %wZ\n&quot;, CreateInfo-&gt;ImageFileName));</span><br><span class="line">	KdPrint((&quot;[Y0ng]   CmdLine   : %wZ\n&quot;, CreateInfo-&gt;CommandLine));</span><br><span class="line">	KdPrint((&quot;[Y0ng] ----------------------------------------\n&quot;));</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 检查是否需要阻止</span><br><span class="line">	if (!g_Stats.BlockEnabled) return;</span><br><span class="line"></span><br><span class="line">	if (_stricmp((char*)FileName, &quot;notepad.exe&quot;) &#x3D;&#x3D; 0) &#123;</span><br><span class="line">		CreateInfo-&gt;CreationStatus &#x3D; STATUS_ACCESS_DENIED;</span><br><span class="line">		DbgPrint(&quot;[Y0ng] *** BLOCKED notepad.exe (PID&#x3D;%lu) ***\n&quot;, HandleToULong(ProcessId));</span><br><span class="line">		InterlockedIncrement(&amp;g_Stats.TotalBlocked);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>开启拦截</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260517180519236.png" alt="image-20260517180519236"></p>
+<p>关闭拦截</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260517180616819.png" alt="image-20260517180616819"></p>
+<h3 id="全局回调数组"><a href="#全局回调数组" class="headerlink" title="全局回调数组"></a>全局回调数组</h3><p><strong>定位回调函数地址</strong></p>
+<p>在上面提到的回调函数列表实际上是一个64长度的全局数组（x64下），每当注册回调函数后，回调函数指针会被添加到 EX_FAST_REF 结构的数组中，实际上这些结构指针存储在 <strong>nt!PspCreateProcessNotifyRoutine</strong> 数组中。</p>
+<p>从注册函数来看，<code>nt!PsSetCreateProcessNotifyRoutineEx</code> 调用了 <code>nt!PspSetCreateProcessNotifyRoutine</code> ，关于该函数的分析有很多文章，<a target="_blank" rel="noopener" href="https://gist.github.com/nmulasmajic/a14b2d51596a4c6fb261fc8f8e83b279">nt!PspSetCreateProcessNotifyRoutine</a></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260517195859856.png" alt="image-20260517195859856"></p>
+<p>查看代码发现通过 <code>ExAllocateCallBack</code> 函数将注册回调函数封装成 <code>_EX_CALLBACK_ROUTINE_BLOCK</code> 类型，前8位是 EX_RUNDOWN_REF 结构可忽略，Function 存储了真正的回调函数地址。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _EX_CALLBACK_ROUTINE_BLOCK</span><br><span class="line">&#123;</span><br><span class="line">    EX_RUNDOWN_REF RundownProtect;</span><br><span class="line">    PEX_CALLBACK_FUNCTION Function;</span><br><span class="line">    PVOID Context;</span><br><span class="line">&#125; EX_CALLBACK_ROUTINE_BLOCK, *PEX_CALLBACK_ROUTINE_BLOCK;</span><br></pre></td></tr></table></figure>
+
+<p>然后再通过 <code>ExCompareExchangeCallBack</code> 函数插入到 <code>PspCreateProcessNotifyRoutine</code> 数组中，该数组中是 <code>EX_FAST_REF</code> <strong>16字节对齐 (低 4 位永远是 0)</strong> 的结构类型。</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260517200708053.png" alt="image-20260517200708053"></p>
+<p>那么通过数组反推回调函数真正的地址需要：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">回调函数地址 &#x3D; *(PspCreateProcessNotifyRoutine[i] &amp; 0xFFFFFFFFFFFFFFF0) + 8</span><br></pre></td></tr></table></figure>
+
+<p>查看数组，有13个回调</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dqs nt!PspCreateProcessNotifyRoutine</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260518011143638.png" alt="image-20260518011143638"></p>
+<p>以第一个为例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; ? (ffffb709&#96;3545024f &amp; 0xFFFFFFFFFFFFFFF0) + 8</span><br><span class="line">Evaluate expression: -80224800406968 &#x3D; ffffb709&#96;35450248</span><br><span class="line"></span><br><span class="line">1: kd&gt; dq ffffb709&#96;35450248 L1</span><br><span class="line">ffffb709&#96;35450248  fffff802&#96;7cf390c0</span><br><span class="line"></span><br><span class="line">1: kd&gt; u fffff802&#96;7cf390c0</span><br><span class="line">nt!ViCreateProcessCallback:</span><br><span class="line">fffff802&#96;7cf390c0 4883ec28        sub     rsp,28h</span><br><span class="line">fffff802&#96;7cf390c4 833d753f8e0000  cmp     dword ptr [nt!ViVerifierEnabled (fffff802&#96;7d81d040)],0</span><br><span class="line">fffff802&#96;7cf390cb 488bc2          mov     rax,rdx</span><br><span class="line">fffff802&#96;7cf390ce 0f858c4d1400    jne     nt!ViCreateProcessCallback+0x144da0 (fffff802&#96;7d07de60)</span><br><span class="line">fffff802&#96;7cf390d4 4883c428        add     rsp,28h</span><br><span class="line">fffff802&#96;7cf390d8 c3              ret</span><br><span class="line">fffff802&#96;7cf390d9 cc              int     3</span><br><span class="line">fffff802&#96;7cf390da cc              int     3</span><br><span class="line">1: kd&gt; ln fffff802&#96;7cf390c0</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;7cf390c0)   nt!ViCreateProcessCallback   |  (fffff802&#96;7cf390e0)   nt!PsReferenceSiloContext</span><br><span class="line">Exact matches:</span><br><span class="line">    nt!ViCreateProcessCallback (void)</span><br></pre></td></tr></table></figure>
+
+<p>第二个 cng.sys</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; dq ((ffffb709&#96;356848af &amp; 0xFFFFFFFFFFFFFFF0) + 8) L1</span><br><span class="line">ffffb709&#96;356848a8  fffff802&#96;7e997070</span><br><span class="line"></span><br><span class="line">1: kd&gt; lmDva fffff802&#96;7e997070</span><br><span class="line">Browse full module list</span><br><span class="line">start             end                 module name</span><br><span class="line">fffff802&#96;7e990000 fffff802&#96;7ea4b000   cng        (pdb symbols)          c:\symbols\cng.pdb\A991BA58B5368F30B1E2322692E985C51\cng.pdb</span><br><span class="line">    Loaded symbol image file: cng.sys</span><br><span class="line">    Image path: \SystemRoot\System32\drivers\cng.sys</span><br><span class="line">    Image name: cng.sys</span><br><span class="line">    Browse all global symbols  functions  data  Symbol Reload</span><br><span class="line">    Image was built with &#x2F;Brepro flag.</span><br><span class="line">    Timestamp:        8AF25707 (This is a reproducible build file hash, not a timestamp)</span><br><span class="line">    CheckSum:         000B8A74</span><br><span class="line">    ImageSize:        000BB000</span><br><span class="line">    Mapping Form:     Loaded</span><br><span class="line">    Translations:     0000.04b0 0000.04e4 0409.04b0 0409.04e4</span><br><span class="line">    Information from resource tables:</span><br><span class="line"></span><br><span class="line">1: kd&gt; u fffff802&#96;7e997070</span><br><span class="line">cng!CngCreateProcessNotifyRoutine:</span><br><span class="line">fffff802&#96;7e997070 4883ec28        sub     rsp,28h</span><br><span class="line">fffff802&#96;7e997074 488364244800    and     qword ptr [rsp+48h],0</span><br><span class="line">fffff802&#96;7e99707a 488bc2          mov     rax,rdx</span><br><span class="line">fffff802&#96;7e99707d 4584c0          test    r8b,r8b</span><br><span class="line">fffff802&#96;7e997080 7406            je      cng!CngCreateProcessNotifyRoutine+0x18 (fffff802&#96;7e997088)</span><br><span class="line">fffff802&#96;7e997082 4883c428        add     rsp,28h</span><br><span class="line">fffff802&#96;7e997086 c3              ret</span><br><span class="line">fffff802&#96;7e997087 cc              int     3</span><br></pre></td></tr></table></figure>
+
+<p>与第三方工具比对地址类型正确</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260518014534113.png" alt="image-20260518014534113"></p>
+<p>自定义驱动</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; dqs nt!PspCreateProcessNotifyRoutine</span><br><span class="line">fffff802&#96;7d8ec5e0  ffffb709&#96;3545024f</span><br><span class="line">fffff802&#96;7d8ec5e8  ffffb709&#96;356848af</span><br><span class="line">fffff802&#96;7d8ec5f0  ffffb709&#96;35ccbd0f</span><br><span class="line">fffff802&#96;7d8ec5f8  ffffb709&#96;35ccbdcf</span><br><span class="line">fffff802&#96;7d8ec600  ffffb709&#96;35ccc57f</span><br><span class="line">fffff802&#96;7d8ec608  ffffb709&#96;35d2a31f</span><br><span class="line">fffff802&#96;7d8ec610  ffffb709&#96;35d2a9af</span><br><span class="line">fffff802&#96;7d8ec618  ffffb709&#96;35d2b30f</span><br><span class="line">fffff802&#96;7d8ec620  ffffb709&#96;35d2b03f</span><br><span class="line">fffff802&#96;7d8ec628  ffffb709&#96;35d2af1f</span><br><span class="line">fffff802&#96;7d8ec630  ffffb709&#96;35d2dbbf</span><br><span class="line">fffff802&#96;7d8ec638  ffffb709&#96;393607af</span><br><span class="line">fffff802&#96;7d8ec640  ffffb709&#96;393661df</span><br><span class="line">fffff802&#96;7d8ec648  ffffb709&#96;3af4f5ef</span><br><span class="line">fffff802&#96;7d8ec650  00000000&#96;00000000</span><br><span class="line">fffff802&#96;7d8ec658  00000000&#96;00000000</span><br><span class="line"></span><br><span class="line">1: kd&gt; dq ((ffffb709&#96;3af4f5ef &amp; 0xFFFFFFFFFFFFFFF0) + 8) L1</span><br><span class="line">ffffb709&#96;3af4f5e8  fffff802&#96;967511c0</span><br><span class="line"></span><br><span class="line">1: kd&gt; u fffff802&#96;967511c0</span><br><span class="line">CallBackDriver!OnProcessNotify [E:\Project\Driver\CallBackDriver\main.cpp @ 143]:</span><br><span class="line">fffff802&#96;967511c0 4c89442418      mov     qword ptr [rsp+18h],r8</span><br><span class="line">fffff802&#96;967511c5 4889542410      mov     qword ptr [rsp+10h],rdx</span><br><span class="line">fffff802&#96;967511ca 48894c2408      mov     qword ptr [rsp+8],rcx</span><br><span class="line">fffff802&#96;967511cf 4883ec38        sub     rsp,38h</span><br><span class="line">fffff802&#96;967511d3 48837c245000    cmp     qword ptr [rsp+50h],0</span><br><span class="line">fffff802&#96;967511d9 7505            jne     CallBackDriver!OnProcessNotify+0x20 (fffff802&#96;967511e0)</span><br><span class="line">fffff802&#96;967511db e9fe000000      jmp     CallBackDriver!OnProcessNotify+0x11e (fffff802&#96;967512de)</span><br><span class="line">fffff802&#96;967511e0 488d05191e0000  lea     rax,[CallBackDriver!g_Stats (fffff802&#96;96753000)]</span><br><span class="line"></span><br><span class="line">1: kd&gt; lmDva fffff802&#96;967511c0</span><br><span class="line">Browse full module list</span><br><span class="line">start             end                 module name</span><br><span class="line">fffff802&#96;96750000 fffff802&#96;96757000   CallBackDriver   (private pdb symbols)  E:\Project\Driver\CallBackDriver\x64\Debug\CallBackDriver.pdb</span><br><span class="line">    Loaded symbol image file: CallBackDriver.sys</span><br><span class="line">    Image path: CallBackDriver.sys</span><br><span class="line">    Image name: CallBackDriver.sys</span><br><span class="line">    Browse all global symbols  functions  data  Symbol Reload</span><br><span class="line">    Timestamp:        Sun May 17 17:59:24 2026 (6A09917C)</span><br><span class="line">    CheckSum:         00008006</span><br><span class="line">    ImageSize:        00007000</span><br><span class="line">    Mapping Form:     Loaded</span><br><span class="line">    Translations:     0000.04b0 0000.04e4 0409.04b0 0409.04e4</span><br><span class="line">    Information from resource tables:</span><br></pre></td></tr></table></figure>
+
+<p>如果去除该数组值，就会导致自定义驱动失效</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; eq fffff802&#96;7d8ec648 0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>定位回调函数数组</strong></p>
+<p>上面搞清楚了回调函数在数组中的地址计算方式，那么如何 <strong>定位数组的地址</strong> 呢？</p>
+<p>PspCreateProcessNotifyRoutine <strong>不是导出符号</strong>，所以要想办法定位它，常见方法是 <strong>获取某个导出函数地址并向后进行特征码扫描</strong>，回顾 PspSetCreateProcessNotifyRoutine 导出函数里有一条关键指令，使用RIP 相对寻址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4c8d2d3f2c5500     lea     r13, [ntkrnlmp!PspCreateProcessNotifyRoutine (fffff8027d8ec5e0)]</span><br><span class="line"></span><br><span class="line">4C 8D 2D | 3F 2C 55 00</span><br><span class="line">↑  ↑  ↑     ↑</span><br><span class="line">│  │  │     └── disp32（4字节，小端）</span><br><span class="line">│  │  └── ModR&#x2F;M: Mod&#x3D;00 Reg&#x3D;R13 R&#x2F;M&#x3D;101(RIP相对)</span><br><span class="line">│  └── 指令&#x3D;LEA</span><br><span class="line">└── REX前缀 (0100 1100): R&#x3D;1 → 把reg字段扩展一位，101→R13</span><br><span class="line"></span><br><span class="line">RIP 相对寻址公式：</span><br><span class="line"></span><br><span class="line">目标地址 &#x3D; 下一条指令的地址 + disp32</span><br><span class="line">		&#x3D; (当前指令地址 + 当前指令长度) + disp32</span><br><span class="line">   		&#x3D; RIP + disp32</span><br></pre></td></tr></table></figure>
+
+<p>那么就定位 <code>4c 8d 2d</code> 特征码，根据公式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PspCreateProcessNotifyRoutine </span><br><span class="line">&#x3D; 本条指令地址 + 指令长度 + disp32</span><br><span class="line">&#x3D; 0xfffff802&#96;7d39999a + 7 + 0x00552C3F</span><br><span class="line">&#x3D; 0xfffff802&#96;7d8ec5e0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260518221745732.png" alt="image-20260518221745732"></p>
+<p>给出定位函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INT64 GetPspCreateProcessNotifyRoutineArray() &#123;</span><br><span class="line">	INT64 PsSetCallbacksNotifyRoutineAddress &#x3D; GetFuncAddress((CHAR*)&quot;PsSetCreateProcessNotifyRoutine&quot;);</span><br><span class="line">	if (PsSetCallbacksNotifyRoutineAddress &#x3D;&#x3D; 0) return 0;</span><br><span class="line">	&#x2F;&#x2F;定位PspSetCreateProcessNotifyRoutine函数地址</span><br><span class="line">	INT count &#x3D; 0;</span><br><span class="line">	BYTE* buffer &#x3D; (BYTE*)malloc(1);</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		DriverReadMemery((VOID*)PsSetCallbacksNotifyRoutineAddress, buffer,1);</span><br><span class="line">		if (*buffer &#x3D;&#x3D; 0xE8 || *buffer &#x3D;&#x3D; 0xE9) &#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		PsSetCallbacksNotifyRoutineAddress &#x3D; PsSetCallbacksNotifyRoutineAddress + 1;</span><br><span class="line">		if (count &#x3D;&#x3D; 200) &#123;</span><br><span class="line">			printf(&quot;未找到Pspsetcreateprocessnotifyroutine 函数地址\n&quot;);</span><br><span class="line">			return 0;</span><br><span class="line">		&#125;</span><br><span class="line">		count++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;获取Pspsetcreateprocessnotifyroutine 函数的偏移地址</span><br><span class="line">	UINT64 PspOffset &#x3D; 0;</span><br><span class="line">	for (int i &#x3D; 4, k &#x3D; 24; i &gt; 0; i--, k &#x3D; k - 8)&#123;</span><br><span class="line"></span><br><span class="line">		DriverReadMemery((VOID*)(PsSetCallbacksNotifyRoutineAddress + i), buffer, 1);</span><br><span class="line">		PspOffset &#x3D; ((UINT64)*buffer &lt;&lt; k) + PspOffset;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F; 检查符号位</span><br><span class="line">	if ((PspOffset &amp; 0x00000000ff000000) &#x3D;&#x3D; 0x00000000ff000000)</span><br><span class="line">		PspOffset &#x3D; PspOffset | 0xffffffff00000000; &#x2F;&#x2F; 负偏移情况下的符号扩展</span><br><span class="line">	</span><br><span class="line">	INT64 PspSetCallbackssNotifyRoutineAddress &#x3D; PsSetCallbacksNotifyRoutineAddress + PspOffset + 5;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;printf(&quot;PspSetCallbackssNotifyRoutineAddress: %I64x\n&quot;, PspSetCallbackssNotifyRoutineAddress);</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F;获取PspCreateProcessNotifyRoutineArray 数组地址</span><br><span class="line">	&#x2F;&#x2F;寻找lea 指令 来定位数组地址</span><br><span class="line">	BYTE SearchByte1 &#x3D; 0x4C;</span><br><span class="line">	BYTE SearchByte2 &#x3D; 0x8D;</span><br><span class="line">	BYTE bArray[3] &#x3D; &#123;0&#125;;</span><br><span class="line">	count &#x3D; 0;</span><br><span class="line">	INT64 back &#x3D; PspSetCallbackssNotifyRoutineAddress;</span><br><span class="line">	BOOL stop &#x3D; FALSE;</span><br><span class="line">	while (count &lt;&#x3D; 200) &#123;</span><br><span class="line">		DriverReadMemery((VOID*)PspSetCallbackssNotifyRoutineAddress, bArray, 3);</span><br><span class="line">		if (bArray[0] &#x3D;&#x3D; SearchByte1 &amp;&amp; bArray[1] &#x3D;&#x3D; SearchByte2) &#123;</span><br><span class="line">			</span><br><span class="line">			if ((bArray[2] &#x3D;&#x3D; 0x0D) || (bArray[2] &#x3D;&#x3D; 0x15) || (bArray[2] &#x3D;&#x3D; 0x1D) || (bArray[2] &#x3D;&#x3D; 0x25) || (bArray[2] &#x3D;&#x3D; 0x2D) || (bArray[2] &#x3D;&#x3D; 0x35) || (bArray[2] &#x3D;&#x3D; 0x3D))</span><br><span class="line">			&#123;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		PspSetCallbackssNotifyRoutineAddress &#x3D; PspSetCallbackssNotifyRoutineAddress + 1;</span><br><span class="line">		if (count &#x3D;&#x3D; 200)</span><br><span class="line">		&#123;</span><br><span class="line">			SearchByte1 &#x3D; 0x48;</span><br><span class="line">			count &#x3D; -1;</span><br><span class="line">			PspSetCallbackssNotifyRoutineAddress &#x3D; back;</span><br><span class="line">			if (stop)</span><br><span class="line">			&#123;</span><br><span class="line">				printf(&quot;未找到lea 指令，无法定位PspSetCallbackssNotifyRoutineAddress 数组\n&quot;);</span><br><span class="line">				return 0;</span><br><span class="line">			&#125;</span><br><span class="line">			stop &#x3D; true;</span><br><span class="line">		&#125;</span><br><span class="line">		count++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	PspOffset &#x3D; 0;</span><br><span class="line">	for (int i &#x3D; 6, k &#x3D; 24; i &gt; 2; i--, k &#x3D; k - 8) &#123;</span><br><span class="line"></span><br><span class="line">		DriverReadMemery((VOID*)(PspSetCallbackssNotifyRoutineAddress + i), buffer, 1);</span><br><span class="line">		PspOffset &#x3D; ((UINT64)*buffer &lt;&lt; k) + PspOffset;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if ((PspOffset &amp; 0x00000000ff000000) &#x3D;&#x3D; 0x00000000ff000000)</span><br><span class="line">		PspOffset &#x3D; PspOffset | 0xffffffff00000000; </span><br><span class="line"></span><br><span class="line">	INT64 PspCreateProcessNotifyRoutineAddress &#x3D; PspSetCallbackssNotifyRoutineAddress + PspOffset + 7;</span><br><span class="line"></span><br><span class="line">	return PspCreateProcessNotifyRoutineAddress;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>用于注册线程通知回调函数的注册函数API有</p>
+<ul>
+<li>PsSetCreateThreadNotifyRoutine</li>
+<li>PsSetCreateThreadNotifyRoutineEx</li>
+</ul>
+<p>用于删除线程通知回调函数的函数API有</p>
+<ul>
+<li>PsRemoveCreateThreadNotifyRoutine</li>
+</ul>
+<p>PsSetCreateThreadNotifyRoutine 函数原型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NTSTATUS PsSetCreateThreadNotifyRoutine(</span><br><span class="line">  [in] PCREATE_THREAD_NOTIFY_ROUTINE NotifyRoutine</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>只有一个参数为驱动程序实现的回调函数，原型如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef</span><br><span class="line">VOID</span><br><span class="line">(*PCREATE_THREAD_NOTIFY_ROUTINE)(</span><br><span class="line">    _In_ HANDLE ProcessId,</span><br><span class="line">    _In_ HANDLE ThreadId,</span><br><span class="line">    _In_ BOOLEAN Create</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<p>参数分别是：进程ID、线程ID、线程是被创建还是销毁的标志</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">VOID ThreadNotifyRoutine(</span><br><span class="line">    _In_ HANDLE   ProcessId,</span><br><span class="line">    _In_ HANDLE   ThreadId,</span><br><span class="line">    _In_ BOOLEAN  Create)</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 线程退出，忽略</span><br><span class="line">    if (!Create) return;</span><br><span class="line"></span><br><span class="line">    InterlockedIncrement(&amp;g_Stats.TotalCreated);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; ---- 获取进程名 ----</span><br><span class="line">    PEPROCESS        process   &#x3D; NULL;</span><br><span class="line">    PCUNICODE_STRING imageName &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">    if (NT_SUCCESS(PsLookupProcessByProcessId(ProcessId, &amp;process))) &#123;</span><br><span class="line">        imageName &#x3D; PsGetProcessImageFileName(process);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; ---- 打印线程信息 ----</span><br><span class="line">    DbgPrint(&quot;[Y0ng] &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;\n&quot;);</span><br><span class="line">    DbgPrint(&quot;[Y0ng] Thread Created:\n&quot;);</span><br><span class="line">    DbgPrint(&quot;[Y0ng]   TID        : %lu\n&quot;, HandleToULong(ThreadId));</span><br><span class="line">    DbgPrint(&quot;[Y0ng]   PID        : %lu\n&quot;, HandleToULong(ProcessId));</span><br><span class="line">    DbgPrint(&quot;[Y0ng]   Process    : %wZ\n&quot;, imageName);</span><br><span class="line">    DbgPrint(&quot;[Y0ng] ----------------------------------------\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局回调数组-1"><a href="#全局回调数组-1" class="headerlink" title="全局回调数组"></a>全局回调数组</h3><p>分析思路同进程，回调函数存储在 <strong>nt!PspCreateThreadNotifyRoutine</strong> 64长度数组中。</p>
+<p><strong>定位回调函数地址</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">回调函数地址 &#x3D; *(PspCreateThreadNotifyRoutine[i] &amp; 0xFFFFFFFFFFFFFFF0) + 8</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; dqs fffff8027d8ec3e0 L5</span><br><span class="line">fffff802&#96;7d8ec3e0  ffffb709&#96;35ccbe5f</span><br><span class="line">fffff802&#96;7d8ec3e8  ffffb709&#96;35ccc27f</span><br><span class="line">fffff802&#96;7d8ec3f0  ffffb709&#96;3936023f</span><br><span class="line">fffff802&#96;7d8ec3f8  ffffb709&#96;3936632f</span><br><span class="line">fffff802&#96;7d8ec400  ffffb709&#96;3936605f &lt;-</span><br><span class="line"></span><br><span class="line">1: kd&gt; dq ((ffffb709&#96;3936605f &amp; 0xFFFFFFFFFFFFFFF0) + 8) L1</span><br><span class="line">ffffb709&#96;39366058  fffff802&#96;966f9ed0</span><br><span class="line"></span><br><span class="line">1: kd&gt; ln fffff802&#96;966f9ed0</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;966f9ed0)   KslD!tk::COSCallback::CreateThreadNotifyRoutineEx   |  (fffff802&#96;966f9f70)   KslD!tk::COSCallback::CreateProcessNotifyRoutineEx</span><br><span class="line">Exact matches:</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>定位回调函数数组</strong></p>
+<p>PspCreateThreadNotifyRoutine <strong>不是导出符号</strong>，所以定位 PspSetCreateThreadNotifyRoutine 导出函数中的特征码 <code>48 8d 0d</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PspCreateThreadNotifyRoutine</span><br><span class="line">&#x3D; 本条指令地址 + 指令长度 + disp32</span><br><span class="line">&#x3D; 0xfffff802&#96;7d3998ba + 7 + 0x00552B1F</span><br><span class="line">&#x3D; 0xfffff802&#96;7d8ec3e0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260518234618195.png" alt="image-20260518234618195"></p>
+<h2 id="映像加载"><a href="#映像加载" class="headerlink" title="映像加载"></a>映像加载</h2><p>用于注册映像加载时通知回调函数的注册函数API有</p>
+<ul>
+<li>PsSetLoadImageNotifyRoutine</li>
+<li>PsSetLoadImageNotifyRoutineEx</li>
+</ul>
+<p>用于删除映像加载时通知回调函数的函数API有</p>
+<ul>
+<li>PsRemoveLoadImageNotifyRoutine</li>
+</ul>
+<p>PsSetLoadImageNotifyRoutine 函数原型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NTSTATUS PsSetLoadImageNotifyRoutine(</span><br><span class="line">  [in] PLOAD_IMAGE_NOTIFY_ROUTINE NotifyRoutine</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>只有一个参数为驱动程序实现的回调函数，原型如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef</span><br><span class="line">VOID</span><br><span class="line">(*PLOAD_IMAGE_NOTIFY_ROUTINE)(</span><br><span class="line">    _In_opt_ PUNICODE_STRING FullImageName,</span><br><span class="line">    _In_ HANDLE ProcessId,                &#x2F;&#x2F; pid into which image is being mapped</span><br><span class="line">    _In_ PIMAGE_INFO ImageInfo</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>FullImageName：NT格式映像名称</p>
+</li>
+<li><p>ProcessId：载入映像的进程ID</p>
+</li>
+<li><p>ImageInfo：映像附加信息结构体，如下</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _IMAGE_INFO &#123;</span><br><span class="line">    union &#123;</span><br><span class="line">        ULONG Properties;</span><br><span class="line">        struct &#123;</span><br><span class="line">            ULONG ImageAddressingMode  : 8;  &#x2F;&#x2F; Code addressing mode</span><br><span class="line">            ULONG SystemModeImage      : 1;  &#x2F;&#x2F; System mode image</span><br><span class="line">            ULONG ImageMappedToAllPids : 1;  &#x2F;&#x2F; Image mapped into all processes</span><br><span class="line">            ULONG ExtendedInfoPresent  : 1;  &#x2F;&#x2F; IMAGE_INFO_EX available</span><br><span class="line">            ULONG MachineTypeMismatch  : 1;  &#x2F;&#x2F; Architecture type mismatch</span><br><span class="line">            ULONG ImageSignatureLevel  : 4;  &#x2F;&#x2F; Signature level</span><br><span class="line">            ULONG ImageSignatureType   : 3;  &#x2F;&#x2F; Signature type</span><br><span class="line">            ULONG ImagePartialMap      : 1;  &#x2F;&#x2F; Nonzero if entire image is not mapped</span><br><span class="line">            ULONG Reserved             : 12;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    PVOID       ImageBase;   &#x2F;&#x2F; 基址</span><br><span class="line">    ULONG       ImageSelector;</span><br><span class="line">    SIZE_T      ImageSize;   &#x2F;&#x2F; 大小</span><br><span class="line">    ULONG       ImageSectionNumber;</span><br><span class="line">&#125; IMAGE_INFO, *PIMAGE_INFO;</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局回调数组-2"><a href="#全局回调数组-2" class="headerlink" title="全局回调数组"></a>全局回调数组</h3><p>分析思路同进程，回调函数存储在 <strong>nt!PspLoadImageNotifyRoutine</strong> 64长度数组中。</p>
+<p><strong>定位回调函数地址</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">回调函数地址 &#x3D; *(PspLoadImageNotifyRoutine[i] &amp; 0xFFFFFFFFFFFFFFF0) + 8</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; dqs fffff8027d8ec1e0 L5</span><br><span class="line">fffff802&#96;7d8ec1e0  ffffb709&#96;35ccc12f</span><br><span class="line">fffff802&#96;7d8ec1e8  ffffb709&#96;35d2b0ff</span><br><span class="line">fffff802&#96;7d8ec1f0  ffffb709&#96;35d2ba8f</span><br><span class="line">fffff802&#96;7d8ec1f8  ffffb709&#96;3936650f &lt;-</span><br><span class="line">fffff802&#96;7d8ec200  00000000&#96;00000000</span><br><span class="line"></span><br><span class="line">1: kd&gt; dq ((ffffb709&#96;3936650f &amp; 0xFFFFFFFFFFFFFFF0) + 8) L1</span><br><span class="line">ffffb709&#96;39366508  fffff802&#96;966f9d90</span><br><span class="line"></span><br><span class="line">1: kd&gt; ln fffff802&#96;966f9d90</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;966f9d90)   KslD!tk::COSCallback::LoadImageNotifyRoutine   |  (fffff802&#96;966f9e30)   KslD!tk::COSCallback::CreateThreadNotifyRoutine</span><br><span class="line">Exact matches:</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>定位回调函数数组</strong></p>
+<p>PspLoadImageNotifyRoutine <strong>不是导出符号</strong>，所以定位 PsSetLoadImageNotifyRoutineEx 导出函数中的特征码 <code>48 8d 0d</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PspLoadImageNotifyRoutine</span><br><span class="line">&#x3D; 本条指令地址 + 指令长度 + disp32</span><br><span class="line">&#x3D; 0xfffff802&#96;7d399691 + 7 + 0x00552B48</span><br><span class="line">&#x3D; 0xfffff802&#96;7d8ec1e0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260519003551466.png" alt="image-20260519003551466"></p>
+<h2 id="注册表"><a href="#注册表" class="headerlink" title="注册表"></a>注册表</h2><p>用于注册访问、修改注册表时通知回调函数的注册函数API有</p>
+<ul>
+<li>CmRegisterCallback</li>
+<li>CmRegisterCallbackEx</li>
+</ul>
+<p>用于删除访问、修改注册表时通知回调函数的函数API有</p>
+<ul>
+<li>CmUnRegisterCallback</li>
+</ul>
+<p>CmRegisterCallbackEx 函数原型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NTSTATUS CmRegisterCallbackEx(</span><br><span class="line">  [in]           PEX_CALLBACK_FUNCTION Function,</span><br><span class="line">  [in]           PCUNICODE_STRING      Altitude,</span><br><span class="line">  [in]           PVOID                 Driver,</span><br><span class="line">  [in, optional] PVOID                 Context,</span><br><span class="line">  [out]          PLARGE_INTEGER        Cookie,</span><br><span class="line">                 PVOID                 Reserved</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Altitude：回调高度</li>
+<li>Driver：驱动对象</li>
+<li>Context：可选值，传递给注册回调函数的第一个参数，一般为 nullptr</li>
+<li>Cookie：注册成功时的结果，在注销时必须传递给 CmUnRegisterCallback</li>
+<li>Reserved：保留</li>
+</ul>
+<p>第一个参数Function为驱动程序实现的回调函数，原型如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">EX_CALLBACK_FUNCTION ExCallbackFunction;</span><br><span class="line"></span><br><span class="line">NTSTATUS ExCallbackFunction(</span><br><span class="line">  [in]           PVOID CallbackContext,</span><br><span class="line">  [in, optional] PVOID Argument1,</span><br><span class="line">  [in, optional] PVOID Argument2</span><br><span class="line">)</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CallbackContext：CmRegisterCallbackEx的Context原样传递过来</li>
+<li>Argument1：一个 <strong>REG_NOTIFY_CLASS</strong> 类型的值，该值标识正在执行的操作类型，以及表明这是操作前回调还是操作后回调</li>
+<li>Argument2：指向包含与Argument1指定操作相关信息的结构体的指针，结构类型取决于 Argument1 的值</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>REG_NOTIFY_CLASS(Argument1)</th>
+<th>Information Struct(Argument2)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RegNtPreCreateKey</td>
+<td>REG_PRE_CREATE_KEY_INFORMATION</td>
+<td>创建密钥,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreCreateKeyEx</td>
+<td>REG_CREATE_KEY_INFORMATION</td>
+<td>创建密钥（扩展）,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreOpenKey</td>
+<td>REG_PRE_OPEN_KEY_INFORMATION</td>
+<td>打开现有密钥,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreOpenKeyEx</td>
+<td>REG_OPEN_KEY_INFORMATION</td>
+<td>打开现有密钥（扩展）,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtDeleteKey</td>
+<td>REG_DELETE_KEY_INFORMATION</td>
+<td>删除密钥,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreDeleteKey</td>
+<td>REG_DELETE_KEY_INFORMATION</td>
+<td>删除密钥,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtSetValueKey</td>
+<td>REG_SET_VALUE_KEY_INFORMATION</td>
+<td>为键设置值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreSetValueKey</td>
+<td>REG_SET_VALUE_KEY_INFORMATION</td>
+<td>为键设置值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtDeleteValueKey</td>
+<td>REG_DELETE_VALUE_KEY_INFORMATION</td>
+<td>删除键的值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreDeleteValueKey</td>
+<td>REG_DELETE_VALUE_KEY_INFORMATION</td>
+<td>删除键的值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtSetInformationKey</td>
+<td>REG_SET_INFORMATION_KEY_INFORMATION</td>
+<td>设置密钥的元数据,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreSetInformationKey</td>
+<td>REG_SET_INFORMATION_KEY_INFORMATION</td>
+<td>设置密钥的元数据,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtRenameKey</td>
+<td>REG_RENAME_KEY_INFORMATION</td>
+<td>重命名密钥,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreRenameKey</td>
+<td>REG_RENAME_KEY_INFORMATION</td>
+<td>重命名密钥,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtEnumerateKey</td>
+<td>REG_ENUMERATE_KEY_INFORMATION</td>
+<td>枚举键的子项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreEnumerateKey</td>
+<td>REG_ENUMERATE_KEY_INFORMATION</td>
+<td>枚举键的子项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtEnumerateValueKey</td>
+<td>REG_ENUMERATE_VALUE_KEY_INFORMATION</td>
+<td>枚举键的值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreEnumerateValueKey</td>
+<td>REG_ENUMERATE_VALUE_KEY_INFORMATION</td>
+<td>枚举键的值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtQueryKey</td>
+<td>REG_QUERY_KEY_INFORMATION</td>
+<td>读取密钥的元数据,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreQueryKey</td>
+<td>REG_QUERY_KEY_INFORMATION</td>
+<td>读取密钥的元数据,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtQueryValueKey</td>
+<td>REG_QUERY_VALUE_KEY_INFORMATION</td>
+<td>读取键的值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreQueryValueKey</td>
+<td>REG_QUERY_VALUE_KEY_INFORMATION</td>
+<td>读取键的值项,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtQueryMultipleValueKey</td>
+<td>REG_QUERY_MULTIPLE_VALUE_KEY_INFORMATION</td>
+<td>查询键的多个值条目,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreQueryMultipleValueKey</td>
+<td>REG_QUERY_MULTIPLE_VALUE_KEY_INFORMATION</td>
+<td>查询键的多个值条目,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtKeyHandleClose</td>
+<td>REG_KEY_HANDLE_CLOSE_INFORMATION</td>
+<td>关闭键句柄,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreKeyHandleClose</td>
+<td>REG_KEY_HANDLE_CLOSE_INFORMATION</td>
+<td>关闭键句柄,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreFlushKey</td>
+<td>REG_FLUSH_KEY_INFORMATION</td>
+<td>将密钥写入磁盘,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreLoadKey</td>
+<td>REG_LOAD_KEY_INFORMATION</td>
+<td>从文件加载注册表配置单元,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreUnLoadKey</td>
+<td>REG_UNLOAD_KEY_INFORMATION</td>
+<td>卸载注册表配置单元,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreQueryKeySecurity</td>
+<td>REG_QUERY_KEY_SECURITY_INFORMATION</td>
+<td>获取注册表项的安全信息,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreSetKeySecurity</td>
+<td>REG_SET_KEY_SECURITY_INFORMATION</td>
+<td>设置注册表项的安全信息,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreRestoreKey</td>
+<td>REG_RESTORE_KEY_INFORMATION</td>
+<td>还原注册表项的信息,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreSaveKey</td>
+<td>REG_SAVE_KEY_INFORMATION</td>
+<td>保存注册表项的信息,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreReplaceKey</td>
+<td>REG_REPLACE_KEY_INFORMATION</td>
+<td>替换注册表项的信息,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreQueryKeyName</td>
+<td>REG_QUERY_KEY_NAME</td>
+<td>获取注册表项的完整路径,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPreSaveMergedKey</td>
+<td>REG_SAVE_MERGED_KEY_INFORMATION</td>
+<td>将两个注册表子树的合并视图保存到文件中,预通知调用</td>
+</tr>
+<tr>
+<td>RegNtPostCreateKey</td>
+<td>REG_POST_CREATE_KEY_INFORMATION</td>
+<td>创建密钥,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostCreateKeyEx</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>创建密钥（扩展）,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostOpenKey</td>
+<td>REG_POST_OPEN_KEY_INFORMATION</td>
+<td>打开现有密钥,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostOpenKeyEx</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>打开现有密钥（扩展）,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostDeleteKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>删除密钥,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostSetValueKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>为键设置值项,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostDeleteValueKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>删除键的值项,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostSetInformationKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>设置密钥的元数据,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostRenameKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>重命名密钥,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostEnumerateKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>枚举键的子项,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostEnumerateValueKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>枚举键的值项,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostQueryKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>读取密钥的元数据,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostQueryValueKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>读取键的值项,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostQueryMultipleValueKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>查询键的多个值条目,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostKeyHandleClose</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>关闭键句柄,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostFlushKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>将密钥写入磁盘,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostLoadKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>从文件加载注册表配置单元,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostUnLoadKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>卸载注册表配置单元,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostQueryKeySecurity</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>获取注册表项的安全信息,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostSetKeySecurity</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>设置注册表项的安全信息,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostRestoreKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>还原注册表项的信息,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostSaveKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>保存注册表项的信息,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostReplaceKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>替换注册表项的信息,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostQueryKeyName</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>获取注册表项的完整路径,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtPostSaveMergedKey</td>
+<td>REG_POST_OPERATION_INFORMATION</td>
+<td>将两个注册表子树的合并视图保存到文件中,通知后调用</td>
+</tr>
+<tr>
+<td>RegNtCallbackObjectContextCleanup</td>
+<td>REG_CALLBACK_CONTEXT_CLEANUP_INFORMATION</td>
+<td>驱动程序已调用 CmUnRegisterCallback 或回调刚完成处理</td>
+</tr>
+<tr>
+<td>MaxRegNtNotifyClass</td>
+<td>—</td>
+<td>枚举类型最大值</td>
+</tr>
+</tbody></table>
+<p>如果指定注册表项是需要保护的则直接返回 STATUS_ACCESS_DENIED，示例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 注册表回调函数</span><br><span class="line">NTSTATUS OnRegistryNotify(_In_ PVOID CallbackContext, _In_opt_ PVOID Argument1, _In_opt_ PVOID Argument2)</span><br><span class="line">&#123;</span><br><span class="line">	NTSTATUS status &#x3D; STATUS_SUCCESS;</span><br><span class="line">	UNICODE_STRING ustrRegPath;</span><br><span class="line">	&#x2F;&#x2F; 获取操作类型</span><br><span class="line">	LONG lOperateType &#x3D; (REG_NOTIFY_CLASS)Argument1;</span><br><span class="line">	...</span><br><span class="line">	&#x2F;&#x2F; 判断操作</span><br><span class="line">	switch (lOperateType)</span><br><span class="line">	&#123;</span><br><span class="line">	&#x2F;&#x2F; 创建注册表之前</span><br><span class="line">	case RegNtPreCreateKey:</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; 获取注册表路径</span><br><span class="line">		GetFullPath(&amp;ustrRegPath, ((PREG_CREATE_KEY_INFORMATION)Argument2)-&gt;RootObject);</span><br><span class="line">		DbgPrint(&quot;[创建注册表][%wZ][%wZ]\n&quot;, &amp;ustrRegPath, ((PREG_CREATE_KEY_INFORMATION)Argument2)-&gt;CompleteName);</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F; 删除键之前</span><br><span class="line">	case RegNtPreDeleteKey:</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; 获取注册表路径</span><br><span class="line">		GetFullPath(&amp;ustrRegPath, ((PREG_DELETE_KEY_INFORMATION)Argument2)-&gt;Object);</span><br><span class="line">		DbgPrint(&quot;[删除键][%wZ] \n&quot;, &amp;ustrRegPath);</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F; 如果要删除指定注册表项则拒绝</span><br><span class="line">		PWCH pszRegister &#x3D; L&quot;\\REGISTRY\\MACHINE\\SOFTWARE\\lyshark.com&quot;;</span><br><span class="line">		if (wcscmp(ustrRegPath.Buffer, pszRegister) &#x3D;&#x3D; 0)</span><br><span class="line">		&#123;</span><br><span class="line">			DbgPrint(&quot;[lyshark] 注册表项删除操作已被拦截! \n&quot;);</span><br><span class="line">			&#x2F;&#x2F; 拒绝操作</span><br><span class="line">			status &#x3D; STATUS_ACCESS_DENIED;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F; 修改键值之前</span><br><span class="line">	case RegNtPreSetValueKey:</span><br><span class="line">	&#123;</span><br><span class="line">		&#x2F;&#x2F; 获取注册表路径</span><br><span class="line">		GetFullPath(&amp;ustrRegPath, ((PREG_SET_VALUE_KEY_INFORMATION)Argument2)-&gt;Object);</span><br><span class="line">		DbgPrint(&quot;[修改键值][%wZ][%wZ] \n&quot;, &amp;ustrRegPath, ((PREG_SET_VALUE_KEY_INFORMATION)Argument2)-&gt;ValueName);</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	default:</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">	return status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="全局回调双向链表"><a href="#全局回调双向链表" class="headerlink" title="全局回调双向链表"></a>全局回调双向链表</h3><p><strong>定位回调函数地址</strong></p>
+<p>在尝试定位回调函数存储位置时发现调用链</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nt!CmRegisterCallbackEx -&gt; nt!CmpRegisterCallbackInternal -&gt; nt!CmpInsertCallbackInListByAltitude</span><br></pre></td></tr></table></figure>
+
+<p>结合AI解释汇编能看出来操作的主要对象是 <strong>nt!CallbackListHead</strong>，一句话总结为：拿锁 -&gt; 分配 Cookie -&gt; 按 Altitude 降序遍历链表找到插入点 -&gt; 做双向链表四针插入 -&gt; 释放锁</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260522223341692.png" alt="image-20260522223341692"></p>
+<p><strong>nt!CallbackListHead</strong> 是一个双向链表的head，可表示为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;0x10 bytes (sizeof)</span><br><span class="line">struct LIST_ENTRY64</span><br><span class="line">&#123;</span><br><span class="line">    ULONGLONG Flink; &#x2F;&#x2F;0x0</span><br><span class="line">    ULONGLONG Blink; &#x2F;&#x2F;0x8</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>链表中包含一种未公开的结构体类型，该结构包含指向回调函数的指针。该结构体可表示为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _CMREG_CALLBACK &#123;</span><br><span class="line">    struct LIST_ENTRY64</span><br><span class="line">    &#123;</span><br><span class="line">        ULONGLONG Flink;  &#x2F;&#x2F;0x0</span><br><span class="line">        ULONGLONG Blink;  &#x2F;&#x2F;0x8</span><br><span class="line">    &#125; List; </span><br><span class="line">    ULONG Unknown1;</span><br><span class="line">    ULONG Unknown2;</span><br><span class="line">    LARGE_INTEGER Cookie;</span><br><span class="line">    PVOID Unknown3;</span><br><span class="line">    PEX_CALLBACK_FUNCTION Function; &#x2F;&#x2F; +0x28 &lt;-</span><br><span class="line">&#125; CMREG_CALLBACK, *PCMREG_CALLBACK;</span><br></pre></td></tr></table></figure>
+
+<p>使用AI给出的结构体为，两者正确与否不得而知</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _CMREG_CALLBACK &#123;</span><br><span class="line">  LIST_ENTRY           List;       &#x2F;&#x2F; +0x00</span><br><span class="line">  ULONG                Unknown1;   &#x2F;&#x2F; +0x10</span><br><span class="line">  ULONG                Unknown2;   &#x2F;&#x2F; +0x14</span><br><span class="line">  LARGE_INTEGER        Cookie;     &#x2F;&#x2F; +0x18</span><br><span class="line">  PVOID                Context;    &#x2F;&#x2F; +0x20</span><br><span class="line">  PEX_CALLBACK_FUNCTION Function;  &#x2F;&#x2F; +0x28 &lt;-</span><br><span class="line">  UNICODE_STRING       Altitude;   &#x2F;&#x2F; +0x30</span><br><span class="line">&#125; CMREG_CALLBACK, *PCMREG_CALLBACK;</span><br></pre></td></tr></table></figure>
+
+<p><strong>总之在该结构的0x28偏移处存储了回调函数的地址，所以只需要遍历双向链表的每个结构体0x28偏移就能获取所有的回调函数地址</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260523004405168.png" alt="image-20260523004405168"></p>
+<p>不断遍历Flink即可实现找到所有回调地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; ? nt!CallbackListHead</span><br><span class="line">Evaluate expression: -8785397251216 &#x3D; fffff802&#96;7d848370</span><br><span class="line">---------------------------------------------</span><br><span class="line">1: kd&gt; dqs nt!CallbackListHead L1</span><br><span class="line">fffff802&#96;7d848370  ffffa103&#96;f27d3e40</span><br><span class="line">1: kd&gt; dqs ffffa103&#96;f27d3e40+0x28 L1</span><br><span class="line">ffffa103&#96;f27d3e68  fffff802&#96;7f31d0d0 WdFilter!MpRegCallback</span><br><span class="line">1: kd&gt; ln fffff802&#96;7f31d0d0</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;7f31d0d0)   WdFilter!MpRegCallback   |  (fffff802&#96;7f31da60)   WdFilter!MpRegPostCreateKeyEx</span><br><span class="line">Exact matches:</span><br><span class="line"></span><br><span class="line">---------------------------------------------</span><br><span class="line">1: kd&gt; dqs ffffa103&#96;f27d3e40 L1</span><br><span class="line">ffffa103&#96;f27d3e40  ffffa103&#96;f2942240</span><br><span class="line">1: kd&gt; dqs ffffa103&#96;f2942240+0x28 L1</span><br><span class="line">ffffa103&#96;f2942268  fffff802&#96;80715dd0 UCPD+0x5dd0</span><br><span class="line">1: kd&gt; ln fffff802&#96;80715dd0</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">---------------------------------------------</span><br><span class="line">1: kd&gt; dqs ffffa103&#96;f2942240 L1</span><br><span class="line">ffffa103&#96;f2942240  ffffa103&#96;f7918090</span><br><span class="line">1: kd&gt; dqs ffffa103&#96;f7918090+0x28 l1</span><br><span class="line">ffffa103&#96;f79180b8  fffff802&#96;7d1d4fd0 nt!VrpRegistryCallback</span><br><span class="line">1: kd&gt; ln fffff802&#96;7d1d4fd0</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;7d1d4fd0)   nt!VrpRegistryCallback   |  (fffff802&#96;7d1d5160)   nt!VrpShouldOperateOnCall</span><br><span class="line">Exact matches:</span><br><span class="line">    nt!VrpRegistryCallback (void)</span><br><span class="line"></span><br><span class="line">---------------------------------------------</span><br><span class="line">1: kd&gt; dqs ffffa103&#96;f7918090 L1</span><br><span class="line">ffffa103&#96;f7918090  fffff802&#96;7d848370 nt!CallbackListHead</span><br></pre></td></tr></table></figure>
+
+<p><strong>定位回调双向链表</strong></p>
+<p>CallbackListHead <strong>不是导出符号</strong>，所以定位 CmUnRegisterCallback 导出函数中的特征码 <code>48 8d 0d</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260523004916524.png" alt="image-20260523004916524"></p>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>对象是对资源（例如文件、进程、令牌、注册表键）的一种抽象表示，内核通知支持的对象类型有 <strong>进程、线程、桌面</strong>。用于在尝试打开或复制进程、线程、桌面的 <strong>句柄</strong> 时通知回调函数的注册函数API有</p>
+<ul>
+<li>ObRegisterCallbacks</li>
+</ul>
+<p>用于删除对象句柄通知回调函数的函数API有</p>
+<ul>
+<li>ObUnRegisterCallbacks</li>
+</ul>
+<p>ObRegisterCallbacks 函数原型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NTSTATUS ObRegisterCallbacks(</span><br><span class="line">  [in]  POB_CALLBACK_REGISTRATION CallbackRegistration,</span><br><span class="line">  [out] PVOID                     *RegistrationHandle</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RegistrationHandle：注册成功后返回值，ObUnRegisterCallbacks使用</li>
+<li>CallbackRegistration：_OB_CALLBACK_REGISTRATION 结构用于提供驱动程序要针对什么操作进行注册的必要细节</li>
+</ul>
+<p><code>_OB_CALLBACK_REGISTRATION</code> 结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _OB_CALLBACK_REGISTRATION &#123;</span><br><span class="line">  USHORT                    Version;</span><br><span class="line">  USHORT                    OperationRegistrationCount;</span><br><span class="line">  UNICODE_STRING            Altitude;</span><br><span class="line">  PVOID                     RegistrationContext;</span><br><span class="line">  OB_OPERATION_REGISTRATION *OperationRegistration;</span><br><span class="line">&#125; OB_CALLBACK_REGISTRATION, *POB_CALLBACK_REGISTRATION;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Version：常量 OB_FLT_REGISTRATION_VERSION</li>
+<li>OperationRegistrationCount：OperationRegistration的数量</li>
+<li>Altitude：回调高度</li>
+<li>RegistrationContext：由驱动程序定义，会传递给回调函数</li>
+<li>OperationRegistration：一个 <code>_OB_OPERATION_REGISTRATION</code> 结构体 <strong>数组</strong> 的指针，包含对哪种对象的哪种行为进行哪种回调函数的细节</li>
+</ul>
+<p><code>_OB_OPERATION_REGISTRATION</code> 结构如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _OB_OPERATION_REGISTRATION &#123;</span><br><span class="line">  POBJECT_TYPE                *ObjectType;</span><br><span class="line">  OB_OPERATION                Operations;</span><br><span class="line">  POB_PRE_OPERATION_CALLBACK  PreOperation;</span><br><span class="line">  POB_POST_OPERATION_CALLBACK PostOperation;</span><br><span class="line">&#125; OB_OPERATION_REGISTRATION, *POB_OPERATION_REGISTRATION;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>ObjectType：触发回调的对象类型，以下值之一</p>
+<ul>
+<li>PsProcessType：进程句柄操作</li>
+<li>PsThreadType：线程句柄操作</li>
+<li>ExDesktopObjectType：桌面句柄操作，仅支持 Windows 10</li>
+</ul>
+</li>
+<li><p>Operations：触发回调的操作类型，以下值之一</p>
+<ul>
+<li>OB_OPERATION_HANDLE_CREATE：一个新的进程、线程或桌面句柄 <strong>已经或即将打开</strong>（例如用户API： CreateProcess| OpenProcess | CreateThread | OpenThread | CreateDesktop | OpenDesktop）</li>
+<li>OB_OPERATION_HANDLE_DUPLICATE：进程、线程或桌面句柄 <strong>已被复制或将要复制</strong>（例如用户API：DuplicateHandle）</li>
+</ul>
+</li>
+<li><p>PreOperation：要注册的操作执行前回调函数</p>
+</li>
+<li><p>PostOperation：要注册的操作执行后回调函数</p>
+</li>
+</ul>
+<p>来看一下操作前回调函数的原型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POB_PRE_OPERATION_CALLBACK PobPreOperationCallback;</span><br><span class="line"></span><br><span class="line">OB_PREOP_CALLBACK_STATUS PobPreOperationCallback(</span><br><span class="line">  [in] PVOID RegistrationContext,</span><br><span class="line">  [in] POB_PRE_OPERATION_INFORMATION OperationInformation</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RegistrationContext：前面的初始化中传入的RegistrationContext参数</li>
+<li>OperationInformation：接收一个 <code>OB_PRE_OPERATION_INFORMATION</code> 结构作为参数，结构如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _OB_PRE_OPERATION_INFORMATION &#123;</span><br><span class="line">  OB_OPERATION                 Operation;</span><br><span class="line">  union &#123;</span><br><span class="line">    ULONG Flags;</span><br><span class="line">    struct &#123;</span><br><span class="line">      ULONG KernelHandle : 1;</span><br><span class="line">      ULONG Reserved : 31;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  PVOID                        Object;</span><br><span class="line">  POBJECT_TYPE                 ObjectType;</span><br><span class="line">  PVOID                        CallContext;</span><br><span class="line">  POB_PRE_OPERATION_PARAMETERS Parameters;</span><br><span class="line">&#125; OB_PRE_OPERATION_INFORMATION, *POB_PRE_OPERATION_INFORMATION;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Operation：触发回调的操作类型</li>
+<li>KernelHandle：指定句柄是否为内核句柄</li>
+<li>Object：指针指向句柄的实际对象，进程 -&gt; EPROCESS地址、线程 -&gt; PETHREAD地址</li>
+<li>ObjectType：触发回调的对象类型</li>
+<li>CallContext：被传递给操作后回调函数</li>
+<li>Parameters：指明了基于操作的附加信息的联合，联合体定义如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef union _OB_PRE_OPERATION_PARAMETERS &#123;</span><br><span class="line">  OB_PRE_CREATE_HANDLE_INFORMATION    CreateHandleInformation; &#x2F;&#x2F; 创建 打开 操作</span><br><span class="line">  OB_PRE_DUPLICATE_HANDLE_INFORMATION DuplicateHandleInformation; &#x2F;&#x2F; 复制 操作</span><br><span class="line">&#125; OB_PRE_OPERATION_PARAMETERS, *POB_PRE_OPERATION_PARAMETERS;</span><br></pre></td></tr></table></figure>
+
+<p>对于创建 打开 操作来说，会收到如下信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _OB_PRE_CREATE_HANDLE_INFORMATION &#123;</span><br><span class="line">  ACCESS_MASK DesiredAccess;</span><br><span class="line">  ACCESS_MASK OriginalDesiredAccess;</span><br><span class="line">&#125; OB_PRE_CREATE_HANDLE_INFORMATION, *POB_PRE_CREATE_HANDLE_INFORMATION;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DesiredAccess：访问掩码，用于设置要授予句柄的访问权限，默认等于OriginalDesiredAccess</li>
+<li>OriginalDesiredAccess：调用者设置的原始访问权限</li>
+</ul>
+<p>对于复制 操作来说，会收到如下信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _OB_PRE_DUPLICATE_HANDLE_INFORMATION &#123;</span><br><span class="line">  ACCESS_MASK DesiredAccess;</span><br><span class="line">  ACCESS_MASK OriginalDesiredAccess;</span><br><span class="line">  PVOID       SourceProcess;</span><br><span class="line">  PVOID       TargetProcess;</span><br><span class="line">&#125; OB_PRE_DUPLICATE_HANDLE_INFORMATION, *POB_PRE_DUPLICATE_HANDLE_INFORMATION;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DesiredAccess：访问掩码，用于设置要授予句柄的访问权限，默认等于OriginalDesiredAccess，可以通过修改此值来设定句柄的访问权限</li>
+<li>OriginalDesiredAccess：调用者设置的原始访问权限</li>
+<li>SourceProcess：句柄来源进程的进程对象指针</li>
+<li>TargetProcess：句柄目标进程的进程对象指针</li>
+</ul>
+<p>关于操作后回调函数是在句柄操作完成后被调用，<strong>所以操作后回调函数不能对句柄进行任何修改，只能用于查看结果查询信息</strong>，结构类似操作前回调</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>给出一个进程保护的例子，通过设置DesiredAccess来实现保护某些进程不被强行终止</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">extern &quot;C&quot; NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject, _In_ PUNICODE_STRING RegistryPath)</span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(RegistryPath);</span><br><span class="line">	KdPrint((&quot;[Y0ng] DriverEntry\n&quot;));</span><br><span class="line">	...</span><br><span class="line">		&#x2F;&#x2F; 对象回调函数</span><br><span class="line">		OB_OPERATION_REGISTRATION opRegs[] &#x3D; &#123; 0 &#125;;</span><br><span class="line">		OB_CALLBACK_REGISTRATION  cbReg &#x3D; &#123; 0 &#125;;</span><br><span class="line">		opRegs[0].ObjectType &#x3D; PsProcessType;</span><br><span class="line">		opRegs[0].Operations &#x3D; OB_OPERATION_HANDLE_CREATE | OB_OPERATION_HANDLE_DUPLICATE;</span><br><span class="line">		opRegs[0].PreOperation &#x3D; OnPreOpenProcessObj;</span><br><span class="line">		opRegs[0].PostOperation &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">		cbReg.Version &#x3D; OB_FLT_REGISTRATION_VERSION;</span><br><span class="line">		cbReg.OperationRegistrationCount &#x3D; 1;</span><br><span class="line">		cbReg.Altitude &#x3D; RTL_CONSTANT_STRING(L&quot;12345.6171&quot;);</span><br><span class="line">		cbReg.RegistrationContext &#x3D; NULL;</span><br><span class="line">		cbReg.OperationRegistration &#x3D; opRegs;</span><br><span class="line"></span><br><span class="line">		status &#x3D; ObRegisterCallbacks(&amp;cbReg, &amp;g_Stats.RegHandle);</span><br><span class="line">		if (!NT_SUCCESS(status)) &#123;</span><br><span class="line">			KdPrint((&quot;[Y0ng] ObRegisterCallbacks failed: 0x%08X\n&quot;, status));</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		SetObCallback &#x3D; true;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">	return status;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">OB_PREOP_CALLBACK_STATUS OnPreOpenProcessObj(PVOID RegistrationContext, POB_PRE_OPERATION_INFORMATION OperationInformation) </span><br><span class="line">&#123;</span><br><span class="line">	UNREFERENCED_PARAMETER(RegistrationContext);</span><br><span class="line"></span><br><span class="line">	if (OperationInformation &#x3D;&#x3D; NULL)</span><br><span class="line">		return OB_PREOP_SUCCESS;</span><br><span class="line"></span><br><span class="line">	if(OperationInformation-&gt;KernelHandle)</span><br><span class="line">		return OB_PREOP_SUCCESS;</span><br><span class="line"></span><br><span class="line">	&#x2F;&#x2F; 对象类型 只处理进程类型的句柄</span><br><span class="line">	if (OperationInformation-&gt;ObjectType &#x3D;&#x3D; *PsProcessType) &#123;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; 只保护notepad.exe进程</span><br><span class="line">		PUCHAR name &#x3D; PsGetProcessImageFileName((PEPROCESS)OperationInformation-&gt;Object);</span><br><span class="line">		if (strcmp((const char*)name, &quot;notepad.exe&quot;) !&#x3D; 0 ) &#123;</span><br><span class="line">			return OB_PREOP_SUCCESS;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; 获取调用方 PID</span><br><span class="line">		HANDLE callerPid &#x3D; PsGetCurrentProcessId();</span><br><span class="line">		&#x2F;&#x2F; 获取目标 PID</span><br><span class="line">		HANDLE targetPid &#x3D; PsGetProcessId((PEPROCESS)OperationInformation-&gt;Object);</span><br><span class="line">		&#x2F;&#x2F; 目标访问权限</span><br><span class="line">		ACCESS_MASK desired &#x3D; OperationInformation-&gt;Parameters-&gt;CreateHandleInformation.DesiredAccess;</span><br><span class="line">		KdPrint((&quot;[Y0ng] caller&#x3D;%llu target&#x3D;%llu access&#x3D;0x%08X\n&quot;, (ULONG64)(ULONG_PTR)callerPid, (ULONG64)(ULONG_PTR)targetPid, desired));</span><br><span class="line"></span><br><span class="line">		if (g_Stats.BlockEnabled) &#123;</span><br><span class="line">			&#x2F;&#x2F; 操作类型 句柄创建 和 句柄复制</span><br><span class="line">			if (OperationInformation-&gt;Operation &#x3D;&#x3D; OB_OPERATION_HANDLE_CREATE)</span><br><span class="line">			&#123;</span><br><span class="line">				OperationInformation-&gt;Parameters-&gt;CreateHandleInformation.DesiredAccess &amp;&#x3D; ~PROCESS_TERMINATE;</span><br><span class="line">				KdPrint((&quot;[Y0ng] Protected CreateHandle!\n&quot;));</span><br><span class="line">			&#125;</span><br><span class="line">			if (OperationInformation-&gt;Operation &#x3D;&#x3D; OB_OPERATION_HANDLE_DUPLICATE) &#123;</span><br><span class="line">				OperationInformation-&gt;Parameters-&gt;DuplicateHandleInformation.DesiredAccess &amp;&#x3D; ~PROCESS_TERMINATE;</span><br><span class="line">				KdPrint((&quot;[Y0ng] Protected DuplicateHandle!\n&quot;));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return OB_PREOP_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260524193842767.png" alt="image-20260524193842767"></p>
+<p>但是发现通过任务管理器 - 进程 右键可以结束进程，搜索得到</p>
+<blockquote>
+<p>通过任务管理器关闭进程，实际上有两种方式：</p>
+<p>1.直接杀掉进程，调用系统API，TerminateProcess<br>2.结束任务，这种方式会发送一个WM_CLOSE的消息给程序，如果程序在一定时间内还没有退出的话，才会调用TerminateProcess</p>
+<p>如果被保护的程序没有处理这个消息，或消息的处理方式是默认的话，就不会调用TerminateProcess，而是正常程序自身退出，所以如果你想保护自己的程序不被退出，你还需要在你的程序中处理WM_CLOSE这个消息</p>
+</blockquote>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260524193953135.png" alt="image-20260524193953135"></p>
+<h3 id="全局回调双向链表-1"><a href="#全局回调双向链表-1" class="headerlink" title="全局回调双向链表"></a>全局回调双向链表</h3><p><strong>定位回调函数地址</strong></p>
+<p>通过反编译 ObRegisterCallbacks，从 <code>cbReg.OperationRegistration 数组中</code> 取值为 v13</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260525224525623.png" alt="image-20260525224525623"></p>
+<p>随后调用 <code>ObpInsertCallbackByAltitude</code> 根据函数名推测是将回调函数根据Altitude的值排序插入到内核对象中，向上追溯这两个参数</p>
+<ul>
+<li>V17：v13的 ObjectType，即 PsProcessType、PsThreadType、ExDesktopObjectType</li>
+<li>V16：某种结构体，包含了 LIST_ENTRY、回调前函数PreOperation、回调后函数PostOperation等</li>
+</ul>
+<p>反编译 ObpInsertCallbackByAltitude</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260525230211417.png" alt="image-20260525230211417"></p>
+<p>看不懂问AI，在0xc8的偏移处插入了V16</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260525230350756.png" alt="image-20260525230350756"></p>
+<p>V17 - ObjectType 的结构类型为 <code>_OBJECT_TYPE</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;0xd8 bytes (sizeof)</span><br><span class="line">struct _OBJECT_TYPE</span><br><span class="line">&#123;</span><br><span class="line">    struct _LIST_ENTRY TypeList;                &#x2F;&#x2F;0x0</span><br><span class="line">    struct _UNICODE_STRING Name;                &#x2F;&#x2F;0x10</span><br><span class="line">    VOID* DefaultObject;                        &#x2F;&#x2F;0x20</span><br><span class="line">    UCHAR Index;                                &#x2F;&#x2F;0x28</span><br><span class="line">    ULONG TotalNumberOfObjects;                 &#x2F;&#x2F;0x2c</span><br><span class="line">    ULONG TotalNumberOfHandles;                 &#x2F;&#x2F;0x30</span><br><span class="line">    ULONG HighWaterNumberOfObjects;             &#x2F;&#x2F;0x34</span><br><span class="line">    ULONG HighWaterNumberOfHandles;             &#x2F;&#x2F;0x38</span><br><span class="line">    struct _OBJECT_TYPE_INITIALIZER TypeInfo;   &#x2F;&#x2F;0x40</span><br><span class="line">    struct _EX_PUSH_LOCK TypeLock;              &#x2F;&#x2F;0xb8</span><br><span class="line">    ULONG Key;                                  &#x2F;&#x2F;0xc0</span><br><span class="line">    struct _LIST_ENTRY CallbackList;            &#x2F;&#x2F;0xc8</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>其中 CallbackList，是一个 <code>_CALLBACK_ENTRY_ITEM</code> 结构组成的双向链表，就是V16的结构</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">typedef struct _CALLBACK_ENTRY_ITEM &#123;</span><br><span class="line">    LIST_ENTRY                  EntryItemList;</span><br><span class="line">    OB_OPERATION                Operations;</span><br><span class="line">    CALLBACK_ENTRY*             CallbackEntry;</span><br><span class="line">    POBJECT_TYPE                ObjectType;</span><br><span class="line">    POB_PRE_OPERATION_CALLBACK  PreOperation;  &#x2F;&#x2F;offset 0x28</span><br><span class="line">    POB_POST_OPERATION_CALLBACK PostOperation; &#x2F;&#x2F;offset 0x30</span><br><span class="line">&#125;CALLBACK_ENTRY_ITEM;</span><br></pre></td></tr></table></figure>
+
+<p>那么回调函数的定位就需要通过 <strong>ObjectType（PsProcessType、PsThreadType、ExDesktopObjectType）</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ObjectType.CallbackList -&gt; *Flink -&gt; _CALLBACK_ENTRY_ITEM.PreOperation</span><br><span class="line">ObjectType.CallbackList -&gt; *Flink -&gt; _CALLBACK_ENTRY_ITEM.PostOperation</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>定位回调双向链表</strong></p>
+<p>PsProcessType、PsThreadType、ExDesktopObjectType <strong>都是导出符号</strong>，直接定位它们地址就可以了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1: kd&gt; dqs poi(poi(nt!PsProcessType)+0xc8)+0x28 L1</span><br><span class="line">ffffa103&#96;f272bc58  fffff802&#96;80711e20</span><br><span class="line">1: kd&gt; ln fffff802&#96;80711e20</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line">---------------------------------------------</span><br><span class="line">1: kd&gt; dqs poi(poi(poi(nt!PsProcessType)+0xc8))+0x28 L1</span><br><span class="line">ffffa103&#96;ff78fa68  fffff802&#96;967ee170 WdFilter!MpCreateInstanceContext+0x50</span><br><span class="line">1: kd&gt; ln fffff802&#96;967ee170</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;967ee120)   WdFilter!MpCreateInstanceContext+0x50   |  (fffff802&#96;967ef12c)   WdFilter!MpInitFileStateGenericTable</span><br><span class="line">---------------------------------------------</span><br><span class="line">1: kd&gt; dqs poi(poi(poi(poi(nt!PsProcessType)+0xc8)))+0x28 L1</span><br><span class="line">ffffa103&#96;fcc7e148  fffff802&#96;967511b0 &lt;Unloaded_CallBackDriver.sys&gt;+0x11b0</span><br><span class="line">1: kd&gt; ln fffff802&#96;967511b0</span><br><span class="line">Browse module</span><br><span class="line">Set bu breakpoint</span><br><span class="line"></span><br><span class="line">(fffff802&#96;967511b0)   &lt;Unloaded_CallBackDriver.sys&gt;+0x11b0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/KernelCallback/image-20260526003214103.png" alt="image-20260526003214103"></p>
+<h1 id="清除回调函数"><a href="#清除回调函数" class="headerlink" title="清除回调函数"></a>清除回调函数</h1><p>进程、线程、映像三者类似，定位回调函数地址后直接将地址置空即可</p>
+<p>注册表的回调直接删除会触发PG，所以利用双向链表操纵前后节点摘掉中间节点可以实现删除回调函数</p>
+<p>对象的回调函数，可以直接将地址置空即可，也可以摘掉中间节点</p>
+<p>对于对象，注册表还可以利用 Altitude回调高度的顺序性质在不破坏回调函数情况下使EDR回调失效：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2316142">https://cloud.tencent.com/developer/article/2316142</a></p>
+<p>代码直接参考大佬项目：<a target="_blank" rel="noopener" href="https://github.com/myzxcg/RealBlindingEDR">https://github.com/myzxcg/RealBlindingEDR</a> 。在AI如此发达的如今，代码已经不是问题了( <del>其实不会手搓</del> )</p>
+<h1 id="Refrence"><a href="#Refrence" class="headerlink" title="Refrence"></a>Refrence</h1><p><a target="_blank" rel="noopener" href="https://blog.whiteflag.io/blog/from-windows-drivers-to-a-almost-fully-working-edr/">From Windows drivers to a almost fully working EDR</a></p>
+<p><a target="_blank" rel="noopener" href="https://myzxcg.com/2023/09/%E7%99%BD%E9%A9%B1%E5%8A%A8-Kill-AV/EDR%E4%B8%8A/">白驱动 Kill AV/EDR（上）</a></p>
+<p><a target="_blank" rel="noopener" href="https://myzxcg.com/2023/10/%E7%99%BD%E9%A9%B1%E5%8A%A8-Kill-AV/EDR%E4%B8%8B/">白驱动 Kill AV/EDR（下）</a></p>
+<p><a target="_blank" rel="noopener" href="https://myzxcg.com/2023/10/AV/EDR-%E5%AE%8C%E5%85%A8%E8%87%B4%E7%9B%B2-%E6%B8%85%E9%99%A46%E5%A4%A7%E5%86%85%E6%A0%B8%E5%9B%9E%E8%B0%83%E5%AE%9E%E7%8E%B0/">AV/EDR 完全致盲 - 清除6大内核回调实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.nviso.eu/">Kernel Karnage</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@matterpreter/mimidrv-in-depth-4d273d19e148">Mimidrv In Depth: Exploring Mimikatz’s Kernel Driver</a></p>
+<p><a target="_blank" rel="noopener" href="https://jonny-johnson.medium.com/understanding-telemetry-kernel-callbacks-1a97cfcb8fb3">Understanding Telemetry: Kernel Callbacks</a></p>
+<p><a target="_blank" rel="noopener" href="https://250wuyifan.github.io/list/">内核驱动系列文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DATA-GaMi/WindowsKernelBook">《Windows 内核安全编程技术实践》</a></p>
+<p>《Windows Kernel Programming》</p>
+<p>《Evading EDR: The Definitive Guide to Defeating Endpoint Detection Systems》</p>
+<p>MISC：</p>
+<p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-2009403-1-1.html">自写反内核工具(Anti RootKit)之回调枚举和进程线程枚举</a></p>
+<p><a target="_blank" rel="noopener" href="https://revers.engineering/beyond-process-and-object-callbacks-an-unconventional-method/">Experimenting with Object Initializers in Windows – See PG-compliance Disclaimer</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/2066">ObRegisterCallbacks 的装载和卸载</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/18733">从进程终结到内核级防护：深度解析Windows进程保护机制与对抗技术</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/11/CVE-2026-24291/" rel="prev" title="RegPwn CVE-2026-24291">
+                  <i class="fa fa-angle-left"></i> RegPwn CVE-2026-24291
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
