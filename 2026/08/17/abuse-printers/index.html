@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/08/17/abuse-printers/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/08/17/abuse-printers/","path":"2026/08/17/abuse-printers/","title":"内网打印机攻击面"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>内网打印机攻击面 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/08/17/abuse-printers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="内网打印机攻击面 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          内网打印机攻击面
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-08-17 00:00:00" itemprop="dateCreated datePublished" datetime="2026-08-17T00:00:00+08:00">2026-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!--more-->
+
+<p>内网中关于打印机可能会开启多种网络服务，除了利用二进制漏洞，作为红队渗透测试人员还应将其服务作为获取凭证、命令执行、信息收集的重要入口点，在此简单记录暴露面。</p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>常见端口</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RAW / JetDirect</td>
+<td>TCP <strong>9100</strong></td>
+<td>最常见的直接打印协议</td>
+</tr>
+<tr>
+<td>LPD/LPR</td>
+<td>TCP <strong>515</strong></td>
+<td>Unix/Linux 等系统的传统网络打印</td>
+</tr>
+<tr>
+<td>IPP</td>
+<td>TCP <strong>631</strong></td>
+<td>Internet Printing Protocol，现代打印系统常用</td>
+</tr>
+<tr>
+<td>IPP over HTTPS</td>
+<td>TCP <strong>443</strong></td>
+<td>加密 IPP 打印</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>TCP <strong>80</strong></td>
+<td>Web 管理页面</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>TCP <strong>443</strong></td>
+<td>Web 管理页面</td>
+</tr>
+<tr>
+<td>SNMP</td>
+<td>UDP <strong>161</strong></td>
+<td>监控打印机状态、墨量、耗材等</td>
+</tr>
+<tr>
+<td>SNMP Trap</td>
+<td>UDP <strong>162</strong></td>
+<td>打印机向管理系统发送状态通知</td>
+</tr>
+<tr>
+<td>mDNS / Bonjour</td>
+<td>UDP <strong>5353</strong></td>
+<td>自动发现 AirPrint/IPP 等打印机</td>
+</tr>
+<tr>
+<td>WS-Discovery</td>
+<td>UDP <strong>3702</strong></td>
+<td>Windows 网络发现/打印机发现</td>
+</tr>
+<tr>
+<td>SMB</td>
+<td>TCP <strong>445</strong></td>
+<td>部分多功能打印机用于扫描到共享文件夹等</td>
+</tr>
+<tr>
+<td>FTP</td>
+<td>TCP <strong>21</strong></td>
+<td>某些老型号用于扫描/文件传输</td>
+</tr>
+<tr>
+<td>TFTP</td>
+<td>UDP <strong>69</strong></td>
+<td>部分设备用于配置/固件相关功能</td>
+</tr>
+<tr>
+<td>WSD Print</td>
+<td>TCP/UDP 动态端口</td>
+<td>Windows 的 WSD 打印/发现</td>
+</tr>
+<tr>
+<td>LDAP</td>
+<td>TCP <strong>389</strong></td>
+<td>查询企业通讯录、用户/地址簿、认证</td>
+</tr>
+<tr>
+<td>SMTP</td>
+<td>TCP <strong>25</strong></td>
+<td>扫描到邮件、发送设备告警</td>
+</tr>
+<tr>
+<td>SMTP Submission</td>
+<td>TCP <strong>587</strong></td>
+<td>经认证的邮件提交</td>
+</tr>
+<tr>
+<td>SMTPS</td>
+<td>TCP <strong>465</strong></td>
+<td>TLS 加密 SMTP（部分设备支持）</td>
+</tr>
+<tr>
+<td>IMAP/POP3</td>
+<td>TCP <strong>143/993 / 110/995</strong></td>
+<td>某些设备用于邮件相关功能</td>
+</tr>
+<tr>
+<td>Kerberos</td>
+<td>TCP/UDP <strong>88</strong></td>
+<td>域环境身份认证</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>TCP/UDP <strong>53</strong></td>
+<td>解析邮件服务器、LDAP服务器等</td>
+</tr>
+<tr>
+<td>NTP</td>
+<td>UDP <strong>123</strong></td>
+<td>时间同步，配合 TLS/LDAP/Kerberos 使用</td>
+</tr>
+</tbody></table>
+<p>WEB服务：</p>
+<ul>
+<li>弱口令登录，翻用户名、文件、凭据。可以做爆破</li>
+<li>挖一些未授权API接口，找信息泄露，例如 <a target="_blank" rel="noopener" href="https://www.rapid7.com/blog/post/2022/03/29/cve-2022-1026-kyocera-net-view-address-book-exposure/">CVE-2022-1026</a></li>
+</ul>
+<p>SMB服务：</p>
+<ul>
+<li>responder 获取明文传递的 LDAP、SMTP、Telnet明文凭据</li>
+<li>使用UNC路径获取 Net-NTLM</li>
+</ul>
+<p>SNMP服务：使用工具 snmpget、snmpwalk、snmp-check，探测 用户名、配置、凭据等信息</p>
+<table>
+<thead>
+<tr>
+<th>风险</th>
+<th>常见表现</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>默认 community string</td>
+<td>public / private 等仍可使用</td>
+<td>高</td>
+</tr>
+<tr>
+<td>弱 community string</td>
+<td>community 容易被猜到</td>
+<td>高</td>
+</tr>
+<tr>
+<td>SNMPv1/v2c 明文传输</td>
+<td>community string 没有加密</td>
+<td>中~高</td>
+</tr>
+<tr>
+<td>SNMP Read 权限过大</td>
+<td>能读取大量设备/MIB 信息</td>
+<td>中</td>
+</tr>
+<tr>
+<td>SNMP Write 开启</td>
+<td>存在 SET 权限</td>
+<td>高</td>
+</tr>
+<tr>
+<td>ACL 限制缺失</td>
+<td>任意内网主机都能访问 UDP/161</td>
+<td>中~高</td>
+</tr>
+<tr>
+<td>敏感 MIB 暴露</td>
+<td>型号、接口、地址、配置等泄露</td>
+<td>中</td>
+</tr>
+<tr>
+<td>SNMP Trap 配置不当</td>
+<td>Trap 接收端或认证配置不安全</td>
+<td>中</td>
+</tr>
+<tr>
+<td>SNMPv3 配置不当</td>
+<td>弱认证、无加密或错误权限配置</td>
+<td>中</td>
+</tr>
+<tr>
+<td>厂商 SNMP 实现漏洞</td>
+<td>特定固件存在内存破坏、认证绕过等</td>
+<td>高/严重</td>
+</tr>
+<tr>
+<td>SNMP 放大攻击</td>
+<td>UDP/161 暴露公网且设备响应异常大</td>
+<td>中~高</td>
+</tr>
+<tr>
+<td>信息泄露导致横向侦察</td>
+<td>获取网络拓扑、接口、设备名称等</td>
+<td>中</td>
+</tr>
+</tbody></table>
+<hr>
+<p>最后AI来个总结</p>
+<p><strong>高优先级</strong></p>
+<ul>
+<li>SNMP 弱配置/信息泄露</li>
+<li>Web 管理后台</li>
+<li>SMB/LDAP/SMTP 身份认证</li>
+<li>默认账号/弱口令</li>
+<li>已知固件漏洞</li>
+<li>LLMNR/NBT-NS/WPAD</li>
+</ul>
+<p><strong>中优先级</strong></p>
+<ul>
+<li>IPP / LPR / 9100 未授权功能</li>
+<li>FTP</li>
+<li>mDNS / WS-Discovery</li>
+<li>打印队列和设备信息泄露</li>
+</ul>
+<p><strong>低优先级</strong></p>
+<ul>
+<li>单纯的设备状态、耗材、页面计数等信息泄露</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>服务/入口</th>
+<th>主要红队测试面</th>
+<th>关注点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP/HTTPS</td>
+<td>Web 管理面</td>
+<td>默认凭据、弱口令、旧固件、认证/授权、敏感信息泄露</td>
+</tr>
+<tr>
+<td>SNMP</td>
+<td>信息收集</td>
+<td>默认/弱 community、过度暴露的 MIB、设备/网络拓扑/位置等信息</td>
+</tr>
+<tr>
+<td>RAW</td>
+<td>打印服务</td>
+<td>未授权打印、设备行为、服务实现漏洞</td>
+</tr>
+<tr>
+<td>IPP</td>
+<td>打印/Web 服务</td>
+<td>未授权访问、打印队列、配置和身份信息泄露</td>
+</tr>
+<tr>
+<td>LPR</td>
+<td>打印服务</td>
+<td>未授权打印、队列信息、老旧协议</td>
+</tr>
+<tr>
+<td>LDAP</td>
+<td>企业身份/通讯录</td>
+<td>LDAP 配置、匿名查询、认证配置、通讯录信息暴露</td>
+</tr>
+<tr>
+<td>SMTP</td>
+<td>扫描到邮件</td>
+<td>SMTP 配置、认证方式、邮件地址泄露、邮件功能滥用</td>
+</tr>
+<tr>
+<td>SMB</td>
+<td>文件/扫描功能</td>
+<td>共享访问、认证配置、NTLM 暴露、弱权限</td>
+</tr>
+<tr>
+<td>FTP</td>
+<td>扫描/文件传输</td>
+<td>匿名访问、明文认证、文件泄露</td>
+</tr>
+<tr>
+<td>mDNS</td>
+<td>服务发现</td>
+<td>主机/打印机信息泄露、局域网欺骗面</td>
+</tr>
+<tr>
+<td>WS-Discovery</td>
+<td>Windows/设备发现</td>
+<td>设备信息、发现机制及欺骗风险</td>
+</tr>
+<tr>
+<td>WSD</td>
+<td>Windows 打印</td>
+<td>未授权发现/打印及实现漏洞</td>
+</tr>
+<tr>
+<td>DNS/NTP</td>
+<td>基础设施依赖</td>
+<td>错误配置、欺骗和可用性问题</td>
+</tr>
+<tr>
+<td>Kerberos</td>
+<td>AD 集成</td>
+<td>域认证配置、身份信任关系</td>
+</tr>
+<tr>
+<td>LLMNR/NBT-NS/WPAD</td>
+<td>内网认证链</td>
+<td>名称解析欺骗、NTLM 认证暴露</td>
+</tr>
+</tbody></table>
+<p><strong>Reference</strong></p>
+<p><a target="_blank" rel="noopener" href="https://hackers-arise.com/iot-hacking-abusing-printers-to-compromise-active-directory/">IoT Hacking: Abusing Printers to Compromise Active Directory</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/b6v0hW5_rBKN5YgXKK2dvw">边界设备SNMP服务攻击思考</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/08/15/Azure%20Seamless%20SSO/" rel="prev" title="Azure Seamless SSO">
+                  <i class="fa fa-angle-left"></i> Azure Seamless SSO
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
